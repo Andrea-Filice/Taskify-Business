@@ -1,5 +1,7 @@
 # Taskify
 
+![alt text](https://github.com/Play-Epik-Inc/Taskify/blob/main/src/assets/git_slide1.png)
+
 **Taskify** is a powerful desktop application designed to help businesses organize, assign, and track maintenance tasks for their computer software. By providing a clear, centralized interface, Maintenance Scheduler streamlines planning, reduces downtime, and ensures each component receives timely updates and checks.
 
 ## Key Features
