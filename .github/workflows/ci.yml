@@ -28,10 +28,3 @@ jobs:
       # Build the Electron app
       - name: Build Electron app
         run: npx electron-builder --win --x64
-
-      # Upload the build artifact
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: windows-build
-          path: dist/*
