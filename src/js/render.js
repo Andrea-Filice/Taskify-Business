@@ -1,4 +1,4 @@
-const { ipcRenderer, contextBridge } = require('electron');
+const { ipcRenderer } = require('electron');
 
 //VARIABLEs
 let taskCreated = 0;
@@ -125,4 +125,10 @@ function closeInfoBox(){
   document.getElementById('infoBox').style.display = 'none';
   document.getElementById("ibtn").style.display = "block";
   document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
+}
+
+function quitApplication(){
+  if (confirm("Sei sicuro di voler chiudere l'app?")) {
+    ipcRenderer.send('quit-app');
+  }
 }

@@ -44,7 +44,7 @@ input {
     font-family: 'Supreme', sans-serif;
 }
 
-#fuoriAddBtn, #softwareAddBtn, .delete-btn, .closeButton, .btn {
+#fuoriAddBtn, #softwareAddBtn, .delete-btn, .closeButton, .btn, .quitButton {
     align-self: center; 
     padding: 10px 15px;
     width: 100%;
@@ -147,4 +147,11 @@ html {
     display: inline-flex;
     align-items: center;
     justify-content: center;     
+}
+
+.quitButton{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;   
+    gap: 10px;
 }

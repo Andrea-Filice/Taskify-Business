@@ -50,14 +50,17 @@ function createWindow() {
 
   mainWindow.setMenu(null)
   mainWindow.loadFile('src/boot.html')
-  
+
   mainWindow.webContents.on('before-input-event', (event, input) => {
     if (input.key.toLowerCase() === 'r' && input.control) {
       event.preventDefault()
       mainWindow.reload()
     }
+    if (input.key.toLowerCase() === 'i' && input.control && input.shift) {
+      mainWindow.webContents.openDevTools();
+    }
   })
-
+  
   mainWindow.on('closed', () => {
     mainWindow = null
   })
@@ -76,6 +79,10 @@ ipcMain.on('save-todos', (event, newTodos) => {
   todos = newTodos
   saveTodosToDisk()
 })
+
+ipcMain.on('quit-app', () => {
+  app.quit();
+});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
