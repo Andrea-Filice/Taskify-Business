@@ -25,6 +25,33 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      #Install electron
+      - name: Install Electron Dependencies
+        run: npm install electron --save-dev
+      - name: Install Electron Dependencies
+        run: npm install electron  
       # Build the Electron app
       - name: Build Electron app
         run: npx electron-builder --win --x64
+
+      # Create a release and upload the artifact
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ github.run_number }}
+          release_name: "Build v${{ github.run_number }}"
+          draft: false
+          prerelease: false
+
+      - name: Upload Build to Release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/*.exe
+          asset_name: app-windows.exe
+          asset_content_type: application/octet-stream
