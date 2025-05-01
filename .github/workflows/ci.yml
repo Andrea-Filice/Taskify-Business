@@ -35,6 +35,10 @@ jobs:
       - name: Debug dist directory
         run: dir /s dist
 
+      # Debug build output
+      - name: Debug build output
+        run: dir /s
+
       # Create a release and upload the artifact
       - name: Create GitHub Release
         id: create_release
