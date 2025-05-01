@@ -25,13 +25,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      #Install electron
-      - name: Install Electron Dependencies
-        run: npm install electron --save-dev
-      - name: Install Electron Dependencies
-        run: npm install electron  
       # Build the Electron app
       - name: Build Electron app
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx electron-builder --win --x64
 
       # Create a release and upload the artifact
