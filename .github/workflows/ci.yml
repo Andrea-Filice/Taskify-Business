@@ -31,6 +31,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npx electron-builder --win --x64
 
+      # Debug dist directory
+      - name: Debug dist directory
+        run: dir /s dist
+
       # Create a release and upload the artifact
       - name: Create GitHub Release
         id: create_release
