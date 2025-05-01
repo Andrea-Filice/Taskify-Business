@@ -1,17 +1,37 @@
-name: CI
+name: Build Electron App for Windows
+
 on:
   push:
     branches:
       - main
+  pull_request:
+
 jobs:
-  build_on_win:
-    runs-on: windows-2016
+  build:
+    runs-on: windows-latest
+
     steps:
-    - uses: actions/checkout@master
-      with:
-        ref: feature/github-actions        
-    - uses: actions/setup-node@master
-      with:
-        node-version: 10.16
-    - name: see directory
-      run: ls
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build the Electron app
+      - name: Build Electron app
+        run: npx electron-builder --win --x64
+
+      # Upload the build artifact
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: windows-build
+          path: dist/*
