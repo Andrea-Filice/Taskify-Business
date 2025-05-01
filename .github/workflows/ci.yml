@@ -1,41 +1,17 @@
-name: Build Electron App
-
+name: CI
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-env:
-  ACTIONS_STEP_DEBUG: true
-
+    branches:
+      - main
 jobs:
-  build:
-    runs-on: windows-latest
-
+  build_on_win:
+    runs-on: windows-2016
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
+    - uses: actions/checkout@master
       with:
-        node-version: '18'
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Build Electron App
-      run: npm run build
-
-    - name: Package App for Windows
-      run: npx electron-builder --win --x64
-
-    - name: List files in dist
-      run: dir dist
-
-    - name: Upload Build Artifact
-      uses: actions/upload-artifact@v3
+        ref: feature/github-actions        
+    - uses: actions/setup-node@master
       with:
-        name: windows-build
-        path: dist/*.exe
+        node-version: 10.16
+    - name: see directory
+      run: ls
