@@ -1,0 +1,150 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Supreme', sans-serif;
+    background: #1a1a1a;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: 95vh;
+}
+
+.column {
+    background: #2d2d2d;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1{
+    margin-top: 0;
+    color: #ffffff;
+    font-size: 1.6em;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+    margin-bottom: 15px;
+}
+
+input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #3d3d3d;
+    color: #fff;
+    font-size: 15px;
+    font-family: 'Supreme', sans-serif;
+}
+
+#fuoriAddBtn, #softwareAddBtn, .delete-btn, .closeButton, .btn {
+    align-self: center; 
+    padding: 10px 15px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    background: #009dff;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    font-size: 20px;
+    font-family: 'Supreme', sans-serif;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 10px;
+    margin: 5px 0;
+    background: #3d3d3d;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete-btn {
+    font-family: 'Supreme', sans-serif;
+    background: #ff0000;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+}
+
+input:focus {
+    outline: none;
+    animation: animationInput 2s ease-in-out infinite;
+}
+
+@keyframes animationInput{
+    0%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+    50%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+    100%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+}
+
+.version-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+.version-inputs input {
+    flex: 1;
+}
+
+html {
+    scrollbar-color: #888 #1a1a1a;
+    scrollbar-width: auto;
+}
+
+@keyframes FadeIn{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}
+
+.info{
+    display: none;
+}
+
+.infoButton{
+    background-color: transparent;
+    height: 30px;
+    width: 30px;
+    border-color: transparent;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+.infoButton:hover{
+    cursor: pointer;
+}
+
+.closeButton, .btn{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;     
+}

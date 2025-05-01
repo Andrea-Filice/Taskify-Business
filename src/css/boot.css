@@ -1,0 +1,49 @@
+body{
+    background-color: #1a1a1a;
+}
+
+.logo{
+    margin-top: 50px;
+    width: 200px;
+    height: 200px;
+}
+
+/*LOADER BY: https://cssloaders.github.io/*/
+
+.loader {
+    margin-top: 150px;
+    width: 48px;
+    height: 48px;
+    border: 3px solid #FFF;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+    content: '';  
+    position: absolute;
+    box-sizing: border-box;
+    left: 20px;
+    top: 31px;
+    border: 10px solid transparent;
+    border-right-color: #FFF;
+    transform: rotate(-40deg);
+}
+  
+@keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+}
+
+@keyframes FadeOut{
+    0%{opacity: 1;}
+    100%{opacity: 0;}
+}
