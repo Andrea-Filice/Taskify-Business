@@ -29,14 +29,10 @@ jobs:
       - name: Build Electron app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-builder --win --x64
+        run: npx electron-builder --win --x64 --publish always
 
-      # Debug dist directory
-      - name: Debug dist directory
-        run: dir /s dist
-
-      # Debug build output
-      - name: Debug build output
+      # Debug root directory
+      - name: Debug root directory
         run: dir /s
 
       # Create a release and upload the artifact
