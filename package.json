@@ -1,0 +1,25 @@
+{
+  "name": "taskify",
+  "version": "1.0.0",
+  "description": "An app for Professionals Companies with better management of Maintenance Applications",
+  "license": "MIT",
+  "author": "Play Epik, Incoporation",
+  "type": "commonjs",
+  "main": "config.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "build": {
+    "appId": "com.playepik.taskify",
+    "productName": "Taskify",
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "devDependencies": {
+    "electron": "^36.0.1",
+    "electron-builder": "^26.0.12"
+  }
+}
