@@ -19,7 +19,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 22
 
       # Install dependencies
       - name: Install dependencies
@@ -32,8 +32,8 @@ jobs:
         run: npx electron-builder --win --x64 --publish always
 
       # Debug root directory
-      - name: Debug root directory
-        run: dir /s
+      #- name: Debug root directory
+      #  run: dir /s
 
       # Create a release and upload the artifact
       - name: Create GitHub Release
