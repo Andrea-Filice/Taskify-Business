@@ -1,6 +1,6 @@
 {
   "name": "taskify",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An app for Professionals Companies with better management of Maintenance Applications",
   "license": "MIT",
   "author": "Play Epik, Incoporation",
@@ -19,7 +19,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "assets/icon.ico"
+      "icon": "src/assets/icon.ico"
     }
   },
   "devDependencies": {
