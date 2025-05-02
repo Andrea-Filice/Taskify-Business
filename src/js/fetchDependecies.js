@@ -3,13 +3,9 @@ try{
     .then(response => response.json())
           .then(data => {
             const version = data.versionTaskify;
-            document.getElementById('version').innerText = "Versione: " + version;
-          })
-          .then(data => {
-            const build = data.buildTaskify;
-            document.getElementById('build').innerText = "Build: " + build;
+            document.getElementById('latestversion').innerText = "Ultima versione disponibile: " + version;
           })
 }
 catch (error) {
-    document.getElementById('version').innerText = "Versione: err";
+    document.getElementById('latestversion').innerText = "Ultima versione disponibile: err";
 }

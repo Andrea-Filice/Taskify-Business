@@ -3,7 +3,7 @@
     <head>
         <!--SETTINGS-->
         <meta charset="UTF-8">
-        <title>Manutenzione Play Epik, Inc.</title>
+        <title>Manutenzione - Play Epik, Inc.</title>
         <link rel="stylesheet" href="css/style.css">
         <link href="https://api.fontshare.com/v2/css?f[]=supreme@1&display=swap" rel="stylesheet">
     </head>
@@ -12,7 +12,7 @@
             <div class="column">
                 <h1>SOFTWARE COMPONENTS</h1>
                 <div class="input-group">
-                    <input type="text" id="softwareInput" placeholder="Inserisci il nome del software...">
+                    <input type="text" id="softwareInput" placeholder="Inserisci il nome del Task...">
                     <div class="version-inputs">
                         <input type="text" id="softwarePrevVersion" placeholder="Versione Precedente">
                         <input type="text" id="softwareNextVersion" placeholder="Versione Successiva">
@@ -25,7 +25,7 @@
             <div class="column">
                 <h1>FUORI DALLA MANUTENZIONE</h1>
                 <div class="input-group">
-                    <input type="text" id="fuoriInput" placeholder="Inserisci il nome del software...">
+                    <input type="text" id="fuoriInput" placeholder="Inserisci il nome del Task...">
                     <div class="version-inputs">
                         <input type="text" id="fuoriPrevVersion" placeholder="Versione Precedente">
                         <input type="text" id="fuoriNextVersion" placeholder="Versione Successiva">
@@ -40,7 +40,8 @@
         <div class="info" id="infoBox">
             <h1 style="font-size: 50px;"><img src="assets/_info.png" alt="" draggable="false" height="35px" width="35px"> Informazioni:</h1>
             <div class="content" style="margin-top: -35px;">
-                <h2 id="version">Versione: 1.0.0</h2>
+                <h2 id="version">Versione: 1.x.x</h2>
+                <p style="margin-top: -20px;" id="latestversion">Ultima versione disponibile: </p>
                 <h2 id="build">Build: 01052025</h2>
                 <hr>
                 <h2 id="taskCreated">Task creati (in questa sessione): </h2>
@@ -49,9 +50,9 @@
                 <!--<br> <br>
                 <button onclick="todoManager.resetAllTasks();" class="btn"><img src="assets/_undo.png" alt="" draggable="false" width="25px" height="25px">  Resetta tutti i task.</button>-->
                 <br> <br>
-                <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="30px" width="30px"> Chiudi</button>
+                <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="25px" width="25px"> Esci dall'app</button>
                 <br> <br>
-                <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="30px" width="30px"> Esci dall'app</button>
+                <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="30px" width="30px"> Chiudi</button>
             </div>
         </div>
     </body>

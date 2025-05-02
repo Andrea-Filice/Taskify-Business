@@ -1,19 +1,24 @@
-const { ipcRenderer } = require('electron');
+const { ipcRenderer, app, ipcMain } = require('electron');
 
-//VARIABLEs
+//VARIABLES
+const buildNumber = '02052025';
 let taskCreated = 0;
 let taskCompleted = 0;
 
 function OnLoad(){
   document.getElementById("app").style.animation = "FadeIn 1s forwards";
+  fetchVersion();
 }
 
 window.todoManager = new class TodoManager {
   constructor() {
-    this.todos = ipcRenderer.sendSync('load-todos') || {
-      softwareComponents: [],
-      fuoriManutenzione: []
+    const loaded = ipcRenderer.sendSync('load-todos') || {};
+    this.todos = {
+      softwareComponents: loaded.softwareComponents || [],
+      fuoriManutenzione: loaded.fuoriManutenzione || [],
     };
+    taskCreated = loaded.taskCreated || 0;
+    taskCompleted = loaded.taskCompleted || 0;
     window.addEventListener('beforeunload', () => {
       ipcRenderer.send('save-todos', this.todos);
     });
@@ -46,17 +51,19 @@ window.todoManager = new class TodoManager {
     if (!text || !prevVersion || !nextVersion) return;
 
     this.todos[category].push({
-        text,
-        prevVersion,
-        nextVersion,
-        date: new Date(),
-        completed: false
+      text,
+      prevVersion,
+      nextVersion,
+      date: new Date(),
+      completed: false
     });
 
     input.value = '';
     prevVersionInput.value = '';
     nextVersionInput.value = '';
     taskCreated++;
+    console.log('Dati inviati al processo principale:', { ...this.todos, taskCreated, taskCompleted }); // Log per il debug
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted });
     this.updateUI();
   }
 
@@ -67,14 +74,15 @@ window.todoManager = new class TodoManager {
   removeTodo(category, index) {
     taskCompleted++;
     this.todos[category].splice(index, 1);
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted }); 
     this.updateUI();
   }
 
   updateUI() {
     const taskCreatedEl = document.getElementById('taskCreated');
     const taskCompletedEl = document.getElementById('taskCompleted');
-    taskCreatedEl.innerText = `Task Creati (in questa sessione): ${taskCreated}`;
-    taskCompletedEl.innerText = `Task Completati (in questa sessione): ${taskCompleted}`;
+    taskCreatedEl.innerText = `Task Creati: ${taskCreated}`;
+    taskCompletedEl.innerText = `Task Completati: ${taskCompleted}`;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
   }
@@ -100,19 +108,20 @@ window.todoManager = new class TodoManager {
     });
   }
 
-  resetAllTasks() {
-    const confirmation = confirm("Sei sicuro di voler eliminare tutti i task resettandoli?");
+  /*resetAllTasks() {
+    const confirmation = dialog.showMessageBox("Sei sicuro di voler eliminare tutti i task resettandoli?");
     if (confirmation) {
-        this.todos = {
-            softwareComponents: [],
-            fuoriManutenzione: []
-        };
-        taskCreated = 0;
-        taskCompleted = 0;
-        this.updateUI();
-        alert("Task resettati con successo!");
+      this.todos = {
+        softwareComponents: [],
+        fuoriManutenzione: []
+      };
+      taskCreated = 0;
+      taskCompleted = 0;
+      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted });
+      this.updateUI();
+      alert("Task resettati con successo!");
     }
-  }
+  }*/
 }();
 
 function openInfoBox(){
@@ -122,13 +131,33 @@ function openInfoBox(){
 }
 
 function closeInfoBox(){
+  document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
   document.getElementById('infoBox').style.display = 'none';
   document.getElementById("ibtn").style.display = "block";
-  document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
 }
 
-function quitApplication(){
-  if (confirm("Sei sicuro di voler chiudere l'app?")) {
+async function quitApplication() {
+  const userConfirmed = await ipcRenderer.invoke('show-confirm', "Sei sicuro di voler chiudere l'app?");
+  if (userConfirmed) {
     ipcRenderer.send('quit-app');
   }
+}
+
+function fetchVersion(){
+  fetch('version.json')
+  .then(response => response.json())
+          .then(data => {
+            const version = data.Version;
+            document.getElementById('version').innerHTML = "Versione: " + version;
+          });
+  fetchVersionBuild();
+}
+
+function fetchVersionBuild(){
+  fetch('version.json')
+  .then(response => response.json())
+          .then(data => {
+            const BuildNumber = data.BuildNumber;
+            document.getElementById('build').innerHTML = "Build: " + BuildNumber;
+          });
 }

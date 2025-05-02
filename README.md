@@ -29,11 +29,11 @@
 - **Electron** for cross-platform desktop application
 - **Node.js** backend for file storage and IPC communication
 - **HTML/CSS/JavaScript** for responsive and accessible UI
-- **SQLite** (or JSON files) for lightweight local data persistence
+- **JSON File** for lightweight local data persistence
 
 ## Installation
 
-Follow the steps below to set up the project locally.
+Follow the steps below to set up the application locally.
 
 1. **Download the Setup from Releases page**  
    ```bash
