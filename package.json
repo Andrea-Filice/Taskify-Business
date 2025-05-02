@@ -12,15 +12,19 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "build": {
-    "appId": "com.playepik.taskify",
-    "productName": "Taskify",
-    "directories": {
-      "output": "dist"
-    },
-    "win": {
-      "target": "nsis",
-      "icon": "src/assets/icon.ico"
-    }
+  "appId": "com.playepik.taskify",
+  "productName": "Taskify",
+  "win": {
+    "icon": "src/assets/icon.ico",
+    "target": "nsis"
+  },
+  "nsis": {
+    "oneClick": false,
+    "installerIcon": "src/assets/icon_installer.ico",   
+    "uninstallerIcon": "src/assets/icon_installer.ico",
+    "uninstallDisplayName": "Taskify",
+    "allowToChangeInstallationDirectory": true
+  }
   },
   "devDependencies": {
     "electron": "^36.0.1",
