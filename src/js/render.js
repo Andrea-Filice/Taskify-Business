@@ -1,9 +1,9 @@
 const { ipcRenderer, app, ipcMain } = require('electron');
 
 //VARIABLES
-const buildNumber = '02052025';
 let taskCreated = 0;
 let taskCompleted = 0;
+let autoClose = false;
 
 function OnLoad(){
   document.getElementById("app").style.animation = "FadeIn 1s forwards";
@@ -12,16 +12,15 @@ function OnLoad(){
 
 window.todoManager = new class TodoManager {
   constructor() {
+    const categoryID = document.getElementById('categoryClean');
     const loaded = ipcRenderer.sendSync('load-todos') || {};
     this.todos = {
       softwareComponents: loaded.softwareComponents || [],
-      fuoriManutenzione: loaded.fuoriManutenzione || [],
+      fuoriManutenzione: loaded.fuoriManutenzione || []
     };
     taskCreated = loaded.taskCreated || 0;
     taskCompleted = loaded.taskCompleted || 0;
-    window.addEventListener('beforeunload', () => {
-      ipcRenderer.send('save-todos', this.todos);
-    });
+    autoClose = loaded.autoClose || false;
 
     document.getElementById('softwareAddBtn')
             .addEventListener('click', () => this.addTodoHandler('softwareComponents'));
@@ -31,6 +30,14 @@ window.todoManager = new class TodoManager {
             .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
     document.getElementById('fuoriInput')
             .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
+    document.getElementById('resetBtn')
+            .addEventListener('click', () => this.resetAllTasks());
+    document.getElementById('restartBtn')
+            .addEventListener('click', () => this.restartApplication());
+    document.getElementById('cleanSectionBtn')
+            .addEventListener('click', () => this.markAsCompleted(categoryID.value));
+    document.getElementById('checkbox')
+            .addEventListener('click', () => this.checkBox());
 
     this.updateUI();
   }
@@ -62,8 +69,7 @@ window.todoManager = new class TodoManager {
     prevVersionInput.value = '';
     nextVersionInput.value = '';
     taskCreated++;
-    console.log('Dati inviati al processo principale:', { ...this.todos, taskCreated, taskCompleted }); // Log per il debug
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose });
     this.updateUI();
   }
 
@@ -74,15 +80,17 @@ window.todoManager = new class TodoManager {
   removeTodo(category, index) {
     taskCompleted++;
     this.todos[category].splice(index, 1);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted }); 
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose }); 
     this.updateUI();
   }
 
   updateUI() {
     const taskCreatedEl = document.getElementById('taskCreated');
     const taskCompletedEl = document.getElementById('taskCompleted');
+    const autoCloseCheckbox = document.getElementById('checkbox');
     taskCreatedEl.innerText = `Task Creati: ${taskCreated}`;
     taskCompletedEl.innerText = `Task Completati: ${taskCompleted}`;
+    autoCloseCheckbox.checked = autoClose;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
   }
@@ -108,25 +116,80 @@ window.todoManager = new class TodoManager {
     });
   }
 
-  /*resetAllTasks() {
-    const confirmation = dialog.showMessageBox("Sei sicuro di voler eliminare tutti i task resettandoli?");
-    if (confirmation) {
-      this.todos = {
-        softwareComponents: [],
-        fuoriManutenzione: []
-      };
-      taskCreated = 0;
-      taskCompleted = 0;
-      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted });
-      this.updateUI();
-      alert("Task resettati con successo!");
+  resetAllTasks() {
+    ipcRenderer.invoke('show-confirm', "Sei sicuro di voler resettare tutti i task?")
+      .then(userResponse => {
+        if (userResponse) {
+          this.todos = {
+            softwareComponents: [],
+            fuoriManutenzione: []
+          };
+          taskCreated = 0;
+          taskCompleted = 0;
+          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose });
+          this.updateUI();
+          ipcRenderer.invoke('show-alert', "Task resettati con successo!")
+        }
+      });
+  }
+
+  restartApplication(){
+    ipcRenderer.invoke('show-confirm', "Sei sicuro di voler riavviare l'applicazione?")
+    .then(userResponse =>{
+      if(userResponse){
+        window.location.href = "boot.html";
+      }
+    })
+  }
+
+  markAsCompleted(categoryKey) {
+    if(categoryKey == ""){
+      ipcRenderer.invoke('show-alert', "La categoria è vuota.");
+      return;
     }
-  }*/
+    if(categoryKey == "Software Components") categoryKey="softwareComponents";
+    if(categoryKey == "Fuori dalla manutenzione") categoryKey="fuoriManutenzione";
+    ipcRenderer.invoke('show-confirm',
+      `Sei sicuro di voler segnare come completata la categoria ${categoryKey}?`
+    ).then(userResponse => {
+      if (!userResponse) return;
+      const list = this.todos[categoryKey];
+      if (!Array.isArray(list)) {
+        ipcRenderer.invoke('show-alert', "Categoria non trovata.");
+        return;
+      }
+      taskCompleted += list.length;
+      this.todos[categoryKey] = [];
+      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose });
+      this.updateUI();
+      ipcRenderer.invoke('show-alert', "Task segnati come completati con successo!");
+    });
+  }
+  
+  checkBox() {
+    autoClose = !autoClose; 
+    if (!autoClose) {
+      window.addEventListener('scroll', this.handleScroll);
+    } else {
+      window.removeEventListener('scroll', this.handleScroll);
+    }
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose });
+  }
+  
+  handleScroll() {
+    if (window.scrollY === 0) {
+      document.getElementById('infoBox').style.display = "none";
+      document.getElementById("ibtn").style.display = "block";
+      document.getElementById('sbtn').style.display = "block";
+    }
+  }
 }();
 
+//OPEN INFO AND SETTINGS
 function openInfoBox(){
   document.getElementById('infoBox').style.display = 'block';
   document.getElementById("ibtn").style.display = "none";
+  document.getElementById('sbtn').style.display = 'none';
   document.getElementById('infoBox').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -134,6 +197,14 @@ function closeInfoBox(){
   document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
   document.getElementById('infoBox').style.display = 'none';
   document.getElementById("ibtn").style.display = "block";
+  document.getElementById('sbtn').style.display = 'block';
+}
+
+function openSettings(){
+  document.getElementById('infoBox').style.display = 'block';
+  document.getElementById('ibtn').style.display = 'none';
+  document.getElementById('sbtn').style.display = 'none';
+  document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
 }
 
 async function quitApplication() {
@@ -150,10 +221,10 @@ function fetchVersion(){
             const version = data.Version;
             document.getElementById('version').innerHTML = "Versione: " + version;
           });
-  fetchVersionBuild();
+  fetchBuildNumber();
 }
 
-function fetchVersionBuild(){
+function fetchBuildNumber(){
   fetch('version.json')
   .then(response => response.json())
           .then(data => {

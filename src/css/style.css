@@ -7,6 +7,10 @@ body {
     overflow-x: hidden;
 }
 
+#app{
+    opacity: 0;
+}
+
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -139,6 +143,20 @@ html {
     right: 20px;
 }
 
+.settingsButton{
+    background-color: transparent;
+    height: 30px;
+    width: 30px;
+    border-color: transparent;
+    position: fixed;
+    bottom: 20px;
+    right: 60px;
+}
+
+.settingsButton:hover{
+    cursor: pointer;
+}
+
 .infoButton:hover{
     cursor: pointer;
 }
@@ -154,4 +172,35 @@ html {
     align-items: center;
     justify-content: center;   
     gap: 10px;
+}
+
+.btn{
+    gap: 10px;
+}
+
+.cleanSection {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+#cleanSectionBtn{
+    align-self: center; 
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background: #009dff;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    font-size: 20px;
+    font-family: 'Supreme', sans-serif;
+}
+
+.cleanSection input {
+    flex: 1;
+}
+
+.cleanSection button {
+    flex-shrink: 0; 
 }

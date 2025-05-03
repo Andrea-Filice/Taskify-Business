@@ -36,23 +36,39 @@
                 <ul id="fuoriList"></ul>
             </div>
             <button onclick="openInfoBox()" class="infoButton" id="ibtn"><img src="assets/_info.png" alt="" draggable="false" height="30px" width="30px"></button>
+            <button onclick="openSettings()" class="settingsButton" id="sbtn"><img src="assets/_settings.png" alt="" draggable="false" height="30px" width="30px"></button>
         </div>
+        <br>
         <div class="info" id="infoBox">
             <h1 style="font-size: 50px;"><img src="assets/_info.png" alt="" draggable="false" height="35px" width="35px"> Informazioni:</h1>
             <div class="content" style="margin-top: -35px;">
                 <h2 id="version">Versione: 1.x.x</h2>
                 <p style="margin-top: -20px;" id="latestversion">Ultima versione disponibile: </p>
-                <h2 id="build">Build: 01052025</h2>
+                <h2 id="build">Build: build_number</h2>
                 <hr>
-                <h2 id="taskCreated">Task creati (in questa sessione): </h2>
-                <h2 id="taskCompleted">Task creati (in questa sessione): </h2>
+                <h2 id="taskCreated">Task creati: </h2>
+                <h2 id="taskCompleted">Task creati: </h2>
                 <hr>
-                <!--<br> <br>
-                <button onclick="todoManager.resetAllTasks();" class="btn"><img src="assets/_undo.png" alt="" draggable="false" width="25px" height="25px">  Resetta tutti i task.</button>-->
-                <br> <br>
-                <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="25px" width="25px"> Esci dall'app</button>
-                <br> <br>
-                <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="30px" width="30px"> Chiudi</button>
+                <h1 style="font-size: 50px;"><img src="assets/_settings.png" alt="" draggable="false" height="35px" width="35px"> Impostazioni:</h1>
+                <div class="settings" id="settings">
+                    <h2>Generali:</h2>
+                    <div class="cleanSection">
+                        <input id="categoryClean" type="text" required placeholder="Inserisci la categoria che vuoi segnare come completata..." style="width: 50%;">
+                        <button id="cleanSectionBtn" class="cleanSectionBtn">Segna come completata</button>
+                    </div>
+                    <br>
+                    <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
+                    <label for="checkbox" style="font-size: 20px;">Attiva la chiusura automatica delle impostazioni.</label>
+                    <br> <br> <br>
+                    <h2>Azioni:</h2>
+                    <button id="resetBtn" class="btn"><img src="assets/_undo.png" alt="" draggable="false" width="25px" height="25px">  Resetta tutti i task.</button>
+                    <br> <br>
+                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" alt="" draggable="false" width="23px" height="23px">  Riavvia l'app.</button>
+                    <br> <br>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="25px" width="25px"> Esci dall'app</button>
+                    <br> <br>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="30px" width="30px"> Chiudi</button>
+                </div>
             </div>
         </div>
     </body>

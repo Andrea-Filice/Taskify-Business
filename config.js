@@ -9,7 +9,8 @@ let todos = {
   softwareComponents: [],
   fuoriManutenzione: [],
   taskCreated: 0,
-  taskCompleted: 0
+  taskCompleted: 0,
+  autoClose: false
 }
 
 function loadTodosFromDisk() {
@@ -19,6 +20,7 @@ function loadTodosFromDisk() {
       todos = JSON.parse(raw);
       todos.taskCreated = todos.taskCreated || 0;
       todos.taskCompleted = todos.taskCompleted || 0;
+      todos.autoClose = todos.autoClose || false;
     }
   } catch (err) {
     console.error('Errore nel caricamento di todos.json:', err);
@@ -26,7 +28,8 @@ function loadTodosFromDisk() {
       softwareComponents: [],
       fuoriManutenzione: [],
       taskCreated: 0,
-      taskCompleted: 0
+      taskCompleted: 0,
+      autoClose: false
     };
   }
 }
@@ -61,6 +64,18 @@ function createWindow() {
     const result = await dialog.showMessageBox({
       type: 'question',
       buttons: ['OK', 'Annulla'],
+      defaultId: 1,
+      cancelId: 0,
+      message: message,
+      title: 'Taskify',
+      noLink: true
+    });
+    return result.response === 0;
+  });
+
+  ipcMain.handle('show-alert', async (event, message) => {
+    const result = await dialog.showMessageBox({
+      type: 'question',
       defaultId: 1,
       cancelId: 0,
       message: message,

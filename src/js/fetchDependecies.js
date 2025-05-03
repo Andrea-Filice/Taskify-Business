@@ -7,5 +7,5 @@ try{
           })
 }
 catch (error) {
-    document.getElementById('latestversion').innerText = "Ultima versione disponibile: err";
+    document.getElementById('latestversion').innerText = "Ultima versione disponibile: errore";
 }
