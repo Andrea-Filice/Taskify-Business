@@ -208,7 +208,7 @@ function openSettings(){
 }
 
 async function quitApplication() {
-  const userConfirmed = await ipcRenderer.invoke('show-confirm', "Sei sicuro di voler chiudere l'app?");
+  const userConfirmed = await ipcRenderer.invoke('show-confirm', "Sei sicuro di voler chiudere l'applicazione?");
   if (userConfirmed) {
     ipcRenderer.send('quit-app');
   }
