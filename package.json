@@ -1,5 +1,5 @@
 {
-  "name": "taskify",
+  "name": "taskify-business",
   "version": "1.1.1",
   "description": "An app for Professionals Companies with better management of Maintenance Applications",
   "license": "MIT",
@@ -12,22 +12,27 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "build": {
-  "appId": "com.playepik.taskify",
-  "productName": "Taskify",
-  "win": {
-    "icon": "src/assets/icon.ico",
-    "target": "nsis"
-  },
-  "nsis": {
-    "oneClick": false,
-    "installerIcon": "src/assets/icon_installer.ico",   
-    "uninstallerIcon": "src/assets/icon_installer.ico",
-    "uninstallDisplayName": "Taskify",
-    "allowToChangeInstallationDirectory": true
-  }
+    "appId": "com.playepik.taskifybusiness",
+    "productName": "Taskify Business",
+    "win": {
+      "icon": "src/assets/icon.ico",
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "installerIcon": "src/assets/icon_installer.ico",
+      "uninstallerIcon": "src/assets/icon_installer.ico",
+      "uninstallDisplayName": "Taskify Business",
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "devDependencies": {
     "electron": "^36.0.1",
     "electron-builder": "^26.0.12"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
+    "dotenv": "^16.5.0",
+    "dotnet": "^1.1.4"
   }
 }

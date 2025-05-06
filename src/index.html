@@ -3,34 +3,42 @@
     <head>
         <!--SETTINGS-->
         <meta charset="UTF-8">
-        <title>Manutenzione - Play Epik, Inc.</title>
+        <title>Manutenzione - {name}</title>
         <link rel="stylesheet" href="css/style.css">
         <link href="https://api.fontshare.com/v2/css?f[]=supreme@1&display=swap" rel="stylesheet">
     </head>
     <body onload="OnLoad()">
         <div class="container" id="app">
             <div class="column">
-                <h1>SOFTWARE COMPONENTS</h1>
+                <h1>SOFTWARES TO UPGRADE</h1>
                 <div class="input-group">
-                    <input type="text" id="softwareInput" placeholder="Inserisci il nome del Task...">
+                    <input type="text" id="softwareInput" placeholder="Insert the Task name: ">
                     <div class="version-inputs">
-                        <input type="text" id="softwarePrevVersion" placeholder="Versione Precedente">
-                        <input type="text" id="softwareNextVersion" placeholder="Versione Successiva">
+                        <input type="text" id="softwarePrevVersion" placeholder="Previous Version">
+                        <input type="text" id="softwareNextVersion" placeholder="Newer Version">
                     </div>
-                    <button id="softwareAddBtn">+ Aggiungi</button>
+                    <div class="nameTaskUser">
+                        <img src="assets/_employee.png" alt="" draggable="false" class="nameTaskUserImg">
+                        <input type="text" id="userTypeIn" placeholder="Insert a name of a employee (optional)...">
+                    </div>
+                    <button id="softwareAddBtn">+ Add to Tasks</button>
                 </div>
                 <hr style="color: grey; opacity: 0.5;">
                 <ul id="softwareList"></ul>
             </div>
             <div class="column">
-                <h1>FUORI DALLA MANUTENZIONE</h1>
+                <h1>OUT OF MAINTENANCE</h1>
                 <div class="input-group">
-                    <input type="text" id="fuoriInput" placeholder="Inserisci il nome del Task...">
+                    <input type="text" id="fuoriInput" placeholder="Insert the Task name: ">
                     <div class="version-inputs">
-                        <input type="text" id="fuoriPrevVersion" placeholder="Versione Precedente">
-                        <input type="text" id="fuoriNextVersion" placeholder="Versione Successiva">
+                        <input type="text" id="fuoriPrevVersion" placeholder="Previous Version">
+                        <input type="text" id="fuoriNextVersion" placeholder="Newer Version">
                     </div>
-                    <button id="fuoriAddBtn">+ Aggiungi</button>
+                    <div class="nameTaskUser">
+                        <img src="assets/_employee.png" alt="" draggable="false" class="nameTaskUserImg">
+                        <input type="text" id="userTypeOut" placeholder="Insert a name of a employee (optional)...">
+                    </div>
+                    <button id="fuoriAddBtn">+ Add to Tasks</button>
                 </div>
                 <hr style="color: grey; opacity: 0.5;">
                 <ul id="fuoriList"></ul>
@@ -40,7 +48,7 @@
         </div>
         <br>
         <div class="info" id="infoBox">
-            <h1 style="font-size: 50px;"><img src="assets/_info.png" alt="" draggable="false" height="35px" width="35px"> Informazioni:</h1>
+            <h1 style="font-size: 50px;"><img src="assets/_info.png" alt="" draggable="false" height="35px" width="35px"> Informations:</h1>
             <div class="content" style="margin-top: -35px;">
                 <h2 id="version">Versione: 1.x.x</h2>
                 <p style="margin-top: -20px;" id="latestversion">Ultima versione disponibile: </p>
@@ -49,25 +57,25 @@
                 <h2 id="taskCreated">Task creati: </h2>
                 <h2 id="taskCompleted">Task creati: </h2>
                 <hr>
-                <h1 style="font-size: 50px;"><img src="assets/_settings.png" alt="" draggable="false" height="35px" width="35px"> Impostazioni:</h1>
+                <h1 style="font-size: 50px;"><img src="assets/_settings.png" alt="" draggable="false" height="35px" width="35px"> Settings:</h1>
                 <div class="settings" id="settings">
-                    <h2>Generali:</h2>
+                    <h2>Generals:</h2>
                     <div class="cleanSection">
-                        <input id="categoryClean" type="text" required placeholder="Inserisci la categoria che vuoi segnare come completata..." style="width: 50%;">
-                        <button id="cleanSectionBtn" class="cleanSectionBtn">Segna come completata</button>
+                        <input id="categoryClean" type="text" required placeholder="Insert the category to mark as 'completed'" style="width: 50%;">
+                        <button id="cleanSectionBtn" class="cleanSectionBtn">Mark as 'Completed'</button>
                     </div>
                     <br>
                     <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
-                    <label for="checkbox" style="font-size: 20px;">Disattiva la chiusura automatica delle impostazioni.</label>
+                    <label for="checkbox" style="font-size: 20px;">Disable Auto-Close settings and informations panel.</label>
                     <br> <br> <br>
-                    <h2>Azioni:</h2>
-                    <button id="resetBtn" class="btn"><img src="assets/_undo.png" alt="" draggable="false" width="25px" height="25px">  Resetta tutti i task.</button>
+                    <h2>Actions:</h2>
+                    <button id="resetBtn" class="btn"><img src="assets/_undo.png" alt="" draggable="false" width="25px" height="25px">  Reset all Tasks.</button>
                     <br> <br>
-                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" alt="" draggable="false" width="23px" height="23px">  Riavvia l'app.</button>
+                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" alt="" draggable="false" width="23px" height="23px">  Restart Application.</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="25px" width="25px"> Esci dall'app</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="25px" width="25px"> Quit Application.</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="30px" width="30px"> Chiudi</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="30px" width="30px"> Close.</button>
                 </div>
             </div>
         </div>

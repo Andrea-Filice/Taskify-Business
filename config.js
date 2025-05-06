@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
 const fs = require('fs')
+const { json } = require('stream/consumers')
 
 let mainWindow = null
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
@@ -10,7 +11,8 @@ let todos = {
   fuoriManutenzione: [],
   taskCreated: 0,
   taskCompleted: 0,
-  autoClose: false
+  autoClose: false,
+  companyName: undefined
 }
 
 function loadTodosFromDisk() {
@@ -21,15 +23,17 @@ function loadTodosFromDisk() {
       todos.taskCreated = todos.taskCreated || 0;
       todos.taskCompleted = todos.taskCompleted || 0;
       todos.autoClose = todos.autoClose || false;
+      todos.companyName = todos.companyName || undefined;
     }
   } catch (err) {
-    console.error('Errore nel caricamento di todos.json:', err);
+    console.error('THROW NEW EXCEPTION: ', err);
     todos = {
       softwareComponents: [],
       fuoriManutenzione: [],
       taskCreated: 0,
       taskCompleted: 0,
-      autoClose: false
+      autoClose: false,
+      companyName: undefined
     };
   }
 }
@@ -67,7 +71,7 @@ function createWindow() {
       defaultId: 1,
       cancelId: 0,
       message: message,
-      title: 'Taskify',
+      title: 'Taskify Business',
       noLink: true
     });
     return result.response === 0;
@@ -79,7 +83,7 @@ function createWindow() {
       defaultId: 1,
       cancelId: 0,
       message: message,
-      title: 'Taskify',
+      title: 'Taskify Business',
       noLink: true
     });
     return result.response === 0;
@@ -114,6 +118,13 @@ ipcMain.on('save-todos', (event, newTodos) => {
     ...todos,
     ...newTodos
   };
+  saveTodosToDisk();
+});
+
+ipcMain.on('save-companyName', (event, companyName) => {
+  todos = {
+    companyName: companyName
+  }
   saveTodosToDisk();
 });
 

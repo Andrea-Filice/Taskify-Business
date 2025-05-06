@@ -1,0 +1,82 @@
+body {
+    background-color: #1a1a1a;
+    font-family: 'Supreme', sans-serif;
+}
+  
+h1{
+    color: white;
+    font-size: 80px;
+    text-align: center;
+    line-height: 1.2;
+}
+
+h3{
+    color: white;
+    font-family: 'Supreme', sans-serif;
+    text-align: center;
+}
+
+.special{
+    -webkit-text-fill-color: transparent; 
+    background-image: linear-gradient(to right,#818cf8,#e0e7ff,#38bdf8,#e879f9,#38bdf8,#e0e7ff,#818cf8);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    animation: gradient 8s linear infinite;
+}
+
+@keyframes gradient {
+    to {
+        background-position: 200% center
+    }
+}
+
+input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #3d3d3d;
+    color: #fff;
+    font-size: 15px;
+    font-family: 'Supreme', sans-serif;
+}
+
+input:focus {
+    outline: none;
+    animation: animationInput 2s ease-in-out infinite;
+}
+
+@keyframes animationInput{
+    0%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+    50%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+    100%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+}
+
+button{
+    align-self: flex-end; 
+    padding: 10px 15px;
+    width: 82%;
+    border: none;
+    border-radius: 5px;
+    background: #009dff;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    font-size: 20px;
+    font-family: 'Supreme', sans-serif;
+    margin-left: 90px;
+    margin-top: 170px;
+}
+
+@keyframes FadeIn{
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+}

@@ -204,3 +204,25 @@ html {
 .cleanSection button {
     flex-shrink: 0; 
 }
+
+.nameTaskUser{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nameTaskUserImg{
+    width: 30px; 
+    height: 30px; 
+}
+
+.nameTaskUser input {
+    flex: 1; 
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background: #3d3d3d;
+    color: #fff;
+    font-size: 15px;
+    font-family: 'Supreme', sans-serif;
+}

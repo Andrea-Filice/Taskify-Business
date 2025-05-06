@@ -4,9 +4,9 @@ const { ipcRenderer, app, ipcMain } = require('electron');
 let taskCreated = 0;
 let taskCompleted = 0;
 let autoClose = false;
+let companyName = undefined;
 
 function OnLoad(){
-  document.getElementById("app").style.animation = "FadeIn 1s forwards";
   fetchVersion();
 }
 
@@ -14,6 +14,7 @@ window.todoManager = new class TodoManager {
   constructor() {
     const categoryID = document.getElementById('categoryClean');
     const loaded = ipcRenderer.sendSync('load-todos') || {};
+
     this.todos = {
       softwareComponents: loaded.softwareComponents || [],
       fuoriManutenzione: loaded.fuoriManutenzione || []
@@ -21,6 +22,13 @@ window.todoManager = new class TodoManager {
     taskCreated = loaded.taskCreated || 0;
     taskCompleted = loaded.taskCompleted || 0;
     autoClose = loaded.autoClose || false;
+    companyName = loaded.companyName || undefined
+    if(companyName === undefined){
+      window.location.href = "createCompany.html";
+    }
+    else{
+      document.getElementById("app").style.animation = "FadeIn 1s forwards";
+    }
 
     document.getElementById('softwareAddBtn')
             .addEventListener('click', () => this.addTodoHandler('softwareComponents'));
@@ -46,30 +54,34 @@ window.todoManager = new class TodoManager {
     const inputId = category === 'softwareComponents' ? 'softwareInput' : 'fuoriInput';
     const prevVersionId = category === 'softwareComponents' ? 'softwarePrevVersion' : 'fuoriPrevVersion';
     const nextVersionId = category === 'softwareComponents' ? 'softwareNextVersion' : 'fuoriNextVersion';
+    const employeeId = category === 'softwareComponents' ? 'userTypeIn': 'userTypeOut';
 
     const input = document.getElementById(inputId);
     const prevVersionInput = document.getElementById(prevVersionId);
     const nextVersionInput = document.getElementById(nextVersionId);
+    const employeeField = document.getElementById(employeeId);
 
     const text = input.value.trim();
     const prevVersion = prevVersionInput.value.trim();
     const nextVersion = nextVersionInput.value.trim();
+    const employeeName = employeeField.value.trim();
 
-    if (!text || !prevVersion || !nextVersion) return;
+    if (!text || !prevVersion || !nextVersion) ipcRenderer.invoke('show-alert', "Error creating the Task, please check your inputs and try again.");
 
     this.todos[category].push({
       text,
       prevVersion,
       nextVersion,
-      date: new Date(),
+      userName: employeeName === undefined ? "You": employeeName,
       completed: false
     });
 
     input.value = '';
     prevVersionInput.value = '';
     nextVersionInput.value = '';
+    employeeField.value = '';
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
     this.updateUI();
   }
 
@@ -80,7 +92,7 @@ window.todoManager = new class TodoManager {
   removeTodo(category, index) {
     taskCompleted++;
     this.todos[category].splice(index, 1);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose }); 
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName }); 
     this.updateUI();
   }
 
@@ -88,9 +100,10 @@ window.todoManager = new class TodoManager {
     const taskCreatedEl = document.getElementById('taskCreated');
     const taskCompletedEl = document.getElementById('taskCompleted');
     const autoCloseCheckbox = document.getElementById('checkbox');
-    taskCreatedEl.innerText = `Task Creati: ${taskCreated}`;
-    taskCompletedEl.innerText = `Task Completati: ${taskCompleted}`;
+    taskCreatedEl.innerText = `Tasks crated: ${taskCreated}`;
+    taskCompletedEl.innerText = `Tasks completed: ${taskCompleted}`;
     autoCloseCheckbox.checked = autoClose;
+    document.title = 'Taskify Business - ' + companyName;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
   }
@@ -101,13 +114,13 @@ window.todoManager = new class TodoManager {
 
     this.todos[category].forEach((todo, idx) => {
         const li = document.createElement('li');
-        const dateStr = new Date(todo.date).toLocaleDateString();
+        const employee = todo.userName;
         li.innerHTML = `
             <span>${todo.text}</span>
             <div>
                 <small>${todo.prevVersion} -> ${todo.nextVersion}</small><br>
-                <small>${dateStr}</small>
-                <button class="delete-btn">Elimina</button>
+                <small>${employee}</small>
+                <button class="delete-btn">Remove</button>
             </div>
         `;
         li.querySelector('.delete-btn')
@@ -117,7 +130,7 @@ window.todoManager = new class TodoManager {
   }
 
   resetAllTasks() {
-    ipcRenderer.invoke('show-confirm', "Sei sicuro di voler resettare tutti i task?")
+    ipcRenderer.invoke('show-confirm', "Are you sure do you want to reset all Tasks?")
       .then(userResponse => {
         if (userResponse) {
           this.todos = {
@@ -126,15 +139,15 @@ window.todoManager = new class TodoManager {
           };
           taskCreated = 0;
           taskCompleted = 0;
-          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose });
+          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
           this.updateUI();
-          ipcRenderer.invoke('show-alert', "Task resettati con successo!")
+          ipcRenderer.invoke('show-alert', "Tasks succesfully reset!")
         }
       });
   }
 
   restartApplication(){
-    ipcRenderer.invoke('show-confirm', "Sei sicuro di voler riavviare l'applicazione?")
+    ipcRenderer.invoke('show-confirm', "Are you sure do you want to restart the App?")
     .then(userResponse =>{
       if(userResponse){
         window.location.href = "boot.html";
@@ -144,25 +157,25 @@ window.todoManager = new class TodoManager {
 
   markAsCompleted(categoryKey) {
     if(categoryKey == ""){
-      ipcRenderer.invoke('show-alert', "La categoria è vuota.");
+      ipcRenderer.invoke('show-alert', "The category field is empty.");
       return;
     }
     if(categoryKey == "Software Components") categoryKey="softwareComponents";
-    if(categoryKey == "Fuori dalla manutenzione") categoryKey="fuoriManutenzione";
+    if(categoryKey == "Out of maintenance") categoryKey="fuoriManutenzione";
     ipcRenderer.invoke('show-confirm',
-      `Sei sicuro di voler segnare come completata la categoria ${categoryKey}?`
+      `Are you sure to mark complete the following category:  ${categoryKey}?`
     ).then(userResponse => {
       if (!userResponse) return;
       const list = this.todos[categoryKey];
       if (!Array.isArray(list)) {
-        ipcRenderer.invoke('show-alert', "Categoria non trovata.");
+        ipcRenderer.invoke('show-alert', "Category not found.");
         return;
       }
       taskCompleted += list.length;
       this.todos[categoryKey] = [];
-      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose });
+      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
       this.updateUI();
-      ipcRenderer.invoke('show-alert', "Task segnati come completati con successo!");
+      ipcRenderer.invoke('show-alert', "Tasks marked as 'Completed'!");
     });
   }
   
@@ -173,7 +186,7 @@ window.todoManager = new class TodoManager {
     } else {
       window.removeEventListener('scroll', this.handleScroll);
     }
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
   }
   
   handleScroll() {
@@ -208,7 +221,7 @@ function openSettings(){
 }
 
 async function quitApplication() {
-  const userConfirmed = await ipcRenderer.invoke('show-confirm', "Sei sicuro di voler chiudere l'applicazione?");
+  const userConfirmed = await ipcRenderer.invoke('show-confirm', "Are you sure do you want quit the App?");
   if (userConfirmed) {
     ipcRenderer.send('quit-app');
   }
@@ -219,7 +232,7 @@ function fetchVersion(){
   .then(response => response.json())
           .then(data => {
             const version = data.Version;
-            document.getElementById('version').innerHTML = "Versione: " + version;
+            document.getElementById('version').innerHTML = "Version: " + version;
           });
   fetchBuildNumber();
 }
