@@ -1,0 +1,32 @@
+name: Build Electron App for Linux
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install && npm install electron
+
+      # Build the Electron app
+      - name: Build Electron app
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npx electron-builder --linux --x64 --publish always

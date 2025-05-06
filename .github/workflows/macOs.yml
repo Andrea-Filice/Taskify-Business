@@ -1,4 +1,4 @@
-name: Build Electron App for Windows
+name: Build Electron App for macOS
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: macos-latest
 
     steps:
       # Checkout the repository
@@ -29,4 +29,4 @@ jobs:
       - name: Build Electron app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-builder --win --x64 --publish always
+        run: npx electron-builder --mac --x64 --publish always
