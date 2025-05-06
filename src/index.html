@@ -3,7 +3,6 @@
     <head>
         <!--SETTINGS-->
         <meta charset="UTF-8">
-        <title>Manutenzione - {name}</title>
         <link rel="stylesheet" href="css/style.css">
         <link href="https://api.fontshare.com/v2/css?f[]=supreme@1&display=swap" rel="stylesheet">
     </head>
@@ -19,7 +18,7 @@
                     </div>
                     <div class="nameTaskUser">
                         <img src="assets/_employee.png" alt="" draggable="false" class="nameTaskUserImg">
-                        <input type="text" id="userTypeIn" placeholder="Insert a name of a employee (optional)...">
+                        <input type="text" id="userTypeIn" placeholder="Enter the name of an employee (optional)...">
                     </div>
                     <button id="softwareAddBtn">+ Add to Tasks</button>
                 </div>
@@ -36,7 +35,7 @@
                     </div>
                     <div class="nameTaskUser">
                         <img src="assets/_employee.png" alt="" draggable="false" class="nameTaskUserImg">
-                        <input type="text" id="userTypeOut" placeholder="Insert a name of a employee (optional)...">
+                        <input type="text" id="userTypeOut" placeholder="Enter the name of an employee (optional)...">
                     </div>
                     <button id="fuoriAddBtn">+ Add to Tasks</button>
                 </div>
@@ -54,28 +53,34 @@
                 <p style="margin-top: -20px;" id="latestversion">Ultima versione disponibile: </p>
                 <h2 id="build">Build: build_number</h2>
                 <hr>
+                <img src="assets/_betaIcon.png" style="height: 50px;">
                 <h2 id="taskCreated">Task creati: </h2>
                 <h2 id="taskCompleted">Task creati: </h2>
                 <hr>
-                <h1 style="font-size: 50px;"><img src="assets/_settings.png" alt="" draggable="false" height="35px" width="35px"> Settings:</h1>
+                <h1 style="font-size: 50px;"><img src="assets/_settings.png" draggable="false" height="35px" width="35px"> Settings:</h1>
                 <div class="settings" id="settings">
                     <h2>Generals:</h2>
                     <div class="cleanSection">
-                        <input id="categoryClean" type="text" required placeholder="Insert the category to mark as 'completed'" style="width: 50%;">
+                        <input id="categoryClean" type="text" required placeholder="Insert the category to mark as 'completed'..." style="width: 50%;">
                         <button id="cleanSectionBtn" class="cleanSectionBtn">Mark as 'Completed'</button>
+                    </div>
+                    <br> 
+                    <div class="cleanSection">
+                        <input id="nameCompany" type="text" required placeholder="Insert the new name of the Company..." style="width: 50%;">
+                        <button id="changeNameBtn" class="cleanSectionBtn">Change the name</button>
                     </div>
                     <br>
                     <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
                     <label for="checkbox" style="font-size: 20px;">Disable Auto-Close settings and informations panel.</label>
                     <br> <br> <br>
                     <h2>Actions:</h2>
-                    <button id="resetBtn" class="btn"><img src="assets/_undo.png" alt="" draggable="false" width="25px" height="25px">  Reset all Tasks.</button>
+                    <button id="resetBtn" class="btn"><img src="assets/_undo.png" alt="" draggable="false" width="25px" height="25px">  Reset all Tasks</button>
                     <br> <br>
-                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" alt="" draggable="false" width="23px" height="23px">  Restart Application.</button>
+                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" alt="" draggable="false" width="23px" height="23px">  Restart Application</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="25px" width="25px"> Quit Application.</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="25px" width="25px"> Quit Application</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="30px" width="30px"> Close.</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="30px" width="30px"> Close</button>
                 </div>
             </div>
         </div>

@@ -184,7 +184,7 @@ html {
     gap: 10px; 
 }
 
-#cleanSectionBtn{
+#cleanSectionBtn, #changeNameBtn{
     align-self: center; 
     padding: 10px 15px;
     border: none;

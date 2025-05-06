@@ -13,6 +13,7 @@ function OnLoad(){
 window.todoManager = new class TodoManager {
   constructor() {
     const categoryID = document.getElementById('categoryClean');
+    const newCompanyName = document.getElementById('nameCompany');
     const loaded = ipcRenderer.sendSync('load-todos') || {};
 
     this.todos = {
@@ -29,6 +30,7 @@ window.todoManager = new class TodoManager {
     else{
       document.getElementById("app").style.animation = "FadeIn 1s forwards";
     }
+    console.log(loaded.autoClose);
 
     document.getElementById('softwareAddBtn')
             .addEventListener('click', () => this.addTodoHandler('softwareComponents'));
@@ -44,6 +46,8 @@ window.todoManager = new class TodoManager {
             .addEventListener('click', () => this.restartApplication());
     document.getElementById('cleanSectionBtn')
             .addEventListener('click', () => this.markAsCompleted(categoryID.value));
+    document.getElementById('changeNameBtn')
+            .addEventListener('click', () => this.changeCompanyName(newCompanyName.value));
     document.getElementById('checkbox')
             .addEventListener('click', () => this.checkBox());
 
@@ -195,6 +199,22 @@ window.todoManager = new class TodoManager {
       document.getElementById("ibtn").style.display = "block";
       document.getElementById('sbtn').style.display = "block";
     }
+  }
+
+  changeCompanyName(newName) {
+    if(newName === "") {
+      ipcRenderer.invoke('show-alert', "The company name field is empty.");
+      return;
+    }
+    ipcRenderer.invoke('show-confirm', `Are you sure to change the company name to: ${newName}?`)
+      .then(userResponse => {
+        if (!userResponse) return;
+        companyName = newName;
+        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
+        document.getElementById('nameCompany').value = '';
+        ipcRenderer.invoke('show-alert', "Company name changed successfully!");
+        this.updateUI();
+      });
   }
 }();
 

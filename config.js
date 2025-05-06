@@ -26,7 +26,7 @@ function loadTodosFromDisk() {
       todos.companyName = todos.companyName || undefined;
     }
   } catch (err) {
-    console.error('THROW NEW EXCEPTION: ', err);
+    console.error('Error: ', err);
     todos = {
       softwareComponents: [],
       fuoriManutenzione: [],
@@ -42,7 +42,7 @@ function saveTodosToDisk() {
   try {
     fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8');
   } catch (err) {
-    console.error('Errore nel salvataggio di todos.json:', err);
+    console.error('Error saving todos.json:', err);
   }
 }
 
