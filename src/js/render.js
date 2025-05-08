@@ -70,7 +70,10 @@ window.todoManager = new class TodoManager {
     const nextVersion = nextVersionInput.value.trim();
     const employeeName = employeeField.value.trim();
 
-    if (!text || !prevVersion || !nextVersion) ipcRenderer.invoke('show-alert', "Error creating the Task, please check your inputs and try again.");
+    if (!text || !prevVersion || !nextVersion){
+      ipcRenderer.invoke('show-alert', "Error creating the Task, please check your inputs and try again.");
+      return;
+    }
 
     this.todos[category].push({
       text,
