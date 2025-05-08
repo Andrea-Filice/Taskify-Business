@@ -13,8 +13,8 @@ By providing a clear, centralized interface, Maintenance Scheduler streamlines p
 - **Version Tracking**  
   Record current and target versions for each component, making upgrades and rollbacks straightforward.
   
-- **User & Role Management (Coming soon)**  
-  Assign tasks to specific team members or teams, with permissions to view, edit, or complete tasks.
+- **AI Assistant (Coming soon)**  
+  AI will assist you during the scheduling process of all maintenance Tasks.
   
 - **Progress Dashboards (In beta)**  
   Visual overviews of completed vs. pending tasks, helping managers spot bottlenecks and resource needs.
