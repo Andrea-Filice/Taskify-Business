@@ -12,7 +12,8 @@ let todos = {
   taskCreated: 0,
   taskCompleted: 0,
   autoClose: false,
-  companyName: undefined
+  companyName: undefined,
+  chartData: {labels: [], created: [], completed: []}
 }
 
 function loadTodosFromDisk() {
@@ -24,6 +25,7 @@ function loadTodosFromDisk() {
       todos.taskCompleted = todos.taskCompleted || 0;
       todos.autoClose = todos.autoClose || false;
       todos.companyName = todos.companyName || undefined;
+      todos.chartData = todos.chartData || { labels: [], created: [], completed: [] }; 
     }
   } catch (err) {
     console.error('Error: ', err);
@@ -35,6 +37,7 @@ function loadTodosFromDisk() {
       autoClose: false,
       companyName: undefined
     };
+    todos.chartData = { labels: [], created: [], completed: [] }; 
   }
 }
 

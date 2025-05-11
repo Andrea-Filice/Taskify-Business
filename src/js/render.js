@@ -1,4 +1,5 @@
 const { ipcRenderer, app, ipcMain } = require('electron');
+const Chart = require('chart.js/auto').Chart;
 
 //VARIABLES
 let taskCreated = 0;
@@ -6,8 +7,31 @@ let taskCompleted = 0;
 let autoClose = false;
 let companyName = undefined;
 
+//CHART DATAS
+const loaded = ipcRenderer.sendSync('load-todos') || {};
+
+let chartData = loaded.chartData || {
+  labels: [],
+  created: [],
+  completed: []
+};
+let tasksChart = null;
+
 function OnLoad(){
+  //FETCH JSON
   fetchVersion();
+  fetchBuildNumber();
+
+  showWarnLogs();
+}
+
+function showWarnLogs(){
+  setTimeout(() =>{
+    console.clear();
+    console.log('%cWARNING!', 'color: red; font-size: 40px; font-weight: bold;');
+    console.log('%cThis part of application is reserved to Play Epik Developers, if you are here by mistake please close this window.', 'color: white; font-size: 16px;');
+    console.log('%cFor more info about it, see https://developer.mozilla.org/en-US/docs/Glossary/Developer_Tools', 'color: lightblue; font-size: 14px;');
+  },100);
 }
 
 window.todoManager = new class TodoManager {
@@ -30,7 +54,6 @@ window.todoManager = new class TodoManager {
     else{
       document.getElementById("app").style.animation = "FadeIn 1s forwards";
     }
-    console.log(loaded.autoClose);
 
     document.getElementById('softwareAddBtn')
             .addEventListener('click', () => this.addTodoHandler('softwareComponents'));
@@ -41,7 +64,7 @@ window.todoManager = new class TodoManager {
     document.getElementById('fuoriInput')
             .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
     document.getElementById('resetBtn')
-            .addEventListener('click', () => this.resetAllTasks());
+            .addEventListener('click', () => this.resetData());
     document.getElementById('restartBtn')
             .addEventListener('click', () => this.restartApplication());
     document.getElementById('cleanSectionBtn')
@@ -68,18 +91,19 @@ window.todoManager = new class TodoManager {
     const text = input.value.trim();
     const prevVersion = prevVersionInput.value.trim();
     const nextVersion = nextVersionInput.value.trim();
-    const employeeName = employeeField.value.trim();
+    let employeeName = employeeField.value.trim();
 
-    if (!text || !prevVersion || !nextVersion){
+    if (!text){
       ipcRenderer.invoke('show-alert', "Error creating the Task, please check your inputs and try again.");
       return;
     }
 
+    if (!employeeName) employeeName = "You";
     this.todos[category].push({
       text,
       prevVersion,
       nextVersion,
-      userName: employeeName === undefined ? "You": employeeName,
+      userName: employeeName,
       completed: false
     });
 
@@ -88,7 +112,7 @@ window.todoManager = new class TodoManager {
     nextVersionInput.value = '';
     employeeField.value = '';
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
     this.updateUI();
   }
 
@@ -99,7 +123,7 @@ window.todoManager = new class TodoManager {
   removeTodo(category, index) {
     taskCompleted++;
     this.todos[category].splice(index, 1);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName }); 
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData }); 
     this.updateUI();
   }
 
@@ -107,12 +131,80 @@ window.todoManager = new class TodoManager {
     const taskCreatedEl = document.getElementById('taskCreated');
     const taskCompletedEl = document.getElementById('taskCompleted');
     const autoCloseCheckbox = document.getElementById('checkbox');
-    taskCreatedEl.innerText = `Tasks crated: ${taskCreated}`;
-    taskCompletedEl.innerText = `Tasks completed: ${taskCompleted}`;
+    taskCreatedEl.innerText = `${taskCreated}`;
+    taskCompletedEl.innerText = `${taskCompleted}`;
     autoCloseCheckbox.checked = autoClose;
+    if (!autoClose) {
+      window.addEventListener('scroll', this.handleScroll);
+    } else {
+      window.removeEventListener('scroll', this.handleScroll);
+    }
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
     document.title = 'Taskify Business - ' + companyName;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
+
+    //UPDATE CHART
+    if (!tasksChart) {
+        const ctx = document.getElementById('tasksChart').getContext('2d');
+        tasksChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [
+                    {
+                        label: 'Task Created',
+                        data: chartData.created,
+                        borderColor: '#009dff',
+                        backgroundColor: 'rgba(0,157,255,0.1)',
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Task Completed',
+                        data: chartData.completed,
+                        borderColor: '#07b907',
+                        backgroundColor: 'rgba(7,185,7,0.1)',
+                        tension: 0.3
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { labels:{
+                      color: '#fff',
+                      font: {
+                        family: 'Excon, Sans Serif',
+                        size: 16
+                      }
+                    } }
+                },
+                scales: {
+                    x: { ticks:{
+                      color: '#fff',
+                      font:{
+                        family: 'Excon, Sans Serif',
+                        size: 12
+                      }
+                    } },
+                    y: { 
+                      ticks: {
+                        color: '#fff',
+                        font:{
+                          family: 'Excon, Sans Serif',
+                          size: 10
+                        },
+                        callback: function(value) {
+                          return Number.isInteger(value) ? value : null;
+                        }
+                      }, 
+                      beginAtZero: true 
+                    }
+                }
+            }
+        });
+    }
+    this.updateChart();
   }
 
   renderList(category, listId) {
@@ -122,12 +214,22 @@ window.todoManager = new class TodoManager {
     this.todos[category].forEach((todo, idx) => {
         const li = document.createElement('li');
         const employee = todo.userName;
+        let versionHtml = '';
+        if (todo.prevVersion || todo.nextVersion) {
+            versionHtml = `
+                <small>
+                    ${todo.prevVersion ? `<p class="versionPrev">${todo.prevVersion}</p>` : ''}
+                    ${todo.prevVersion && todo.nextVersion ? ' > ' : ''}
+                    ${todo.nextVersion ? `<p class="versionNext">${todo.nextVersion}</p>` : ''}
+                </small><br>
+            `;
+        }
         li.innerHTML = `
-            <span>${todo.text}</span>
+            <span><b>${todo.text}</b></span>
             <div>
-                <small>${todo.prevVersion} -> ${todo.nextVersion}</small><br>
-                <small>${employee}</small>
-                <button class="delete-btn">Remove</button>
+                ${versionHtml}
+                <small>Assigned to: <i>${employee}</i></small>
+                <button class="delete-btn"><img src="assets/_delete.png" draggable="false" width="20px" height="20px"> Remove</button>
             </div>
         `;
         li.querySelector('.delete-btn')
@@ -136,8 +238,8 @@ window.todoManager = new class TodoManager {
     });
   }
 
-  resetAllTasks() {
-    ipcRenderer.invoke('show-confirm', "Are you sure do you want to reset all Tasks?")
+  resetData() {
+    ipcRenderer.invoke('show-confirm', "Are you sure do you want to reset all Data saved?")
       .then(userResponse => {
         if (userResponse) {
           this.todos = {
@@ -146,15 +248,18 @@ window.todoManager = new class TodoManager {
           };
           taskCreated = 0;
           taskCompleted = 0;
-          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
+          companyName = "";
+          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
           this.updateUI();
-          ipcRenderer.invoke('show-alert', "Tasks succesfully reset!")
+          const res = ipcRenderer.invoke('show-alert', "Data succesfully reset, app will be restarted soon.")
+          if(res)
+            window.location.href = "boot.html";
         }
       });
   }
 
   restartApplication(){
-    ipcRenderer.invoke('show-confirm', "Are you sure do you want to restart the App?")
+    ipcRenderer.invoke('show-confirm', "Are you sure you want to restart the app?")
     .then(userResponse =>{
       if(userResponse){
         window.location.href = "boot.html";
@@ -180,7 +285,7 @@ window.todoManager = new class TodoManager {
       }
       taskCompleted += list.length;
       this.todos[categoryKey] = [];
-      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
+      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
       this.updateUI();
       ipcRenderer.invoke('show-alert', "Tasks marked as 'Completed'!");
     });
@@ -193,7 +298,7 @@ window.todoManager = new class TodoManager {
     } else {
       window.removeEventListener('scroll', this.handleScroll);
     }
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
   }
   
   handleScroll() {
@@ -205,19 +310,42 @@ window.todoManager = new class TodoManager {
   }
 
   changeCompanyName(newName) {
-    if(newName === "") {
+    if(!newName) {
       ipcRenderer.invoke('show-alert', "The company name field is empty.");
+      return;
+    }
+    if(newName.length < 8){
+      ipcRenderer.invoke('show-alert', "The company name must contain at least 8 characters in order to be validated.");
       return;
     }
     ipcRenderer.invoke('show-confirm', `Are you sure to change the company name to: ${newName}?`)
       .then(userResponse => {
         if (!userResponse) return;
         companyName = newName;
-        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName });
+        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
         document.getElementById('nameCompany').value = '';
         ipcRenderer.invoke('show-alert', "Company name changed successfully!");
         this.updateUI();
       });
+  }
+
+  updateChart() {
+    const now = new Date();
+    const label = now.toLocaleDateString();
+    chartData.labels.push(label);
+    chartData.created.push(taskCreated);
+    chartData.completed.push(taskCompleted);
+    if (chartData.labels.length > 10) {
+        chartData.labels.shift();
+        chartData.created.shift();
+        chartData.completed.shift();
+    }
+    if (tasksChart) {
+        tasksChart.data.labels = chartData.labels;
+        tasksChart.data.datasets[0].data = chartData.created;
+        tasksChart.data.datasets[1].data = chartData.completed;
+        tasksChart.update();
+    }
   }
 }();
 
@@ -244,7 +372,7 @@ function openSettings(){
 }
 
 async function quitApplication() {
-  const userConfirmed = await ipcRenderer.invoke('show-confirm', "Are you sure do you want quit the App?");
+  const userConfirmed = await ipcRenderer.invoke('show-confirm', "Are you sure you want to close the app?");
   if (userConfirmed) {
     ipcRenderer.send('quit-app');
   }
@@ -257,7 +385,6 @@ function fetchVersion(){
             const version = data.Version;
             document.getElementById('version').innerHTML = "Version: " + version;
           });
-  fetchBuildNumber();
 }
 
 function fetchBuildNumber(){

@@ -5,11 +5,12 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/style.css">
         <link href="https://api.fontshare.com/v2/css?f[]=supreme@1&display=swap" rel="stylesheet">
+        <link href="https://api.fontshare.com/v2/css?f[]=excon@1&display=swap" rel="stylesheet">
     </head>
     <body onload="OnLoad()">
         <div class="container" id="app">
             <div class="column">
-                <h1>SOFTWARES TO UPGRADE</h1>
+                <h1 style="font-family: 'Excon', sans-serif;">SOFTWARES TO UPGRADE</h1>
                 <div class="input-group">
                     <input type="text" id="softwareInput" placeholder="Insert the Task name: ">
                     <div class="version-inputs">
@@ -26,7 +27,7 @@
                 <ul id="softwareList"></ul>
             </div>
             <div class="column">
-                <h1>OUT OF MAINTENANCE</h1>
+                <h1 style="font-family: 'Excon', sans-serif;">OUT OF MAINTENANCE</h1>
                 <div class="input-group">
                     <input type="text" id="fuoriInput" placeholder="Insert the Task name: ">
                     <div class="version-inputs">
@@ -47,19 +48,20 @@
         </div>
         <br>
         <div class="info" id="infoBox">
-            <h1 style="font-size: 50px;"><img src="assets/_info.png" alt="" draggable="false" height="35px" width="35px"> Informations:</h1>
+            <h1 style="font-size: 50px; font-family: 'Excon', sans-serif;"><img src="assets/_info.png" alt="" draggable="false" height="35px" width="35px"> Informations:</h1>
             <div class="content" style="margin-top: -35px;">
                 <h2 id="version">Versione: 1.x.x</h2>
                 <p style="margin-top: -20px;" id="latestversion">Ultima versione disponibile: </p>
                 <h2 id="build">Build: build_number</h2>
                 <hr>
-                <img src="assets/_betaIcon.png" style="height: 50px;" draggable="false">
-                <h2 id="taskCreated">Task creati: </h2>
-                <h2 id="taskCompleted">Task creati: </h2>
+                <h1 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_chart.png" alt="" draggable="false" width="20px" height="20px"> Charts:</h1>
+                <h2><img src="assets/_createTask.png" alt="" draggable="false" height="20px" width="20px">  Task created: <p style="display: inline;"id="taskCreated"></p></h2>
+                <h2><img src="assets/_completeIcon.png" draggable="false" alt="" height="20px" width="20px">  Task completed: <p style="display: inline;" id="taskCompleted"></p></h2>
+                <canvas id="tasksChart" width="400" height="150" style="background: #232323; border-radius: 10px; margin-bottom: 30px;"></canvas>
                 <hr>
-                <h1 style="font-size: 50px;"><img src="assets/_settings.png" draggable="false" height="35px" width="35px"> Settings:</h1>
-                <div class="settings" id="settings">
-                    <h2>Generals:</h2>
+                <h1 style="font-size: 50px; font-family: 'Excon', sans-serif;"><img src="assets/_settings.png" draggable="false" height="35px" width="35px" id="settings"> Settings:</h1>
+                <div class="settings">
+                    <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_general.png" alt="" draggable="false" height="20px" width="20px"> General:</h2>
                     <div class="cleanSection">
                         <input id="categoryClean" type="text" required placeholder="Insert the category to mark as 'completed'..." style="width: 50%;">
                         <button id="cleanSectionBtn" class="cleanSectionBtn">Mark as 'Completed'</button>
@@ -73,14 +75,14 @@
                     <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
                     <label for="checkbox" style="font-size: 20px;">Disable Auto-Close settings and informations panel.</label>
                     <br> <br> <br>
-                    <h2>Actions:</h2>
-                    <button id="resetBtn" class="btn"><img src="assets/_undo.png" alt="" draggable="false" width="25px" height="25px">  Reset all Tasks</button>
+                    <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_actions.png" alt="" draggable="false" height="20px" width="20px"> Actions:</h2>
+                    <button id="resetBtn" class="btn"><img src="assets/_delete.png" alt="" draggable="false" width="25px" height="25px">  Reset all datas</button>
                     <br> <br>
-                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" alt="" draggable="false" width="23px" height="23px">  Restart Application</button>
+                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" alt="" draggable="false" width="23px" height="23px">  Restart the app</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="25px" width="25px"> Quit Application</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" alt="" draggable="false" height="25px" width="25px"> Quit the app</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="30px" width="30px"> Close</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" alt="" draggable="false" height="15px" width="15px"> Close</button>
                 </div>
             </div>
         </div>

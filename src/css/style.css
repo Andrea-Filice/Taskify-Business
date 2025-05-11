@@ -88,6 +88,10 @@ li {
     color: white;
     padding: 5px 10px;
     border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 input:focus {
@@ -164,7 +168,8 @@ html {
 .closeButton, .btn{
     display: inline-flex;
     align-items: center;
-    justify-content: center;     
+    justify-content: center;
+    gap: 10px;
 }
 
 .quitButton{
@@ -225,4 +230,25 @@ html {
     color: #fff;
     font-size: 15px;
     font-family: 'Supreme', sans-serif;
+}
+
+.versionPrev{
+    display: inline;
+}
+
+.versionNext{
+    color: rgb(7, 185, 7);
+    display: inline;
+}
+
+.warnP{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: 'Supreme', sans-serif;
+}
+
+canvas{
+    font-family: 'Excon', sans-serif;
 }

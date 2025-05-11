@@ -16,7 +16,7 @@ By providing a clear, centralized interface, Maintenance Scheduler streamlines p
 - **AI Assistant (Coming soon)**  
   AI will assist you during the scheduling process of all maintenance Tasks.
   
-- **Progress Dashboards (In beta)**  
+- **Progress Dashboard**  
   Visual overviews of completed vs. pending tasks, helping managers spot bottlenecks and resource needs.
 
 ## Tech Stack

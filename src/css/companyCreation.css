@@ -73,10 +73,32 @@ button{
     font-size: 20px;
     font-family: 'Supreme', sans-serif;
     margin-left: 90px;
-    margin-top: 170px;
+    margin-top: 100px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;   
+    gap: 10px;
 }
 
 @keyframes FadeIn{
     0%{opacity: 0;}
     100%{opacity: 1;}
+}
+
+@keyframes FadeOut{
+    0%{opacity: 1;}
+    100%{opacity: 0;}
+}
+
+#warn{
+    color: white;
+    font-family: 'Supreme', sans-serif;
+    text-align: center;
+    font-size: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;   
+    gap: 5px;
+    width: 100%;
+    margin: 10 auto;
 }
