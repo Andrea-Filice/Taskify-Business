@@ -46,7 +46,7 @@
             <button onclick="openInfoBox()" class="infoButton" id="ibtn"><img src="assets/_info.png" alt="" draggable="false" height="30px" width="30px"></button>
             <button onclick="openSettings()" class="settingsButton" id="sbtn"><img src="assets/_settings.png" alt="" draggable="false" height="30px" width="30px"></button>
         </div>
-        <br>
+        <br> 
         <div class="info" id="infoBox">
             <h1 style="font-size: 50px; font-family: 'Excon', sans-serif;"><img src="assets/_info.png" alt="" draggable="false" height="35px" width="35px"> Informations:</h1>
             <div class="content" style="margin-top: -35px;">
@@ -63,7 +63,10 @@
                 <div class="settings">
                     <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_general.png" alt="" draggable="false" height="20px" width="20px"> General:</h2>
                     <div class="cleanSection">
-                        <input id="categoryClean" type="text" required placeholder="Insert the category to mark as 'completed'..." style="width: 50%;">
+                        <select name="selectCategory" id="categoryClean">
+                            <option value="softwareComponents">Software to upgrade</option>
+                            <option value="fuoriManutenzione">Out of Maintenance</option>
+                        </select>
                         <button id="cleanSectionBtn" class="cleanSectionBtn">Mark as 'Completed'</button>
                     </div>
                     <br> 

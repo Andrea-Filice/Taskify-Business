@@ -268,21 +268,15 @@ window.todoManager = new class TodoManager {
   }
 
   markAsCompleted(categoryKey) {
-    if(categoryKey == ""){
-      ipcRenderer.invoke('show-alert', "The category field is empty.");
+    if (!this.todos[categoryKey]) {
+      ipcRenderer.invoke('show-alert', "Invalid category selected.");
       return;
     }
-    if(categoryKey == "Software Components") categoryKey="softwareComponents";
-    if(categoryKey == "Out of maintenance") categoryKey="fuoriManutenzione";
     ipcRenderer.invoke('show-confirm',
-      `Are you sure to mark complete the following category:  ${categoryKey}?`
+      `Are you sure to mark complete the following category?`
     ).then(userResponse => {
       if (!userResponse) return;
       const list = this.todos[categoryKey];
-      if (!Array.isArray(list)) {
-        ipcRenderer.invoke('show-alert', "Category not found.");
-        return;
-      }
       taskCompleted += list.length;
       this.todos[categoryKey] = [];
       ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
