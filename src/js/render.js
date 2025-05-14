@@ -125,6 +125,7 @@ window.todoManager = new class TodoManager {
   }
 
   removeTodo(category, index) {
+    taskCompleted++;
     this.todos[category].splice(index, 1);
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData }); 
     this.updateUI();
