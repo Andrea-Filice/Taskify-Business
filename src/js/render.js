@@ -63,6 +63,10 @@ window.todoManager = new class TodoManager {
             .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
     document.getElementById('fuoriInput')
             .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
+    document.getElementById('software')
+            .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
+    document.getElementById('out')
+            .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
     document.getElementById('resetBtn')
             .addEventListener('click', () => this.resetData());
     document.getElementById('restartBtn')
@@ -121,7 +125,6 @@ window.todoManager = new class TodoManager {
   }
 
   removeTodo(category, index) {
-    taskCompleted++;
     this.todos[category].splice(index, 1);
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData }); 
     this.updateUI();

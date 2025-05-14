@@ -47,7 +47,7 @@ input {
     font-family: 'Supreme', sans-serif;
 }
 
-#fuoriAddBtn, #softwareAddBtn, .delete-btn, .closeButton, .btn, .quitButton {
+#fuoriAddBtn, #softwareAddBtn, .delete-btn, .closeButton, .btn, .quitButton{
     align-self: center; 
     padding: 10px 15px;
     width: 100%;
