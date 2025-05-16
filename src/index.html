@@ -12,7 +12,7 @@
             <div class="column">
                 <h1 style="font-family: 'Excon', sans-serif;">SOFTWARES TO UPGRADE</h1>
                 <div class="input-group">
-                    <input type="text" id="softwareInput" placeholder="Insert the Task name: ">
+                    <input type="text" id="softwareInput" placeholder="Insert the Task name: " required>
                     <div class="version-inputs" id="software">
                         <input type="text" id="softwarePrevVersion" placeholder="Previous Version">
                         <input type="text" id="softwareNextVersion" placeholder="Newer Version">
@@ -29,7 +29,7 @@
             <div class="column">
                 <h1 style="font-family: 'Excon', sans-serif;">OUT OF MAINTENANCE</h1>
                 <div class="input-group">
-                    <input type="text" id="fuoriInput" placeholder="Insert the Task name: ">
+                    <input type="text" id="fuoriInput" placeholder="Insert the Task name: " required>
                     <div class="version-inputs" id="out">
                         <input type="text" id="fuoriPrevVersion" placeholder="Previous Version">
                         <input type="text" id="fuoriNextVersion" placeholder="Newer Version">
@@ -64,7 +64,7 @@
                     <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_general.png" alt="" draggable="false" height="20px" width="20px"> General:</h2>
                     <div class="cleanSection">
                         <select name="selectCategory" id="categoryClean">
-                            <option value="softwareComponents">Software to upgrade</option>
+                            <option value="softwareComponents">Softwares to upgrade</option>
                             <option value="fuoriManutenzione">Out of Maintenance</option>
                         </select>
                         <button id="cleanSectionBtn" class="cleanSectionBtn">Mark as 'Completed'</button>

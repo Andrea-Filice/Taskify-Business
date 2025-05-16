@@ -11,17 +11,20 @@ let companyName = undefined;
 const loaded = ipcRenderer.sendSync('load-todos') || {};
 
 let chartData = loaded.chartData || {
-  labels: [],
-  created: [],
-  completed: []
+  labels: Array(7).fill('').map((_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (6 - i)); 
+    return date.toLocaleDateString();
+  }),
+  created: Array(7).fill(0),
+  completed: Array(7).fill(0)
 };
+
 let tasksChart = null;
 
 function OnLoad(){
-  //FETCH JSON
   fetchVersion();
   fetchBuildNumber();
-
   showWarnLogs();
 }
 
@@ -74,7 +77,7 @@ window.todoManager = new class TodoManager {
     document.getElementById('cleanSectionBtn')
             .addEventListener('click', () => this.markAsCompleted(categoryID.value));
     document.getElementById('changeNameBtn')
-            .addEventListener('click', () => this.changeCompanyName(newCompanyName.value));
+            .addEventListener('click', () => this.changeCompanyName(newCompanyName.value.trim()));
     document.getElementById('checkbox')
             .addEventListener('click', () => this.checkBox());
 
@@ -82,6 +85,8 @@ window.todoManager = new class TodoManager {
   }
 
   addTodoHandler(category) {
+    updateDailyData();
+    
     const inputId = category === 'softwareComponents' ? 'softwareInput' : 'fuoriInput';
     const prevVersionId = category === 'softwareComponents' ? 'softwarePrevVersion' : 'fuoriPrevVersion';
     const nextVersionId = category === 'softwareComponents' ? 'softwareNextVersion' : 'fuoriNextVersion';
@@ -102,6 +107,17 @@ window.todoManager = new class TodoManager {
       return;
     }
 
+    if(prevVersion && !nextVersion){
+      ipcRenderer.invoke('show-alert', "Check your versions input and try again, you cannot insert only the previous version.")
+      return;
+    }
+    else if(!prevVersion && nextVersion){
+      ipcRenderer.invoke('show-alert', "Check your versions input and try again, you cannot insert only the next version.")
+      return;
+    }
+    
+    chartData.created[chartData.created.length - 1]++;
+
     if (!employeeName) employeeName = "You";
     this.todos[category].push({
       text,
@@ -111,10 +127,8 @@ window.todoManager = new class TodoManager {
       completed: false
     });
 
-    input.value = '';
-    prevVersionInput.value = '';
-    nextVersionInput.value = '';
-    employeeField.value = '';
+    clearInputs();
+
     taskCreated++;
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
     this.updateUI();
@@ -125,9 +139,12 @@ window.todoManager = new class TodoManager {
   }
 
   removeTodo(category, index) {
-    taskCompleted++;
+    updateDailyData(); 
+
     this.todos[category].splice(index, 1);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData }); 
+    chartData.completed[chartData.completed.length - 1]++; 
+    taskCompleted++;
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
     this.updateUI();
   }
 
@@ -150,63 +167,72 @@ window.todoManager = new class TodoManager {
 
     //UPDATE CHART
     if (!tasksChart) {
-        const ctx = document.getElementById('tasksChart').getContext('2d');
-        tasksChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: chartData.labels,
-                datasets: [
-                    {
-                        label: 'Task Created',
-                        data: chartData.created,
-                        borderColor: '#009dff',
-                        backgroundColor: 'rgba(0,157,255,0.1)',
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Task Completed',
-                        data: chartData.completed,
-                        borderColor: '#07b907',
-                        backgroundColor: 'rgba(7,185,7,0.1)',
-                        tension: 0.3
-                    }
-                ]
+      const ctx = document.getElementById('tasksChart').getContext('2d');
+      tasksChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: chartData.labels, // Ultimi 7 giorni
+          datasets: [
+            {
+              label: 'Task Created',
+              data: chartData.created,
+              borderColor: '#009dff',
+              backgroundColor: 'rgba(0,157,255,0.1)',
+              tension: 0.3
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: { labels:{
-                      color: '#fff',
-                      font: {
-                        family: 'Excon, Sans Serif',
-                        size: 16
-                      }
-                    } }
-                },
-                scales: {
-                    x: { ticks:{
-                      color: '#fff',
-                      font:{
-                        family: 'Excon, Sans Serif',
-                        size: 12
-                      }
-                    } },
-                    y: { 
-                      ticks: {
-                        color: '#fff',
-                        font:{
-                          family: 'Excon, Sans Serif',
-                          size: 10
-                        },
-                        callback: function(value) {
-                          return Number.isInteger(value) ? value : null;
-                        }
-                      }, 
-                      beginAtZero: true 
-                    }
-                }
+            {
+              label: 'Task Completed',
+              data: chartData.completed,
+              borderColor: '#07b907',
+              backgroundColor: 'rgba(7,185,7,0.1)',
+              tension: 0.3
             }
-        });
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              labels: {
+                color: '#fff',
+                font: {
+                  family: 'Excon, Sans Serif',
+                  size: 16
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: '#fff',
+                font: {
+                  family: 'Excon, Sans Serif',
+                  size: 12
+                }
+              }
+            },
+            y: {
+              ticks: {
+                color: '#fff',
+                font: {
+                  family: 'Excon, Sans Serif',
+                  size: 10
+                },
+                callback: function(value) {
+                  return Number.isInteger(value) ? value : null;
+                }
+              },
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    } else {
+      tasksChart.data.labels = chartData.labels;
+      tasksChart.data.datasets[0].data = chartData.created;
+      tasksChart.data.datasets[1].data = chartData.completed;
+      tasksChart.update();
     }
     this.updateChart();
   }
@@ -392,4 +418,26 @@ function fetchBuildNumber(){
             const BuildNumber = data.BuildNumber;
             document.getElementById('build').innerHTML = "Build: " + BuildNumber;
           });
+}
+
+function clearInputs(){
+    input.value = '';
+    prevVersionInput.value = '';
+    nextVersionInput.value = '';
+    employeeField.value = '';
+}
+
+function updateDailyData() {
+  const today = new Date().toLocaleDateString();
+
+  if (chartData.labels[chartData.labels.length - 1] !== today) {
+    chartData.labels.shift(); 
+    chartData.labels.push(today); 
+
+    chartData.created.shift();
+    chartData.created.push(0);
+
+    chartData.completed.shift(); 
+    chartData.completed.push(0); 
+  }
 }
