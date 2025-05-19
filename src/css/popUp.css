@@ -1,0 +1,62 @@
+body{
+    margin: 0;
+    padding: 20px;
+    font-family: 'Supreme', sans-serif;
+    background: #1a1a1a;
+    color: #fff;
+    overflow: hidden;
+}
+
+input {
+    padding: 10px 12px;
+    border: none;
+    border-radius: 5px;
+    background: #3d3d3d;
+    color: #fff;
+    font-size: 15px;
+    font-family: 'Supreme', sans-serif;
+    flex: 1; 
+}
+
+input:focus {
+    outline: none;
+    animation: animationInput 2s ease-in-out infinite;
+}
+
+@keyframes animationInput{
+    0%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+    50%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+    100%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+}
+
+button {
+    height: 40px;
+    padding: 0 15px;
+    border: none;
+    border-radius: 5px;
+    background: #009dff;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    font-family: 'Supreme', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.modify-task-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}

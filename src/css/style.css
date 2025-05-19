@@ -47,7 +47,7 @@ input {
     font-family: 'Supreme', sans-serif;
 }
 
-#fuoriAddBtn, #softwareAddBtn, .delete-btn, .closeButton, .btn, .quitButton{
+#fuoriAddBtn, #softwareAddBtn, .delete-btn, .closeButton, .btn, .quitButton, .edit-btn{
     align-self: center; 
     padding: 10px 15px;
     width: 100%;
@@ -93,9 +93,28 @@ li {
     gap: 10px;
 }
 
+
+.edit-btn {
+    font-family: 'Supreme', sans-serif;
+    background: #009dff;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100px;
+}
+
 input:focus {
     outline: none;
     animation: animationInput 2s ease-in-out infinite;
+}
+
+input::after{
+    outline: none;
+    animation: animInputOut 1s ease-in-out forwards;
 }
 
 @keyframes animationInput{
@@ -104,6 +123,17 @@ input:focus {
         box-shadow: 0 0 8px rgba(102, 175, 233, 0);
     }
     50%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+    100%{
+        border-color: #66afe9;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+}
+
+@keyframes animInputOut{
+    0%{
         border-color: #66afe9;
         box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
     }

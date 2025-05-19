@@ -51,13 +51,12 @@ window.todoManager = new class TodoManager {
     taskCompleted = loaded.taskCompleted || 0;
     autoClose = loaded.autoClose || false;
     companyName = loaded.companyName || undefined
-    if(companyName === undefined){
+    
+    if(companyName === undefined)
       window.location.href = "createCompany.html";
-    }
-    else{
+    else
       document.getElementById("app").style.animation = "FadeIn 1s forwards";
-    }
-
+    
     document.getElementById('softwareAddBtn')
             .addEventListener('click', () => this.addTodoHandler('softwareComponents'));
     document.getElementById('fuoriAddBtn')
@@ -86,7 +85,6 @@ window.todoManager = new class TodoManager {
 
   addTodoHandler(category) {
     updateDailyData();
-    
     const inputId = category === 'softwareComponents' ? 'softwareInput' : 'fuoriInput';
     const prevVersionId = category === 'softwareComponents' ? 'softwarePrevVersion' : 'fuoriPrevVersion';
     const nextVersionId = category === 'softwareComponents' ? 'softwareNextVersion' : 'fuoriNextVersion';
@@ -116,8 +114,6 @@ window.todoManager = new class TodoManager {
       return;
     }
     
-    chartData.created[chartData.created.length - 1]++;
-
     if (!employeeName) employeeName = "You";
     this.todos[category].push({
       text,
@@ -127,7 +123,10 @@ window.todoManager = new class TodoManager {
       completed: false
     });
 
-    clearInputs();
+    input.value = '';
+    prevVersionInput.value = '';
+    nextVersionInput.value = '';
+    employeeField.value = '';
 
     taskCreated++;
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
@@ -142,7 +141,6 @@ window.todoManager = new class TodoManager {
     updateDailyData(); 
 
     this.todos[category].splice(index, 1);
-    chartData.completed[chartData.completed.length - 1]++; 
     taskCompleted++;
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
     this.updateUI();
@@ -171,7 +169,7 @@ window.todoManager = new class TodoManager {
       tasksChart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: chartData.labels, // Ultimi 7 giorni
+          labels: chartData.labels, 
           datasets: [
             {
               label: 'Task Created',
@@ -234,7 +232,6 @@ window.todoManager = new class TodoManager {
       tasksChart.data.datasets[1].data = chartData.completed;
       tasksChart.update();
     }
-    this.updateChart();
   }
 
   renderList(category, listId) {
@@ -259,11 +256,20 @@ window.todoManager = new class TodoManager {
             <div>
                 ${versionHtml}
                 <small>Assigned to: <i>${employee}</i></small>
-                <button class="delete-btn"><img src="assets/_delete.png" draggable="false" width="20px" height="20px"> Remove</button>
+                <div style="display: flex; gap: 5px; margin-top: 0px;">
+                    <button class="delete-btn" style="width: 100px;">
+                      <img src="assets/_delete.png" draggable="false" width="20px" height="20px">
+                    </button>
+                    <button class="edit-btn" id="editBtn">
+                      <img src="assets/_edit.png" draggable="false" width="20px" height="20px">
+                    </button>
+                </div>
             </div>
         `;
         li.querySelector('.delete-btn')
           .addEventListener('click', () => this.removeTodo(category, idx));
+        li.querySelector('.edit-btn')
+          .addEventListener('click',() => this.modifyTask(category, idx));
         list.appendChild(li);
     });
   }
@@ -279,11 +285,21 @@ window.todoManager = new class TodoManager {
           taskCreated = 0;
           taskCompleted = 0;
           companyName = "";
+          chartData = {
+            labels: Array(7).fill('').map((_, i) => {
+              const date = new Date();
+              date.setDate(date.getDate() - (6 - i));
+              return date.toLocaleDateString();
+            }),
+            created: Array(7).fill(0),
+            completed: Array(7).fill(0)
+          };
           ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
           this.updateUI();
           const res = ipcRenderer.invoke('show-alert', "Data succesfully reset, app will be restarted soon.")
-          if(res)
+          .then(() => {
             window.location.href = "boot.html";
+          });
         }
       });
   }
@@ -371,7 +387,17 @@ window.todoManager = new class TodoManager {
         tasksChart.update();
     }
   }
+
+  modifyTask(category, index) {
+  const task = this.todos[category][index];
+  if (!task) {
+    ipcRenderer.invoke('show-alert', "Task not found.");
+    return;
+  }
+  ipcRenderer.invoke('show-input-alert', category, index);
+  }
 }();
+
 
 //OPEN INFO AND SETTINGS
 function openInfoBox(){
@@ -420,24 +446,28 @@ function fetchBuildNumber(){
           });
 }
 
-function clearInputs(){
-    input.value = '';
-    prevVersionInput.value = '';
-    nextVersionInput.value = '';
-    employeeField.value = '';
-}
-
 function updateDailyData() {
   const today = new Date().toLocaleDateString();
+  const lastLabel = chartData.labels[chartData.labels.length - 1];
 
-  if (chartData.labels[chartData.labels.length - 1] !== today) {
-    chartData.labels.shift(); 
-    chartData.labels.push(today); 
+  if (lastLabel !== today) {
+    chartData.labels.push(today);
+    chartData.created.push(taskCreated);
+    chartData.completed.push(taskCompleted);
 
-    chartData.created.shift();
-    chartData.created.push(0);
-
-    chartData.completed.shift(); 
-    chartData.completed.push(0); 
+    if (chartData.labels.length > 7) {
+      chartData.labels.shift();
+      chartData.created.shift();
+      chartData.completed.shift();
+    }
+  } else {
+    chartData.created[chartData.created.length - 1] = taskCreated;
+    chartData.completed[chartData.completed.length - 1] = taskCompleted;
   }
 }
+
+ipcRenderer.on('task-modified', (event, category, index, newText) => {
+  window.todoManager.todos[category][index].text = newText
+  ipcRenderer.send('save-todos', { ...window.todoManager.todos, taskCreated, taskCompleted, autoClose, companyName, chartData })
+  window.todoManager.updateUI()
+})
