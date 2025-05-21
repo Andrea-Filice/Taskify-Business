@@ -51,7 +51,7 @@ window.todoManager = new class TodoManager {
     taskCompleted = loaded.taskCompleted || 0;
     autoClose = loaded.autoClose || false;
     companyName = loaded.companyName || undefined
-    
+
     if(companyName === undefined)
       window.location.href = "createCompany.html";
     else
