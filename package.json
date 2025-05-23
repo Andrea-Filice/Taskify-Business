@@ -1,6 +1,6 @@
 {
   "name": "taskify-business",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "An app for Professionals Companies with better management of Maintenance Applications",
   "license": "MIT",
   "author": "Play Epik, Incoporation",
@@ -34,6 +34,7 @@
     "@supabase/supabase-js": "^2.49.4",
     "chart.js": "^4.4.9",
     "dotenv": "^16.5.0",
-    "dotnet": "^1.1.4"
+    "dotnet": "^1.1.4",
+    "openai": "^4.100.0"
   }
 }
