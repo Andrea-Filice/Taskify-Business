@@ -9,10 +9,25 @@
         <link href="https://api.fontshare.com/v2/css?f[]=excon@1&display=swap" rel="stylesheet">
     </head>
     <body>
-        <h2>Modify Task Name</h2>
+        <h2>Modify Task Proprieties:</h2>
         <div class="modify-task-row">
-            <input type="text" id="input" placeholder="Enter new task name">
-            <button onclick="submitInput()"><img src="assets/_edit.png" width="20px" height="20px" style="margin-top: 2px;"></button>
+            <label for="inputName" style="color: white; font-family: 'Supreme', sans-serif;">Task Name: </label>
+            <input type="text" id="inputName" placeholder="Enter new task name">
+        </div>
+        <br>
+        <div class="modify-task-row">
+            <label for="inputPV" style="color: white; font-family: 'Supreme', sans-serif;">Task Previous Version: </label>
+            <input type="text" id="inputPV" placeholder="Enter previous version">
+        </div>
+        <br>
+        <div class="modify-task-row">
+            <label for="inputNV" style="color: white; font-family: 'Supreme', sans-serif;">Task Newer Version: </label>
+            <input type="text" id="inputNV" placeholder="Enter next version">
+        </div>
+        <br> <br>
+        <div class="modify-task-row">
+            <button onclick="submitInput()" style="background-color: #009dff;">Edit Task<img src="assets/_edit.png" width="20px" height="20px" style="margin-top: 2px;"></button>
+            <button onclick="Quit()" style="background-color: red;"><img src="assets/_close.png" width="20px" height="20px" style="margin-top: 2px;"> Cancel</button>
         </div>
     </body>
     <script src="js/popUp.js"></script>

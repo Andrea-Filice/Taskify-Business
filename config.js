@@ -70,7 +70,7 @@ function createWindow() {
   ipcMain.handle('show-confirm', async (event, message) => {
     const result = await dialog.showMessageBox({
       type: 'question',
-      buttons: ['OK', 'Annulla'],
+      buttons: ['OK', 'Cancel'],
       defaultId: 1,
       cancelId: 0,
       message,
@@ -103,11 +103,35 @@ function createWindow() {
     }
   })
 
-  ipcMain.on('input-submitted', (event, updatedText) => {
-    todos[categoryModifyTask][indexModifyTask].text = updatedText.trim()
-    saveTodosToDisk()
-    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, updatedText.trim())
+  ipcMain.on('inputName-submitted', (event, updatedText) => {
+    todos[categoryModifyTask][indexModifyTask].text = updatedText.trim();
+    saveTodosToDisk();
+    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
+        text: todos[categoryModifyTask][indexModifyTask].text,
+        prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
+        nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
+    });
   })
+
+  ipcMain.on('inputPV-submitted', (event, updatedText) => {
+    todos[categoryModifyTask][indexModifyTask].prevVersion = updatedText.trim();
+    saveTodosToDisk();
+    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
+        text: todos[categoryModifyTask][indexModifyTask].text,
+        prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
+        nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
+    });
+});
+
+  ipcMain.on('inputNV-submitted', (event, updatedText) => {
+    todos[categoryModifyTask][indexModifyTask].nextVersion = updatedText.trim();
+    saveTodosToDisk();
+    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
+        text: todos[categoryModifyTask][indexModifyTask].text,
+        prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
+        nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
+    });
+  });
 
   ipcMain.on('load-todos', event => {
     event.returnValue = todos
@@ -160,17 +184,20 @@ app.on('activate', () => {
 
 function createInputPopUp() {
   const inputWindow = new BrowserWindow({
-    width: 400,
-    height: 200,
+    width: 600,
+    height: 450,
+    fullscreenable: false,
     resizable: false,
-    modal: true,
-    parent: mainWindow,
+    show: true,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false
+      contextIsolation: false,
+      webSecurity: false
     },
-    icon: 'src/assets/icon.ico',
+    icon: 'src/assets/icon.ico'
   })
+
+  //inputWindow.webContents.openDevTools(); 
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')
 }

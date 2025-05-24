@@ -43,10 +43,10 @@ button {
     padding: 0 15px;
     border: none;
     border-radius: 5px;
-    background: #009dff;
     color: white;
     cursor: pointer;
     font-size: 18px;
+    width: 50%;
     font-family: 'Supreme', sans-serif;
     display: inline-flex;
     align-items: center;

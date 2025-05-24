@@ -257,10 +257,10 @@ window.todoManager = new class TodoManager {
                 ${versionHtml}
                 <small>Assigned to: <i>${employee}</i></small>
                 <div style="display: flex; gap: 5px; margin-top: 0px;">
-                    <button class="delete-btn" style="width: 100px;">
-                      <img src="assets/_delete.png" draggable="false" width="20px" height="20px">
+                    <button class="delete-btn" style="width: 100px; background-color: white;" title="Mark as Completed">
+                      <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
                     </button>
-                    <button class="edit-btn" id="editBtn">
+                    <button class="edit-btn" id="editBtn" title="Edit Task">
                       <img src="assets/_edit.png" draggable="false" width="20px" height="20px">
                     </button>
                 </div>
@@ -466,8 +466,10 @@ function updateDailyData() {
   }
 }
 
-ipcRenderer.on('task-modified', (event, category, index, newText) => {
-  window.todoManager.todos[category][index].text = newText
-  ipcRenderer.send('save-todos', { ...window.todoManager.todos, taskCreated, taskCompleted, autoClose, companyName, chartData })
-  window.todoManager.updateUI()
-})
+ipcRenderer.on('task-modified', (event, category, index, taskData) => {
+    window.todoManager.todos[category][index].text = taskData.text;
+    window.todoManager.todos[category][index].prevVersion = taskData.prevVersion;
+    window.todoManager.todos[category][index].nextVersion = taskData.nextVersion;
+    ipcRenderer.send('save-todos', { ...window.todoManager.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    window.todoManager.updateUI();
+});

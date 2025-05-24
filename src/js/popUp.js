@@ -5,8 +5,21 @@ ipcRenderer.on('populate-input', (event, taskText) => {
 })
 
 function submitInput() {
-  const input = document.getElementById('input').value.trim()
-  if (!input) return ipcRenderer.invoke('show-alert', 'Task name cannot be empty.')
-  ipcRenderer.send('input-submitted', input)
-  window.close()
+  //NEW TASK NAME
+  const inputName = document.getElementById('inputName').value.trim();
+
+  //PREVIOUS/NEWER VERSION
+  const previousVersion = document.getElementById('inputPV').value.trim();
+  const newerVersion = document.getElementById('inputNV').value.trim();
+
+  //SEND NEW VALUES
+  if(inputName)
+    ipcRenderer.send('inputName-submitted', inputName);
+  if(previousVersion)
+    ipcRenderer.send('inputPV-submitted', previousVersion);
+  if(newerVersion)
+    ipcRenderer.send('inputNV-submitted', newerVersion);
+  window.close();
 }
+
+function Quit() {window.close();}

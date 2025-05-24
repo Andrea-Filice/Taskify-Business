@@ -9,7 +9,7 @@ function createCompany(){
     const input = document.getElementById('inputCompany');
     const value = input.value.trim();
     if (!value) {
-        ipcRenderer.invoke('show-alert', "Check your inputs and try again.");
+        ipcRenderer.invoke('show-alert', "Check your company name and try again.");
         return;
     }
     else if (value.length < 8){

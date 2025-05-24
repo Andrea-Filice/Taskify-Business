@@ -10,7 +10,7 @@
     <body onload="OnLoad()">
         <div class="container" id="app">
             <div class="column">
-                <h1 style="font-family: 'Excon', sans-serif;">THINGS TO UPGRADE</h1>
+                <h1 style="font-family: 'Excon', sans-serif;">MAINTENANCE TASKS</h1>
                 <div class="input-group">
                     <input type="text" id="softwareInput" placeholder="Insert the Task name..." required>
                     <div class="version-inputs" id="software">
@@ -43,12 +43,12 @@
                 <hr style="color: grey; opacity: 0.5;">
                 <ul id="fuoriList"></ul>
             </div>
-            <button onclick="openInfoBox()" class="infoButton" id="ibtn"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
-            <button onclick="openSettings()" class="settingsButton" id="sbtn"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
+            <button onclick="openInfoBox()" class="infoButton" id="ibtn" title="About"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
+            <button onclick="openSettings()" class="settingsButton" id="sbtn" title="Settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
         </div>
         <br> 
         <div class="info" id="infoBox">
-            <h1 style="font-size: 50px; font-family: 'Excon', sans-serif;"><img src="assets/_info.png" draggable="false" height="35px" width="35px"> Informations:</h1>
+            <h1 style="font-size: 50px; font-family: 'Excon', sans-serif;"><img src="assets/_info.png" draggable="false" height="35px" width="35px"> About:</h1>
             <div class="content" style="margin-top: -35px;">
                 <h2 id="version">Version:</h2>
                 <p style="margin-top: -20px;" id="latestversion">Latest version avaible: </p>
@@ -64,10 +64,10 @@
                     <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_general.png" draggable="false" height="20px" width="20px"> General:</h2>
                     <div class="cleanSection">
                         <select name="selectCategory" id="categoryClean">
-                            <option value="softwareComponents">Things to Upgrade</option>
+                            <option value="softwareComponents">Maintenance Tasks</option>
                             <option value="fuoriManutenzione">Out of Maintenance</option>
                         </select>
-                        <button id="cleanSectionBtn" class="cleanSectionBtn">Mark as 'Completed'</button>
+                        <button id="cleanSectionBtn" class="cleanSectionBtn">Mark as Completed</button>
                     </div>
                     <br> 
                     <div class="cleanSection">
@@ -79,13 +79,13 @@
                     <label for="checkbox" style="font-size: 20px;">Disable Auto-Close settings and informations panel.</label>
                     <br> <br> <br>
                     <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_actions.png" draggable="false" height="20px" width="20px"> Actions:</h2>
-                    <button id="resetBtn" class="btn"><img src="assets/_delete.png" draggable="false" width="25px" height="25px">  Reset all datas</button>
+                    <button id="resetBtn" class="btn"><img src="assets/_delete.png" draggable="false" width="25px" height="25px" title="Reset datas">  Reset all datas</button>
                     <br> <br>
-                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" draggable="false" width="23px" height="23px">  Restart the app</button>
+                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" draggable="false" width="23px" height="23px" title="Restart">  Restart the app</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" draggable="false" height="25px" width="25px"> Quit the app</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" draggable="false" height="25px" width="25px" title="Quit"> Quit the app</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" draggable="false" height="15px" width="15px"> Close settings</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" draggable="false" height="15px" width="15px" title="Close"> Close settings</button>
                 </div>
             </div>
         </div>
