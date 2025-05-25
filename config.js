@@ -197,6 +197,7 @@ function createInputPopUp() {
     icon: 'src/assets/icon.ico'
   })
 
+  //DEBUG
   //inputWindow.webContents.openDevTools(); 
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')
