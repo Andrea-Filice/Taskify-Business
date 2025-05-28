@@ -19,6 +19,12 @@ function submitInput() {
     ipcRenderer.send('inputPV-submitted', previousVersion);
   if(newerVersion)
     ipcRenderer.send('inputNV-submitted', newerVersion);
+  
+  window.close();
+}
+
+function DeleteTask(){
+  ipcRenderer.send('deleteTask');
   window.close();
 }
 

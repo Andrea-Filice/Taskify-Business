@@ -1,6 +1,4 @@
 .vscode
 node_modules
 .env
-
-//TEMPORANY
-src/js/ai.js
+.venv

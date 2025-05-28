@@ -43,6 +43,7 @@
                 <hr style="color: grey; opacity: 0.5;">
                 <ul id="fuoriList"></ul>
             </div>
+            <button class="aiButton" id="openSidebarBtn" title="Open AI"><img src="assets/_aiIcon.png" draggable="false"></button>
             <button onclick="openInfoBox()" class="infoButton" id="ibtn" title="About"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
             <button onclick="openSettings()" class="settingsButton" id="sbtn" title="Settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
         </div>
@@ -86,6 +87,17 @@
                     <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" draggable="false" height="25px" width="25px" title="Quit"> Quit the app</button>
                     <br> <br>
                     <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" draggable="false" height="15px" width="15px" title="Close"> Close settings</button>
+                </div>
+            </div>
+        </div>
+        <div id="sidebarAI" class="sidebar-ai">
+            <a href="javascript:void(0)" id="closeSidebarBtn" class="close-sidebar-btn">&times;</a>
+            <div class="sidebar-ai-content">
+                <h2 style="margin-top: -35px; font-family: 'Excon', sans-serif;">AI Assistant <img src="assets/_betaIcon.png" height="40px" width="40px" style="margin-top: 10px;"></h2>
+                <div id="aiChatHistory" class="ai-chat-history"></div>
+                <div class="ai-chat-input-row">
+                    <input id="aiInput" type="text" placeholder="Write a message..." autocomplete="off" style="display: block;" spellcheck="false"/>
+                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif;">Send</button>
                 </div>
             </div>
         </div>

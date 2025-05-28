@@ -1,4 +1,7 @@
 const { ipcRenderer, app, ipcMain } = require('electron');
+const {execFile} = require('child_process');
+const { path } = require('path');
+const { stdout, stderr, eventNames } = require('process');
 const Chart = require('chart.js/auto').Chart;
 
 //VARIABLES
@@ -6,6 +9,7 @@ let taskCreated = 0;
 let taskCompleted = 0;
 let autoClose = false;
 let companyName = undefined;
+let messageSend = false;
 
 //CHART DATAS
 const loaded = ipcRenderer.sendSync('load-todos') || {};
@@ -79,7 +83,37 @@ window.todoManager = new class TodoManager {
             .addEventListener('click', () => this.changeCompanyName(newCompanyName.value.trim()));
     document.getElementById('checkbox')
             .addEventListener('click', () => this.checkBox());
+    document.getElementById('aiSendBtn')
+            .addEventListener('click', e => this.sendAIMessage())
 
+    this.updateUI();
+  }
+
+  sendAIMessage(){
+    const input = document.getElementById('aiInput');
+    const message = input.value.trim();
+
+    if(!input || !message){
+      ipcRenderer.invoke('show-alert', "Check your AI message and try again.")
+      return;
+    }
+
+    appendMsg(message, "you");
+    input.value = '';
+    CallAIFunction(message);
+  }
+
+  addToDo(taskName, previousVer, nextVer, category){
+    this.todos[category].push({
+      text: taskName,
+      prevVersion: previousVer,
+      nextVersion: nextVer,
+      userName: "You",
+      completed: false
+    })
+
+    taskCreated++;
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
     this.updateUI();
   }
 
@@ -346,6 +380,7 @@ window.todoManager = new class TodoManager {
       document.getElementById('infoBox').style.display = "none";
       document.getElementById("ibtn").style.display = "block";
       document.getElementById('sbtn').style.display = "block";
+      document.getElementById('openSidebarBtn').style.display = "block";
     }
   }
 
@@ -389,21 +424,21 @@ window.todoManager = new class TodoManager {
   }
 
   modifyTask(category, index) {
-  const task = this.todos[category][index];
-  if (!task) {
-    ipcRenderer.invoke('show-alert', "Task not found.");
-    return;
-  }
-  ipcRenderer.invoke('show-input-alert', category, index);
+    const task = this.todos[category][index];
+    if (!task) {
+      ipcRenderer.invoke('show-alert', "Task not found.");
+      return;
+    }
+    ipcRenderer.invoke('show-input-alert', category, index);
   }
 }();
-
 
 //OPEN INFO AND SETTINGS
 function openInfoBox(){
   document.getElementById('infoBox').style.display = 'block';
   document.getElementById("ibtn").style.display = "none";
   document.getElementById('sbtn').style.display = 'none';
+  document.getElementById('openSidebarBtn').style.display = "none";
   document.getElementById('infoBox').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -412,12 +447,14 @@ function closeInfoBox(){
   document.getElementById('infoBox').style.display = 'none';
   document.getElementById("ibtn").style.display = "block";
   document.getElementById('sbtn').style.display = 'block';
+  document.getElementById('openSidebarBtn').style.display = "block";
 }
 
 function openSettings(){
   document.getElementById('infoBox').style.display = 'block';
   document.getElementById('ibtn').style.display = 'none';
   document.getElementById('sbtn').style.display = 'none';
+  document.getElementById('openSidebarBtn').style.display = "none";
   document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
 }
 
@@ -466,6 +503,7 @@ function updateDailyData() {
   }
 }
 
+//EDIT TASKS FUNCTIONS
 ipcRenderer.on('task-modified', (event, category, index, taskData) => {
     window.todoManager.todos[category][index].text = taskData.text;
     window.todoManager.todos[category][index].prevVersion = taskData.prevVersion;
@@ -473,3 +511,113 @@ ipcRenderer.on('task-modified', (event, category, index, taskData) => {
     ipcRenderer.send('save-todos', { ...window.todoManager.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
     window.todoManager.updateUI();
 });
+
+ipcRenderer.on('delete-task', (event, category, index) => {
+    window.todoManager.todos[category].splice(index, 1);
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    window.todoManager.updateUI();
+});
+
+//AI ASSISTANT
+function CallAIFunction(input){
+  const scriptPath = 'src/ai/contentAnalizer.py';
+  execFile('python', [scriptPath, input], (error, stdout, stderr) =>{
+    if(error){
+      appendMsg("ERROR: " + error.message, "AI");
+      return;
+    }
+    try{
+      const result = JSON.parse(stdout);
+      if (result.tasks && Array.isArray(result.tasks) && !Object.prototype.hasOwnProperty.call(result, 'modify')) {
+        result.tasks.forEach(task => {
+           appendMsg(`Task Created ${task.name} (${task.prev_version} → ${task.next_version})`, "AI");
+          window.todoManager.addToDo(task.name, task.prev_version, task.next_version, task.category);
+        });
+      } else if (result.name && !Object.prototype.hasOwnProperty.call(result, 'modify')) {
+        appendMsg(`Task Created ${result.name} (${result.prev_version} → ${result.next_version})`, "AI");
+        window.todoManager.addToDo(result.name, result.prev_version, result.next_version, result.category);
+      } else if(Object.prototype.hasOwnProperty.call(result, 'modify')){
+        appendMsg(`Modifying task ${result.name}`, "AI");
+        const todos = window.todoManager.todos[result.category];
+        const index = todos.findIndex(t => t.text === result.name);
+        if(index !== -1){
+          window.todoManager.modifyTask(result.category, index);
+        } else {
+          appendMsg(`Task "${result.name}" not found in category "${result.category}"`, "AI");
+        }
+      }
+      else{
+        appendMsg(result, "AI");
+      }
+    }
+    catch(e){
+      appendMsg("ERROR: " + e, "AI")
+    }
+  });
+}
+
+//SIDEBAR VARIABLES
+const sidebar = document.getElementById('sidebarAI');
+const openSidebarBtn = document.getElementById('openSidebarBtn');
+const closeSidebarBtn = document.getElementById('closeSidebarBtn');
+const aiSendBtn = document.getElementById('aiSendBtn');
+const aiInput = document.getElementById('aiInput');
+const aiChatHistory = document.getElementById('aiChatHistory');
+
+//SIDEBAR ACTIONS
+openSidebarBtn.onclick = () =>{
+  sidebar.classList.add('open');
+  setTimeout(() =>{
+    aiInput.focus();
+  }, 400);
+  if(!messageSend){
+    CallAIFunction("hello");
+    messageSend = true;
+  }
+};
+
+closeSidebarBtn.onclick = () =>{
+  sidebar.classList.remove('open');
+}
+
+aiSendBtn.onclick = () => {
+  const msg = aiInput.value.trim();
+  if(!msg) return;
+
+  appendMsg(msg, "you");
+  
+  if (!sidebar.classList.contains('open')) {
+    sidebar.classList.add('open');
+  }
+
+  CallAIFunction(msg);
+  setTimeout(() => {
+    appendMsg("AI: Elaborating request...", "AI");
+  }, 800);
+}
+
+aiInput.addEventListener('keydown', function(e){
+    if(e.key === 'Enter') aiSendBtn.click();
+});
+
+function appendMsg(text, who = "ai"){
+  const div = document.createElement('div');
+  div.className = 'ai-chat-msg ' + (who.toLowerCase() === "you" ? "user" : "ai");
+  if(who === "AI")
+    div.innerHTML = `
+            <div>
+                <label class="aiText">AI Assistant: </label>
+                <p style="display: inline;"> ${text} </p>
+            </div>
+        `;
+  else{
+    div.innerHTML = `
+        <div>
+            <label class="youText">You: </label>
+            <p style="display: inline;"> ${text} </p>
+        </div>
+    `;
+  }
+  aiChatHistory.appendChild(div);
+  aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
+}

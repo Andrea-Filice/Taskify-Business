@@ -61,7 +61,7 @@ function createWindow() {
       contextIsolation: false,
       webSecurity: false
     },
-    icon: 'src/assets/icon.ico',
+    icon: 'src/assets/icon.ico'
   })
 
   mainWindow.setMenu(null)
@@ -121,7 +121,7 @@ function createWindow() {
         prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
         nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
     });
-});
+  });
 
   ipcMain.on('inputNV-submitted', (event, updatedText) => {
     todos[categoryModifyTask][indexModifyTask].nextVersion = updatedText.trim();
@@ -131,6 +131,10 @@ function createWindow() {
         prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
         nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
     });
+  });
+
+  ipcMain.on('deleteTask', () =>{
+    mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);
   });
 
   ipcMain.on('load-todos', event => {

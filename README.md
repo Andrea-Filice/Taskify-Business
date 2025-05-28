@@ -13,7 +13,7 @@ By providing a clear, centralized interface, Maintenance Scheduler streamlines p
 - **Version Tracking**  
   Record current and target versions for each component, making upgrades and rollbacks straightforward.
   
-- **AI Assistant (Coming soon)**  
+- **AI Assistant (Beta)**  
   AI will assist you during the scheduling process of all maintenance Tasks.
   
 - **Progress Dashboard**  
