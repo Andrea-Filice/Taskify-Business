@@ -1,6 +1,6 @@
 const { ipcRenderer, app, ipcMain } = require('electron');
 const {execFile} = require('child_process');
-const { path } = require('path');
+const path = require('path');
 const { stdout, stderr, eventNames } = require('process');
 const Chart = require('chart.js/auto').Chart;
 
@@ -520,10 +520,10 @@ ipcRenderer.on('delete-task', (event, category, index) => {
 
 //AI ASSISTANT
 function CallAIFunction(input){
-  const scriptPath = 'src/ai/contentAnalizer.py';
+  const scriptPath = path.join(__dirname, '..', 'ai', 'contentAnalizer.py');
   execFile('python', [scriptPath, input], (error, stdout, stderr) =>{
     if(error){
-      appendMsg("ERROR: " + error.message, "AI");
+      appendMsg(`ERROR: ${error.message}, CAUSE: ${error.cause}`, "AI");
       return;
     }
     try{
