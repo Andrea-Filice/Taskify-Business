@@ -520,7 +520,7 @@ ipcRenderer.on('delete-task', (event, category, index) => {
 
 //AI ASSISTANT
 function CallAIFunction(input){
-  const scriptPath = path.join(__dirname, '..', 'ai', 'contentAnalizer.py');
+  const scriptPath = path.join(process.resourcesPath, 'src/ai/contentAnalizer.py');
   execFile('python', [scriptPath, input], (error, stdout, stderr) =>{
     if(error){
       appendMsg(`ERROR: ${error.message}, CAUSE: ${error.cause}`, "AI");

@@ -24,7 +24,10 @@
       "uninstallerIcon": "src/assets/icon_installer.ico",
       "uninstallDisplayName": "Taskify Business",
       "allowToChangeInstallationDirectory": true
-    }
+    },
+    "asarUnpack": [
+      "src/ai"
+    ]
   },
   "files": [
     "src/ai/**/*",
