@@ -520,7 +520,15 @@ ipcRenderer.on('delete-task', (event, category, index) => {
 
 //AI ASSISTANT
 function CallAIFunction(input){
-  const scriptPath = path.join(process.resourcesPath, 'src/ai/contentAnalizer.py');
+  let scriptPath;
+  const unpackedPath = path.join(process.resourcesPath, 'app.asar.unpacked', 'src', 'ai', 'contentAnalizer.py');
+  const packedPath = path.join(process.resourcesPath, 'src', 'ai', 'contentAnalizer.py');
+  if (require('fs').existsSync(unpackedPath)) {
+    scriptPath = unpackedPath;
+  } else {
+    scriptPath = packedPath;
+  }
+
   execFile('python', [scriptPath, input], (error, stdout, stderr) =>{
     if(error){
       appendMsg(`ERROR: ${error.message}, CAUSE: ${error.cause}`, "AI");
@@ -547,7 +555,11 @@ function CallAIFunction(input){
         }
       }
       else{
-        appendMsg(result, "AI");
+        if (typeof result === "object") {
+          appendMsg(JSON.stringify(result, null, 2), "AI");
+        } else {
+          appendMsg(result, "AI");
+        }
       }
     }
     catch(e){
