@@ -26,6 +26,17 @@
       "allowToChangeInstallationDirectory": true
     }
   },
+  "files": [
+    "src/ai/**/*",
+    "src/js/**/*",
+    "src/css/**/*",
+    "src/assets/**/*",
+    "src/*.html",
+    "src/version.json",
+    "config.js",
+    "main.js",
+    "package.json"
+  ],
   "devDependencies": {
     "electron": "^36.0.1",
     "electron-builder": "^26.0.12"
