@@ -31,9 +31,11 @@ def parse_input(text):
                 "category": category
             })
         return {"tasks": tasks}
+    
     modify_match = re.match(
         r"/modify\s+([^\s]+)\s+!category\s+([^\s]+)", text, re.IGNORECASE
     )
+
     if modify_match:
         name = modify_match.group(1)
         category_raw = modify_match.group(2).lower()
@@ -72,7 +74,7 @@ def parse_input(text):
     elif (text == "hello" or text == "HELLO" or text == "Hello"):
         return 'HI! Welcome to AI Assistance of Taskify! write /help for more commands!'
     else:
-        return 'Sorry, I am unable to elaborating your request. if you need help, type /help.'
+        return 'Sorry, I am unable to elaborating your request. if you need more help, type /help.'
 
 def main():
     if len(sys.argv) < 2:
@@ -83,6 +85,6 @@ def main():
     if result:
         print(json.dumps(result))
     else:
-        print(json.dumps({"Sorry, I am unable to elaborating your request. if you need help, type /help."}))
+        print(json.dumps({"Sorry, I am unable to elaborating your request. if you need more help, type /help."}))
 
 main()

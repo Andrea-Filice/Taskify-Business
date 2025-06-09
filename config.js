@@ -3,6 +3,7 @@ const path = require('path')
 const fs = require('fs')
 
 let mainWindow = null
+const DEBUG = true
 let categoryModifyTask, indexModifyTask
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
 
@@ -156,11 +157,11 @@ function createWindow() {
   });
 
   mainWindow.webContents.on('before-input-event', (event, input) => {
-    if (input.key.toLowerCase() === 'r' && input.control) {
+    if (input.key.toLowerCase() === 'r' && input.control && DEBUG) {
       event.preventDefault()
       mainWindow.reload()
     }
-    if (input.key.toLowerCase() === 'i' && input.control && input.shift) {
+    if (input.key.toLowerCase() === 'i' && input.control && input.shift && DEBUG) {
       mainWindow.webContents.openDevTools()
     }
   })

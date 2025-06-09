@@ -29,10 +29,10 @@
             <div class="column">
                 <h1 style="font-family: 'Excon', sans-serif;">OUT OF MAINTENANCE</h1>
                 <div class="input-group">
-                    <input type="text" id="fuoriInput" placeholder="Insert the Task name... " required>
+                    <input type="text" id="fuoriInput" placeholder="Insert the Task name... " required spellcheck="false">
                     <div class="version-inputs" id="out">
-                        <input type="text" id="fuoriPrevVersion" placeholder="Previous Version">
-                        <input type="text" id="fuoriNextVersion" placeholder="Newer Version">
+                        <input type="text" id="fuoriPrevVersion" placeholder="Previous Version" spellcheck="false">
+                        <input type="text" id="fuoriNextVersion" placeholder="Newer Version" spellcheck="false">
                     </div>
                     <div class="nameTaskUser">
                         <img src="assets/_employee.png" draggable="false" class="nameTaskUserImg">
@@ -91,13 +91,13 @@
             </div>
         </div>
         <div id="sidebarAI" class="sidebar-ai">
-            <a href="javascript:void(0)" id="closeSidebarBtn" class="close-sidebar-btn">&times;</a>
+            <a href="javascript:void(0)" id="closeSidebarBtn" class="close-sidebar-btn" title="Close AI">&times;</a>
             <div class="sidebar-ai-content">
                 <h2 style="margin-top: -35px; font-family: 'Excon', sans-serif;">AI Assistant <img src="assets/_betaIcon.png" height="40px" width="40px" style="margin-top: 10px;"></h2>
                 <div id="aiChatHistory" class="ai-chat-history"></div>
                 <div class="ai-chat-input-row">
-                    <input id="aiInput" type="text" placeholder="Write a message..." autocomplete="off" style="display: block;" spellcheck="false"/>
-                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif;">Send</button>
+                    <input id="aiInput" type="text" placeholder="Write a message..." autocomplete="on" style="display: block;" spellcheck="false"/>
+                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif;"><img src="assets/_send.png" height="15px" width="15px"></button>
                 </div>
             </div>
         </div>

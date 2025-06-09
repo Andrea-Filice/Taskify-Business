@@ -3,6 +3,6 @@ function OnLoad(){
         document.getElementById("loading").style.animation = "FadeOut 1s forwards";
         setTimeout(() =>{
             window.location.href = "index.html";
-        }, 1100)
-    }, 1000);
+        }, 900)
+    }, 800);
 }

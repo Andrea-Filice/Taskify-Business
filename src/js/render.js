@@ -118,7 +118,6 @@ window.todoManager = new class TodoManager {
   }
 
   addTodoHandler(category) {
-    updateDailyData();
     const inputId = category === 'softwareComponents' ? 'softwareInput' : 'fuoriInput';
     const prevVersionId = category === 'softwareComponents' ? 'softwarePrevVersion' : 'fuoriPrevVersion';
     const nextVersionId = category === 'softwareComponents' ? 'softwareNextVersion' : 'fuoriNextVersion';
@@ -164,6 +163,7 @@ window.todoManager = new class TodoManager {
 
     taskCreated++;
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    updateDailyData();
     this.updateUI();
   }
 
@@ -172,11 +172,10 @@ window.todoManager = new class TodoManager {
   }
 
   removeTodo(category, index) {
-    updateDailyData(); 
-
     this.todos[category].splice(index, 1);
     taskCompleted++;
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    updateDailyData(); 
     this.updateUI();
   }
 
