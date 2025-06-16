@@ -1,6 +1,6 @@
 # Taskify Business
 
-![alt text](https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/src/assets/git_slide1.png "Main Page")
+![alt text](https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/src/assets/gitImages/git_slide1.png "Main Page")
 
 **Taskify Business** is a powerful desktop application designed to help businesses organize, assign, and track maintenance tasks for their computer softwares. 
 By providing a clear, centralized interface, Maintenance Scheduler streamlines planning, reduces downtime, and ensures each component receives timely updates and checks.
