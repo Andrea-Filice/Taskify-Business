@@ -151,6 +151,16 @@ button::after, option::after{
     animation: animButtonOut 1s ease-in-out forwards;
 }
 
+.quitButton:focus, .closeButton:focus{
+    outline: none;
+    animation: animRedIn 2s ease-in-out infinite;
+}
+
+.quitButton::after, .closeButton::after{
+    outline: none;
+    animation: animRedOut 1s ease-in-out forwards;
+}
+
 @keyframes animInputIn{
     0%{
         border-color: #66afe9;
@@ -174,6 +184,32 @@ button::after, option::after{
     100%{
         border-color: #66afe9;
         box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+}
+
+@keyframes animRedIn{
+    0%{
+        border-color: #ff0000;
+        box-shadow: 0 0 8px rgba(255, 0, 0, 0);
+    }
+    50%{
+        border-color: #ff0000;
+        box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+    }
+    100%{
+        border-color: #ff0000;
+        box-shadow: 0 0 8px rgba(255, 0, 0, 0);
+    }
+}
+
+@keyframes animRedOut{
+    0%{
+        border-color: #ff0000;
+        box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+    }
+    100%{
+        border-color: #ff0000;
+        box-shadow: 0 0 8px rgba(255, 0, 0, 0);
     }
 }
 
