@@ -1,4 +1,4 @@
-const { ipcRenderer, app, ipcMain } = require('electron');
+const { ipcRenderer, app, ipcMain, shell } = require('electron');
 const {execFile} = require('child_process');
 const path = require('path');
 const { stdout, stderr, eventNames } = require('process');
@@ -8,8 +8,10 @@ const Chart = require('chart.js/auto').Chart;
 let taskCreated = 0;
 let taskCompleted = 0;
 let autoClose = false;
+let joinBeta = true;
 let companyName = undefined;
 let messageSend = false;
+const DEBUG = ipcRenderer.sendSync('checkForDebug');
 
 //CHART DATAS
 const loaded = ipcRenderer.sendSync('load-todos') || {};
@@ -41,6 +43,7 @@ function showWarnLogs(){
   },100);
 }
 
+///MARK: TASK MANAGEMENT SECTION
 window.todoManager = new class TodoManager {
   constructor() {
     const categoryID = document.getElementById('categoryClean');
@@ -54,6 +57,7 @@ window.todoManager = new class TodoManager {
     taskCreated = loaded.taskCreated || 0;
     taskCompleted = loaded.taskCompleted || 0;
     autoClose = loaded.autoClose || false;
+    joinBeta = typeof loaded.joinBeta === "boolean" ? loaded.joinBeta : true;
     companyName = loaded.companyName || undefined
 
     if(companyName === undefined)
@@ -83,9 +87,10 @@ window.todoManager = new class TodoManager {
             .addEventListener('click', () => this.changeCompanyName(newCompanyName.value.trim()));
     document.getElementById('checkbox')
             .addEventListener('click', () => this.checkBox());
+    document.getElementById('joinBeta')
+            .addEventListener('click', () => this.joinBetaClicked());
     document.getElementById('aiSendBtn')
             .addEventListener('click', e => this.sendAIMessage())
-
     this.updateUI();
   }
 
@@ -113,7 +118,7 @@ window.todoManager = new class TodoManager {
     })
 
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
     this.updateUI();
   }
 
@@ -162,7 +167,7 @@ window.todoManager = new class TodoManager {
     employeeField.value = '';
 
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
     updateDailyData();
     this.updateUI();
   }
@@ -174,7 +179,7 @@ window.todoManager = new class TodoManager {
   removeTodo(category, index) {
     this.todos[category].splice(index, 1);
     taskCompleted++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
     updateDailyData(); 
     this.updateUI();
   }
@@ -183,15 +188,21 @@ window.todoManager = new class TodoManager {
     const taskCreatedEl = document.getElementById('taskCreated');
     const taskCompletedEl = document.getElementById('taskCompleted');
     const autoCloseCheckbox = document.getElementById('checkbox');
+    const joinBetaCheckBox = document.getElementById('joinBeta');
     taskCreatedEl.innerText = `${taskCreated}`;
     taskCompletedEl.innerText = `${taskCompleted}`;
     autoCloseCheckbox.checked = autoClose;
-    if (!autoClose) {
+    joinBetaCheckBox.checked = joinBeta;
+
+    //AUTO-CLOSE SETTINGS
+    if (!autoClose)
       window.addEventListener('scroll', this.handleScroll);
-    } else {
+    else 
       window.removeEventListener('scroll', this.handleScroll);
-    }
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    //JOIN BETA CHANNEL
+    showBetaOptions(joinBeta);
+
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
     document.title = 'Taskify Business - ' + companyName;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
@@ -327,7 +338,7 @@ window.todoManager = new class TodoManager {
             created: Array(7).fill(0),
             completed: Array(7).fill(0)
           };
-          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
           this.updateUI();
           const res = ipcRenderer.invoke('show-alert', "Data succesfully reset, app will be restarted soon.")
           .then(() => {
@@ -358,7 +369,7 @@ window.todoManager = new class TodoManager {
       const list = this.todos[categoryKey];
       taskCompleted += list.length;
       this.todos[categoryKey] = [];
-      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
       this.updateUI();
       ipcRenderer.invoke('show-alert', "Tasks marked as 'Completed'!");
     });
@@ -366,12 +377,18 @@ window.todoManager = new class TodoManager {
   
   checkBox() {
     autoClose = !autoClose; 
-    if (!autoClose) {
+    if (!autoClose) 
       window.addEventListener('scroll', this.handleScroll);
-    } else {
+    else
       window.removeEventListener('scroll', this.handleScroll);
-    }
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+  }
+
+  joinBetaClicked(){
+    joinBeta = !joinBeta;
+    showBetaOptions(joinBeta);
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+    this.updateUI();
   }
   
   handleScroll() {
@@ -379,7 +396,7 @@ window.todoManager = new class TodoManager {
       document.getElementById('infoBox').style.display = "none";
       document.getElementById("ibtn").style.display = "block";
       document.getElementById('sbtn').style.display = "block";
-      document.getElementById('openSidebarBtn').style.display = "block";
+      showBetaOptions(joinBeta);
     }
   }
 
@@ -396,7 +413,7 @@ window.todoManager = new class TodoManager {
       .then(userResponse => {
         if (!userResponse) return;
         companyName = newName;
-        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
         document.getElementById('nameCompany').value = '';
         ipcRenderer.invoke('show-alert', "Company name changed successfully!");
         this.updateUI();
@@ -424,8 +441,8 @@ window.todoManager = new class TodoManager {
 
   modifyTask(category, index) {
     const task = this.todos[category][index];
-    if (!task) {
-      ipcRenderer.invoke('show-alert', "Task not found.");
+    if (!task){
+      ipcRenderer.invoke('show-alert', "Task not found."); 
       return;
     }
     ipcRenderer.invoke('show-input-alert', category, index);
@@ -459,9 +476,8 @@ function openSettings(){
 
 async function quitApplication() {
   const userConfirmed = await ipcRenderer.invoke('show-confirm', "Are you sure you want to close the app?");
-  if (userConfirmed) {
+  if (userConfirmed)
     ipcRenderer.send('quit-app');
-  }
 }
 
 function fetchVersion(){
@@ -507,63 +523,66 @@ ipcRenderer.on('task-modified', (event, category, index, taskData) => {
     window.todoManager.todos[category][index].text = taskData.text;
     window.todoManager.todos[category][index].prevVersion = taskData.prevVersion;
     window.todoManager.todos[category][index].nextVersion = taskData.nextVersion;
-    ipcRenderer.send('save-todos', { ...window.todoManager.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    ipcRenderer.send('save-todos', { ...window.todoManager.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData });
     window.todoManager.updateUI();
 });
 
 ipcRenderer.on('delete-task', (event, category, index) => {
     window.todoManager.todos[category].splice(index, 1);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
     window.todoManager.updateUI();
 });
 
+///MARK: AI SECTION
 //AI ASSISTANT
 function CallAIFunction(input){
   let scriptPath;
   const unpackedPath = path.join(process.resourcesPath, 'app.asar.unpacked', 'src', 'ai', 'contentAnalizer.py');
   const packedPath = path.join(process.resourcesPath, 'src', 'ai', 'contentAnalizer.py');
-  if (require('fs').existsSync(unpackedPath)) {
-    scriptPath = unpackedPath;
-  } else {
-    scriptPath = packedPath;
+  if(!DEBUG){
+    if (require('fs').existsSync(unpackedPath)) 
+      scriptPath = unpackedPath;
+    else
+      scriptPath = packedPath;
   }
-
+  else{
+    scriptPath = 'src/ai/contentAnalizer.py'
+  }
   execFile('python', [scriptPath, input], (error, stdout, stderr) =>{
     if(error){
-      appendMsg(`ERROR: ${error.message}, CAUSE: ${error.cause}`, "AI");
+      appendMsg(`Error during the load of AI Scripts: ${error.message}`, "AI");
       return;
     }
     try{
       const result = JSON.parse(stdout);
       if (result.tasks && Array.isArray(result.tasks) && !Object.prototype.hasOwnProperty.call(result, 'modify')) {
         result.tasks.forEach(task => {
-           appendMsg(`Task Created ${task.name} (${task.prev_version} → ${task.next_version})`, "AI");
+           appendMsg(`Task Created! ${task.name} (${task.prev_version} → ${task.next_version})`, "AI");
           window.todoManager.addToDo(task.name, task.prev_version, task.next_version, task.category);
         });
       } else if (result.name && !Object.prototype.hasOwnProperty.call(result, 'modify')) {
-        appendMsg(`Task Created ${result.name} (${result.prev_version} → ${result.next_version})`, "AI");
+        appendMsg(`Task Created! ${result.name} (${result.prev_version} → ${result.next_version})`, "AI");
         window.todoManager.addToDo(result.name, result.prev_version, result.next_version, result.category);
       } else if(Object.prototype.hasOwnProperty.call(result, 'modify')){
-        appendMsg(`Modifying task ${result.name}`, "AI");
         const todos = window.todoManager.todos[result.category];
         const index = todos.findIndex(t => t.text === result.name);
         if(index !== -1){
           window.todoManager.modifyTask(result.category, index);
-        } else {
-          appendMsg(`Task "${result.name}" not found in category "${result.category}"`, "AI");
+          appendMsg(`Modifying task: ${result.name}`, "AI");
         }
+        else
+          appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
       }
       else{
-        if (typeof result === "object") {
+        if (typeof result === "object")
           appendMsg(JSON.stringify(result, null, 2), "AI");
-        } else {
+        if(result == "cleared")
+          clearChat();
+        else
           appendMsg(result, "AI");
-        }
       }
     }
-    catch(e){
-      appendMsg("ERROR: " + e, "AI")
-    }
+    catch(e) {appendMsg("An unknown error occured: " + e, "AI");}
   });
 }
 
@@ -581,15 +600,14 @@ openSidebarBtn.onclick = () =>{
   setTimeout(() =>{
     aiInput.focus();
   }, 400);
+
   if(!messageSend){
     CallAIFunction("hello");
     messageSend = true;
   }
 };
 
-closeSidebarBtn.onclick = () =>{
-  sidebar.classList.remove('open');
-}
+closeSidebarBtn.onclick = () =>{sidebar.classList.remove('open');}
 
 aiSendBtn.onclick = () => {
   const msg = aiInput.value.trim();
@@ -597,9 +615,8 @@ aiSendBtn.onclick = () => {
 
   appendMsg(msg, "you");
   
-  if (!sidebar.classList.contains('open')) {
+  if (!sidebar.classList.contains('open')) 
     sidebar.classList.add('open');
-  }
 
   CallAIFunction(msg);
   setTimeout(() => {
@@ -611,9 +628,13 @@ aiInput.addEventListener('keydown', function(e){
     if(e.key === 'Enter') aiSendBtn.click();
 });
 
+aiInput.addEventListener('focus', () => aiInput.classList.add('ai-glow'));
+aiInput.addEventListener('blur', () => aiInput.classList.remove('ai-glow'));
+
 function appendMsg(text, who = "ai"){
   const div = document.createElement('div');
   div.className = 'ai-chat-msg ' + (who.toLowerCase() === "you" ? "user" : "ai");
+
   if(who === "AI")
     div.innerHTML = `
             <div>
@@ -631,4 +652,27 @@ function appendMsg(text, who = "ai"){
   }
   aiChatHistory.appendChild(div);
   aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
+}
+
+function showBetaOptions(value){
+  if(window.scrollY === 0)
+    document.getElementById('openSidebarBtn').style.display = (value === true) ? "block" : "none";
+}
+
+//INFO ABOUT BETA PROGRAM
+function ShowInfoPanel(){ipcRenderer.invoke('show-alert', "If enabled, this option show a new button for AI Assistant in Beta version, if not will be not show anything.")}
+
+//WEB REFERENCES
+document.getElementById('repoGitBtn').addEventListener('click', () =>{
+  shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business");
+});
+
+document.getElementById('licenseBtn').addEventListener('click', () =>{
+  shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE");
+});
+
+function clearChat() {
+    const chatHistory = document.querySelector('.ai-chat-history');
+    if (chatHistory) 
+        chatHistory.innerHTML = '';
 }

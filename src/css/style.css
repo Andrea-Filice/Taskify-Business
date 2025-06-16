@@ -7,9 +7,7 @@ body {
     overflow-x: hidden;
 }
 
-#app{
-    opacity: 0;
-}
+#app{opacity: 0;}
 
 .container {
     display: grid;
@@ -61,9 +59,35 @@ input {
     font-family: 'Supreme', sans-serif;
 }
 
-button:hover {
-    opacity: 0.8;
+#repoGitBtn, #licenseBtn{
+    align-self: center; 
+    padding: 10px 15px;
+    width: 50%;
+    border: none;
+    border-radius: 5px;
+    background: #009dff;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    font-size: 20px;
+    font-family: 'Supreme', sans-serif;
 }
+
+#aiSendBtn{
+    align-self: center; 
+    padding: 10px 15px;
+    width: 20%;
+    border: none;
+    border-radius: 5px;
+    background: #009dff;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    font-size: 20px;
+    font-family: 'Supreme', sans-serif;
+}
+
+button:hover {opacity: 0.8;}
 
 ul {
     list-style: none;
@@ -109,7 +133,7 @@ li {
 
 input:focus {
     outline: none;
-    animation: animationInput 2s ease-in-out infinite;
+    animation: animInputIn 2s ease-in-out infinite;
 }
 
 input::after{
@@ -117,7 +141,17 @@ input::after{
     animation: animInputOut 1s ease-in-out forwards;
 }
 
-@keyframes animationInput{
+button:focus, option:focus, .aiButton{
+    outline: none;
+    animation: animButtonIn 2s ease-in-out infinite;
+}
+
+button::after, option::after{
+    outline: none;
+    animation: animButtonOut 1s ease-in-out forwards;
+}
+
+@keyframes animInputIn{
     0%{
         border-color: #66afe9;
         box-shadow: 0 0 8px rgba(102, 175, 233, 0);
@@ -143,14 +177,38 @@ input::after{
     }
 }
 
+@keyframes animButtonIn{
+    0%{
+        border-color: #ffffff;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+    50%{
+        border-color: #ffffff;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+    100%{
+        border-color: #ffffff;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+}
+
+@keyframes animButtonOut{
+    0%{
+        border-color: #ffffff;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+    }
+    100%{
+        border-color: #ffffff;
+        box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+    }
+}
+
 .version-inputs {
     display: flex;
     gap: 10px;
 }
 
-.version-inputs input {
-    flex: 1;
-}
+.version-inputs input {flex: 1;}
 
 html {
     scrollbar-color: #888 #1a1a1a;
@@ -217,17 +275,7 @@ html {
     cursor: pointer;
 }
 
-.settingsButton:hover{
-    cursor: pointer;
-}
-
-.aiButton:hover{
-    cursor: pointer;
-}
-
-.infoButton:hover{
-    cursor: pointer;
-}
+.settingsButton:hover, .aiButton:hover, .infoButton:hover, .aboutBeta:hover {cursor: pointer;}
 
 .closeButton, .btn{
     display: inline-flex;
@@ -236,16 +284,14 @@ html {
     gap: 10px;
 }
 
-.quitButton{
+.quitButton, #fuoriAddBtn, #softwareAddBtn, #aiSendBtn, #repoGitBtn, #licenseBtn{
     display: inline-flex;
     align-items: center;
     justify-content: center;   
     gap: 10px;
 }
 
-.btn{
-    gap: 10px;
-}
+.btn {gap: 10px;}
 
 .cleanSection {
     display: flex;
@@ -266,13 +312,9 @@ html {
     font-family: 'Supreme', sans-serif;
 }
 
-.cleanSection input {
-    flex: 1;
-}
+.cleanSection input {flex: 1;}
 
-.cleanSection button {
-    flex-shrink: 0; 
-}
+.cleanSection button {flex-shrink: 0; }
 
 .nameTaskUser{
     display: flex;
@@ -296,9 +338,7 @@ html {
     font-family: 'Supreme', sans-serif;
 }
 
-.versionPrev{
-    display: inline;
-}
+.versionPrev{display: inline;}
 
 .versionNext{
     color: rgb(7, 185, 7);
@@ -313,9 +353,7 @@ html {
     font-family: 'Supreme', sans-serif;
 }
 
-canvas{
-    font-family: 'Excon', sans-serif;
-}
+canvas{font-family: 'Excon', sans-serif;}
 
 select{
     width: 80%;
@@ -332,9 +370,7 @@ select:focus{
     animation: animationInput 2s ease-in-out infinite;
 }
 
-option{
-    font-family: 'Supreme', sans-serif;
-}
+option{font-family: 'Supreme', sans-serif;}
 
 /* Sidebar AI Chat */
 .sidebar-ai {
@@ -352,9 +388,7 @@ option{
     flex-direction: column;
 }
 
-.sidebar-ai.open {
-    width: 350px;
-}
+.sidebar-ai.open {width: 350px;}
 
 .close-sidebar-btn {
     position: absolute;
@@ -422,28 +456,35 @@ option{
 }
 
 #aiInput {
-    flex: 1;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    font-size: 15px;
+    position: relative;
+    z-index: 1;
     background: #292929;
     color: #fff;
-}
-
-#aiSendBtn {
-    padding: 10px 18px;
-    background: #009dff;
-    color: white;
     border: none;
     border-radius: 5px;
+    padding: 10px;
     font-size: 15px;
-    cursor: pointer;
-    transition: background 0.2s;
+    font-family: 'Supreme', sans-serif;
+    box-shadow: none;
+    width: 80%;
 }
 
-#aiSendBtn:hover {
-    background: #007acc;
+#aiInput:focus {outline: none;}
+
+#aiInput.ai-glow {
+    border: 2.5px solid transparent;
+    background: 
+        linear-gradient(#292929, #292929) padding-box,
+        linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400) border-box;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    width: 80%;
+    background-size: 400% auto;
+    animation: gradient 15s linear infinite;
+}
+
+@keyframes gradient {
+    to {background-position: 400% center}
 }
 
 .aiText{
@@ -456,10 +497,19 @@ option{
     -moz-text-fill-color: transparent;
 }
 
-.youText{
-    color: white;
+.youText{color: white;}
+
+.suggestion{display: none;}
+
+.references{
+    display: flex;
+    gap: 10px;
 }
 
-.suggestion{
-    display: none;
+.assistantText{
+    -webkit-text-fill-color: transparent; 
+    background-image: linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    animation: gradient 8s linear infinite;
 }

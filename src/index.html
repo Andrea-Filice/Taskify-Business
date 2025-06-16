@@ -12,16 +12,16 @@
             <div class="column">
                 <h1 style="font-family: 'Excon', sans-serif;">MAINTENANCE TASKS</h1>
                 <div class="input-group">
-                    <input type="text" id="softwareInput" placeholder="Insert the Task name..." required>
+                    <input type="text" id="softwareInput" placeholder="Insert the Task name..." required spellcheck="false">
                     <div class="version-inputs" id="software">
-                        <input type="text" id="softwarePrevVersion" placeholder="Previous Version">
-                        <input type="text" id="softwareNextVersion" placeholder="Newer Version">
+                        <input type="text" id="softwarePrevVersion" placeholder="Previous Version" spellcheck="false">
+                        <input type="text" id="softwareNextVersion" placeholder="Newer Version" spellcheck="false">
                     </div>
                     <div class="nameTaskUser">
                         <img src="assets/_employee.png" draggable="false" class="nameTaskUserImg">
-                        <input type="text" id="userTypeIn" placeholder="Enter the name of an employee (optional)...">
+                        <input type="text" id="userTypeIn" placeholder="Enter the name of an employee (optional)..." spellcheck="false">
                     </div>
-                    <button id="softwareAddBtn">+ Add to Tasks</button>
+                    <button id="softwareAddBtn" title="Add to Tasks"><img src="assets/_add.png" width="20px" height="20px" draggable="false"> Add to Tasks</button>
                 </div>
                 <hr style="color: grey; opacity: 0.5;">
                 <ul id="softwareList"></ul>
@@ -36,14 +36,14 @@
                     </div>
                     <div class="nameTaskUser">
                         <img src="assets/_employee.png" draggable="false" class="nameTaskUserImg">
-                        <input type="text" id="userTypeOut" placeholder="Enter the name of an employee (optional)...">
+                        <input type="text" id="userTypeOut" placeholder="Enter the name of an employee (optional)..." spellcheck="false">
                     </div>
-                    <button id="fuoriAddBtn">+ Add to Tasks</button>
+                    <button id="fuoriAddBtn" title="Add to Tasks"><img src="assets/_add.png" width="20px" height="20px" draggable="false"> Add to Tasks</button>
                 </div>
                 <hr style="color: grey; opacity: 0.5;">
                 <ul id="fuoriList"></ul>
             </div>
-            <button class="aiButton" id="openSidebarBtn" title="Open AI"><img src="assets/_aiIcon.png" draggable="false"></button>
+            <button class="aiButton" id="openSidebarBtn" title="Open AI Assistant"><img src="assets/_aiIcon.png" draggable="false"></button>
             <button onclick="openInfoBox()" class="infoButton" id="ibtn" title="About"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
             <button onclick="openSettings()" class="settingsButton" id="sbtn" title="Settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
         </div>
@@ -55,7 +55,7 @@
                 <p style="margin-top: -20px;" id="latestversion">Latest version avaible: </p>
                 <h2 id="build">Build:</h2>
                 <hr>
-                <h1 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_chart.png" draggable="false" width="20px" height="20px"> Charts:</h1>
+                <h1 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_chart.png" draggable="false" width="20px" height="20px"> Chart:</h1>
                 <h2><img src="assets/_createTask.png" draggable="false" height="20px" width="20px">  Task created: <p style="display: inline;"id="taskCreated"></p></h2>
                 <h2><img src="assets/_completeIcon.png" draggable="false" height="20px" width="20px">  Task completed: <p style="display: inline;" id="taskCompleted"></p></h2>
                 <canvas id="tasksChart" width="400" height="150" style="background: #232323; border-radius: 10px; margin-bottom: 30px;"></canvas>
@@ -65,43 +65,50 @@
                     <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_general.png" draggable="false" height="20px" width="20px"> General:</h2>
                     <div class="cleanSection">
                         <select name="selectCategory" id="categoryClean">
-                            <option value="softwareComponents">Maintenance Tasks</option>
-                            <option value="fuoriManutenzione">Out of Maintenance</option>
+                            <option value="softwareComponents"> Maintenance Tasks</option>
+                            <option value="fuoriManutenzione"> Out of Maintenance</option>
                         </select>
                         <button id="cleanSectionBtn" class="cleanSectionBtn">Mark as Completed</button>
                     </div>
-                    <br> 
+                    <br>
                     <div class="cleanSection">
                         <input id="nameCompany" type="text" required placeholder="Insert the new name of the Company..." style="width: 50%;" spellcheck="false">
                         <button id="changeNameBtn" class="cleanSectionBtn">Change the name</button>
                     </div>
                     <br>
                     <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
-                    <label for="checkbox" style="font-size: 20px;">Disable Auto-Close settings and informations panel.</label>
+                    <label for="checkbox" style="font-size: 20px;">Disable Auto-Close settings and informations panel.</label><br><br>
+                    <input type="checkbox" id="joinBeta" style="transform: scale(1.7);">
+                    <label for="joinBeta" style="font-size: 20px;">Join Beta Program for AI Assistant.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel()" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option show a new button for AI Assistant in Beta version, if not will be not show anything.">
                     <br> <br> <br>
+                    <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_references.png" draggable="false" height="20px" width="20px"> Web References:</h2>
+                    <div class="references">
+                        <button id="repoGitBtn" title="Open Repository"><img src="assets/_github.png" width="20px" height="20px" draggable="false"> Open GitHub Repository.</button>
+                        <button id="licenseBtn" title="Open License"><img src="assets/_license.png" width="20px" height="20px" draggable="false"> Open License.</button>
+                    </div>
+                    <br>
                     <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_actions.png" draggable="false" height="20px" width="20px"> Actions:</h2>
-                    <button id="resetBtn" class="btn"><img src="assets/_delete.png" draggable="false" width="25px" height="25px" title="Reset datas">  Reset all datas</button>
+                    <button id="resetBtn" class="btn" title="Reset datas"><img src="assets/_delete.png" draggable="false" width="25px" height="25px">  Reset all datas</button>
                     <br> <br>
-                    <button id="restartBtn" class="btn"><img src="assets/_reload.png" draggable="false" width="23px" height="23px" title="Restart">  Restart the app</button>
+                    <button id="restartBtn" class="btn" title="Restart"><img src="assets/_reload.png" draggable="false" width="23px" height="23px">  Restart the app</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton"><img src="assets/_quit.png" draggable="false" height="25px" width="25px" title="Quit"> Quit the app</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton" title="Quit"><img src="assets/_quit.png" draggable="false" height="25px" width="25px"> Quit the app</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton"><img src="assets/_close.png" draggable="false" height="15px" width="15px" title="Close"> Close settings</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton" title="Close"><img src="assets/_close.png" draggable="false" height="15px" width="15px"> Close Section</button>
                 </div>
             </div>
         </div>
         <div id="sidebarAI" class="sidebar-ai">
             <a href="javascript:void(0)" id="closeSidebarBtn" class="close-sidebar-btn" title="Close AI">&times;</a>
             <div class="sidebar-ai-content">
-                <h2 style="margin-top: -35px; font-family: 'Excon', sans-serif;">AI Assistant <img src="assets/_betaIcon.png" height="40px" width="40px" style="margin-top: 10px;"></h2>
+                <h2 style="margin-top: -35px; font-family: 'Excon', sans-serif;" class="assistantText">AI Assistant <img src="assets/_betaIcon.png" height="40px" width="40px" style="margin-top: 10px;" draggable="false"></h2>
                 <div id="aiChatHistory" class="ai-chat-history"></div>
                 <div class="ai-chat-input-row">
                     <input id="aiInput" type="text" placeholder="Write a message..." autocomplete="on" style="display: block;" spellcheck="false"/>
-                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif;"><img src="assets/_send.png" height="15px" width="15px"></button>
+                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif; height: 100%;"><img src="assets/_send.png" height="15px" width="15px" draggable="false"></button>
                 </div>
             </div>
         </div>
     </body>
-    <script src="js/render.js"></script>
-    <script src="js/fetchDependecies.js"></script>
+    <script src="js/render.js"></script><script src="js/fetchDependecies.js"></script>
 </html>

@@ -60,3 +60,15 @@ button {
     gap: 10px;
     margin-top: 10px;
 }
+
+.special{
+    -webkit-text-fill-color: transparent; 
+    background-image: linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    animation: gradient 8s linear infinite;
+}
+
+@keyframes gradient {
+    to {background-position: 400% center}
+}

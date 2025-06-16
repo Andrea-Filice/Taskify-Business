@@ -15,11 +15,10 @@ function submitInput() {
   //SEND NEW VALUES
   if(inputName)
     ipcRenderer.send('inputName-submitted', inputName);
-  if(previousVersion)
+  else if(previousVersion)
     ipcRenderer.send('inputPV-submitted', previousVersion);
-  if(newerVersion)
+  else if(newerVersion)
     ipcRenderer.send('inputNV-submitted', newerVersion);
-  
   window.close();
 }
 

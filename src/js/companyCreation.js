@@ -4,7 +4,6 @@ function OnLoad(){
     document.getElementById('container').style.animation = "FadeIn 1s forwards";
     document.getElementById('companyCreation').addEventListener('click', createCompany);
     showWarnLogs();
-
     //ADD EVENT LISTENER
     document.getElementById('inputCompany').addEventListener('keydown', function(e){
         if(e.key === 'Enter') createCompany();

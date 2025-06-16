@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 
 let mainWindow = null
-const DEBUG = false
+const DEBUG = true
 let categoryModifyTask, indexModifyTask
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
 
@@ -13,6 +13,7 @@ let todos = {
   taskCreated: 0,
   taskCompleted: 0,
   autoClose: false,
+  joinBeta: true,
   companyName: undefined,
   chartData: { labels: [], created: [], completed: [] }
 }
@@ -25,6 +26,7 @@ function loadTodosFromDisk() {
       todos.taskCreated = todos.taskCreated || 0
       todos.taskCompleted = todos.taskCompleted || 0
       todos.autoClose = todos.autoClose || false
+      todos.joinBeta = todos.joinBeta || true
       todos.companyName = todos.companyName || undefined
       todos.chartData = todos.chartData || { labels: [], created: [], completed: [] }
     }
@@ -36,6 +38,7 @@ function loadTodosFromDisk() {
       taskCreated: 0,
       taskCompleted: 0,
       autoClose: false,
+      joinBeta: true,
       companyName: undefined,
       chartData: { labels: [], created: [], completed: [] }
     }
@@ -113,6 +116,10 @@ function createWindow() {
         nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
     });
   })
+
+  ipcMain.on('checkForDebug', (event) => {
+    event.returnValue = DEBUG;
+  });
 
   ipcMain.on('inputPV-submitted', (event, updatedText) => {
     todos[categoryModifyTask][indexModifyTask].prevVersion = updatedText.trim();

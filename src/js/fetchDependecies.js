@@ -6,4 +6,4 @@ try{
             document.getElementById('latestversion').innerText = "Latest version avaible: " + version;
           })
 }
-catch (error) {document.getElementById('latestversion').innerText = "Latest version avaible: " + error;}
+catch (error) {document.getElementById('latestversion').innerText = "Latest version avaible: Error retrieving data " + error;}
