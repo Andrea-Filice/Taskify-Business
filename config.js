@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 
 let mainWindow = null
-const DEBUG = true
+const DEBUG = false
 let categoryModifyTask, indexModifyTask
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
 
