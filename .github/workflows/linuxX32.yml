@@ -36,4 +36,4 @@ jobs:
       - name: Build Electron app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-builder --linux AppImage,rpm,deb --ia32 --publish always
+        run: npx electron-builder --linux AppImage --linux rpm --linux deb --ia32 --publish always
