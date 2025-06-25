@@ -193,11 +193,8 @@ window.todoManager = new class TodoManager {
     joinBetaCheckBox.checked = joinBeta;
 
     //AUTO-CLOSE SETTINGS
-    if (!autoClose){
-        //JOIN BETA CHANNEL
-        showBetaOptions(joinBeta);
+    if (!autoClose)
         window.addEventListener('scroll', this.handleScroll);
-    }
     else 
       window.removeEventListener('scroll', this.handleScroll);
 
@@ -528,6 +525,7 @@ ipcRenderer.on('task-modified', (event, category, index, taskData) => {
 
 ipcRenderer.on('delete-task', (event, category, index) => {
     window.todoManager.todos[category].splice(index, 1);
+    taskCreated--;
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
     window.todoManager.updateUI();
 });
@@ -654,7 +652,8 @@ function appendMsg(text, who = "ai"){
 }
 
 function showBetaOptions(value){
-  document.getElementById('openSidebarBtn').style.display = (value === true) ? "block" : "none";
+  if(!autoClose)
+    document.getElementById('openSidebarBtn').style.display = (value === true) ? "block" : "none";
 }
 
 //INFO ABOUT BETA PROGRAM

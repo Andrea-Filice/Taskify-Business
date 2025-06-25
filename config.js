@@ -145,18 +145,14 @@ function createWindow() {
     mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);
   });
 
-  ipcMain.on('load-todos', event => {
-    event.returnValue = todos
-  })
+  ipcMain.on('load-todos', event => {event.returnValue = todos})
 
   ipcMain.on('save-todos', (event, newTodos) => {
     todos = { ...todos, ...newTodos }
     saveTodosToDisk()
   })
 
-  ipcMain.on('quit-app', () => {
-    app.quit()
-  })
+  ipcMain.on('quit-app', () => {app.quit()})
 
   ipcMain.on('save-companyName', (event, companyName) => {
     todos.companyName = companyName;
@@ -168,9 +164,8 @@ function createWindow() {
       event.preventDefault()
       mainWindow.reload()
     }
-    if (input.key.toLowerCase() === 'i' && input.control && input.shift && DEBUG) {
+    if (input.key.toLowerCase() === 'i' && input.control && input.shift && DEBUG) 
       mainWindow.webContents.openDevTools()
-    }
   })
 
   mainWindow.on('closed', () => {
