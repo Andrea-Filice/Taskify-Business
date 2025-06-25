@@ -3,7 +3,10 @@
   "version": "1.5.4",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
   "license": "MIT",
-  "author": "Play Epik, Incoporation",
+  "author":{
+    "name": "Play Epik, Incoporation",
+    "email": "help.playepik@gmail.com"
+  },
   "type": "commonjs",
   "main": "config.js",
   "scripts": {
