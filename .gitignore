@@ -1,6 +1,8 @@
 #MODULES
 .vscode
 node_modules
+
+#FILES
 .env
 .venv
 .qodo
