@@ -19,7 +19,11 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 22
+          node-version: 24
+      
+      #Updating Packages
+      - name: Updating Packages
+        run: npx npm-check-updates && npx && npx npm-check-updates -u && npm install
 
       # Install dependencies
       - name: Install dependencies

@@ -1,4 +1,4 @@
-name: Build Electron App for macOS
+name: Build Electron App for Windows Arm64
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: windows-latest
 
     steps:
       # Checkout the repository
@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 24
-
+      
       #Updating Packages
       - name: Updating Packages
         run: npx npm-check-updates && npx && npx npm-check-updates -u && npm install
@@ -33,4 +33,4 @@ jobs:
       - name: Build Electron app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-builder --mac --x64 --publish always
+        run: npx electron-builder --win --arm64 --publish always

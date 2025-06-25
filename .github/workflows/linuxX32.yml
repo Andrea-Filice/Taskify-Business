@@ -1,4 +1,4 @@
-name: Build Electron App for macOS
+name: Build Electron App for Linux X32
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
 
     steps:
       # Checkout the repository
@@ -19,18 +19,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 24
-
-      #Updating Packages
-      - name: Updating Packages
-        run: npx npm-check-updates && npx && npx npm-check-updates -u && npm install
+          node-version: 24 
 
       # Install dependencies
       - name: Install dependencies
         run: npm install && npm install electron
 
+      #Updating Packages
+      - name: Updating Packages
+        run: npx npm-check-updates && npx && npx npm-check-updates -u && npm install
+
       # Build the Electron app
       - name: Build Electron app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-builder --mac --x64 --publish always
+        run: npx electron-builder --linux AppImage,rpm,deb --ia32 --publish always
