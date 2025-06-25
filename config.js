@@ -3,9 +3,9 @@ const path = require('path')
 const fs = require('fs')
 
 let mainWindow = null
-const DEBUG = true
 let categoryModifyTask, indexModifyTask
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
+const DEBUG = true
 
 let todos = {
   softwareComponents: [],
@@ -48,9 +48,7 @@ function loadTodosFromDisk() {
 function saveTodosToDisk() {
   try {
     fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')
-  } catch (err) {
-    console.error(err)
-  }
+  } catch (err){}
 }
 
 function createWindow() {
@@ -107,56 +105,50 @@ function createWindow() {
     }
   })
 
-  ipcMain.on('inputName-submitted', (event, updatedText) => {
-    todos[categoryModifyTask][indexModifyTask].text = updatedText.trim();
-    saveTodosToDisk();
-    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
-        text: todos[categoryModifyTask][indexModifyTask].text,
-        prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
-        nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
-    });
-  })
+  ipcMain.on('checkForDebug', (event) => {event.returnValue = DEBUG;});
 
-  ipcMain.on('checkForDebug', (event) => {
-    event.returnValue = DEBUG;
+  ipcMain.on('inputSend', (event, updatedText, category) =>{
+    switch(category){
+      case "task_name":
+        todos[categoryModifyTask][indexModifyTask].text = updatedText.trim();
+        saveTodosToDisk();
+        mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
+            text: todos[categoryModifyTask][indexModifyTask].text,
+            prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
+            nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
+        });
+        break;
+      case "prev_version":
+        todos[categoryModifyTask][indexModifyTask].prevVersion = updatedText.trim();
+        saveTodosToDisk();
+        mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
+            text: todos[categoryModifyTask][indexModifyTask].text,
+            prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
+            nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
+        });
+        break;
+      case "next_version":
+        todos[categoryModifyTask][indexModifyTask].nextVersion = updatedText.trim();
+        saveTodosToDisk();
+        mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
+            text: todos[categoryModifyTask][indexModifyTask].text,
+            prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
+            nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
+        });
+        break;
+    }
   });
 
-  ipcMain.on('inputPV-submitted', (event, updatedText) => {
-    todos[categoryModifyTask][indexModifyTask].prevVersion = updatedText.trim();
-    saveTodosToDisk();
-    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
-        text: todos[categoryModifyTask][indexModifyTask].text,
-        prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
-        nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
-    });
-  });
+  ipcMain.on('deleteTask', () =>{mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);});
 
-  ipcMain.on('inputNV-submitted', (event, updatedText) => {
-    todos[categoryModifyTask][indexModifyTask].nextVersion = updatedText.trim();
-    saveTodosToDisk();
-    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
-        text: todos[categoryModifyTask][indexModifyTask].text,
-        prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
-        nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
-    });
-  });
-
-  ipcMain.on('deleteTask', () =>{
-    mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);
-  });
-
-  ipcMain.on('load-todos', event => {
-    event.returnValue = todos
-  })
+  ipcMain.on('load-todos', event => {event.returnValue = todos})
 
   ipcMain.on('save-todos', (event, newTodos) => {
     todos = { ...todos, ...newTodos }
     saveTodosToDisk()
   })
 
-  ipcMain.on('quit-app', () => {
-    app.quit()
-  })
+  ipcMain.on('quit-app', () => {app.quit()})
 
   ipcMain.on('save-companyName', (event, companyName) => {
     todos.companyName = companyName;
@@ -168,14 +160,11 @@ function createWindow() {
       event.preventDefault()
       mainWindow.reload()
     }
-    if (input.key.toLowerCase() === 'i' && input.control && input.shift && DEBUG) {
+    if (input.key.toLowerCase() === 'i' && input.control && input.shift && DEBUG) 
       mainWindow.webContents.openDevTools()
-    }
   })
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+  mainWindow.on('closed', () => {mainWindow = null})
 }
 
 app.whenReady().then(() => {
@@ -190,9 +179,7 @@ app.on('window-all-closed', () => {
   }
 })
 
-app.on('activate', () => {
-  if (!mainWindow) createWindow()
-})
+app.on('activate', () => {if (!mainWindow) createWindow()})
 
 function createInputPopUp() {
   const inputWindow = new BrowserWindow({
@@ -208,9 +195,6 @@ function createInputPopUp() {
     },
     icon: 'src/assets/icon.ico'
   })
-
-  //DEBUG
-  //inputWindow.webContents.openDevTools(); 
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')
 }

@@ -1,4 +1,4 @@
-name: Build Electron App for Windows
+name: Build Electron App for Windows X32
 
 on:
   push:
@@ -36,4 +36,4 @@ jobs:
       - name: Build Electron app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-builder --win --x64 --publish always
+        run: npx electron-builder --win --ia32 --publish always
