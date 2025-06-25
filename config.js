@@ -105,36 +105,38 @@ function createWindow() {
     }
   })
 
-  ipcMain.on('inputName-submitted', (event, updatedText) => {
-    todos[categoryModifyTask][indexModifyTask].text = updatedText.trim();
-    saveTodosToDisk();
-    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
-        text: todos[categoryModifyTask][indexModifyTask].text,
-        prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
-        nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
-    });
-  })
-
   ipcMain.on('checkForDebug', (event) => {event.returnValue = DEBUG;});
 
-  ipcMain.on('inputPV-submitted', (event, updatedText) => {
-    todos[categoryModifyTask][indexModifyTask].prevVersion = updatedText.trim();
-    saveTodosToDisk();
-    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
-        text: todos[categoryModifyTask][indexModifyTask].text,
-        prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
-        nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
-    });
-  });
-
-  ipcMain.on('inputNV-submitted', (event, updatedText) => {
-    todos[categoryModifyTask][indexModifyTask].nextVersion = updatedText.trim();
-    saveTodosToDisk();
-    mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
-        text: todos[categoryModifyTask][indexModifyTask].text,
-        prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
-        nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
-    });
+  ipcMain.on('inputSend', (event, updatedText, category) =>{
+    switch(category){
+      case "task_name":
+        todos[categoryModifyTask][indexModifyTask].text = updatedText.trim();
+        saveTodosToDisk();
+        mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
+            text: todos[categoryModifyTask][indexModifyTask].text,
+            prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
+            nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
+        });
+        break;
+      case "prev_version":
+        todos[categoryModifyTask][indexModifyTask].prevVersion = updatedText.trim();
+        saveTodosToDisk();
+        mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
+            text: todos[categoryModifyTask][indexModifyTask].text,
+            prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
+            nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
+        });
+        break;
+      case "next_version":
+        todos[categoryModifyTask][indexModifyTask].nextVersion = updatedText.trim();
+        saveTodosToDisk();
+        mainWindow.webContents.send('task-modified', categoryModifyTask, indexModifyTask, {
+            text: todos[categoryModifyTask][indexModifyTask].text,
+            prevVersion: todos[categoryModifyTask][indexModifyTask].prevVersion,
+            nextVersion: todos[categoryModifyTask][indexModifyTask].nextVersion
+        });
+        break;
+    }
   });
 
   ipcMain.on('deleteTask', () =>{mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);});

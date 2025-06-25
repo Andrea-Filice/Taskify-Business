@@ -5,9 +5,7 @@ function OnLoad(){
     document.getElementById('companyCreation').addEventListener('click', createCompany);
     showWarnLogs();
     //ADD EVENT LISTENER
-    document.getElementById('inputCompany').addEventListener('keydown', function(e){
-        if(e.key === 'Enter') createCompany();
-    });
+    document.getElementById('inputCompany').addEventListener('keydown', function(e){if(e.key === 'Enter') createCompany();});
 }
 
 function showWarnLogs(){
@@ -22,13 +20,8 @@ function showWarnLogs(){
 function createCompany(){
     const input = document.getElementById('inputCompany');
     const value = input.value.trim();
-    //TODO: Optimize this Code with only one if-else
-    if (!value) {
-        ipcRenderer.invoke('show-alert', "Check your company name and try again.");
-        return;
-    }
-    else if (value.length < 8){
-        ipcRenderer.invoke('show-alert', "The company name must contain at least 8 characters in order to be validated.");
+    if (!value || value.length < 8) {
+        ipcRenderer.invoke('show-alert', "Invalid Company name. At least 8 characters.");
         return;
     }
     else {
