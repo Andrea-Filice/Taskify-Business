@@ -1,6 +1,6 @@
 {
   "name": "taskify-business",
-  "version": "1.5.2",
+  "version": "1.5.4",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
   "license": "MIT",
   "author": "Play Epik, Incoporation",
@@ -41,12 +41,12 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^36.0.1",
+    "electron": "^36.5.0",
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.49.4",
-    "chart.js": "^4.4.9",
+    "@supabase/supabase-js": "^2.50.0",
+    "chart.js": "^4.5.0",
     "dotenv": "^16.5.0",
     "npm": "^11.4.2"
   }

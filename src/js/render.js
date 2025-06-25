@@ -172,9 +172,7 @@ window.todoManager = new class TodoManager {
     this.updateUI();
   }
 
-  handleEnter(e, category) {
-    if (e.key === 'Enter') this.addTodoHandler(category);
-  }
+  handleEnter(e, category) {if (e.key === 'Enter') this.addTodoHandler(category);}
 
   removeTodo(category, index) {
     this.todos[category].splice(index, 1);
@@ -195,12 +193,13 @@ window.todoManager = new class TodoManager {
     joinBetaCheckBox.checked = joinBeta;
 
     //AUTO-CLOSE SETTINGS
-    if (!autoClose)
-      window.addEventListener('scroll', this.handleScroll);
+    if (!autoClose){
+        //JOIN BETA CHANNEL
+        showBetaOptions(joinBeta);
+        window.addEventListener('scroll', this.handleScroll);
+    }
     else 
       window.removeEventListener('scroll', this.handleScroll);
-    //JOIN BETA CHANNEL
-    showBetaOptions(joinBeta);
 
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
     document.title = 'Taskify Business - ' + companyName;
@@ -655,8 +654,7 @@ function appendMsg(text, who = "ai"){
 }
 
 function showBetaOptions(value){
-  if(window.scrollY === 0)
-    document.getElementById('openSidebarBtn').style.display = (value === true) ? "block" : "none";
+  document.getElementById('openSidebarBtn').style.display = (value === true) ? "block" : "none";
 }
 
 //INFO ABOUT BETA PROGRAM

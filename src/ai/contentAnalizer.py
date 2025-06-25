@@ -14,8 +14,9 @@ def parse_input(text):
         next_versions = [v.strip() for v in multi_match.group(3).split(',')]
         categories = [c.strip().lower() for c in multi_match.group(4).split(',')] if multi_match.group(4) else []
 
+        max_len = max(len(names), len(prev_versions), len(next_versions), len(categories) if categories else 0)
         tasks = []
-        for i in range(len(names)):
+        for i in range(max_len):
             name = names[i] if i < len(names) else ""
             prev_version = prev_versions[i] if i < len(prev_versions) else ""
             next_version = next_versions[i] if i < len(next_versions) else ""

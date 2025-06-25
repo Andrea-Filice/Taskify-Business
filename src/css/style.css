@@ -141,25 +141,29 @@ input::after{
     animation: animInputOut 1s ease-in-out forwards;
 }
 
-button:focus, option:focus, .aiButton{
+button:focus:not(.infoButton):not(.settingsButton),
+option:focus:not(.infoButton):not(.settingsButton),
+.aiButton {
     outline: none;
     animation: animButtonIn 2s ease-in-out infinite;
 }
 
-button::after, option::after{
+button:not(.infoButton):not(.settingsButton)::after,
+option:not(.infoButton):not(.settingsButton)::after {
     outline: none;
     animation: animButtonOut 1s ease-in-out forwards;
 }
 
-.quitButton:focus, .closeButton:focus{
+.quitButton:focus, .closeButton:focus {
     outline: none;
     animation: animRedIn 2s ease-in-out infinite;
 }
 
-.quitButton::after, .closeButton::after{
+.quitButton::after, .closeButton::after {
     outline: none;
     animation: animRedOut 1s ease-in-out forwards;
 }
+
 
 @keyframes animInputIn{
     0%{
@@ -323,7 +327,7 @@ html {
 .quitButton, #fuoriAddBtn, #softwareAddBtn, #aiSendBtn, #repoGitBtn, #licenseBtn{
     display: inline-flex;
     align-items: center;
-    justify-content: center;   
+    justify-content: center;
     gap: 10px;
 }
 
@@ -548,4 +552,12 @@ option{font-family: 'Supreme', sans-serif;}
     background-size: 200% auto;
     -webkit-background-clip: text;
     animation: gradient 8s linear infinite;
+}
+
+/*TOOLTIP*/
+.tip{
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
 }

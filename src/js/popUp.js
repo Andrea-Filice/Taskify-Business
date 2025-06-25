@@ -15,9 +15,9 @@ function submitInput() {
   //SEND NEW VALUES
   if(inputName)
     ipcRenderer.send('inputName-submitted', inputName);
-  else if(previousVersion)
+  if(previousVersion)
     ipcRenderer.send('inputPV-submitted', previousVersion);
-  else if(newerVersion)
+  if(newerVersion)
     ipcRenderer.send('inputNV-submitted', newerVersion);
   window.close();
 }

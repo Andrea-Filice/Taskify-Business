@@ -5,5 +5,4 @@ try{
             const version = data.versionTaskify;
             document.getElementById('latestversion').innerText = "Latest version avaible: " + version;
           })
-}
-catch (error) {document.getElementById('latestversion').innerText = "Latest version avaible: Error retrieving data " + error;}
+} catch (error) {document.getElementById('latestversion').innerText = "Latest version avaible: Error retrieving data " + error;}
