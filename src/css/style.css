@@ -327,7 +327,7 @@ html {
 .quitButton, #fuoriAddBtn, #softwareAddBtn, #aiSendBtn, #repoGitBtn, #licenseBtn{
     display: inline-flex;
     align-items: center;
-    justify-content: center;   
+    justify-content: center;
     gap: 10px;
 }
 
@@ -552,4 +552,12 @@ option{font-family: 'Supreme', sans-serif;}
     background-size: 200% auto;
     -webkit-background-clip: text;
     animation: gradient 8s linear infinite;
+}
+
+/*TOOLTIP*/
+.tip{
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-align: center;
 }
