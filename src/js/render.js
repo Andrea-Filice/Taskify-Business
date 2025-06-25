@@ -5,15 +5,12 @@ const { stdout, stderr, eventNames } = require('process');
 const Chart = require('chart.js/auto').Chart;
 
 //VARIABLES
-let taskCreated = 0;
-let taskCompleted = 0;
-let autoClose = false;
-let joinBeta = true;
+let taskCreated = 0, taskCompleted = 0;
+let autoClose = false, joinBeta = true, messageSend = false;
 let companyName = undefined;
-let messageSend = false;
 const DEBUG = ipcRenderer.sendSync('checkForDebug');
 
-//CHART DATAS
+//LOADING TODOs
 const loaded = ipcRenderer.sendSync('load-todos') || {};
 
 let chartData = loaded.chartData || {
@@ -65,6 +62,7 @@ window.todoManager = new class TodoManager {
     else
       document.getElementById("app").style.animation = "FadeIn 1s forwards";
     
+    //EVENT LISTENERS
     document.getElementById('softwareAddBtn')
             .addEventListener('click', () => this.addTodoHandler('softwareComponents'));
     document.getElementById('fuoriAddBtn')
@@ -97,7 +95,6 @@ window.todoManager = new class TodoManager {
   sendAIMessage(){
     const input = document.getElementById('aiInput');
     const message = input.value.trim();
-
     if(!input || !message){
       ipcRenderer.invoke('show-alert', "Check your AI message and try again.")
       return;
@@ -139,16 +136,16 @@ window.todoManager = new class TodoManager {
     let employeeName = employeeField.value.trim();
 
     if (!text){
-      ipcRenderer.invoke('show-alert', "Error creating the Task, please check your inputs and try again.");
+      ipcRenderer.invoke('show-alert', "Error creating the Task, invalid Task Name.");
       return;
     }
 
     if(prevVersion && !nextVersion){
-      ipcRenderer.invoke('show-alert', "Check your versions input and try again, you cannot insert only the previous version.")
+      ipcRenderer.invoke('show-alert', "Error creating the Task, invalid Previous/Newer Versio.")
       return;
     }
     else if(!prevVersion && nextVersion){
-      ipcRenderer.invoke('show-alert', "Check your versions input and try again, you cannot insert only the next version.")
+      ipcRenderer.invoke('show-alert', "Error creating the Task, No valid newer version.")
       return;
     }
     
@@ -257,9 +254,7 @@ window.todoManager = new class TodoManager {
                   family: 'Excon, Sans Serif',
                   size: 10
                 },
-                callback: function(value) {
-                  return Number.isInteger(value) ? value : null;
-                }
+                callback: function(value) {return Number.isInteger(value) ? value : null;}
               },
               beginAtZero: true
             }
@@ -337,9 +332,7 @@ window.todoManager = new class TodoManager {
           ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
           this.updateUI();
           const res = ipcRenderer.invoke('show-alert', "Data succesfully reset, app will be restarted soon.")
-          .then(() => {
-            window.location.href = "boot.html";
-          });
+          .then(() => {window.location.href = "boot.html";});
         }
       });
   }
@@ -347,9 +340,8 @@ window.todoManager = new class TodoManager {
   restartApplication(){
     ipcRenderer.invoke('show-confirm', "Are you sure you want to restart the app?")
     .then(userResponse =>{
-      if(userResponse){
+      if(userResponse)
         window.location.href = "boot.html";
-      }
     })
   }
 
@@ -364,6 +356,7 @@ window.todoManager = new class TodoManager {
       if (!userResponse) return;
       const list = this.todos[categoryKey];
       taskCompleted += list.length;
+
       this.todos[categoryKey] = [];
       ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
       this.updateUI();
@@ -397,12 +390,8 @@ window.todoManager = new class TodoManager {
   }
 
   changeCompanyName(newName) {
-    if(!newName) {
-      ipcRenderer.invoke('show-alert', "The company name field is empty.");
-      return;
-    }
-    if(newName.length < 8){
-      ipcRenderer.invoke('show-alert', "The company name must contain at least 8 characters in order to be validated.");
+    if(!newName || newName.length < 8) {
+      ipcRenderer.invoke('show-alert', "Invalid Company name. At least 8 characters.");
       return;
     }
     ipcRenderer.invoke('show-confirm', `Are you sure to change the company name to: ${newName}?`)
@@ -508,7 +497,8 @@ function updateDailyData() {
       chartData.created.shift();
       chartData.completed.shift();
     }
-  } else {
+  } 
+  else {
     chartData.created[chartData.created.length - 1] = taskCreated;
     chartData.completed[chartData.completed.length - 1] = taskCompleted;
   }
@@ -537,14 +527,10 @@ function CallAIFunction(input){
   const unpackedPath = path.join(process.resourcesPath, 'app.asar.unpacked', 'src', 'ai', 'contentAnalizer.py');
   const packedPath = path.join(process.resourcesPath, 'src', 'ai', 'contentAnalizer.py');
   if(!DEBUG){
-    if (require('fs').existsSync(unpackedPath)) 
-      scriptPath = unpackedPath;
-    else
-      scriptPath = packedPath;
+    scriptPath = (require('fs').existsSync(unpackedPath)) ? unpackedPath : packedPath;
   }
-  else{
+  else
     scriptPath = 'src/ai/contentAnalizer.py'
-  }
   execFile('python', [scriptPath, input], (error, stdout, stderr) =>{
     if(error){
       appendMsg(`Error during the load of AI Scripts: ${error.message}`, "AI");
@@ -563,6 +549,7 @@ function CallAIFunction(input){
       } else if(Object.prototype.hasOwnProperty.call(result, 'modify')){
         const todos = window.todoManager.todos[result.category];
         const index = todos.findIndex(t => t.text === result.name);
+
         if(index !== -1){
           window.todoManager.modifyTask(result.category, index);
           appendMsg(`Modifying task: ${result.name}`, "AI");
@@ -621,9 +608,7 @@ aiSendBtn.onclick = () => {
   }, 800);
 }
 
-aiInput.addEventListener('keydown', function(e){
-    if(e.key === 'Enter') aiSendBtn.click();
-});
+aiInput.addEventListener('keydown', function(e){if(e.key === 'Enter') aiSendBtn.click();});
 
 aiInput.addEventListener('focus', () => aiInput.classList.add('ai-glow'));
 aiInput.addEventListener('blur', () => aiInput.classList.remove('ai-glow'));
@@ -653,20 +638,16 @@ function appendMsg(text, who = "ai"){
 
 function showBetaOptions(value){
   if(!autoClose)
-    document.getElementById('openSidebarBtn').style.display = (value === true) ? "block" : "none";
+    document.getElementById('openSidebarBtn').style.display = (value === true && window.scrollY === 0) ? "block" : "none";
 }
 
 //INFO ABOUT BETA PROGRAM
 function ShowInfoPanel(){ipcRenderer.invoke('show-alert', "If enabled, this option show a new button for AI Assistant in Beta version, if not will be not show anything.")}
 
 //WEB REFERENCES
-document.getElementById('repoGitBtn').addEventListener('click', () =>{
-  shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business");
-});
+document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business");});
 
-document.getElementById('licenseBtn').addEventListener('click', () =>{
-  shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE");
-});
+document.getElementById('licenseBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE");});
 
 function clearChat() {
     const chatHistory = document.querySelector('.ai-chat-history');

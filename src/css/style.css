@@ -117,7 +117,6 @@ li {
     gap: 10px;
 }
 
-
 .edit-btn {
     font-family: 'Supreme', sans-serif;
     background: #009dff;
@@ -410,7 +409,7 @@ select:focus{
     animation: animationInput 2s ease-in-out infinite;
 }
 
-option{font-family: 'Supreme', sans-serif;}
+option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 
 /* Sidebar AI Chat */
 .sidebar-ai {
@@ -553,6 +552,8 @@ option{font-family: 'Supreme', sans-serif;}
     -webkit-background-clip: text;
     animation: gradient 8s linear infinite;
 }
+
+#checkbox:checked, #joinBeta:checked{accent-color: #009dff; color-scheme: light;}
 
 /*TOOLTIP*/
 .tip{

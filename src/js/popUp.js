@@ -13,6 +13,7 @@ function submitInput() {
   const newerVersion = document.getElementById('inputNV').value.trim();
 
   //SEND NEW VALUES
+  //TODO: Optimize this Code
   if(inputName)
     ipcRenderer.send('inputName-submitted', inputName);
   if(previousVersion)

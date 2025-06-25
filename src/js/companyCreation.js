@@ -22,6 +22,7 @@ function showWarnLogs(){
 function createCompany(){
     const input = document.getElementById('inputCompany');
     const value = input.value.trim();
+    //TODO: Optimize this Code with only one if-else
     if (!value) {
         ipcRenderer.invoke('show-alert', "Check your company name and try again.");
         return;
@@ -32,7 +33,7 @@ function createCompany(){
     }
     else {
         ipcRenderer.send('save-companyName', value);
-            document.getElementById('container').style.animation = "FadeOut 1s forwards";
+        document.getElementById('container').style.animation = "FadeOut 1s forwards";
         setTimeout(() => {
             window.location.href = "index.html";
         }, 1000);
