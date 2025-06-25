@@ -3,9 +3,9 @@ const path = require('path')
 const fs = require('fs')
 
 let mainWindow = null
-const DEBUG = true
 let categoryModifyTask, indexModifyTask
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
+const DEBUG = true
 
 let todos = {
   softwareComponents: [],
@@ -48,9 +48,7 @@ function loadTodosFromDisk() {
 function saveTodosToDisk() {
   try {
     fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')
-  } catch (err) {
-    console.error(err)
-  }
+  } catch (err){}
 }
 
 function createWindow() {
@@ -117,9 +115,7 @@ function createWindow() {
     });
   })
 
-  ipcMain.on('checkForDebug', (event) => {
-    event.returnValue = DEBUG;
-  });
+  ipcMain.on('checkForDebug', (event) => {event.returnValue = DEBUG;});
 
   ipcMain.on('inputPV-submitted', (event, updatedText) => {
     todos[categoryModifyTask][indexModifyTask].prevVersion = updatedText.trim();
@@ -141,9 +137,7 @@ function createWindow() {
     });
   });
 
-  ipcMain.on('deleteTask', () =>{
-    mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);
-  });
+  ipcMain.on('deleteTask', () =>{mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);});
 
   ipcMain.on('load-todos', event => {event.returnValue = todos})
 
@@ -168,9 +162,7 @@ function createWindow() {
       mainWindow.webContents.openDevTools()
   })
 
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
+  mainWindow.on('closed', () => {mainWindow = null})
 }
 
 app.whenReady().then(() => {
@@ -185,9 +177,7 @@ app.on('window-all-closed', () => {
   }
 })
 
-app.on('activate', () => {
-  if (!mainWindow) createWindow()
-})
+app.on('activate', () => {if (!mainWindow) createWindow()})
 
 function createInputPopUp() {
   const inputWindow = new BrowserWindow({
@@ -203,9 +193,6 @@ function createInputPopUp() {
     },
     icon: 'src/assets/icon.ico'
   })
-
-  //DEBUG
-  //inputWindow.webContents.openDevTools(); 
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')
 }
