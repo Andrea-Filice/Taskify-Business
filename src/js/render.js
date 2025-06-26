@@ -8,9 +8,10 @@ const Chart = require('chart.js/auto').Chart;
 let taskCreated = 0, taskCompleted = 0;
 let autoClose = false, joinBeta = true, messageSend = false;
 let companyName = undefined;
-const DEBUG = ipcRenderer.sendSync('checkForDebug');
 let taskCompletedColor = document.getElementById('colorTaskCreated').value;
 let taskCreatedColor = document.getElementById('colorTaskCompleted').value;
+
+const DEBUG = ipcRenderer.sendSync('checkForDebug');
 
 //LOADING TODOs
 const loaded = ipcRenderer.sendSync('load-todos') || {};
