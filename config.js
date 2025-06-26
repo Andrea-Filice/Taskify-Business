@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, ipcRenderer } = require('electron')
 const path = require('path')
 const fs = require('fs')
 
@@ -103,12 +103,6 @@ function createWindow() {
     categoryModifyTask = category
     indexModifyTask = index
     createInputPopUp()
-    const task = todos[categoryModifyTask][indexModifyTask]
-    if (task) {
-      setTimeout(() => {
-        mainWindow.webContents.send('populate-input', task.text)
-      }, 500)
-    }
   })
 
   ipcMain.on('checkForDebug', (event) => {event.returnValue = DEBUG;});
@@ -203,4 +197,11 @@ function createInputPopUp() {
   })
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')
+
+  const task = todos[categoryModifyTask][indexModifyTask];
+  if (task) {
+    inputWindow.webContents.once('did-finish-load', () => {
+      inputWindow.webContents.send('retrieveTaskName', task.text);
+    });
+  }
 }
