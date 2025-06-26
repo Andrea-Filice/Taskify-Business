@@ -9,6 +9,8 @@ let taskCreated = 0, taskCompleted = 0;
 let autoClose = false, joinBeta = true, messageSend = false;
 let companyName = undefined;
 const DEBUG = ipcRenderer.sendSync('checkForDebug');
+let taskCompletedColor = document.getElementById('colorTaskCreated').value;
+let taskCreatedColor = document.getElementById('colorTaskCompleted').value;
 
 //LOADING TODOs
 const loaded = ipcRenderer.sendSync('load-todos') || {};
@@ -28,7 +30,7 @@ let tasksChart = null;
 function OnLoad(){
   fetchVersion();
   fetchBuildNumber();
-  showWarnLogs();
+  //showWarnLogs();
 }
 
 function showWarnLogs(){
@@ -42,6 +44,7 @@ function showWarnLogs(){
 
 ///MARK: TASK MANAGEMENT SECTION
 window.todoManager = new class TodoManager {
+
   constructor() {
     const categoryID = document.getElementById('categoryClean');
     const newCompanyName = document.getElementById('nameCompany');
@@ -56,6 +59,9 @@ window.todoManager = new class TodoManager {
     autoClose = loaded.autoClose || false;
     joinBeta = typeof loaded.joinBeta === "boolean" ? loaded.joinBeta : true;
     companyName = loaded.companyName || undefined
+
+    document.getElementById('colorTaskCreated').value = loaded.taskCompletedColor || "blue";
+    document.getElementById('colorTaskCompleted').value = loaded.taskCreatedColor || "green";
 
     if(companyName === undefined)
       window.location.href = "createCompany.html";
@@ -89,6 +95,10 @@ window.todoManager = new class TodoManager {
             .addEventListener('click', () => this.joinBetaClicked());
     document.getElementById('aiSendBtn')
             .addEventListener('click', e => this.sendAIMessage())
+    document.getElementById('colorTaskCreated')
+            .addEventListener('change', () => this.updateUI())
+    document.getElementById('colorTaskCompleted')
+            .addEventListener('change', () => this.updateUI())
     this.updateUI();
   }
 
@@ -115,7 +125,7 @@ window.todoManager = new class TodoManager {
     })
 
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
     this.updateUI();
   }
 
@@ -164,7 +174,7 @@ window.todoManager = new class TodoManager {
     employeeField.value = '';
 
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
     updateDailyData();
     this.updateUI();
   }
@@ -174,7 +184,7 @@ window.todoManager = new class TodoManager {
   removeTodo(category, index) {
     this.todos[category].splice(index, 1);
     taskCompleted++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
     updateDailyData(); 
     this.updateUI();
   }
@@ -184,10 +194,64 @@ window.todoManager = new class TodoManager {
     const taskCompletedEl = document.getElementById('taskCompleted');
     const autoCloseCheckbox = document.getElementById('checkbox');
     const joinBetaCheckBox = document.getElementById('joinBeta');
+    const dropDowntaskCreated = document.getElementById('colorTaskCreated').value;
+    const dropDowntaskCompleted = document.getElementById('colorTaskCompleted').value;
+
+    let colorTCompleted = null, colorTCreated = null, colorTCompletedBG = null, colorTCreatedBG = null;
+
     taskCreatedEl.innerText = `${taskCreated}`;
     taskCompletedEl.innerText = `${taskCompleted}`;
     autoCloseCheckbox.checked = autoClose;
     joinBetaCheckBox.checked = joinBeta;
+
+    //COLOR SELECTION
+    //TaskCompleted
+    switch(dropDowntaskCompleted){
+      case 'red':
+        colorTCompleted = 'rgba(255, 0, 0, 1)'; 
+        colorTCompletedBG = 'rgba(255, 0, 0, 0.1)';
+        break;
+      case 'green':
+        colorTCompleted = 'rgba(7,185,7,1)'; 
+        colorTCompletedBG = 'rgba(7,185,7,0.1)'
+        break;
+      case 'blue':
+        colorTCompleted = 'rgba(0,157,255,1)'; 
+        colorTCompletedBG = 'rgba(0,157,255,0.1)'
+        break;
+      case 'orange':
+        colorTCompletedBG = 'rgba(255, 149, 0, 0.1)';
+        colorTCompleted = 'rgba(255, 149, 0, 1)'; 
+        break;
+      case 'yellow':
+        colorTCompleted = 'rgba(255, 217, 0, 1)'; 
+        colorTCompletedBG = 'rgba(255, 217, 0, 0.1)';
+        break;
+    }
+
+    //TaskCreated
+    switch(dropDowntaskCreated){
+      case 'red':
+        colorTCreated = 'rgba(255, 0, 0, 1)'; 
+        colorTCreatedBG = 'rgba(255, 0, 0, 0.1)';
+        break;
+      case 'green':
+        colorTCreated = 'rgba(7,185,7,1)'; 
+        colorTCreatedBG = 'rgba(7,185,7,0.1)'
+        break;
+      case 'blue':
+        colorTCreated = 'rgba(0,157,255,1)'; 
+        colorTCreatedBG = 'rgba(0,157,255,0.1)'
+        break;
+      case 'orange':
+        colorTCreated = 'rgba(255, 149, 0, 1)'; 
+        colorTCreatedBG = 'rgba(255, 149, 0, 0.1)';
+        break;
+      case 'yellow':
+        colorTCreated = 'rgba(255, 217, 0, 1)'; 
+        colorTCreatedBG = 'rgba(255, 217, 0, 0.1)';
+        break;
+    }
 
     //AUTO-CLOSE SETTINGS
     if (!autoClose)
@@ -195,7 +259,10 @@ window.todoManager = new class TodoManager {
     else 
       window.removeEventListener('scroll', this.handleScroll);
 
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+    taskCreatedColor = document.getElementById('colorTaskCreated').value;
+    taskCompletedColor = document.getElementById('colorTaskCompleted').value;
+
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
     document.title = 'Taskify Business - ' + companyName;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
@@ -211,15 +278,15 @@ window.todoManager = new class TodoManager {
             {
               label: 'Task Created',
               data: chartData.created,
-              borderColor: '#009dff',
-              backgroundColor: 'rgba(0,157,255,0.1)',
+              borderColor: colorTCreated,
+              backgroundColor: colorTCreatedBG,
               tension: 0.3
             },
             {
               label: 'Task Completed',
               data: chartData.completed,
-              borderColor: '#07b907',
-              backgroundColor: 'rgba(7,185,7,0.1)',
+              borderColor: colorTCompleted,
+              backgroundColor: colorTCompletedBG,
               tension: 0.3
             }
           ]
@@ -265,6 +332,10 @@ window.todoManager = new class TodoManager {
       tasksChart.data.labels = chartData.labels;
       tasksChart.data.datasets[0].data = chartData.created;
       tasksChart.data.datasets[1].data = chartData.completed;
+      tasksChart.data.datasets[0].borderColor = colorTCreated;
+      tasksChart.data.datasets[0].backgroundColor = colorTCreatedBG;
+      tasksChart.data.datasets[1].borderColor = colorTCompleted;
+      tasksChart.data.datasets[1].backgroundColor = colorTCompletedBG;
       tasksChart.update();
     }
   }
@@ -329,7 +400,7 @@ window.todoManager = new class TodoManager {
             created: Array(7).fill(0),
             completed: Array(7).fill(0)
           };
-          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
           this.updateUI();
           const res = ipcRenderer.invoke('show-alert', "Data succesfully reset, app will be restarted soon.")
           .then(() => {window.location.href = "boot.html";});
@@ -358,7 +429,7 @@ window.todoManager = new class TodoManager {
       taskCompleted += list.length;
 
       this.todos[categoryKey] = [];
-      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
       this.updateUI();
       ipcRenderer.invoke('show-alert', "Tasks marked as 'Completed'!");
     });
@@ -370,13 +441,13 @@ window.todoManager = new class TodoManager {
       window.addEventListener('scroll', this.handleScroll);
     else
       window.removeEventListener('scroll', this.handleScroll);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
   }
 
   joinBetaClicked(){
     joinBeta = !joinBeta;
     showBetaOptions(joinBeta);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
     this.updateUI();
   }
   
@@ -398,7 +469,7 @@ window.todoManager = new class TodoManager {
       .then(userResponse => {
         if (!userResponse) return;
         companyName = newName;
-        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
         document.getElementById('nameCompany').value = '';
         ipcRenderer.invoke('show-alert', "Company name changed successfully!");
         this.updateUI();
@@ -509,14 +580,14 @@ ipcRenderer.on('task-modified', (event, category, index, taskData) => {
     window.todoManager.todos[category][index].text = taskData.text;
     window.todoManager.todos[category][index].prevVersion = taskData.prevVersion;
     window.todoManager.todos[category][index].nextVersion = taskData.nextVersion;
-    ipcRenderer.send('save-todos', { ...window.todoManager.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
     window.todoManager.updateUI();
 });
 
 ipcRenderer.on('delete-task', (event, category, index) => {
     window.todoManager.todos[category].splice(index, 1);
     taskCreated--;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
     window.todoManager.updateUI();
 });
 
