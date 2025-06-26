@@ -526,11 +526,7 @@ function CallAIFunction(input){
   let scriptPath;
   const unpackedPath = path.join(process.resourcesPath, 'app.asar.unpacked', 'src', 'ai', 'contentAnalizer.py');
   const packedPath = path.join(process.resourcesPath, 'src', 'ai', 'contentAnalizer.py');
-  if(!DEBUG){
-    scriptPath = (require('fs').existsSync(unpackedPath)) ? unpackedPath : packedPath;
-  }
-  else
-    scriptPath = 'src/ai/contentAnalizer.py'
+  scriptPath = (DEBUG) ? 'src/ai/contentAnalizer.py' : ((require('fs').existsSync(unpackedPath)) ? unpackedPath : packedPath);
   execFile('python', [scriptPath, input], (error, stdout, stderr) =>{
     if(error){
       appendMsg(`Error during the load of AI Scripts: ${error.message}`, "AI");
@@ -538,12 +534,12 @@ function CallAIFunction(input){
     }
     try{
       const result = JSON.parse(stdout);
-      if (result.tasks && Array.isArray(result.tasks) && !Object.prototype.hasOwnProperty.call(result, 'modify')) {
+      if (result.tasks && Array.isArray(result.tasks) && !Object.prototype.hasOwnProperty.call(result, 'modify') && !Object.prototype.hasOwnProperty.call(result, 'type')) {
         result.tasks.forEach(task => {
            appendMsg(`Task Created! ${task.name} (${task.prev_version} → ${task.next_version})`, "AI");
           window.todoManager.addToDo(task.name, task.prev_version, task.next_version, task.category);
         });
-      } else if (result.name && !Object.prototype.hasOwnProperty.call(result, 'modify')) {
+      } else if (result.name && !Object.prototype.hasOwnProperty.call(result, 'modify') && !Object.prototype.hasOwnProperty.call(result, 'type')) {
         appendMsg(`Task Created! ${result.name} (${result.prev_version} → ${result.next_version})`, "AI");
         window.todoManager.addToDo(result.name, result.prev_version, result.next_version, result.category);
       } else if(Object.prototype.hasOwnProperty.call(result, 'modify')){
@@ -556,6 +552,18 @@ function CallAIFunction(input){
         }
         else
           appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
+      }
+      else if (result.name && Object.prototype.hasOwnProperty.call(result, 'type')){
+        const todos = window.todoManager.todos[result.category];
+        const index = todos.findIndex(t => t.text === result.name);
+
+        if(index !== -1){
+          window.todoManager.removeTodo(result.category, index);
+          appendMsg(`Deleting task: ${result.name}`, "AI");
+          taskCreated--;
+        }
+        else
+        appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI")
       }
       else{
         if (typeof result === "object")
