@@ -90,9 +90,7 @@ def parse_input(text):
     if(clear_match or cls_match):
         return 'cleared'
     
-    delete_match = re.match(
-        r"/delete\s+([^\s]+)\s+!category\s+([^\s]+)", text, re.IGNORECASE
-    )
+    delete_match = re.match(r"/delete\s+([^\s]+)\s+!category\s+([^\s]+)", text, re.IGNORECASE)
 
     if(delete_match):
         name = delete_match.group(1)

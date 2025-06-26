@@ -1,7 +1,6 @@
-const { ipcRenderer, app, ipcMain, shell } = require('electron');
+const { ipcRenderer, shell } = require('electron');
 const {execFile} = require('child_process');
 const path = require('path');
-const { stdout, stderr, eventNames } = require('process');
 const Chart = require('chart.js/auto').Chart;
 
 //VARIABLES
@@ -31,7 +30,7 @@ let tasksChart = null;
 function OnLoad(){
   fetchVersion();
   fetchBuildNumber();
-  //showWarnLogs();
+  showWarnLogs();
 }
 
 function showWarnLogs(){
