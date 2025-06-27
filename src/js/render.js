@@ -71,16 +71,20 @@ window.todoManager = new class TodoManager {
     //EVENT LISTENERS
     document.getElementById('softwareAddBtn')
             .addEventListener('click', () => this.addTodoHandler('softwareComponents'));
-    document.getElementById('fuoriAddBtn')
-            .addEventListener('click', () => this.addTodoHandler('fuoriManutenzione'));
     document.getElementById('softwareInput')
+            .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
+    document.getElementById('userTypeIn')
+            .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
+    document.getElementById('software')
             .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
     document.getElementById('fuoriInput')
             .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
-    document.getElementById('software')
-            .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
     document.getElementById('out')
             .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
+    document.getElementById('userTypeOut')
+            .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
+    document.getElementById('fuoriAddBtn')
+            .addEventListener('click', () => this.addTodoHandler('fuoriManutenzione'));
     document.getElementById('resetBtn')
             .addEventListener('click', () => this.resetData());
     document.getElementById('restartBtn')
