@@ -1,80 +1,80 @@
 body{
-    margin: 0;
-    padding: 20px;
-    font-family: 'Supreme', sans-serif;
-    background: #1a1a1a;
-    color: #fff;
-    overflow: hidden;
+  margin: 0;
+  padding: 20px;
+  font-family: 'Supreme', sans-serif;
+  background: #1a1a1a;
+  color: #fff;
+  overflow: hidden;
 }
 
 input {
-    padding: 10px 12px;
-    border: none;
-    border-radius: 5px;
-    background: #3d3d3d;
-    color: #fff;
-    font-size: 15px;
-    font-family: 'Supreme', sans-serif;
-    flex: 1; 
+  padding: 10px 12px;
+  border: none;
+  border-radius: 5px;
+  background: #3d3d3d;
+  color: #fff;
+  font-size: 15px;
+  font-family: 'Supreme', sans-serif;
+  flex: 1; 
 }
 
 input:focus {
-    outline: none;
-    animation: animationInput 2s ease-in-out infinite;
-    border: 2.5px solid transparent;
-    background: 
-        linear-gradient(#292929, #292929) padding-box,
-        linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400) border-box;
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    width: 80%;
-    background-size: 400% auto;
-    animation: gradient 15s linear infinite;
+  outline: none;
+  animation: animationInput 2s ease-in-out infinite;
+  border: 2.5px solid transparent;
+  background: 
+      linear-gradient(#292929, #292929) padding-box,
+      linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400) border-box;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  width: 80%;
+  background-size: 400% auto;
+  animation: gradient 15s linear infinite;
 }
 
 button {
-    height: 40px;
-    padding: 0 15px;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    font-size: 18px;
-    width: 10%;
-    font-family: 'Supreme', sans-serif;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+  height: 40px;
+  padding: 0 15px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  width: 10%;
+  font-family: 'Supreme', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .modify-task-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .special{
-    -webkit-text-fill-color: transparent; 
-    background-image: linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    animation: gradient 8s linear infinite;
+  -webkit-text-fill-color: transparent; 
+  background-image: linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  animation: gradient 8s linear infinite;
 }
 
 @keyframes gradient {
-    to {background-position: 400% center}
+  to {background-position: 400% center}
 }
 
 @keyframes FadeOut{
-    0%{opacity: 1;}
-    100%{opacity: 0;}
+  0%{opacity: 1;}
+  100%{opacity: 0;}
 }
 
 @keyframes FadeIn{
-    0%{opacity: 0;}
-    100%{opacity: 1;}
+  0%{opacity: 0;}
+  100%{opacity: 1;}
 }
 
 /*LOADER BY: https://cssloaders.github.io*/
@@ -90,6 +90,7 @@ button {
   box-sizing: border-box;
   animation: animloader 1s linear infinite;
 }
+
 .loader::after {
   content: '';  
   box-sizing: border-box;
