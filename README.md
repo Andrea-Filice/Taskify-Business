@@ -1,4 +1,6 @@
 # Taskify Business
+[![GitHub release](https://img.shields.io/github/v/release/Play-Epik-Inc/Taskify-Business?color=009dff)](https://github.com/Play-Epik-Inc/Taskify-Business/releases/latest) [![GitHub license](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE) [![(Runtime) Build and Test](https://github.com/facebook/react/actions/workflows/runtime_build_and_test.yml/badge.svg)](https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/.github/workflows/windows.yml)
+<hr>
 
 ![alt text](https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/src/assets/gitImages/git_slide1.png "Main Page")
 
@@ -24,10 +26,3 @@ By providing a clear, centralized interface, Maintenance Scheduler streamlines p
 - **Electron** for cross-platform desktop application
 - **Node.js** backend for file storage and IPC communication
 - **HTML/CSS/JavaScript** for responsive and accessible UI
-
-## Installation
-
-Follow the steps below to set up Taskify Business locally.
-
-1. **Download the Setup from Releases , you can choose among: Windows, macOS and Linux!**
-   [![GitHub release](https://img.shields.io/github/v/release/Play-Epik-Inc/Taskify-Business?color=009dff)](https://github.com/Play-Epik-Inc/Taskify-Business/releases/latest)
