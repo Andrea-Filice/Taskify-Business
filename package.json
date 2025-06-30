@@ -3,7 +3,7 @@
   "version": "1.6.0",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
   "license": "Apache",
-  "author":{
+  "author": {
     "name": "Play Epik, Incoporation",
     "email": "help.playepik@gmail.com"
   },
@@ -19,7 +19,8 @@
     "productName": "Taskify Business",
     "win": {
       "icon": "src/assets/icon.ico",
-      "target": "nsis"
+      "target": "nsis",
+      "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
     },
     "nsis": {
       "oneClick": false,
