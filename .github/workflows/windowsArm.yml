@@ -37,4 +37,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          npx electron-builder --win --arm64 --config win.artifactName="TaskifyBusiness-${{ github.ref_name }}-arm64.${ext}" --publish always
+          npx electron-builder --win --arm64 --config "{\"win\":{\"artifactName\":\"TaskifyBusiness-${{ github.ref_name }}-arm64.${ext}\"}}" --publish always
