@@ -1,8 +1,8 @@
 {
   "name": "taskify-business",
-  "version": "1.5.4",
+  "version": "1.6.0",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
-  "license": "MIT",
+  "license": "Apache",
   "author":{
     "name": "Play Epik, Incoporation",
     "email": "help.playepik@gmail.com"
