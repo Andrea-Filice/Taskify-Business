@@ -22,18 +22,30 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 24 
+          node-version: 24
 
       # Install dependencies
       - name: Install dependencies
         run: npm install && npm install electron
 
-      #Updating Packages
+      # Updating Packages
       - name: Updating Packages
-        run: npx npm-check-updates && npx && npx npm-check-updates -u && npm install
+        run: npx npm-check-updates && npx npm-check-updates -u && npm install
 
       # Build the Electron app
       - name: Build Electron app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-builder --linux AppImage --linux rpm --linux deb --x64 --publish always
+        run: |
+          npx electron-builder \
+            --linux AppImage rpm deb \
+            --arm64 \
+            --config linux.artifactName="TaskifyBusiness-${{ github.ref_name }}-arm64-${arch}.${ext}" \
+            --publish always
+
+      #Upload Artifact
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: TaskifyBusiness-linux-arm64
+          path: dist/*
