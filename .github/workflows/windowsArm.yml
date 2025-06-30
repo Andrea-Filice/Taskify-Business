@@ -28,12 +28,13 @@ jobs:
       - name: Install dependencies
         run: npm install && npm install electron
 
-      #Updating Packages
+      # Updating Packages
       - name: Updating Packages
-        run: npx npm-check-updates && npx && npx npm-check-updates -u && npm install
+        run: npx npm-check-updates && npx npm-check-updates -u && npm install
 
       # Build the Electron app
       - name: Build Electron app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-builder --win --arm64 --publish always
+        run: |
+          npx electron-builder --win --arm64 --publish always
