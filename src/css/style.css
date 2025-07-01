@@ -130,7 +130,7 @@ li {
     width: 100px;
 }
 
-input:focus {
+input:focus:not(#checkbox):not(#joinBeta) {
     outline: none;
     animation: animInputIn 2s ease-in-out infinite;
 }
@@ -140,15 +140,12 @@ input::after{
     animation: animInputOut 1s ease-in-out forwards;
 }
 
-button:focus:not(.infoButton):not(.settingsButton),
-option:focus:not(.infoButton):not(.settingsButton),
-.aiButton {
+button:focus:not(.infoButton):not(.settingsButton), .aiButton {
     outline: none;
     animation: animButtonIn 2s ease-in-out infinite;
 }
 
-button:not(.infoButton):not(.settingsButton)::after,
-option:not(.infoButton):not(.settingsButton)::after {
+button:not(.infoButton):not(.settingsButton)::after{
     outline: none;
     animation: animButtonOut 1s ease-in-out forwards;
 }
@@ -162,7 +159,6 @@ option:not(.infoButton):not(.settingsButton)::after {
     outline: none;
     animation: animRedOut 1s ease-in-out forwards;
 }
-
 
 @keyframes animInputIn{
     0%{
