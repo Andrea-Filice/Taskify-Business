@@ -220,12 +220,12 @@ window.todoManager = new class TodoManager {
         colorTCompletedBG = 'rgba(7,185,7,0.1)'
         break;
       case 'blue':
-        colorTCompleted = 'rgba(0,157,255,1)'; 
+        colorTCompleted = 'rgb(0, 157, 255)'; 
         colorTCompletedBG = 'rgba(0,157,255,0.1)'
         break;
       case 'orange':
+        colorTCompleted = 'rgba(255, 149, 0, 1)';
         colorTCompletedBG = 'rgba(255, 149, 0, 0.1)';
-        colorTCompleted = 'rgba(255, 149, 0, 1)'; 
         break;
       case 'yellow':
         colorTCompleted = 'rgba(255, 217, 0, 1)'; 
@@ -267,7 +267,7 @@ window.todoManager = new class TodoManager {
     taskCompletedColor = document.getElementById('colorTaskCompleted').value;
 
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
-    document.title = 'Taskify Business - ' + companyName;
+    document.title = `Taskify Dashboard - ${companyName}`;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
 
