@@ -458,8 +458,7 @@ window.todoManager = new class TodoManager {
   handleScroll() {
     if (window.scrollY === 0) {
       document.getElementById('infoBox').style.display = "none";
-      document.getElementById("ibtn").style.display = "block";
-      document.getElementById('sbtn').style.display = "block";
+      toggleButtons(true);
       showBetaOptions(joinBeta);
     }
   }
@@ -510,28 +509,34 @@ window.todoManager = new class TodoManager {
 }();
 
 //OPEN INFO AND SETTINGS
+const buttons =[
+  info = document.getElementById('ibtn'),
+  settings = document.getElementById('sbtn'),
+  ai = document.getElementById('openSidebarBtn')
+];
+
 function openInfoBox(){
   document.getElementById('infoBox').style.display = 'block';
-  document.getElementById("ibtn").style.display = "none";
-  document.getElementById('sbtn').style.display = 'none';
-  document.getElementById('openSidebarBtn').style.display = "none";
   document.getElementById('infoBox').scrollIntoView({ behavior: 'smooth' });
+  toggleButtons(false);
 }
 
 function closeInfoBox(){
   document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
   document.getElementById('infoBox').style.display = 'none';
-  document.getElementById("ibtn").style.display = "block";
-  document.getElementById('sbtn').style.display = 'block';
-  document.getElementById('openSidebarBtn').style.display = "block";
+  toggleButtons(false);
 }
 
 function openSettings(){
   document.getElementById('infoBox').style.display = 'block';
-  document.getElementById('ibtn').style.display = 'none';
-  document.getElementById('sbtn').style.display = 'none';
-  document.getElementById('openSidebarBtn').style.display = "none";
   document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
+  toggleButtons(false);
+}
+
+function toggleButtons(value){
+  buttons.forEach(e  => {
+      e.style.display = (value) ? "block" : "none";
+  });
 }
 
 async function quitApplication() {
