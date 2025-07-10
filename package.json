@@ -45,7 +45,7 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^37.2.1",
+    "electron": "^37.2.0",
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
