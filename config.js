@@ -5,7 +5,7 @@ const fs = require('fs')
 let mainWindow = null
 let categoryModifyTask, indexModifyTask
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
-const DEBUG = true
+const DEBUG = false
 
 let todos = {
   softwareComponents: [],
