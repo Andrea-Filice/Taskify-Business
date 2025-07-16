@@ -732,6 +732,12 @@ function appendMsg(text, who = "ai"){
   aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
 }
 
+function clearChat() {
+    const chatHistory = document.querySelector('.ai-chat-history');
+    if (chatHistory) 
+        chatHistory.innerHTML = '';
+}
+
 function showBetaOptions(value){
   if(!autoClose)
     document.getElementById('openSidebarBtn').style.display = (value === true && window.scrollY === 0) ? "block" : "none";
@@ -740,13 +746,10 @@ function showBetaOptions(value){
 //INFO ABOUT BETA PROGRAM
 function ShowInfoPanel(){ipcRenderer.invoke('show-alert', "If enabled, this option show a new button for AI Assistant in Beta version, if not will be not show anything.")}
 
-//WEB REFERENCES
+//WEB REFERENCES SECTION
 document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business");});
-
 document.getElementById('licenseBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE");});
 
-function clearChat() {
-    const chatHistory = document.querySelector('.ai-chat-history');
-    if (chatHistory) 
-        chatHistory.innerHTML = '';
-}
+//NEED HELP SECTION
+document.getElementById('feedback').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=bug");});
+document.getElementById('contactUs').addEventListener('click', () =>{shell.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});

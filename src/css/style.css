@@ -59,7 +59,7 @@ input {
     font-family: 'Supreme', sans-serif;
 }
 
-#repoGitBtn, #licenseBtn{
+#repoGitBtn, #licenseBtn, #feedback, #contactUs{
     align-self: center; 
     padding: 10px 15px;
     width: 50%;
@@ -536,7 +536,7 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 
 .suggestion{display: none;}
 
-.references{
+.references, .needHelp{
     display: flex;
     gap: 10px;
 }
