@@ -140,7 +140,6 @@ function createWindow() {
   });
 
   ipcMain.on('deleteTask', () =>{mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);});
-
   ipcMain.on('load-todos', event => {event.returnValue = todos})
 
   ipcMain.on('save-todos', (event, newTodos) => {
@@ -202,6 +201,8 @@ function createInputPopUp() {
   if (task) {
     inputWindow.webContents.once('did-finish-load', () => {
       inputWindow.webContents.send('retrieveTaskName', task.text);
+      inputWindow.webContents.send('retrieveVersion', task.prevVersion, "inputPV");
+      inputWindow.webContents.send('retrieveVersion', task.nextVersion, "inputNV");
     });
   }
 }

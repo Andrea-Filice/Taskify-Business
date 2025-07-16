@@ -28,14 +28,15 @@ function submitInput() {
   window.close();
 }
 
-function DeleteTask(){
-  ipcRenderer.send('deleteTask');
-  window.close();
-}
-
+function DeleteTask(){ipcRenderer.send('deleteTask'); Quit();}
 function Quit() {window.close();}
 
+//GET CURRENT TASK DATAS 
 ipcRenderer.on('retrieveTaskName', (event, name) =>{
   document.getElementById('startingText').innerHTML = `Modify the proprieties of the actual selected task (${name}).`
   document.getElementById('inputName').value = name;
+});
+
+ipcRenderer.on('retrieveVersion', (event, version, elementID) => {
+  document.getElementById(elementID).value = version;
 });
