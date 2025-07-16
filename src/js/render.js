@@ -296,6 +296,23 @@ window.todoManager = new class TodoManager {
                   size: 16
                 }
               }
+            },
+            tooltip: {
+              titleFont: {
+                family: 'Excon, Sans Serif',
+                size: 14,
+                weight: 500
+              },
+              bodyFont: {
+                family: 'Excon, Sans Serif',
+                size: 12,
+                weight: 'normal'
+              },
+              footerFont: {
+                family: 'Excon, Sans Serif',
+                size: 10,
+                style: 'italic'
+              },
             }
           },
           scales: {
@@ -597,6 +614,7 @@ function CallAIFunction(input){
   const unpackedPath = path.join(process.resourcesPath, 'app.asar.unpacked', 'src', 'ai', 'contentAnalizer.py');
   const packedPath = path.join(process.resourcesPath, 'src', 'ai', 'contentAnalizer.py');
   scriptPath = (DEBUG) ? 'src/ai/contentAnalizer.py' : ((require('fs').existsSync(unpackedPath)) ? unpackedPath : packedPath);
+
   execFile('python', [scriptPath, input], (error, stdout, stderr) =>{
     if(error){
       appendMsg(`Error during the load of AI Scripts: ${error.message}`, "AI");
