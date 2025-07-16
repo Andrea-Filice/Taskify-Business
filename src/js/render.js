@@ -357,11 +357,11 @@ window.todoManager = new class TodoManager {
                 ${versionHtml}
                 <small>Assigned to: <i>${employee}</i></small>
                 <div style="display: flex; gap: 5px; margin-top: 0px;">
-                    <button class="delete-btn" style="width: 100px; background-color: white;" title="Mark as Completed">
-                      <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
-                    </button>
                     <button class="edit-btn" id="editBtn" title="Edit Task">
                       <img src="assets/_edit.png" draggable="false" width="20px" height="20px">
+                    </button>
+                    <button class="delete-btn" style="width: 100px; background-color: white;" title="Mark as Completed">
+                      <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
                     </button>
                 </div>
             </div>

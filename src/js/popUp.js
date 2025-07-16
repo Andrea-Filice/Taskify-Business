@@ -34,7 +34,15 @@ function submitInput() {
   window.close();
 }
 
-function DeleteTask(){ipcRenderer.send('deleteTask'); Quit();}
+function DeleteTask(){
+  ipcRenderer.invoke("show-confirm", "Are you sure you want to delete this Task?")
+    .then(userResponse => {
+      if(userResponse){
+        ipcRenderer.send('deleteTask'); 
+        Quit();
+      }
+    });
+}
 function Quit() {window.close();}
 
 //GET CURRENT TASK DATAS 
