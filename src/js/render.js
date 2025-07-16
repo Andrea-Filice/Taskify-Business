@@ -155,7 +155,7 @@ window.todoManager = new class TodoManager {
     }
 
     if(prevVersion && !nextVersion){
-      ipcRenderer.invoke('show-alert', "Error creating the Task, invalid Previous/Newer Versio.")
+      ipcRenderer.invoke('show-alert', "Error creating the Task, invalid Previous/Newer version.")
       return;
     }
     else if(!prevVersion && nextVersion){
