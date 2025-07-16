@@ -1,4 +1,4 @@
-name: Build Taskify Business for Windows arm64
+name: Build Windows arm64
 
 on:
   push:

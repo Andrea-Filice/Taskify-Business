@@ -1,25 +1,29 @@
 # Taskify Business
-[![GitHub release](https://img.shields.io/github/v/release/Play-Epik-Inc/Taskify-Business?color=009dff)](https://github.com/Play-Epik-Inc/Taskify-Business/releases/latest) [![GitHub license](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE) [![Build Taskify Business for Windows](https://github.com/Play-Epik-Inc/Taskify-Business/actions/workflows/windows.yml/badge.svg?branch=dev)](https://github.com/Play-Epik-Inc/Taskify-Business/actions/workflows/windows.yml) [![Build Taskify Business for macOS](https://github.com/Play-Epik-Inc/Taskify-Business/actions/workflows/macOs.yml/badge.svg)](https://github.com/Play-Epik-Inc/Taskify-Business/actions/workflows/macOs.yml)
+[![GitHub release](https://img.shields.io/github/v/release/Play-Epik-Inc/Taskify-Business?color=009dff)](https://github.com/Play-Epik-Inc/Taskify-Business/releases/latest) [![GitHub license](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE) [![Build](https://github.com/Play-Epik-Inc/Taskify-Business/actions/workflows/windows.yml/badge.svg?branch=dev)](https://github.com/Play-Epik-Inc/Taskify-Business/actions/workflows/windows.yml)
 <hr>
 
-![alt text](https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/src/assets/gitImages/git_slide1.png "Main Page")
+![alt text](https://raw.githubusercontent.com/Play-Epik-Inc/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide1.png "Main Page")
 
 **Taskify Business** is a powerful desktop application designed to help businesses organize, assign, and track maintenance tasks for their computer softwares. 
 By providing a clear, centralized interface, Maintenance Scheduler streamlines planning, reduces downtime, and ensures each component receives timely updates and checks.
 
-## Key Features
+# **Key Features**:
 
-- **Task Categorization**  
-  Group maintenance activities by software component or out maintenance.
+# **Task Categorization**  
+Categorize your activity. Select from 2 categories available, "Maintenance Task" or out.
+![alt text](https://raw.githubusercontent.com/Play-Epik-Inc/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide1.png "Task categorization")
   
-- **Version Tracking**  
-  Record current and target versions for each component, making upgrades and rollbacks straightforward.
+# **Version Tracking**  
+Keep track of new versions of third-party tools and apps. You won't forget to update them.
+![alt text](https://raw.githubusercontent.com/Play-Epik-Inc/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide2.png "Version Tracking")
   
-- **AI Assistant (Beta)**  
-  AI will assist you during the scheduling process of all maintenance Tasks.
+# **Powered by AI (Beta)**  
+  /Create, /Delete and /Modify Tasks, only with a few commands ahead.
+![alt text](https://play-epik-incorporation.netlify.app/img/_devsAi.webp "AI Assistant")
   
-- **Progress Dashboard**  
-  Visual overviews of completed vs. pending tasks, helping managers spot bottlenecks and resource needs.
+# **Progress Dashboard**  
+  Keep track of tasks and time at the same time. Simply with a graph.
+  ![alt text](https://raw.githubusercontent.com/Play-Epik-Inc/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide3.png "Charts")
 
 ## Tech Stack
 
