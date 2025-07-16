@@ -24,7 +24,7 @@ function submitInput() {
   const previousVersion = document.getElementById('inputPV').value.trim();
   const newerVersion = document.getElementById('inputNV').value.trim();
 
-  //SEND NEW VALUES
+  //SEND NEW VALUES (IF MODIFIED)
   if(inputName)
     ipcRenderer.send('inputSend', inputName, "task_name")
   if(previousVersion)
@@ -47,7 +47,7 @@ function Quit() {window.close();}
 
 //GET CURRENT TASK DATAS 
 ipcRenderer.on('retrieveTaskName', (event, name) =>{
-  document.getElementById('startingText').innerHTML = `Modify the proprieties of the actual selected task (${name}).`
+  document.getElementById('startingText').innerHTML = `Edit the properties of the currently selected Task (${name}).`
   document.getElementById('inputName').value = name;
 });
 

@@ -270,14 +270,14 @@ window.todoManager = new class TodoManager {
           labels: chartData.labels, 
           datasets: [
             {
-              label: 'Task Created',
+              label: 'Tasks Created',
               data: chartData.created,
               borderColor: colorTCreated,
               backgroundColor: colorTCreatedBG,
               tension: 0.3
             },
             {
-              label: 'Task Completed',
+              label: 'Tasks Completed',
               data: chartData.completed,
               borderColor: colorTCompleted,
               backgroundColor: colorTCompletedBG,
@@ -728,6 +728,7 @@ function appendMsg(text, who = "ai"){
         </div>
     `;
   }
+  
   aiChatHistory.appendChild(div);
   aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
 }
@@ -744,7 +745,7 @@ function showBetaOptions(value){
 }
 
 //INFO ABOUT BETA PROGRAM
-function ShowInfoPanel(){ipcRenderer.invoke('show-alert', "If enabled, this option show a new button for AI Assistant in Beta version, if not will be not show anything.")}
+function ShowInfoPanel(){ipcRenderer.invoke('show-alert', "If enabled, this option will show the button for AI in Beta version.")}
 
 //WEB REFERENCES SECTION
 document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business");});

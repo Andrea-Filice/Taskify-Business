@@ -51,11 +51,7 @@ function loadTodosFromDisk() {
   }
 }
 
-function saveTodosToDisk() {
-  try {
-    fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')
-  } catch (err){}
-}
+function saveTodosToDisk() {try {fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')} catch (err){console.log(err)}}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
