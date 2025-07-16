@@ -3,11 +3,11 @@ const { ipcRenderer } = require('electron')
 function OnLoad(){
   setTimeout(() =>{
     document.getElementById('loading').style.animation = "FadeOut 0.5s linear forwards";
-  }, 500)
+  }, 100)
   setTimeout(() =>{
     document.getElementById('loading').style.display = "none";
     document.getElementById('main').style.animation = "FadeIn 0.5s linear forwards";
-  }, 1000);
+  }, 500);
 }
 
 function submitInput() {
