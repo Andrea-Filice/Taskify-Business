@@ -27,3 +27,5 @@
 [03f5d57], [5d99811] Fixed some mismatch phrases.
 [a55f1c8] Fixed Settings button.
 [cf35872] Reduced Loading Time for Edit PopUp
+[3f9f055] Fixed glow effect for AI Text Input.
+[7700196] Fixed "Hello" screen for AI.
