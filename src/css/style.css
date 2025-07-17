@@ -130,7 +130,7 @@ li {
     width: 100px;
 }
 
-input:focus:not(#checkbox):not(#joinBeta) {
+input:focus:not(#checkbox):not(#joinBeta):not(#aiInput) {
     outline: none;
     animation: animInputIn 2s ease-in-out infinite;
 }

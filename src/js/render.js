@@ -7,8 +7,7 @@ const Chart = require('chart.js/auto').Chart;
 let taskCreated = 0, taskCompleted = 0;
 let autoClose = false, joinBeta = true, messageSend = false;
 let companyName = undefined;
-let taskCompletedColor = document.getElementById('colorTaskCreated').value;
-let taskCreatedColor = document.getElementById('colorTaskCompleted').value;
+let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
 
 const DEBUG = ipcRenderer.sendSync('checkForDebug');
 
@@ -34,7 +33,6 @@ function OnLoad(){
 
 ///MARK: TASK MANAGEMENT SECTION
 window.todoManager = new class TodoManager {
-
   constructor() {
     const categoryID = document.getElementById('categoryClean');
     const newCompanyName = document.getElementById('nameCompany');
@@ -44,6 +42,7 @@ window.todoManager = new class TodoManager {
       softwareComponents: loaded.softwareComponents || [],
       fuoriManutenzione: loaded.fuoriManutenzione || []
     };
+    
     taskCreated = loaded.taskCreated || 0;
     taskCompleted = loaded.taskCompleted || 0;
     autoClose = loaded.autoClose || false;
@@ -199,7 +198,7 @@ window.todoManager = new class TodoManager {
     joinBetaCheckBox.checked = joinBeta;
 
     //COLOR SELECTION
-    //TaskCompleted
+    ///TaskCompleted
     switch(dropDowntaskCompleted){
       case 'red':
         colorTCompleted = 'rgba(255, 0, 0, 1)'; 
@@ -223,7 +222,7 @@ window.todoManager = new class TodoManager {
         break;
     }
 
-    //TaskCreated
+    ///TaskCreated
     switch(dropDowntaskCreated){
       case 'red':
         colorTCreated = 'rgba(255, 0, 0, 1)'; 
@@ -249,7 +248,7 @@ window.todoManager = new class TodoManager {
 
     //AUTO-CLOSE SETTINGS
     if (!autoClose)
-        window.addEventListener('scroll', this.handleScroll);
+      window.addEventListener('scroll', this.handleScroll);
     else 
       window.removeEventListener('scroll', this.handleScroll);
 
@@ -493,15 +492,15 @@ window.todoManager = new class TodoManager {
     chartData.created.push(taskCreated);
     chartData.completed.push(taskCompleted);
     if (chartData.labels.length > 10) {
-        chartData.labels.shift();
-        chartData.created.shift();
-        chartData.completed.shift();
+      chartData.labels.shift();
+      chartData.created.shift();
+      chartData.completed.shift();
     }
     if (tasksChart) {
-        tasksChart.data.labels = chartData.labels;
-        tasksChart.data.datasets[0].data = chartData.created;
-        tasksChart.data.datasets[1].data = chartData.completed;
-        tasksChart.update();
+      tasksChart.data.labels = chartData.labels;
+      tasksChart.data.datasets[0].data = chartData.created;
+      tasksChart.data.datasets[1].data = chartData.completed;
+      tasksChart.update();
     }
   }
 
@@ -541,9 +540,7 @@ function openSettings(){
 }
 
 function toggleButtons(value){
-  buttons.forEach(e  => {
-      e.style.display = (value) ? "block" : "none";
-  });
+  buttons.forEach(e  => {e.style.display = (value) ? "block" : "none";});
 }
 
 async function quitApplication() {
@@ -677,9 +674,7 @@ const aiChatHistory = document.getElementById('aiChatHistory');
 //SIDEBAR ACTIONS
 openSidebarBtn.onclick = () =>{
   sidebar.classList.add('open');
-  setTimeout(() =>{
-    aiInput.focus();
-  }, 400);
+  setTimeout(() =>{aiInput.focus();}, 400);
 
   if(!messageSend){
     CallAIFunction("hello");
@@ -699,9 +694,7 @@ aiSendBtn.onclick = () => {
     sidebar.classList.add('open');
 
   CallAIFunction(msg);
-  setTimeout(() => {
-    appendMsg("AI: Elaborating request...", "AI");
-  }, 800);
+  setTimeout(() => {appendMsg("AI: Elaborating request...", "AI");}, 800);
 }
 
 aiInput.addEventListener('keydown', function(e){if(e.key === 'Enter') aiSendBtn.click();});
@@ -734,9 +727,8 @@ function appendMsg(text, who = "ai"){
 }
 
 function clearChat() {
-    const chatHistory = document.querySelector('.ai-chat-history');
-    if (chatHistory) 
-        chatHistory.innerHTML = '';
+  const chatHistory = document.querySelector('.ai-chat-history');
+  chatHistory.innerHTML = (chatHistory) ? '' : chatHistory.innerHTML;
 }
 
 function showBetaOptions(value){

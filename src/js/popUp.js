@@ -51,6 +51,4 @@ ipcRenderer.on('retrieveTaskName', (event, name) =>{
   document.getElementById('inputName').value = name;
 });
 
-ipcRenderer.on('retrieveVersion', (event, version, elementID) => {
-  document.getElementById(elementID).value = version;
-});
+ipcRenderer.on('retrieveVersion', (event, version, elementID) => {document.getElementById(elementID).value = version;});

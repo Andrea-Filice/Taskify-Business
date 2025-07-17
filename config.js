@@ -63,7 +63,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      webSecurity: false
+      webSecurity: true
     },
     icon: 'src/assets/icon.ico'
   })
@@ -186,7 +186,7 @@ function createInputPopUp() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      webSecurity: false
+      webSecurity: true
     },
     icon: 'src/assets/icon.ico'
   })
