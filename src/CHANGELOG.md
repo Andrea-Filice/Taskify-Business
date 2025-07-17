@@ -4,8 +4,8 @@
 
 - dotenv `17.2.0`
    - [New in 17.2.0](https://www.npmjs.com/package/dotenv/v/17.2.0)
-- Electron `37.2.2`
-  - [New in 37.2.2](https://github.com/electron/electron/releases/tag/v37.2.2)
+- Electron `37.2.3`
+  - [New in 37.2.3](https://github.com/electron/electron/releases/tag/v37.2.2)
 - Supabase-js `2.51.0`
   - [New in 2.51.0](https://github.com/supabase/supabase-js/releases/tag/v2.51.0)
 - NodeJS `24.4.1`
