@@ -81,10 +81,11 @@ def parse_input(text):
         '<br> <b>/clear</b> or <b>/cls</b> = Clear the chat. <br> ' \
         '<br> <b>/delete</b> = Delete a task, the syntax is <i>/delete TaskName !category maintenance/out</i>.'
     
-    #CHECK FOR HELLO COMBINATION
+    #CHECK FOR HELLO OR HI COMBINATION
     hello_match = re.match(r"hello", text, re.IGNORECASE)
+    hi_match = re.match(r"hi", text, re.IGNORECASE)
 
-    if(hello_match):
+    if(hello_match or hi_match):
         return "HI! Welcome to AI Assistant of Taskify Business! write /help for more commands!"
     
     #CHECK FOR '/CLEAR' OR '/CLS' COMMAND
