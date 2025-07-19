@@ -20,7 +20,7 @@ Attach some ScreenShots here
 Describe where the bug happens [e.g. In Settings].
 
 **Desktop (please complete the following information):**
- - OS: [e.g. Windows]
+ - OS: [e.g. Windows, macOS etc...]
  - App Version: [latest: [![GitHub release](https://img.shields.io/github/v/release/Play-Epik-Inc/Taskify-Business?color=009dff)](https://github.com/Play-Epik-Inc/Taskify-Business/releases/latest)]
 
 **Additional context**
