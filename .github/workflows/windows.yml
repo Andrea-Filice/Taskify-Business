@@ -1,4 +1,4 @@
-name: Build Taskify Business for Windows
+name: Build Windows
 
 on:
   push:

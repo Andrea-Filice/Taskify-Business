@@ -45,29 +45,29 @@ body{background-color: #1a1a1a;}
 
 /*END LOADER*/
 @keyframes FadeOut{
-    0%{opacity: 1;}
-    100%{opacity: 0;}
+  0%{opacity: 1;}
+  100%{opacity: 0;}
 }
 
 .logo {
-    margin-top: 50px;
-    width: 200px;
-    height: 200px;
-    background-image: linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #e62c6d, #ff530f, #ff9100, #ffc400);
-    background-size: 200% auto;
-    animation: gradient 1s linear infinite;
-    -webkit-mask-image: url('../assets/_gear.png');
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: contain;
-    -webkit-mask-position: center;
-    mask-image: url('../assets/_gear.png');
-    mask-repeat: no-repeat;
-    mask-size: contain;
-    mask-position: center;
-    display: inline-block;
+  margin-top: 50px;
+  width: 200px;
+  height: 200px;
+  background-image: linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #e62c6d, #ff530f, #ff9100, #ffc400);
+  background-size: 200% auto;
+  animation: gradient 1s linear infinite;
+  -webkit-mask-image: url('../assets/_gear.png');
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  -webkit-mask-position: center;
+  mask-image: url('../assets/_gear.png');
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  mask-position: center;
+  display: inline-block;
 }
 
 @keyframes gradient {
-    95% {background-position: 200% center}
-    100%{background-position: 204% center;}
+  95% {background-position: 200% center}
+  100%{background-position: 204% center;}
 }

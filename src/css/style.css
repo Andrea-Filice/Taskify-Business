@@ -59,7 +59,7 @@ input {
     font-family: 'Supreme', sans-serif;
 }
 
-#repoGitBtn, #licenseBtn{
+#repoGitBtn, #licenseBtn, #feedback, #contactUs{
     align-self: center; 
     padding: 10px 15px;
     width: 50%;
@@ -130,7 +130,7 @@ li {
     width: 100px;
 }
 
-input:focus:not(#checkbox):not(#joinBeta) {
+input:focus:not(#checkbox):not(#joinBeta):not(#aiInput) {
     outline: none;
     animation: animInputIn 2s ease-in-out infinite;
 }
@@ -536,7 +536,7 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 
 .suggestion{display: none;}
 
-.references{
+.references, .needHelp{
     display: flex;
     gap: 10px;
 }

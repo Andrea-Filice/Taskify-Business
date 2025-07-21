@@ -16,26 +16,26 @@
         </center>
         <div id="main" style="opacity: 0;">
             <h1 style="font-size: 45px; margin-top: -5px;"><img src="assets/_edit.png" draggable="false" width="30px" height="30px"> Edit Task <p style="display: inline; font-style: inherit; font-family: 'Excon', sans-serif;" class="special">Proprieties:</p></h1>
-            <h4 style="font-weight: 400; margin-top: -30px; font-family: 'Excon', sans-serif;" id="startingText">Modify the proprieties of the actual selected task.</h4>
+            <h4 style="font-weight: 400; margin-top: -30px; font-family: 'Excon', sans-serif;" id="startingText">Edit the properties of the currently selected task.</h4>
             <div class="modify-task-row">
                 <label for="inputName" style="color: white; font-family: 'Excon', sans-serif;">Task Name: </label>
                 <input type="text" id="inputName" placeholder="Task Name..." title="Enter the new Task Name">
             </div>
             <br>
             <div class="modify-task-row">
-                <label for="inputPV" style="color: white; font-family: 'Excon', sans-serif;">Task Previous Version: </label>
+                <label for="inputPV" style="color: white; font-family: 'Excon', sans-serif;">Previous Version: </label>
                 <input type="text" id="inputPV" placeholder="Previous Version..." title="Optional">
             </div>
             <br>
             <div class="modify-task-row">
-                <label for="inputNV" style="color: white; font-family: 'Excon', sans-serif;">Task Newer Version: </label>
+                <label for="inputNV" style="color: white; font-family: 'Excon', sans-serif;">Newer Version: </label>
                 <input type="text" id="inputNV" placeholder="Newer Version..." title="Optional">
             </div>
             <br>
             <div class="modify-task-row" style="justify-content: end;" id="buttons">
-                <button onclick="submitInput()" style="background-color: #009dff;"><img src="assets/_edit.png" width="20px" height="20px" style="margin-top: 2px;" draggable="false" title="Modify"></button>
-                <button onclick="DeleteTask()" style="background-color: red;"><img src="assets/_delete.png" width="20px" height="20px" style="margin-top: 2px;" draggable="false" title="Delete"></button>
-                <button onclick="Quit()" style="background-color: red;"><img src="assets/_close.png" width="20px" height="20px" style="margin-top: 2px; margin-left: 1px;" draggable="false" title="Close"></button>
+                <button onclick="submitInput()" style="background-color: #009dff;" class="editBtn" title="Modify"><img src="assets/_edit.png" width="20px" height="20px" style="margin-top: 2px;" draggable="false"></button>
+                <button onclick="DeleteTask()" style="background-color: red;" class="deleteBtn" title="Delete"><img src="assets/_delete.png" width="20px" height="20px" style="margin-top: 2px;" draggable="false"></button>
+                <button onclick="Quit()" style="background-color: red;" class="closeBtn" title="Close"><img src="assets/_close.png" width="20px" height="20px" style="margin-top: 2px; margin-left: 1px;" draggable="false"></button>
             </div>
         </div>
     </body>

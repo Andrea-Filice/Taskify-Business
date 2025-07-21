@@ -5,7 +5,7 @@ const fs = require('fs')
 let mainWindow = null
 let categoryModifyTask, indexModifyTask
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
-const DEBUG = true
+const DEBUG = false
 
 let todos = {
   softwareComponents: [],
@@ -51,11 +51,7 @@ function loadTodosFromDisk() {
   }
 }
 
-function saveTodosToDisk() {
-  try {
-    fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')
-  } catch (err){}
-}
+function saveTodosToDisk() {try {fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')} catch (err){console.log(err)}}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -67,7 +63,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      webSecurity: false
+      webSecurity: true
     },
     icon: 'src/assets/icon.ico'
   })
@@ -140,7 +136,6 @@ function createWindow() {
   });
 
   ipcMain.on('deleteTask', () =>{mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);});
-
   ipcMain.on('load-todos', event => {event.returnValue = todos})
 
   ipcMain.on('save-todos', (event, newTodos) => {
@@ -191,7 +186,7 @@ function createInputPopUp() {
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      webSecurity: false
+      webSecurity: true
     },
     icon: 'src/assets/icon.ico'
   })
@@ -202,6 +197,8 @@ function createInputPopUp() {
   if (task) {
     inputWindow.webContents.once('did-finish-load', () => {
       inputWindow.webContents.send('retrieveTaskName', task.text);
+      inputWindow.webContents.send('retrieveVersion', task.prevVersion, "inputPV");
+      inputWindow.webContents.send('retrieveVersion', task.nextVersion, "inputNV");
     });
   }
 }
