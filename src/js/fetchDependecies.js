@@ -4,4 +4,4 @@ try{
           .then(data => {
             document.getElementById('latestversion').innerText = "Latest version avaible: " + data.versionTaskify;
           })
-} catch (error) {document.getElementById('latestversion').innerText = "Latest version avaible: Error retrieving data " + error;}
+} catch (error) {document.getElementById('latestversion').innerText = `Latest version avaible: (Unknown error: ${error})`;}

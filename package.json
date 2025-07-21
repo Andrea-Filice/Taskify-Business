@@ -3,6 +3,10 @@
   "version": "1.7.0",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
   "license": "Apache",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Play-Epik-Inc/Taskify-Business"
+  },
   "author": {
     "name": "Play Epik, Incoporation",
     "email": "help.playepik@gmail.com"
@@ -45,13 +49,13 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^37.2.0",
+    "electron": "^37.2.3",
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.50.3",
+    "@supabase/supabase-js": "^2.52.0",
     "chart.js": "^4.5.0",
-    "dotenv": "^17.0.1",
+    "dotenv": "^17.2.0",
     "npm": "^11.4.2"
   }
 }

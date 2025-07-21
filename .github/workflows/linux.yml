@@ -1,4 +1,4 @@
-name: Build Taskify Business for Linux
+name: Build Linux
 
 on:
   push:

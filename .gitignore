@@ -3,6 +3,3 @@
 node_modules
 .venv
 .qodo
-
-#FILES
-.env

@@ -7,8 +7,7 @@ const Chart = require('chart.js/auto').Chart;
 let taskCreated = 0, taskCompleted = 0;
 let autoClose = false, joinBeta = true, messageSend = false;
 let companyName = undefined;
-let taskCompletedColor = document.getElementById('colorTaskCreated').value;
-let taskCreatedColor = document.getElementById('colorTaskCompleted').value;
+let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
 
 const DEBUG = ipcRenderer.sendSync('checkForDebug');
 
@@ -30,21 +29,10 @@ let tasksChart = null;
 function OnLoad(){
   fetchVersion();
   fetchBuildNumber();
-  showWarnLogs();
-}
-
-function showWarnLogs(){
-  setTimeout(() =>{
-    console.clear();
-    console.log('%cWARNING!', 'color: red; font-size: 40px; font-weight: bold;');
-    console.log('%cThis part of application is reserved to Play Epik Developers, if you are here by mistake please close this window.', 'color: white; font-size: 16px;');
-    console.log('%cFor more info about it, see https://developer.mozilla.org/en-US/docs/Glossary/Developer_Tools', 'color: lightblue; font-size: 14px;');
-  },100);
 }
 
 ///MARK: TASK MANAGEMENT SECTION
 window.todoManager = new class TodoManager {
-
   constructor() {
     const categoryID = document.getElementById('categoryClean');
     const newCompanyName = document.getElementById('nameCompany');
@@ -54,6 +42,7 @@ window.todoManager = new class TodoManager {
       softwareComponents: loaded.softwareComponents || [],
       fuoriManutenzione: loaded.fuoriManutenzione || []
     };
+    
     taskCreated = loaded.taskCreated || 0;
     taskCompleted = loaded.taskCompleted || 0;
     autoClose = loaded.autoClose || false;
@@ -155,7 +144,7 @@ window.todoManager = new class TodoManager {
     }
 
     if(prevVersion && !nextVersion){
-      ipcRenderer.invoke('show-alert', "Error creating the Task, invalid Previous/Newer Versio.")
+      ipcRenderer.invoke('show-alert', "Error creating the Task, invalid Previous/Newer version.")
       return;
     }
     else if(!prevVersion && nextVersion){
@@ -209,7 +198,7 @@ window.todoManager = new class TodoManager {
     joinBetaCheckBox.checked = joinBeta;
 
     //COLOR SELECTION
-    //TaskCompleted
+    ///TaskCompleted
     switch(dropDowntaskCompleted){
       case 'red':
         colorTCompleted = 'rgba(255, 0, 0, 1)'; 
@@ -233,7 +222,7 @@ window.todoManager = new class TodoManager {
         break;
     }
 
-    //TaskCreated
+    ///TaskCreated
     switch(dropDowntaskCreated){
       case 'red':
         colorTCreated = 'rgba(255, 0, 0, 1)'; 
@@ -259,7 +248,7 @@ window.todoManager = new class TodoManager {
 
     //AUTO-CLOSE SETTINGS
     if (!autoClose)
-        window.addEventListener('scroll', this.handleScroll);
+      window.addEventListener('scroll', this.handleScroll);
     else 
       window.removeEventListener('scroll', this.handleScroll);
 
@@ -280,14 +269,14 @@ window.todoManager = new class TodoManager {
           labels: chartData.labels, 
           datasets: [
             {
-              label: 'Task Created',
+              label: 'Tasks Created',
               data: chartData.created,
               borderColor: colorTCreated,
               backgroundColor: colorTCreatedBG,
               tension: 0.3
             },
             {
-              label: 'Task Completed',
+              label: 'Tasks Completed',
               data: chartData.completed,
               borderColor: colorTCompleted,
               backgroundColor: colorTCompletedBG,
@@ -306,6 +295,23 @@ window.todoManager = new class TodoManager {
                   size: 16
                 }
               }
+            },
+            tooltip: {
+              titleFont: {
+                family: 'Excon, Sans Serif',
+                size: 14,
+                weight: 500
+              },
+              bodyFont: {
+                family: 'Excon, Sans Serif',
+                size: 12,
+                weight: 'normal'
+              },
+              footerFont: {
+                family: 'Excon, Sans Serif',
+                size: 10,
+                style: 'italic'
+              },
             }
           },
           scales: {
@@ -367,11 +373,11 @@ window.todoManager = new class TodoManager {
                 ${versionHtml}
                 <small>Assigned to: <i>${employee}</i></small>
                 <div style="display: flex; gap: 5px; margin-top: 0px;">
-                    <button class="delete-btn" style="width: 100px; background-color: white;" title="Mark as Completed">
-                      <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
-                    </button>
                     <button class="edit-btn" id="editBtn" title="Edit Task">
                       <img src="assets/_edit.png" draggable="false" width="20px" height="20px">
+                    </button>
+                    <button class="delete-btn" style="width: 100px; background-color: white;" title="Mark as Completed">
+                      <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
                     </button>
                 </div>
             </div>
@@ -486,15 +492,15 @@ window.todoManager = new class TodoManager {
     chartData.created.push(taskCreated);
     chartData.completed.push(taskCompleted);
     if (chartData.labels.length > 10) {
-        chartData.labels.shift();
-        chartData.created.shift();
-        chartData.completed.shift();
+      chartData.labels.shift();
+      chartData.created.shift();
+      chartData.completed.shift();
     }
     if (tasksChart) {
-        tasksChart.data.labels = chartData.labels;
-        tasksChart.data.datasets[0].data = chartData.created;
-        tasksChart.data.datasets[1].data = chartData.completed;
-        tasksChart.update();
+      tasksChart.data.labels = chartData.labels;
+      tasksChart.data.datasets[0].data = chartData.created;
+      tasksChart.data.datasets[1].data = chartData.completed;
+      tasksChart.update();
     }
   }
 
@@ -534,9 +540,7 @@ function openSettings(){
 }
 
 function toggleButtons(value){
-  buttons.forEach(e  => {
-      e.style.display = (value) ? "block" : "none";
-  });
+  buttons.forEach(e  => {e.style.display = (value) ? "block" : "none";});
 }
 
 async function quitApplication() {
@@ -607,6 +611,7 @@ function CallAIFunction(input){
   const unpackedPath = path.join(process.resourcesPath, 'app.asar.unpacked', 'src', 'ai', 'contentAnalizer.py');
   const packedPath = path.join(process.resourcesPath, 'src', 'ai', 'contentAnalizer.py');
   scriptPath = (DEBUG) ? 'src/ai/contentAnalizer.py' : ((require('fs').existsSync(unpackedPath)) ? unpackedPath : packedPath);
+
   execFile('python', [scriptPath, input], (error, stdout, stderr) =>{
     if(error){
       appendMsg(`Error during the load of AI Scripts: ${error.message}`, "AI");
@@ -669,9 +674,7 @@ const aiChatHistory = document.getElementById('aiChatHistory');
 //SIDEBAR ACTIONS
 openSidebarBtn.onclick = () =>{
   sidebar.classList.add('open');
-  setTimeout(() =>{
-    aiInput.focus();
-  }, 400);
+  setTimeout(() =>{aiInput.focus();}, 400);
 
   if(!messageSend){
     CallAIFunction("hello");
@@ -691,9 +694,7 @@ aiSendBtn.onclick = () => {
     sidebar.classList.add('open');
 
   CallAIFunction(msg);
-  setTimeout(() => {
-    appendMsg("AI: Elaborating request...", "AI");
-  }, 800);
+  setTimeout(() => {appendMsg("AI: Elaborating request...", "AI");}, 800);
 }
 
 aiInput.addEventListener('keydown', function(e){if(e.key === 'Enter') aiSendBtn.click();});
@@ -720,8 +721,14 @@ function appendMsg(text, who = "ai"){
         </div>
     `;
   }
+  
   aiChatHistory.appendChild(div);
   aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
+}
+
+function clearChat() {
+  const chatHistory = document.querySelector('.ai-chat-history');
+  chatHistory.innerHTML = (chatHistory) ? '' : chatHistory.innerHTML;
 }
 
 function showBetaOptions(value){
@@ -730,15 +737,12 @@ function showBetaOptions(value){
 }
 
 //INFO ABOUT BETA PROGRAM
-function ShowInfoPanel(){ipcRenderer.invoke('show-alert', "If enabled, this option show a new button for AI Assistant in Beta version, if not will be not show anything.")}
+function ShowInfoPanel(){ipcRenderer.invoke('show-alert', "If enabled, this option will show the button for AI in Beta version.")}
 
-//WEB REFERENCES
+//WEB REFERENCES SECTION
 document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business");});
-
 document.getElementById('licenseBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE");});
 
-function clearChat() {
-    const chatHistory = document.querySelector('.ai-chat-history');
-    if (chatHistory) 
-        chatHistory.innerHTML = '';
-}
+//NEED HELP SECTION
+document.getElementById('feedback').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=bug");});
+document.getElementById('contactUs').addEventListener('click', () =>{shell.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});

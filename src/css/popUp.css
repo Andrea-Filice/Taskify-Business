@@ -111,3 +111,67 @@ button {
     background-position: 100% 0, 120px 0, 120px 40px, 120px 80px;
   }
 }
+
+/*BUTTONS ANIMATIONS*/
+
+.deleteBtn:focus, .closeBtn:focus{
+  outline: none;
+  animation: animRedIn 2s ease-in-out infinite;
+}
+
+.editBtn:focus{
+  outline: none;
+  animation: animButtonIn 2s ease-in-out infinite;
+}
+
+@keyframes animRedIn{
+  0%{
+    border-color: #ff0000;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0);
+  }
+  50%{
+    border-color: #ff0000;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+  }
+  100%{
+    border-color: #ff0000;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0);
+  }
+}
+
+@keyframes animRedOut{
+  0%{
+    border-color: #ff0000;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+  }
+  100%{
+    border-color: #ff0000;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0);
+  }
+}
+
+@keyframes animButtonIn{
+  0%{
+    border-color: #ffffff;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+  }
+  50%{
+    border-color: #ffffff;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  }
+  100%{
+    border-color: #ffffff;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+  }
+}
+
+@keyframes animButtonOut{
+  0%{
+    border-color: #ffffff;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+  }
+  100%{
+    border-color: #ffffff;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0);
+  }
+}
