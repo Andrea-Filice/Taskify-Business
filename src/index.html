@@ -15,8 +15,8 @@
                 <div class="input-group">
                     <input type="text" id="softwareInput" placeholder="Enter Task name..." required spellcheck="false" title="Task Name" maxlength="20">
                     <div class="version-inputs" id="software">
-                        <input type="text" id="softwarePrevVersion" placeholder="Previous Version" spellcheck="false" title="Previous Version" maxlength="7">
-                        <input type="text" id="softwareNextVersion" placeholder="Newer Version" spellcheck="false" title="Newer Version" maxlength="7">
+                        <input type="text" id="softwarePrevVersion" placeholder="Previous Version" spellcheck="false" title="Previous Version" maxlength="10">
+                        <input type="text" id="softwareNextVersion" placeholder="Newer Version" spellcheck="false" title="Newer Version" maxlength="10">
                     </div>
                     <div class="nameTaskUser">
                         <img src="assets/_employee.png" draggable="false" class="nameTaskUserImg">
@@ -32,8 +32,8 @@
                 <div class="input-group">
                     <input type="text" id="fuoriInput" placeholder="Enter Task name... " required spellcheck="false" title="Task Name" maxlength="20">
                     <div class="version-inputs" id="out">
-                        <input type="text" id="fuoriPrevVersion" placeholder="Previous Version" spellcheck="false" title="Previous Version" maxlength="7">
-                        <input type="text" id="fuoriNextVersion" placeholder="Newer Version" spellcheck="false" title="Newer Version" maxlength="7">
+                        <input type="text" id="fuoriPrevVersion" placeholder="Previous Version" spellcheck="false" title="Previous Version" maxlength="10">
+                        <input type="text" id="fuoriNextVersion" placeholder="Newer Version" spellcheck="false" title="Newer Version" maxlength="10">
                     </div>
                     <div class="nameTaskUser">
                         <img src="assets/_employee.png" draggable="false" class="nameTaskUserImg">
@@ -101,8 +101,10 @@
                     <br>
                     <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
                     <label for="checkbox" style="font-size: 20px;">Disables the auto-close of the settings panel.</label><br><br>
+                    <input type="checkbox" id="characterLimit" style="transform: scale(1.7);">
+                    <label for="characterLimit" style="font-size: 20px;">Disable the character limit for Tasks.</label><br><br>
                     <input type="checkbox" id="joinBeta" style="transform: scale(1.7);">
-                    <label for="joinBeta" style="font-size: 20px;">Join Beta Program for AI Assistant.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel()" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will show the button for AI in Beta version">
+                    <label for="joinBeta" style="font-size: 20px;">Join Beta Program for AI Assistant.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel()" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will show the button for AI in Beta version"><br><br>
                     <br> <br> <br>
                     <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_references.png" draggable="false" height="20px" width="20px"> Web References:</h2>
                     <div class="references">

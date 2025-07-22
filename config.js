@@ -5,7 +5,7 @@ const fs = require('fs')
 let mainWindow = null
 let categoryModifyTask, indexModifyTask
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
-const DEBUG = false
+const DEBUG = true
 
 let todos = {
   softwareComponents: [],
@@ -17,7 +17,8 @@ let todos = {
   companyName: undefined,
   chartData: { labels: [], created: [], completed: [] },
   taskCompletedColor : "green",
-  taskCreatedColor: "blue"
+  taskCreatedColor: "blue",
+  characterLimit: true
 }
 
 function loadTodosFromDisk() {
@@ -33,6 +34,7 @@ function loadTodosFromDisk() {
       todos.chartData = todos.chartData || { labels: [], created: [], completed: [] }
       todos.taskCompletedColor = todos.taskCompletedColor || "green"
       todos.taskCreatedColor = todos.taskCreatedColor || "blue"
+      todos.characterLimit = todos.characterLimit || true
     }
   } catch (err) {
     console.error(err)
@@ -46,7 +48,8 @@ function loadTodosFromDisk() {
       companyName: undefined,
       chartData: { labels: [], created: [], completed: [] },
       taskCompletedColor : "green",
-      taskCreatedColor: "blue"
+      taskCreatedColor: "blue",
+      characterLimit: true
     }
   }
 }

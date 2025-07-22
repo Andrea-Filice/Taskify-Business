@@ -5,7 +5,7 @@ const Chart = require('chart.js/auto').Chart;
 
 //VARIABLES
 let taskCreated = 0, taskCompleted = 0;
-let autoClose = false, joinBeta = true, messageSend = false;
+let autoClose = false, joinBeta = true, messageSend = false, characterLimit;
 let companyName = undefined;
 let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
 
@@ -48,6 +48,7 @@ window.todoManager = new class TodoManager {
     autoClose = loaded.autoClose || false;
     joinBeta = typeof loaded.joinBeta === "boolean" ? loaded.joinBeta : true;
     companyName = loaded.companyName || undefined
+    characterLimit = loaded.characterLimit;
 
     document.getElementById('colorTaskCreated').value = loaded.taskCompletedColor || "blue";
     document.getElementById('colorTaskCompleted').value = loaded.taskCreatedColor || "green";
@@ -86,6 +87,8 @@ window.todoManager = new class TodoManager {
             .addEventListener('click', () => this.checkBox());
     document.getElementById('joinBeta')
             .addEventListener('click', () => this.joinBetaClicked());
+    document.getElementById('characterLimit')
+            .addEventListener('click', () => this.setCharacterLimit());
     document.getElementById('aiSendBtn')
             .addEventListener('click', e => this.sendAIMessage())
     document.getElementById('colorTaskCreated')
@@ -118,7 +121,7 @@ window.todoManager = new class TodoManager {
     })
 
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
     this.updateUI();
   }
 
@@ -167,7 +170,7 @@ window.todoManager = new class TodoManager {
     employeeField.value = '';
 
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
     updateDailyData();
     this.updateUI();
   }
@@ -177,7 +180,7 @@ window.todoManager = new class TodoManager {
   removeTodo(category, index) {
     this.todos[category].splice(index, 1);
     taskCompleted++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
     updateDailyData(); 
     this.updateUI();
   }
@@ -187,6 +190,7 @@ window.todoManager = new class TodoManager {
     const taskCompletedEl = document.getElementById('taskCompleted');
     const autoCloseCheckbox = document.getElementById('checkbox');
     const joinBetaCheckBox = document.getElementById('joinBeta');
+    const characterLimitCheckbox = document.getElementById('characterLimit');
     const dropDowntaskCreated = document.getElementById('colorTaskCreated').value;
     const dropDowntaskCompleted = document.getElementById('colorTaskCompleted').value;
 
@@ -196,6 +200,7 @@ window.todoManager = new class TodoManager {
     taskCompletedEl.innerText = `${taskCompleted}`;
     autoCloseCheckbox.checked = autoClose;
     joinBetaCheckBox.checked = joinBeta;
+    characterLimitCheckbox.checked = characterLimit;
 
     //COLOR SELECTION
     ///TaskCompleted
@@ -255,7 +260,7 @@ window.todoManager = new class TodoManager {
     taskCreatedColor = document.getElementById('colorTaskCreated').value;
     taskCompletedColor = document.getElementById('colorTaskCompleted').value;
 
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
     document.title = `Taskify Dashboard - ${companyName}`;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
@@ -410,7 +415,7 @@ window.todoManager = new class TodoManager {
             created: Array(7).fill(0),
             completed: Array(7).fill(0)
           };
-          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
           this.updateUI();
           const res = ipcRenderer.invoke('show-alert', "Data succesfully reset, app will be restarted soon.")
           .then(() => {window.location.href = "boot.html";});
@@ -439,7 +444,7 @@ window.todoManager = new class TodoManager {
       taskCompleted += list.length;
 
       this.todos[categoryKey] = [];
-      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
       this.updateUI();
       ipcRenderer.invoke('show-alert', "Tasks marked as 'Completed'!");
     });
@@ -451,13 +456,13 @@ window.todoManager = new class TodoManager {
       window.addEventListener('scroll', this.handleScroll);
     else
       window.removeEventListener('scroll', this.handleScroll);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
   }
 
   joinBetaClicked(){
     joinBeta = !joinBeta;
     showBetaOptions(joinBeta);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
     this.updateUI();
   }
   
@@ -478,7 +483,7 @@ window.todoManager = new class TodoManager {
       .then(userResponse => {
         if (!userResponse) return;
         companyName = newName;
-        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
         document.getElementById('nameCompany').value = '';
         ipcRenderer.invoke('show-alert', "Company name changed successfully!");
         this.updateUI();
@@ -512,6 +517,29 @@ window.todoManager = new class TodoManager {
     }
     ipcRenderer.invoke('show-input-alert', category, index);
   }
+
+  setCharacterLimit(){
+    console.log(characterLimit);
+    const inputs = document.querySelectorAll('input');
+
+    if(!characterLimit){
+      inputs.forEach(e =>{
+        const max = e.getAttribute('maxlength');
+        e.dataset.originalMaxLength = max;
+        e.removeAttribute('maxlength');
+      });
+    }
+    else{
+      inputs.forEach(e => {
+        const lenght = e.dataset.originalMaxLength;
+        e.setAttribute('maxlength', lenght);
+      });
+    }
+    characterLimit = !characterLimit;
+
+    this.updateUI();
+  }
+
 }();
 
 //OPEN INFO AND SETTINGS
@@ -593,14 +621,14 @@ ipcRenderer.on('task-modified', (event, category, index, taskData) => {
     window.todoManager.todos[category][index].text = taskData.text;
     window.todoManager.todos[category][index].prevVersion = taskData.prevVersion;
     window.todoManager.todos[category][index].nextVersion = taskData.nextVersion;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
     window.todoManager.updateUI();
 });
 
 ipcRenderer.on('delete-task', (event, category, index) => {
     window.todoManager.todos[category].splice(index, 1);
     taskCreated--;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
     window.todoManager.updateUI();
 });
 

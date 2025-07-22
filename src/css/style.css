@@ -130,7 +130,7 @@ li {
     width: 100px;
 }
 
-input:focus:not(#checkbox):not(#joinBeta):not(#aiInput) {
+input:focus:not(#checkbox):not(#joinBeta):not(#aiInput):not(#characterLimit){
     outline: none;
     animation: animInputIn 2s ease-in-out infinite;
 }
@@ -549,7 +549,7 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
     animation: gradient 8s linear infinite;
 }
 
-#checkbox:checked, #joinBeta:checked{accent-color: #009dff; color-scheme: light;}
+#checkbox:checked, #joinBeta:checked, #characterLimit:checked{accent-color: #009dff; color-scheme: light;}
 
 /*TOOLTIP*/
 .tip{
