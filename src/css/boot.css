@@ -1,7 +1,7 @@
 body{background-color: #1a1a1a;}
 
 /*LOADER BY: https://cssloaders.github.io*/
-.loader {
+/*.loader {
   width: 20px;
   height: 12px;
   display: block;
@@ -41,6 +41,31 @@ body{background-color: #1a1a1a;}
   100% {
     width: 48px;
   }
+}*/
+
+.loader {
+  width: 40%;
+  height: 4.8px;
+  display: inline-block;
+  position: relative;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+.loader::after {
+  content: '';  
+  box-sizing: border-box;
+  width: 0;
+  height: 4.8px;
+  background: #FFF;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: animFw 1.5s ease-in-out forwards;
+}
+
+@keyframes animFw {
+  0% {width: 0;}
+  100% {width: 100%;}
 }
 
 /*END LOADER*/
