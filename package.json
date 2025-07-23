@@ -49,11 +49,11 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^37.2.3",
+    "electron": "^37.2.4",
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.52.0",
+    "@supabase/supabase-js": "^2.52.1",
     "chart.js": "^4.5.0",
     "dotenv": "^17.2.0",
     "npm": "^11.4.2"
