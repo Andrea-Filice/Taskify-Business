@@ -94,8 +94,10 @@ function createWindow() {
       defaultId: 0,
       message,
       title: 'Taskify Business',
-      noLink: true
-    })
+      noLink: true,
+      modal: true,
+      parent: mainWindow
+    });
   })
 
   ipcMain.handle('show-input-alert', (event, category, index) => {
