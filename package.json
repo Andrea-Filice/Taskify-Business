@@ -55,7 +55,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.52.1",
     "chart.js": "^4.5.0",
-    "dotenv": "^17.2.0",
+    "dotenv": "^17.2.1",
     "npm": "^11.5.1"
   }
 }
