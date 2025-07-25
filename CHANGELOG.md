@@ -6,6 +6,8 @@
   - [New in 37.2.4](https://github.com/electron/electron/releases/tag/v37.2.4)
 - Supabase-js `2.52.1`
   - [New in 2.52.1](https://github.com/supabase/supabase-js/releases/tag/v2.52.1)
+- dotenv `17.2.1`
+  - [New in 17.2.1](https://github.com/motdotla/dotenv)
 
 # Bug Fixes
 [55f8438] Fixed character limits and added an option for disable it.
