@@ -79,7 +79,7 @@ def parse_input(text):
         '<b>/create</b> = Create a Task or a list of Tasks (<b>add a number in front of the command "/create"</b>), the syntax is: <i>/create TaskName previousVersion to newer newerVersion !category maintenace/out</i> <br>' \
         '<br> <b>/modify</b> = Modify a Task, the syntax is: <i>/modify taskName !category maintenance/out </i> <br>' \
         '<br> <b>/clear</b> or <b>/cls</b> = Clear the chat. <br> ' \
-        '<br> <b>/delete</b> = Delete a task, the syntax is <i>/delete TaskName !category maintenance/out</i>.'
+        '<br> <b>/delete</b> = Delete a Task, the syntax is <i>/delete TaskName !category maintenance/out</i>.'
     
     #CHECK FOR HELLO OR HI COMBINATION
     hello_match = re.match(r"hello", text, re.IGNORECASE)
@@ -110,7 +110,7 @@ def parse_input(text):
             "type": 1
         }
     else:
-        return 'Sorry, I am unable to elaborating your request. if you need more help, type /help.'
+        return 'Sorry, I am unable to elaborating your request, check your message and try again. if you need more help, type /help.'
 
 def main():
     if len(sys.argv) < 2:
@@ -121,6 +121,6 @@ def main():
     if result:
         print(json.dumps(result))
     else:
-        print(json.dumps({"Sorry, I am unable to elaborating your request. if you need more help, type /help."}))
+        print(json.dumps({"Sorry, I am unable to elaborating your request, check your message and try again. if you need more help, type /help."}))
 
 main()

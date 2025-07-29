@@ -1,6 +1,5 @@
-# Taskify Business
+# <img src="src/assets/_gear.png" alt="Icon" width="30px" height="30px"> Taskify Business
 [![GitHub release](https://img.shields.io/github/v/release/Play-Epik-Inc/Taskify-Business?color=009dff)](https://github.com/Play-Epik-Inc/Taskify-Business/releases/latest) [![GitHub license](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE) [![Build](https://github.com/Play-Epik-Inc/Taskify-Business/actions/workflows/windows.yml/badge.svg?branch=dev)](https://github.com/Play-Epik-Inc/Taskify-Business/actions/workflows/windows.yml)
-<hr>
 
 ![alt text](https://raw.githubusercontent.com/Play-Epik-Inc/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide1.png "Main Page")
 
@@ -24,6 +23,10 @@ Keep track of new versions of third-party tools and apps. You won't forget to up
 # **Progress Dashboard**  
   Keep track of tasks and time at the same time. Simply with a graph.
   ![alt text](https://raw.githubusercontent.com/Play-Epik-Inc/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide3.png "Charts")
+
+
+Check more on: https://play-epik-incorporation.netlify.app/developers
+
 
 ## Tech Stack
 
