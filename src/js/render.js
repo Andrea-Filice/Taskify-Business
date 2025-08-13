@@ -48,7 +48,7 @@ window.todoManager = new class TodoManager {
     autoClose = loaded.autoClose || false;
     joinBeta = typeof loaded.joinBeta === "boolean" ? loaded.joinBeta : true;
     companyName = loaded.companyName || undefined
-    characterLimit = loaded.characterLimit;
+    characterLimit = loaded.characterLimit || true;
 
     document.getElementById('colorTaskCreated').value = loaded.taskCompletedColor || "blue";
     document.getElementById('colorTaskCompleted').value = loaded.taskCreatedColor || "green";
@@ -264,6 +264,7 @@ window.todoManager = new class TodoManager {
     document.title = `Taskify Dashboard - ${companyName}`;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
+    this.setCharacterLimit(false);
 
     //UPDATE CHART
     if (!tasksChart) {
@@ -518,7 +519,7 @@ window.todoManager = new class TodoManager {
     ipcRenderer.invoke('show-input-alert', category, index);
   }
 
-  setCharacterLimit(){
+  setCharacterLimit(update){
     console.log(characterLimit);
     const inputs = document.querySelectorAll('input');
 
@@ -535,9 +536,8 @@ window.todoManager = new class TodoManager {
         e.setAttribute('maxlength', lenght);
       });
     }
-    characterLimit = !characterLimit;
-
-    this.updateUI();
+    if(update == true)
+      characterLimit = !characterLimit;
   }
 
 }();
