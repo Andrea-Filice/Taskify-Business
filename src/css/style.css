@@ -551,10 +551,12 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 
 #checkbox:checked, #joinBeta:checked, #characterLimit:checked{accent-color: #009dff; color-scheme: light;}
 
-/*TOOLTIP*/
+/*TIP*/
 .tip{
     align-items: center;
     justify-content: center;
     gap: 5px;
     text-align: center;
 }
+
+#tipImage{padding-right: 5px;}
