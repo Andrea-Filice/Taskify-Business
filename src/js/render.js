@@ -577,7 +577,7 @@ function openInfoBox(){
 function closeInfoBox(){
   document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
   document.getElementById('infoBox').style.display = 'none';
-  toggleButtons(false);
+  toggleButtons(true);
 }
 
 function openSettings(){
