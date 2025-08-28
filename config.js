@@ -3,7 +3,7 @@ const path = require('path')
 const fs = require('fs')
 
 let mainWindow = null
-let categoryModifyTask, indexModifyTask
+let categoryModifyTask, indexModifyTask, characterLimit
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
 const DEBUG = true
 
@@ -142,6 +142,7 @@ function createWindow() {
 
   ipcMain.on('deleteTask', () =>{mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);});
   ipcMain.on('load-todos', event => {event.returnValue = todos})
+  ipcMain.handle('shareSettings', (event, settings) => {characterLimit = settings})
 
   ipcMain.on('save-todos', (event, newTodos) => {
     todos = { ...todos, ...newTodos }
@@ -204,6 +205,7 @@ function createInputPopUp() {
       inputWindow.webContents.send('retrieveTaskName', task.text);
       inputWindow.webContents.send('retrieveVersion', task.prevVersion, "inputPV");
       inputWindow.webContents.send('retrieveVersion', task.nextVersion, "inputNV");
+      inputWindow.webContents.send('retrieveSetting', characterLimit)
     });
   }
 }

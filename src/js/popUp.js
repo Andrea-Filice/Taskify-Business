@@ -43,7 +43,31 @@ function DeleteTask(){
       }
     });
 }
+
 function Quit() {window.close();}
+
+function SetCharacterLimits(value){
+  const inputs = document.querySelectorAll("input");
+
+  if(!value){
+    inputs.forEach(e =>{
+      if(!e.dataset.originalMaxLength){
+        const max = e.getAttribute("maxlength");
+        if(max != null)
+          e.dataset.originalMaxLength = max;
+      }
+      e.removeAttribute("maxlength")
+    });
+  }
+  else
+    inputs.forEach(e => {
+      const length = e.dataset.originalMaxLength;
+      if(length !== undefined)
+        e.setAttribute("maxlength", length);
+      else
+        e.setAttribute("maxlength", 20);
+    });
+}
 
 //GET CURRENT TASK DATAS 
 ipcRenderer.on('retrieveTaskName', (event, name) =>{
@@ -52,3 +76,5 @@ ipcRenderer.on('retrieveTaskName', (event, name) =>{
 });
 
 ipcRenderer.on('retrieveVersion', (event, version, elementID) => {document.getElementById(elementID).value = version;});
+
+ipcRenderer.on('retrieveSetting', (event, characterLimit) =>{SetCharacterLimits(characterLimit)});

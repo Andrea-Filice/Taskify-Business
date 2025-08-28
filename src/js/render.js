@@ -518,6 +518,7 @@ window.todoManager = new class TodoManager {
       ipcRenderer.invoke('show-alert', "Task not found."); 
       return;
     }
+    ipcRenderer.invoke('shareSettings', characterLimit);
     ipcRenderer.invoke('show-input-alert', category, index);
   }
 
@@ -540,9 +541,8 @@ window.todoManager = new class TodoManager {
       inputs.forEach(e =>{
         if(!e.dataset.originalMaxLength){
           const max = e.getAttribute('maxlength');
-          if(max != null){
+          if(max != null)
             e.dataset.originalMaxLength = max;
-          }
         }
         e.removeAttribute('maxlength');
       });
