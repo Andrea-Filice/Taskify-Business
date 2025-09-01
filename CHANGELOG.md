@@ -4,8 +4,8 @@
 
 - Electron `37.4.0`
   - [New in 37.4.0](https://github.com/electron/electron/releases/tag/v37.4.0)
-- Supabase-js `2.56.0`
-  - [New in 2.56.0](https://github.com/supabase/supabase-js/releases/tag/v2.56.0)
+- Supabase-js `2.56.1`
+  - [New in 2.56.1](https://github.com/supabase/supabase-js/releases/tag/v2.56.1)
 
 # New feautures
 [7ed4ca2] Added a new Icon for "Send AI message" button.
