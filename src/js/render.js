@@ -50,6 +50,9 @@ window.todoManager = new class TodoManager {
     companyName = loaded.companyName || undefined
     characterLimit = loaded.characterLimit;
 
+    //SET DEFAULT CHARACTER LIMIT
+    this.inputCharactersUpdate(characterLimit);
+
     document.getElementById('colorTaskCreated').value = loaded.taskCompletedColor || "blue";
     document.getElementById('colorTaskCompleted').value = loaded.taskCreatedColor || "green";
 
@@ -515,31 +518,47 @@ window.todoManager = new class TodoManager {
       ipcRenderer.invoke('show-alert', "Task not found."); 
       return;
     }
+    ipcRenderer.invoke('shareSettings', characterLimit);
     ipcRenderer.invoke('show-input-alert', category, index);
   }
 
   setCharacterLimit(){
-    console.log(characterLimit);
-    const inputs = document.querySelectorAll('input');
+    console.log("clicked");
 
-    if(!characterLimit){
+    console.log(characterLimit);
+    characterLimit = !characterLimit;
+    console.log(characterLimit);
+    this.inputCharactersUpdate(characterLimit);
+  }
+
+  inputCharactersUpdate(value){
+    console.log("Called from setCharacterLimit");
+
+    console.log(value);
+    const inputs = document.querySelectorAll("input");
+
+    if(!value){
       inputs.forEach(e =>{
-        const max = e.getAttribute('maxlength');
-        e.dataset.originalMaxLength = max;
+        if(!e.dataset.originalMaxLength){
+          const max = e.getAttribute('maxlength');
+          if(max != null)
+            e.dataset.originalMaxLength = max;
+        }
         e.removeAttribute('maxlength');
       });
     }
     else{
       inputs.forEach(e => {
-        const lenght = e.dataset.originalMaxLength;
-        e.setAttribute('maxlength', lenght);
+        const length = e.dataset.originalMaxLength;
+        if(length !== undefined)
+          e.setAttribute('maxlength', length);
+        else
+          e.setAttribute('maxlength', 20);
       });
     }
-    characterLimit = !characterLimit;
 
-    this.updateUI();
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
   }
-
 }();
 
 //OPEN INFO AND SETTINGS
@@ -558,7 +577,7 @@ function openInfoBox(){
 function closeInfoBox(){
   document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
   document.getElementById('infoBox').style.display = 'none';
-  toggleButtons(false);
+  toggleButtons(true);
 }
 
 function openSettings(){

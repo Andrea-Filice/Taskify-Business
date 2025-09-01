@@ -81,7 +81,7 @@
                         </select>
                     </div>
                 </center>
-                <h3 class="tip" style="font-weight: 300;"><img src="assets/_tip.png" height="20px" width="20px" draggable="false"><p style="display: inline; color: orange;"><b style="font-weight: 800;">TIP:</b>  </p> Click on <i style="font-weight: 800;">"Tasks Completed" </i> or <i style="font-weight: 800;">"Tasks Created"</i> to see the progress of an individual item.</h3>
+                <h3 class="tip" style="font-weight: 300;"><img src="assets/_tip.png" height="20px" width="20px" draggable="false" id="tipImage"><p style="display: inline; color: orange;"><b style="font-weight: 800;">TIP:</b>  </p> Click on <i style="font-weight: 800;">"Tasks Completed" </i> or <i style="font-weight: 800;">"Tasks Created"</i> to see the progress of an individual item.</h3>
                 <hr>
                 <h1 style="font-size: 50px; font-family: 'Excon', sans-serif;"><img src="assets/_settings.png" draggable="false" height="35px" width="35px"> Settings:</h1>
                 <div class="settings" id="settings">
@@ -102,10 +102,10 @@
                     <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
                     <label for="checkbox" style="font-size: 20px;">Disables the auto-close of the settings panel.</label><br><br>
                     <input type="checkbox" id="characterLimit" style="transform: scale(1.7);">
-                    <label for="characterLimit" style="font-size: 20px;">Disable the character limit for Tasks.</label><br><br>
+                    <label for="characterLimit" style="font-size: 20px;">Enable character limit.</label><br><br>
                     <input type="checkbox" id="joinBeta" style="transform: scale(1.7);">
                     <label for="joinBeta" style="font-size: 20px;">Join Beta Program for AI Assistant.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel()" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will show the button for AI in Beta version"><br><br>
-                    <br> <br> <br>
+                    <br>
                     <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_references.png" draggable="false" height="20px" width="20px"> Web References:</h2>
                     <div class="references">
                         <button id="repoGitBtn" title="Open Repository"><img src="assets/_github.png" width="20px" height="20px" draggable="false"> Open GitHub Repository</button>
@@ -135,7 +135,7 @@
                 <div id="aiChatHistory" class="ai-chat-history"></div>
                 <div class="ai-chat-input-row">
                     <input id="aiInput" type="text" placeholder="Write a command..." autocomplete="on" style="display: block;" spellcheck="false"/>
-                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif; height: 100%;"><img src="assets/_send.png" height="15px" width="15px" draggable="false"></button>
+                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif; height: 100%;"><img src="assets/_send.png" height="30px" width="30px" draggable="false"></button>
                 </div>
             </div>
         </div>
