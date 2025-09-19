@@ -11,5 +11,5 @@
 [44f0841] Modified the command "/modify" to "/edit" for better context.
 [9e6b1f9] New Employee icon.
 
-#Bug Fixes
+# Bug Fixes
 [9e6b1f9] Fixed a bug for "Task Completed" or "Task Created" texts, now numbers shows correctly.
