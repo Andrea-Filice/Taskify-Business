@@ -680,7 +680,7 @@ function CallAIFunction(input){
 
         if(index !== -1){
           window.todoManager.modifyTask(result.category, index);
-          appendMsg(`Modifying task: ${result.name}`, "AI");
+          appendMsg(`Editing task: ${result.name}`, "AI");
         }
         else
           appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
