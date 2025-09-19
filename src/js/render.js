@@ -784,7 +784,7 @@ function showBetaOptions(value){
 }
 
 //INFO ABOUT BETA PROGRAM
-function ShowInfoPanel(){ipcRenderer.invoke('show-alert', "If enabled, this option will show the button for AI in Beta version.")}
+function ShowInfoPanel(textToShow){ipcRenderer.invoke('show-alert', textToShow)}
 
 //WEB REFERENCES SECTION
 document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business");});
