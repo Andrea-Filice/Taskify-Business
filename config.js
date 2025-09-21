@@ -90,11 +90,11 @@ function createWindow() {
     ipcMain.handle('new-version', async (event, message) => {
     const result = await dialog.showMessageBox({
       type: 'question',
-      buttons: ['Update Now', 'Cancel'],
+      buttons: ['Update Now', 'Not Now'],
       defaultId: 1,
       cancelId: 0,
       message,
-      title: 'Taskify Business',
+      title: 'Taskify Updater',
       noLink: true
     })
     return result.response === 0
