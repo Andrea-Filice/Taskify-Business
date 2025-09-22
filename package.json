@@ -1,6 +1,6 @@
 {
   "name": "taskify-business",
-  "version": "1.7.3",
+  "version": "1.8.0",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
   "license": "Apache",
   "repository": {
@@ -9,7 +9,8 @@
   },
   "author": {
     "name": "Play Epik, Incoporation",
-    "email": "help.playepik@gmail.com"
+    "email": "help.playepik@gmail.com",
+    "url": "https://play-epik-incorporation.netlify.app/developers#taskifyBusiness"
   },
   "type": "commonjs",
   "main": "config.js",
