@@ -71,7 +71,6 @@ function SetCharacterLimits(value){
 
 //GET CURRENT TASK DATAS 
 ipcRenderer.on('retrieveTaskName', (event, name) =>{
-  document.getElementById('startingText').innerHTML = `Edit the properties of the currently selected Task (${name}).`
   document.getElementById('inputName').value = name;
 });
 
