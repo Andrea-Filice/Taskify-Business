@@ -5,7 +5,7 @@ const fs = require('fs')
 let mainWindow = null
 let categoryModifyTask, indexModifyTask, characterLimit
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
-const DEBUG = false
+const DEBUG = true
 
 let todos = {
   softwareComponents: [],
@@ -100,13 +100,13 @@ function createWindow() {
     return result.response === 0
   })
 
-  ipcMain.handle('show-alert', async (event, message) => {
+  ipcMain.handle('show-alert', async (event, message, title) => {
     await dialog.showMessageBox({
       type: 'info',
       buttons: ['OK'],
       defaultId: 0,
       message,
-      title: 'Taskify Business',
+      title: (title == "" || title == undefined) ? "Taskify Business" : title,
       noLink: true,
       modal: true,
       parent: mainWindow

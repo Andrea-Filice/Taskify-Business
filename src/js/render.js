@@ -105,7 +105,7 @@ window.todoManager = new class TodoManager {
     const input = document.getElementById('aiInput');
     const message = input.value.trim();
     if(!input || !message){
-      ipcRenderer.invoke('show-alert', "Check your AI message and try again.")
+      ipcRenderer.invoke('show-alert', "Invalid message. You cannot send empty messages.", "Invalid AI Message")
       return;
     }
 
@@ -145,16 +145,12 @@ window.todoManager = new class TodoManager {
     let employeeName = employeeField.value.trim();
 
     if (!text){
-      ipcRenderer.invoke('show-alert', "Error creating Task, invalid Task name.");
+      ipcRenderer.invoke('show-alert', "Invalid task name. Please enter a valid name.", "Task Creation Error");
       return;
     }
 
     if(prevVersion && !nextVersion){
-      ipcRenderer.invoke('show-alert', "Error creating the Task, invalid Previous/Newer version.")
-      return;
-    }
-    else if(!prevVersion && nextVersion){
-      ipcRenderer.invoke('show-alert', "Error creating the Task, No valid newer version.")
+      ipcRenderer.invoke('show-alert', "Invalid version format. Please enter a valid format.", "Task Creation Error")
       return;
     }
     
