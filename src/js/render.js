@@ -787,7 +787,10 @@ document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.open
 document.getElementById('licenseBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE");});
 
 //NEED HELP SECTION
-document.getElementById('feedback').addEventListener('click', () =>{document.getElementById("feedbackSelection").classList.toggle("feedbackSelection")});
+document.getElementById('feedback').addEventListener('click', () =>{
+  document.getElementById("feedbackSelection").classList.toggle("feedbackSelection")
+  document.getElementById('menuFeedback').classList.toggle("arrowMenu")
+});
 document.getElementById("bug").addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=bug")})
 document.getElementById("feedbackBtn").addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=enhancement")})
 document.getElementById('contactUs').addEventListener('click', () =>{shell.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});

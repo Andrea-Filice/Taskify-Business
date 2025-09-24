@@ -567,3 +567,5 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
     cursor: pointer;
     text-decoration: underline;
 }
+
+.arrowMenu{rotate: 180deg;}
