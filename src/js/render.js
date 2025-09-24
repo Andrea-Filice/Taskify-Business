@@ -48,7 +48,7 @@ window.todoManager = new class TodoManager {
     autoClose = loaded.autoClose || false;
     joinBeta = typeof loaded.joinBeta === "boolean" ? loaded.joinBeta : true;
     companyName = loaded.companyName || undefined
-    characterLimit = loaded.characterLimit;
+    characterLimit = typeof loaded.characterLimit === 'boolean' ? loaded.characterLimit : false;
 
     //SET DEFAULT CHARACTER LIMIT
     this.inputCharactersUpdate(characterLimit);
@@ -91,7 +91,7 @@ window.todoManager = new class TodoManager {
     document.getElementById('joinBeta')
             .addEventListener('click', () => this.joinBetaClicked());
     document.getElementById('characterLimit')
-            .addEventListener('click', () => this.setCharacterLimit());
+            .addEventListener('change', () => this.setCharacterLimit())
     document.getElementById('aiSendBtn')
             .addEventListener('click', e => this.sendAIMessage())
     document.getElementById('colorTaskCreated')
@@ -519,18 +519,11 @@ window.todoManager = new class TodoManager {
   }
 
   setCharacterLimit(){
-    console.log("clicked");
-
-    console.log(characterLimit);
     characterLimit = !characterLimit;
-    console.log(characterLimit);
     this.inputCharactersUpdate(characterLimit);
   }
 
   inputCharactersUpdate(value){
-    console.log("Called from setCharacterLimit");
-
-    console.log(value);
     const inputs = document.querySelectorAll("input");
 
     if(!value){
@@ -553,6 +546,8 @@ window.todoManager = new class TodoManager {
       });
     }
 
+    // debug: verifica valore prima di salvare
+    console.log('Saving todos - characterLimit =', characterLimit);
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
   }
 }();
