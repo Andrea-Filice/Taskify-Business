@@ -1,5 +1,10 @@
 # Release Notes for Taskify Business 1.8.1
 
+# Stack Upgrades
+
+- supabase-js `2.58.0`
+  - [New in 2.58.0](https://github.com/supabase/supabase-js/releases/tag/v2.58.0)
+
 # New Feautures
 [d9b3700] Added a new Send Message icon in AI sidebar.
 
