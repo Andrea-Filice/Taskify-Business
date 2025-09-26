@@ -1,0 +1,37 @@
+.PHONY: help test-coverage test-coverage-% clean
+
+TEST_CMD := npx jest --coverage --coverageReporters=lcov --coverageDirectory=coverage/run-$(NUM)
+
+help:
+	@echo "Targets:"
+	@echo "  make test-coverage-N"
+	@echo "  make test-coverage TEST_NUMBER=N"
+	@echo "  make clean"
+
+test-coverage-%:
+	@$(MAKE) _run-test NUM=$*
+
+test-coverage:
+	@if [ -z "$(TEST_NUMBER)" ]; then \
+		echo "ERROR: TEST_NUMBER not set proprerly-<n>"; \
+		exit 1; \
+	fi
+	@$(MAKE) _run-test NUM=$(TEST_NUMBER)
+
+_run-test:
+	@echo "=== RUNNING TEST $(NUM) ==="
+	@echo "Creating directory coverage/run-$(NUM)"
+	@mkdir -p coverage/run-$(NUM)
+	@echo "Running: npx jest --coverage --coverageReporters=lcov --coverageDirectory=coverage/run-$(NUM)"
+	@$(TEST_CMD)
+	@echo "Check exist of coverage/run-$(NUM)/lcov.info"
+	@if [ -f coverage/run-$(NUM)/lcov.info ]; then \
+		echo "OK: coverage/run-$(NUM)/lcov.info generato"; \
+	else \
+		echo "ERROR: lcov.info not found in coverage/run-$(NUM)"; \
+		exit 2; \
+	fi
+
+clean:
+	@echo "Removing coverage/"
+	@rm -rf coverage
