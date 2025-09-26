@@ -1,5 +1,20 @@
+.PHONY: test coverage clean
+
+test:
+	@echo "Running tests..."
+	pytest
+
+coverage:
+	@echo "Running test coverage..."
+	pytest --cov=.
+
+clean:
+	@echo "Cleaning up..."
+	rm -rf __pycache__ .pytest_cache .coverage
+
 test-coverage-1:
-	npm run test -- --coverage
+	@echo "Running custom test coverage..."
+	pytest --cov=. --cov-report=term-missing
 
 test-coverage-2:
 	npm run test -- --coverage
