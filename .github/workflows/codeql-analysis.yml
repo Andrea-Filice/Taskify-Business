@@ -1,4 +1,4 @@
-name: CodeQL Security Analysis
+name: CodeQL Deep Security Analysis
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   analyze:
-    name: Analyze Code with CodeQL
+    name: Deep CodeQL Analysis
     runs-on: ubuntu-latest
 
     permissions:
@@ -19,16 +19,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'javascript', 'python']
+        language: [ 'javascript', 'python' ]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Initialize CodeQL
+      - name: Initialize CodeQL (Deep Mode)
         uses: github/codeql-action/init@v3
         with:
           languages: ${{ matrix.language }}
+          queries: +security-and-quality
+          config-file: ./.github/codeql/codeql-config.yml
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@v3
@@ -37,3 +39,5 @@ jobs:
         uses: github/codeql-action/analyze@v3
         with:
           category: "/language:${{ matrix.language }}"
+          upload: true
+          output: results-${{ matrix.language }}

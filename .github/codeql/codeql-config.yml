@@ -1,0 +1,5 @@
+name: "Deep CodeQL Config"
+disable-default-queries: false
+queries:
+  - uses: security-extended
+  - uses: security-and-quality
