@@ -25,6 +25,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Show CodeQL version
+        run: codeql version
+
       - name: Initialize CodeQL (Deep Mode)
         uses: github/codeql-action/init@v3
         with:
