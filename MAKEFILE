@@ -1,21 +1,13 @@
-.PHONY: test coverage clean test-coverage-1 test-coverage-2
+.PHONY: test coverage clean
 
 test:
 	@echo "Running tests..."
 	pytest
 
 coverage:
-	@echo "Running test coverage..."
-	pytest --cov=.
+	@echo "Running coverage..."
+	pytest --cov=. --cov-report=term-missing
 
 clean:
 	@echo "Cleaning up..."
 	rm -rf __pycache__ .pytest_cache .coverage htmlcov
-
-test-coverage-1:
-	@echo "Running custom test coverage (pytest)..."
-	pytest --cov=. --cov-report=term-missing
-
-test-coverage-2:
-	@echo "Running custom test coverage (npm)..."
-	npm run test -- --coverage

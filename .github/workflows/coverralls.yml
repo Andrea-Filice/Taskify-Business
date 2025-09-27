@@ -1,43 +1,30 @@
-on: ["push", "pull_request"]
+name: Coverralls
 
-name: Coverrals
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        test_number:
-          - 1
-          - 2
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          node-version: lts/*
+          python-version: "3.11"
 
-      - name: npm install
-        run: npm install
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov coveralls
 
-      - name: Test ${{ matrix.test_number }}
-        run: make test-coverage-${{ matrix.test_number }}
+      - name: Run tests with coverage
+        run: make coverage
 
-      - name: Coveralls Parallel
+      - name: Upload to Coveralls
         uses: coverallsapp/github-action@v2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          flag-name: run-${{ matrix.test_number }}
-          parallel: true
-
-  finish:
-    needs: test
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Coveralls Finished
-        uses: coverallsapp/github-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          parallel-finished: true
-          carryforward: "run-1,run-2"
