@@ -48,7 +48,7 @@ window.todoManager = new class TodoManager {
     autoClose = loaded.autoClose || false;
     joinBeta = typeof loaded.joinBeta === "boolean" ? loaded.joinBeta : true;
     companyName = loaded.companyName || undefined
-    characterLimit = loaded.characterLimit;
+    characterLimit = typeof loaded.characterLimit === 'boolean' ? loaded.characterLimit : false;
 
     //SET DEFAULT CHARACTER LIMIT
     this.inputCharactersUpdate(characterLimit);
@@ -91,7 +91,7 @@ window.todoManager = new class TodoManager {
     document.getElementById('joinBeta')
             .addEventListener('click', () => this.joinBetaClicked());
     document.getElementById('characterLimit')
-            .addEventListener('click', () => this.setCharacterLimit());
+            .addEventListener('change', () => this.setCharacterLimit())
     document.getElementById('aiSendBtn')
             .addEventListener('click', e => this.sendAIMessage())
     document.getElementById('colorTaskCreated')
@@ -105,7 +105,7 @@ window.todoManager = new class TodoManager {
     const input = document.getElementById('aiInput');
     const message = input.value.trim();
     if(!input || !message){
-      ipcRenderer.invoke('show-alert', "Check your AI message and try again.")
+      ipcRenderer.invoke('show-alert', "Invalid message. You cannot send empty messages.", "Invalid AI Message")
       return;
     }
 
@@ -145,16 +145,12 @@ window.todoManager = new class TodoManager {
     let employeeName = employeeField.value.trim();
 
     if (!text){
-      ipcRenderer.invoke('show-alert', "Error creating Task, invalid Task name.");
+      ipcRenderer.invoke('show-alert', "Invalid task name. Please enter a valid name.", "Task Creation Error");
       return;
     }
 
     if(prevVersion && !nextVersion){
-      ipcRenderer.invoke('show-alert', "Error creating the Task, invalid Previous/Newer version.")
-      return;
-    }
-    else if(!prevVersion && nextVersion){
-      ipcRenderer.invoke('show-alert', "Error creating the Task, No valid newer version.")
+      ipcRenderer.invoke('show-alert', "Invalid version format. Please enter a valid format.", "Task Creation Error")
       return;
     }
     
@@ -523,18 +519,11 @@ window.todoManager = new class TodoManager {
   }
 
   setCharacterLimit(){
-    console.log("clicked");
-
-    console.log(characterLimit);
     characterLimit = !characterLimit;
-    console.log(characterLimit);
     this.inputCharactersUpdate(characterLimit);
   }
 
   inputCharactersUpdate(value){
-    console.log("Called from setCharacterLimit");
-
-    console.log(value);
     const inputs = document.querySelectorAll("input");
 
     if(!value){
@@ -557,6 +546,8 @@ window.todoManager = new class TodoManager {
       });
     }
 
+    // debug: verifica valore prima di salvare
+    console.log('Saving todos - characterLimit =', characterLimit);
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
   }
 }();
@@ -791,7 +782,10 @@ document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.open
 document.getElementById('licenseBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE");});
 
 //NEED HELP SECTION
-document.getElementById('feedback').addEventListener('click', () =>{document.getElementById("feedbackSelection").classList.toggle("feedbackSelection")});
+document.getElementById('feedback').addEventListener('click', () =>{
+  document.getElementById("feedbackSelection").classList.toggle("feedbackSelection")
+  document.getElementById('menuFeedback').classList.toggle("arrowMenu")
+});
 document.getElementById("bug").addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=bug")})
 document.getElementById("feedbackBtn").addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=enhancement")})
 document.getElementById('contactUs').addEventListener('click', () =>{shell.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});

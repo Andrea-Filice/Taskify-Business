@@ -5,10 +5,9 @@ try{
     .then(response => response.json())
           .then(data => {
             taskifyVersion = data.versionTaskify;
-            console.log(taskifyVersion)
             document.getElementById('latestversion').innerText = "Latest version avaible: " + data.versionTaskify;
           })
-} catch (error) {document.getElementById('latestversion').innerText = `Latest version avaible: (Unknown error: ${error})`;}
+} catch (error) {document.getElementById('latestversion').innerText = `Latest version avaible: Impossible retrieve latest version, check your internet wi-fi.`;}
 
 
 function getCurrentVersion(){
@@ -16,8 +15,8 @@ function getCurrentVersion(){
   .then(response => response.json())
           .then(data => {
             version = data.Version;
-            console.log(version)
             document.getElementById('version').innerHTML = "Version: " + version;
+            document.getElementById('build').innerHTML = "Build: " + data.BuildNumber;
           });
 
   setTimeout(() => {

@@ -13,14 +13,14 @@
             <div class="column">
                 <h1 style="font-family: 'Excon', sans-serif;">MAINTENANCE TASKS</h1>
                 <div class="input-group">
-                    <input type="text" id="softwareInput" placeholder="Enter Task name..." required spellcheck="false" title="Task Name" maxlength="20">
+                    <input type="text" id="softwareInput" placeholder="Enter Task name..." required spellcheck="false" title="Task name" maxlength="20">
                     <div class="version-inputs" id="software">
-                        <input type="text" id="softwarePrevVersion" placeholder="Previous Version" spellcheck="false" title="Previous Version" maxlength="10">
-                        <input type="text" id="softwareNextVersion" placeholder="Newer Version" spellcheck="false" title="Newer Version" maxlength="10">
+                        <input type="text" id="softwarePrevVersion" placeholder="Previous version" spellcheck="false" title="Previous version" maxlength="10">
+                        <input type="text" id="softwareNextVersion" placeholder="Newer version" spellcheck="false" title="Newer version" maxlength="10">
                     </div>
                     <div class="nameTaskUser">
                         <img src="assets/_employee.png" draggable="false" class="nameTaskUserImg">
-                        <input type="text" id="userTypeIn" placeholder="Employee Name..." spellcheck="false" title="Employee Name (Optional)">
+                        <input type="text" id="userTypeIn" placeholder="Employee name..." spellcheck="false" title="Employee name (Optional)">
                     </div>
                     <button id="softwareAddBtn" title="Add to Tasks"><img src="assets/_add.png" width="20px" height="20px" draggable="false"> Add to Tasks</button>
                 </div>
@@ -30,14 +30,14 @@
             <div class="column">
                 <h1 style="font-family: 'Excon', sans-serif;">OUT OF MAINTENANCE</h1>
                 <div class="input-group">
-                    <input type="text" id="fuoriInput" placeholder="Enter Task name... " required spellcheck="false" title="Task Name" maxlength="20">
+                    <input type="text" id="fuoriInput" placeholder="Enter Task name... " required spellcheck="false" title="Task name" maxlength="20">
                     <div class="version-inputs" id="out">
-                        <input type="text" id="fuoriPrevVersion" placeholder="Previous Version" spellcheck="false" title="Previous Version" maxlength="10">
-                        <input type="text" id="fuoriNextVersion" placeholder="Newer Version" spellcheck="false" title="Newer Version" maxlength="10">
+                        <input type="text" id="fuoriPrevVersion" placeholder="Previous Version" spellcheck="false" title="Previous version" maxlength="10">
+                        <input type="text" id="fuoriNextVersion" placeholder="Newer Version" spellcheck="false" title="Newer version" maxlength="10">
                     </div>
                     <div class="nameTaskUser">
                         <img src="assets/_employee.png" draggable="false" class="nameTaskUserImg">
-                        <input type="text" id="userTypeOut" placeholder="Employee Name..." spellcheck="false" title="Employee Name (Optional)">
+                        <input type="text" id="userTypeOut" placeholder="Employee name..." spellcheck="false" title="Employee name (Optional)">
                     </div>
                     <button id="fuoriAddBtn" title="Add to Tasks"><img src="assets/_add.png" width="20px" height="20px" draggable="false"> Add to Tasks</button>
                 </div>
@@ -60,7 +60,7 @@
                 <h2><img src="assets/_createTask.png" draggable="false" height="20px" width="20px">  Tasks created:  <p style="display: inline; font-weight: 500; font-style: italic;" id="taskCreated"></p></h2>
                 <h2><img src="assets/_completeIcon.png" draggable="false" height="23px" width="23px">  Tasks completed:  <p style="display: inline; font-weight: 500; font-style: italic;" id="taskCompleted"></p></h2>
                 <canvas id="tasksChart" width="400" height="150" style="background: #232323; border-radius: 10px; margin-bottom: 30px;"></canvas>
-                <h1 style="font-family: 'Excon', sans-serif; font-size: 35px; text-align: center;"><img src="assets/_settings.png" alt="Settings" width="30px" height="30px"> Options:</h1>
+                <h1 style="font-family: 'Excon', sans-serif; font-size: 35px; text-align: center;"><img src="assets/_settings.png" alt="Charts settings" width="30px" height="30px" draggable="false"> Options:</h1>
                 <center>
                     <div class="selections">
                         <label for="colorTaskCreated" style="margin-left: 20px;">Color curve <i>Tasks created:</i> </label>
@@ -114,7 +114,7 @@
                     <h4 style="color: white; display: flex; justify-content: end; margin-right: 170px; margin-top: -0px; font-weight: 300; font-style: italic;">Apache License</h4>
                     <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_help.png" draggable="false" height="20px" width="20px"> Need help?</h2>
                     <div class="needHelp">
-                        <button id="feedback" title="Leave a Feedback"><img src="assets/_feedback.png" width="20px" height="20px" draggable="false"> Leave a Feedback <img src="assets/_arrowDown.png" alt="Icon arrow" style="display: inline;" width="20px" height="20px"></button>
+                        <button id="feedback" title="Leave a Feedback"><img src="assets/_feedback.png" width="20px" height="20px" draggable="false"> Leave a Feedback <img src="assets/_arrowDown.png" alt="Icon arrow" style="display: inline;" width="20px" height="20px" id="menuFeedback"></button>
                         <button id="contactUs" title="Contact Us"><img src="assets/_contact.png" width="20px" height="20px" draggable="false"> Contact Us</button>
                     </div>
                     <div class="feedbackSelection" id="feedbackSelection">
@@ -127,9 +127,9 @@
                     <br> <br>
                     <button id="restartBtn" class="btn" title="Restart"><img src="assets/_reload.png" draggable="false" width="23px" height="23px">  Restart</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton" title="Quit application"><img src="assets/_quit.png" draggable="false" height="25px" width="25px"> Quit Application</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="quitApplication()" class="quitButton" title="Quit application"><img src="assets/_quit.png" draggable="false" height="25px" width="25px"> Quit application</button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton" title="Close panel"><img src="assets/_close.png" draggable="false" height="15px" width="15px"> Close Panel</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton" title="Close panel"><img src="assets/_close.png" draggable="false" height="15px" width="15px"> Close panel</button>
                 </div>
             </div>
         </div>
@@ -140,7 +140,7 @@
                 <div id="aiChatHistory" class="ai-chat-history"></div>
                 <div class="ai-chat-input-row">
                     <input id="aiInput" type="text" placeholder="Write a command..." autocomplete="on" style="display: block;" spellcheck="false"/>
-                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif; height: 100%;"><img src="assets/_send.png" height="30px" width="30px" draggable="false"></button>
+                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif; height: 100%;"><img src="assets/_send.png" height="20px" width="20px" draggable="false"></button>
                 </div>
             </div>
         </div>

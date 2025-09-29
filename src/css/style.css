@@ -140,7 +140,7 @@ input::after{
     animation: animInputOut 1s ease-in-out forwards;
 }
 
-button:focus:not(.infoButton):not(.settingsButton), .aiButton {
+button:focus:not(.infoButton):not(.settingsButton):not(.quitButton):not(.closeButton), .aiButton {
     outline: none;
     animation: animButtonIn 2s ease-in-out infinite;
 }
@@ -567,3 +567,5 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
     cursor: pointer;
     text-decoration: underline;
 }
+
+.arrowMenu{rotate: 180deg;}
