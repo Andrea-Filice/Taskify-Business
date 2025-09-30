@@ -7,7 +7,7 @@ try{
             taskifyVersion = data.versionTaskify;
             document.getElementById('latestversion').innerText = "Latest version avaible: " + data.versionTaskify;
           })
-} catch (error) {document.getElementById('latestversion').innerText = `Latest version avaible: Impossible retrieve latest version, check your internet wi-fi.`;}
+} catch (ex) {document.getElementById('latestversion').innerText = `Latest version avaible: Impossible to retrieve the latest version, check your internet wi-fi.`;}
 
 
 function getCurrentVersion(){
@@ -19,9 +19,7 @@ function getCurrentVersion(){
             document.getElementById('build').innerHTML = "Build: " + data.BuildNumber;
           });
 
-  setTimeout(() => {
-    checkForUpdates();
-  }, 1000);
+  setTimeout(checkForUpdates, 1000);
 }
 
 function checkForUpdates(){

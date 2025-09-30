@@ -202,7 +202,7 @@ window.todoManager = new class TodoManager {
     characterLimitCheckbox.checked = characterLimit;
 
     //COLOR SELECTION
-    ///TaskCompleted
+    ///TASK COMPLETED
     switch(dropDowntaskCompleted){
       case 'red':
         colorTCompleted = 'rgba(255, 0, 0, 1)'; 
@@ -226,7 +226,7 @@ window.todoManager = new class TodoManager {
         break;
     }
 
-    ///TaskCreated
+    ///TASK CREATED
     switch(dropDowntaskCreated){
       case 'red':
         colorTCreated = 'rgba(255, 0, 0, 1)'; 
@@ -435,9 +435,8 @@ window.todoManager = new class TodoManager {
       ipcRenderer.invoke('show-alert', "Invalid category selected.");
       return;
     }
-    ipcRenderer.invoke('show-confirm',
-      `Are you sure to mark complete the following category?`
-    ).then(userResponse => {
+    ipcRenderer.invoke('show-confirm',`Are you sure to mark complete the following category?`)
+    .then(userResponse => {
       if (!userResponse) return;
       const list = this.todos[categoryKey];
       taskCompleted += list.length;
@@ -545,9 +544,6 @@ window.todoManager = new class TodoManager {
           e.setAttribute('maxlength', 20);
       });
     }
-
-    // debug: verifica valore prima di salvare
-    console.log('Saving todos - characterLimit =', characterLimit);
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
   }
 }();
