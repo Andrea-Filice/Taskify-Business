@@ -1,7 +1,7 @@
 let taskifyVersion, version;
 
 try{
-    fetch('https://playepikservercontents.netlify.app/dependecies/dependecies.json')
+    fetch('https://playepikservercontents.netlify.app/dependencies/dependencies.json')
     .then(response => response.json())
           .then(data => {
             taskifyVersion = data.versionTaskify;
