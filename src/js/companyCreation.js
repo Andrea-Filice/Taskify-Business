@@ -22,3 +22,6 @@ function createCompany(){
         setTimeout(() => {window.location.href = "index.html";}, 1000);
     }
 }
+
+//DOM ON LOAD
+document.body.onload = OnLoad();
