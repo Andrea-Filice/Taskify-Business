@@ -5,7 +5,7 @@ import re
 def parse_input(text):
     #CHECK FOR '/CREATE' COMMAND
     multi_match = re.match(
-        r"/create\d+\s+([^\s]+(?:\s*,\s*[^\s]+)*)\s+([^\s]+(?:\s*,\s*^_(__|[^_])+_$+)*)\s+to\s+newer\s+([^\s]+(?:\s*,\s*[^\s]+)*)(?:\s+!category\s+([^\s]+(?:\s*,\s*[^\s]+)*))?",
+        r"/create\d+\s+([^\s]+(?:\s*,\s*[^\s]+)*)\s+([^\s]+(?:\s*,\s*[^\s]+)*)\s+to\s+newer\s+([^\s]+(?:\s*,\s*[^\s]+)*)(?:\s+!category\s+([^\s]+(?:\s*,\s*[^\s]+)*))?",
         text, re.IGNORECASE
     )
 
