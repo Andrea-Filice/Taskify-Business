@@ -4,6 +4,8 @@
 
 - dotenv `17.2.3`
   - [New in 17.2.3](https://www.npmjs.com/package/dotenv)
+- Electron `38.2.1`
+  - [New in 38.2.1](https://github.com/electron/electron/releases/tag/v38.2.1)
 
 # Bug Fixes
 [4591c63] Better performance with a code-clean operation.
