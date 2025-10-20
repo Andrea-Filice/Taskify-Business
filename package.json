@@ -54,7 +54,7 @@
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.75.1",
+    "@supabase/supabase-js": "^2.76.0",
     "chart.js": "^4.5.1",
     "dotenv": "^17.2.3",
     "npm": "^11.6.2"
