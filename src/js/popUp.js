@@ -24,12 +24,19 @@ function submitInput() {
   const newerVersion = document.getElementById('inputNV').value.trim();
 
   //SEND NEW VALUES
-  if(inputName)
+  if(inputName){
     ipcRenderer.send('inputSend', inputName, "task_name")
-  if(previousVersion)
-    ipcRenderer.send('inputSend', previousVersion, "prev_version")
-  if(newerVersion)
-    ipcRenderer.send('inputSend', newerVersion, "next_version")
+  }
+  else
+    ipcRenderer.invoke("show-alert", "Unable to modify the Task. Invalid Task name.")
+  if(previousVersion && !newerVersion || !previousVersion && newerVersion){
+    ipcRenderer.invoke("show-alert", "Unable to modify the Task. You cannot add just one version.")
+  }
+  else if(previousVersion && newerVersion){
+    ipcRenderer.send('inputSend', previousVersion, "prev_version");
+    ipcRenderer.send('inputSend', newerVersion, "next_version");
+  }
+
   window.close();
 }
 
