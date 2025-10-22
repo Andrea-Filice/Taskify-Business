@@ -34,7 +34,7 @@ function loadTodosFromDisk() {
       todos.chartData = todos.chartData || { labels: [], created: [], completed: [] }
       todos.taskCompletedColor = todos.taskCompletedColor || "green"
       todos.taskCreatedColor = todos.taskCreatedColor || "blue"
-      todos.characterLimit = todos.characterLimit || true
+      todos.characterLimit = typeof todos.characterLimit === 'boolean' ? todos.characterLimit : true;
     }
   } catch (err) {
     console.error(err)
@@ -154,11 +154,14 @@ function createWindow() {
   });
 
   ipcMain.on('deleteTask', () =>{mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);});
-  ipcMain.on('load-todos', event => {event.returnValue = todos})
+  ipcMain.on('load-todos', event => {event.returnValue = todos;
+    console.log(todos);
+  })
   ipcMain.handle('shareSettings', (event, settings) => {characterLimit = settings})
 
   ipcMain.on('save-todos', (event, newTodos) => {
     todos = { ...todos, ...newTodos }
+    console.log(todos);
     saveTodosToDisk()
   })
 
