@@ -73,5 +73,5 @@ ipcRenderer.on('retrieveTaskName', (event, name) =>{document.getElementById('inp
 ipcRenderer.on('retrieveVersion', (event, version, elementID) => {document.getElementById(elementID).value = version;});
 ipcRenderer.on('retrieveSetting', (event, characterLimit) =>{SetCharacterLimits(characterLimit)});
 
-//DOM ON LOAD
+//ON LOAD
 document.body.onload = OnLoad();
