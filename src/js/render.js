@@ -519,18 +519,12 @@ window.todoManager = new class TodoManager {
   }
 
   setCharacterLimit(){
-    console.log(characterLimit);
-    if(characterLimit == true)
-      characterLimit = false
-    else if(characterLimit == false)
-      characterLimit = true
-    console.log(characterLimit);
+    characterLimit = !characterLimit;
     this.inputCharactersUpdate(characterLimit);
   }
 
   inputCharactersUpdate(value){
     const inputs = document.querySelectorAll("input");
-    console.log(value)
 
     if(!value){
       inputs.forEach(e =>{

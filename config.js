@@ -5,7 +5,7 @@ const fs = require('fs')
 let mainWindow = null
 let categoryModifyTask, indexModifyTask, characterLimit
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
-const DEBUG = true
+const DEBUG = false
 
 let todos = {
   softwareComponents: [],
@@ -154,14 +154,11 @@ function createWindow() {
   });
 
   ipcMain.on('deleteTask', () =>{mainWindow.webContents.send('delete-task', categoryModifyTask, indexModifyTask);});
-  ipcMain.on('load-todos', event => {event.returnValue = todos;
-    console.log(todos);
-  })
+  ipcMain.on('load-todos', event => {event.returnValue = todos;})
   ipcMain.handle('shareSettings', (event, settings) => {characterLimit = settings})
 
   ipcMain.on('save-todos', (event, newTodos) => {
     todos = { ...todos, ...newTodos }
-    console.log(todos);
     saveTodosToDisk()
   })
 
