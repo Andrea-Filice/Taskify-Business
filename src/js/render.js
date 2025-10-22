@@ -395,7 +395,7 @@ window.todoManager = new class TodoManager {
   }
 
   resetData() {
-    ipcRenderer.invoke('show-confirm', "Are you sure do you want to reset all Data saved?")
+    ipcRenderer.invoke('show-confirm', "Are you sure you want to reset all data saved?")
       .then(userResponse => {
         if (userResponse) {
           this.todos = {
@@ -416,7 +416,7 @@ window.todoManager = new class TodoManager {
           };
           ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
           this.updateUI();
-          const res = ipcRenderer.invoke('show-alert', "Data succesfully reset, app will be restarted soon.")
+          const res = ipcRenderer.invoke('show-alert', "Data successfully reset, the app will be restarted soon.")
           .then(() => {window.location.href = "boot.html";});
         }
       });
@@ -432,7 +432,7 @@ window.todoManager = new class TodoManager {
 
   markAsCompleted(categoryKey) {
     if (!this.todos[categoryKey]) {
-      ipcRenderer.invoke('show-alert', "Invalid category selected.");
+      ipcRenderer.invoke('show-alert', "Invalid category.");
       return;
     }
     ipcRenderer.invoke('show-confirm',`Are you sure to mark complete the following category?`)
@@ -477,7 +477,7 @@ window.todoManager = new class TodoManager {
       ipcRenderer.invoke('show-alert', "Invalid Company name. At least 8 characters.");
       return;
     }
-    ipcRenderer.invoke('show-confirm', `Are you sure to change the company name to: ${newName}?`)
+    ipcRenderer.invoke('show-confirm', `Are you sure to change the company name to "${newName}"?`)
       .then(userResponse => {
         if (!userResponse) return;
         companyName = newName;
