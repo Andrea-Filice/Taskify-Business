@@ -1,6 +1,6 @@
 {
   "name": "taskify-business",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
   "license": "Apache",
   "repository": {
@@ -50,11 +50,11 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^38.4.0",
+    "electron": "^39.0.0",
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.76.1",
+    "@supabase/supabase-js": "^2.77.0",
     "chart.js": "^4.5.1",
     "dotenv": "^17.2.3",
     "npm": "^11.6.2"
