@@ -1,5 +1,5 @@
 const https = require('https');
-const { app, BrowserWindow, ipcMain, dialog, ipcRenderer } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
 const fs = require('fs')
 const {spawn} = require('child_process');
@@ -370,7 +370,7 @@ function createWindow() {
     } 
     catch (err) {
       console.error('[🐛 DEBUG] download handler failed:', err);
-      mainWindow.webContents.send("show-alert", "There was an unknown error during the installation.", "Taskify Updater - Error")
+      mainWindow.webContents.send("show-alert", "There was an unknown error during the installation.", "Taskify Updater - Error");
       try { progressBar.close(); }
       catch(e){ console.log('[🐛 DEBUG] Unknown Error'); }
       return { ok: false, message: err.message || String(err) };
