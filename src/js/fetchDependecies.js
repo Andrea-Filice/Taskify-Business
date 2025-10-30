@@ -1,35 +1,45 @@
-let taskifyVersion, version;
+const { ipcRenderer } = require("electron");
 
-try{
-    fetch('https://playepikservercontents.netlify.app/dependencies/dependencies.json')
+let latestVersion, currentVersion; //VARIABLES FOR STORE LOCAL VALUES
+
+function retrieveDatasFromServer(){
+  //GET CURRENT VERSION FROM THE .JSON FILE:
+  getCurrentVersion();
+
+  //GET LATEST VERSION FROM THE SERVER:
+  fetch('https://playepikservercontents.netlify.app/dependencies/dependencies.json')
     .then(response => response.json())
           .then(data => {
-            taskifyVersion = data.versionTaskify;
+            latestVersion = data.versionTaskify;
             document.getElementById('latestversion').innerText = "Latest version avaible: " + data.versionTaskify;
           })
-} catch (ex) {document.getElementById('latestversion').innerText = `Latest version avaible: Impossible to retrieve the latest version, check your internet wi-fi.`;}
-
+}
 
 function getCurrentVersion(){
+  ///* GET THE CURRENT VERSION FROM THE LOCAL .JSON FILE
   fetch('version.json')
   .then(response => response.json())
           .then(data => {
-            version = data.Version;
-            document.getElementById('version').innerHTML = "Version: " + version;
+            currentVersion = data.Version;
+            document.getElementById('version').innerHTML = "Version: " + currentVersion;
             document.getElementById('build').innerHTML = "Build: " + data.BuildNumber;
           });
 
+  //* TIMEOUT FOR AVOID DATA CONFLICTS OR UNDEFINED VALUES.
   setTimeout(checkForUpdates, 1000);
 }
 
 function checkForUpdates(){
-  if(taskifyVersion > version){
-    let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is avaible! (" + taskifyVersion + ")")
+  ///* CHECK FOR UPDATES 
+  if(latestVersion > currentVersion){
+    let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is avaible! (" + latestVersion + ")")
     .then(res =>{
-      if(res)
-        shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/releases/latest")
+      if(res){
+        ipcRenderer.invoke('downloadProgress', latestVersion, )
+      }
     })
   }
 }
 
-document.body.onload = getCurrentVersion();
+//START CHECKING FILES
+document.onload = retrieveDatasFromServer();

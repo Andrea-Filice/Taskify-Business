@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, dialog } = require('electron')
 const path = require('path')
 const fs = require('fs')
+const ProgressBar = require('electron-progressbar')
 
 let mainWindow = null
 let categoryModifyTask, indexModifyTask, characterLimit
@@ -37,20 +38,20 @@ function loadTodosFromDisk() {
       todos.characterLimit = typeof todos.characterLimit === 'boolean' ? todos.characterLimit : true;
     }
   } catch (err) {
-    console.error(err)
-    todos = {
-      softwareComponents: [],
-      fuoriManutenzione: [],
-      taskCreated: 0,
-      taskCompleted: 0,
-      autoClose: false,
-      joinBeta: true,
-      companyName: undefined,
-      chartData: { labels: [], created: [], completed: [] },
-      taskCompletedColor : "green",
-      taskCreatedColor: "blue",
-      characterLimit: true
-    }
+      console.error(err)
+      todos = {
+        softwareComponents: [],
+        fuoriManutenzione: [],
+        taskCreated: 0,
+        taskCompleted: 0,
+        autoClose: false,
+        joinBeta: true,
+        companyName: undefined,
+        chartData: { labels: [], created: [], completed: [] },
+        taskCompletedColor : "green",
+        taskCreatedColor: "blue",
+        characterLimit: true
+      }
   }
 }
 
@@ -87,10 +88,10 @@ function createWindow() {
     return result.response === 0
   })
 
-    ipcMain.handle('new-version', async (event, message) => {
+  ipcMain.handle('new-version', async (event, message) => {
     const result = await dialog.showMessageBox({
       type: 'question',
-      buttons: ['Update Now', 'Not Now'],
+      buttons: ['Install Now', 'Remind me Later'],
       defaultId: 1,
       cancelId: 0,
       message,
@@ -98,6 +99,32 @@ function createWindow() {
       noLink: true
     })
     return result.response === 0
+  })
+
+  ipcMain.handle('downloadProgress', async (event, latestVersion, megabytesTotal) =>{
+    var progressBar = new ProgressBar({
+      indeterminate: false,
+      maxValue: megabytesTotal,
+      text: `Updating Taskify to ${latestVersion}`,
+      detail: `Downloading 0Mb out of ${megabytesTotal}Mb...`
+    })
+
+    progressBar
+      .on('completed', function(){
+        progressBar.detail = "Download completed! Starting the update..." //TODO: ADD A LOGIC FOR RESTART THE APPLICATION
+      })
+      .on('aborted', function(value){
+        console.log("CATCHED AN ERROR WITH PROGRESS BAR (" + value + ").") //TODO: SHOW AN ERROR MESSAGE
+      })
+      .on('progress', function(currentStatus){
+        progressBar.detail = `Downloading ${currentStatus}Mb out of ${progressBar.getOptions().maxValue}Mb...`
+      })
+
+      setInterval(function() { //TODO: UPDATE THIS BASE ON HOW MANY MB USER HAVE DOWNLOADED
+        if(!progressBar.isCompleted()){
+          progressBar.value += 1;
+        }
+      }, 20);
   })
 
   ipcMain.handle('show-alert', async (event, message, title) => {
