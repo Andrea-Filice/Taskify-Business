@@ -226,10 +226,6 @@ function createWindow() {
             }
           });
 
-          response.on('end', () => {
-            // handled in file.on('finish')
-          });
-
           response.on('error', err => {
             file.destroy();
             try { fs.unlinkSync(provisionalPath); } catch (e) {}
@@ -291,7 +287,6 @@ function createWindow() {
           }
           return reject(err);
         });
-
         req.end();
       }
 
