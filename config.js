@@ -1,8 +1,9 @@
 const https = require('https');
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain, dialog, ipcRenderer } = require('electron')
 const path = require('path')
 const fs = require('fs')
 const {spawn} = require('child_process');
+const { https: httpsFollow } = require('follow-redirects');
 
 const ProgressBar = require('electron-progressbar')
 
@@ -140,6 +141,8 @@ function createWindow() {
   //* DOWNLOAD FILE AND UPDATE PROGRESSBAR
   async function downloadFileWithProgress(url, totalMB, progressBar, mainWindow) {
     const maxRedirects = 10;
+    const maxRetries = 2;
+    const requestTimeout = 60000; 
 
     function chooseFilenameFrom(response, requestedUrl) {
       const cd = response.headers['content-disposition'];
@@ -160,55 +163,49 @@ function createWindow() {
     }
 
     return new Promise((resolve, reject) => {
-      let redirects = 0;
-      let requestedUrl = url;
+      let retries = 0;
 
       function doRequest(currentUrl) {
-        requestedUrl = currentUrl;
-        let outputPath;
+        let provisionalName;
         try {
-          const safeNameGuess = sanitizeFilename(path.basename(new URL(currentUrl).pathname) || 'installer.exe');
-          outputPath = path.join(app.getPath('temp'), safeNameGuess + '.download');
+          provisionalName = sanitizeFilename(path.basename(new URL(currentUrl).pathname) || 'installer') + '.download';
         } catch (e) {
-          outputPath = path.join(app.getPath('temp'), 'installer.tmp.download');
+          provisionalName = 'installer.tmp.download';
         }
+        const provisionalPath = path.join(app.getPath('temp'), provisionalName);
+        try { fs.mkdirSync(path.dirname(provisionalPath), { recursive: true }); } catch (e) {}
 
-        console.log('[ℹ️ INFO] request URL:', currentUrl);
-        console.log('[ℹ️ INFO] provisional outputPath:', outputPath);
+        console.log('[DEBUG] request URL:', currentUrl);
+        console.log('[DEBUG] provisional outputPath:', provisionalPath);
 
-        try { fs.mkdirSync(path.dirname(outputPath), { recursive: true }); } catch (e) {}
+        const req = httpsFollow.request(encodeURI(currentUrl), {
+          method: 'GET',
+          agent: false,
+          timeout: requestTimeout,
+          maxRedirects
+        }, response => {
+          console.log('[DEBUG] HTTP statusCode:', response.statusCode);
 
-        const file = fs.createWriteStream(outputPath, { flags: 'w' });
-
-        const req = https.get(encodeURI(currentUrl), response => {
-          console.log('[ℹ️ INFO] HTTP statusCode:', response.statusCode);
           if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
             const loc = response.headers.location.startsWith('http') ? response.headers.location : new URL(response.headers.location, currentUrl).toString();
-            console.log('[ℹ️ INFO] redirect to:', loc);
-            file.close();
+            console.log('[DEBUG] redirect to:', loc);
             req.destroy();
-            redirects += 1;
-            if (redirects > maxRedirects) {
-              return reject(new Error('Too many redirects'));
-            }
             return doRequest(loc);
           }
 
           if (response.statusCode !== 200) {
-            file.close();
-            fs.unlink(outputPath, () => {});
+            req.destroy();
             return reject(new Error(`HTTP ${response.statusCode}`));
           }
 
           const chosenName = chooseFilenameFrom(response, currentUrl);
-          const finalPath = path.join(app.getPath('temp'), chosenName);
-          console.log('[ℹ️ INFO] chosen filename:', chosenName);
-          console.log('[ℹ️ INFO] switching provisional path -> final path:', finalPath);
+          let finalPath = path.join(app.getPath('temp'), chosenName);
+          console.log('[DEBUG] chosen filename:', chosenName);
+          console.log('[DEBUG] switching provisional path -> final path:', finalPath);
 
-          const provisionalPath = outputPath;
-
-          const totalBytes = parseInt(response.headers['content-length'], 10);
+          const file = fs.createWriteStream(provisionalPath, { flags: 'w' });
           let downloadedBytes = 0;
+          const totalBytes = parseInt(response.headers['content-length'], 10);
 
           if (!isNaN(totalBytes)) {
             try { progressBar.max = totalBytes / (1024 * 1024); } catch (e) {}
@@ -219,66 +216,88 @@ function createWindow() {
           response.on('data', chunk => {
             downloadedBytes += chunk.length;
             const downloadedMB = downloadedBytes / (1024 * 1024);
-
             try {
               progressBar.value = downloadedMB;
+              progressBar.detail = `Downloading ${downloadedMB.toFixed(2)}Mb out of ${progressBar.getOptions().maxValue}Mb...`;
             } catch (e) {
               if (mainWindow && mainWindow.webContents) {
                 mainWindow.webContents.send('download-progress', { mb: downloadedMB, totalMB: isNaN(totalBytes) ? null : totalBytes / (1024 * 1024) });
               }
             }
+          });
 
-            try { progressBar.detail = `Downloading ${downloadedMB.toFixed(2)}Mb out of ${totalMB}Mb...`; } 
-            catch (e) {}
+          response.on('end', () => {
+            // handled in file.on('finish')
           });
 
           response.on('error', err => {
             file.destroy();
-            fs.unlink(provisionalPath, () => {});
+            try { fs.unlinkSync(provisionalPath); } catch (e) {}
             reject(err);
           });
 
           file.on('error', err => {
             response.destroy();
-            fs.unlink(provisionalPath, () => {});
+            try { fs.unlinkSync(provisionalPath); } catch (e) {}
             reject(err);
           });
 
           file.on('finish', () => {
             file.close(err => {
-              if (err) return reject(err);
+              if (err) {
+                try { fs.unlinkSync(provisionalPath); } catch (e) {}
+                return reject(err);
+              }
               try {
-                const stats = fs.statSync(outputPath);
-                console.log('[ℹ️ INFO] Download complete:', outputPath);
-                console.log('[ℹ️ INFO] final file size:', stats.size);
-                if (stats.size === 0) return reject(new Error('Downloaded file is empty'));
-
-                let finalPath = outputPath;
-                if (!finalPath.toLowerCase().endsWith('.exe')) {
-                  finalPath += '.exe';
-                  fs.renameSync(outputPath, finalPath);
-                  console.log('[ℹ️ INFO] Renamed to:', finalPath);
+                const stats = fs.statSync(provisionalPath);
+                console.log('[DEBUG] provisional file written size:', stats.size);
+                if (stats.size === 0) {
+                  try { fs.unlinkSync(provisionalPath); } catch (e) {}
+                  return reject(new Error('Downloaded file is empty'));
                 }
-
-                resolve(finalPath);
+                if (!finalPath.toLowerCase().endsWith('.exe')) {
+                  finalPath = finalPath + '.exe';
+                }
+                try {
+                  if (fs.existsSync(finalPath)) fs.unlinkSync(finalPath);
+                  fs.renameSync(provisionalPath, finalPath);
+                  console.log('[DEBUG] moved to final path:', finalPath);
+                  return resolve(finalPath);
+                } catch (renameErr) {
+                  console.warn('[DEBUG] rename failed, keeping provisional file as fallback:', renameErr);
+                  return resolve(provisionalPath);
+                }
               } catch (e) {
-                reject(e);
+                try { fs.unlinkSync(provisionalPath); } catch (ee) {}
+                return reject(e);
               }
             });
           });
           response.pipe(file);
         });
 
-        req.on('error', err => {
-          fs.unlink(outputPath, () => {});
-          reject(err);
+        req.on('timeout', () => {
+          console.warn('[DEBUG] request timeout');
+          req.destroy(new Error('Request timeout'));
         });
+
+        req.on('error', err => {
+          console.error('[DEBUG] request error:', err && err.code ? err.code : err);
+          try { fs.unlinkSync(provisionalPath); } catch (e) {}
+          if ((err.code === 'ECONNRESET' || err.message === 'aborted') && retries < maxRetries) {
+            retries += 1;
+            console.log(`[DEBUG] retrying download (${retries}/${maxRetries})...`);
+            return setTimeout(() => doRequest(url), 500 * retries);
+          }
+          return reject(err);
+        });
+
+        req.end();
       }
 
-      doRequest(requestedUrl);
+      doRequest(url);
     });
   }
-
 
   //* AFTER DOWNLOAD, CLOSE & RUN INSTALLER
   async function downloadAndInstallUpdate(filePath, latestVersion) {
@@ -287,12 +306,14 @@ function createWindow() {
 
       if (!fs.existsSync(filePath)) {
         console.error('[🐛 DEBUG] installer not found:', filePath);
+        mainWindow.webContents.send("show-alert", "There was an error during the downloading of the Installer.", "Taskify Updater - Error")
         return { ok: false, message: 'installer not found' };
       }
 
       const stats = fs.statSync(filePath);
       if (stats.size === 0) {
         console.error('🐛 DEBUG] installer is empty');
+        mainWindow.webContents.send("show-alert", "There was an error during the downloading of the Installer.", "Taskify Updater - Error")
         return { ok: false, message: 'installer is empty' };
       }
 
@@ -320,6 +341,7 @@ function createWindow() {
     } 
     catch (error) {
       console.error('[🐛 DEBUG] Error launching installer:', error);
+      mainWindow.webContents.send("show-alert", "There was an error during the launch of the Installer.", "Taskify Updater - Error")
       return { ok: false, message: error.message };
     }
   }
@@ -353,6 +375,7 @@ function createWindow() {
     } 
     catch (err) {
       console.error('[🐛 DEBUG] download handler failed:', err);
+      mainWindow.webContents.send("show-alert", "There was an unknown error during the installation.", "Taskify Updater - Error")
       try { progressBar.close(); }
       catch(e){ console.log('[🐛 DEBUG] Unknown Error'); }
       return { ok: false, message: err.message || String(err) };
