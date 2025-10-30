@@ -58,7 +58,7 @@ function loadTodosFromDisk() {
   }
 }
 
-function saveTodosToDisk() {try {fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')} catch (err){console.log(err)}}
+function saveTodosToDisk() {try {fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')} catch (err){console.log("[🐛 DEBUG] <color='red'>UNKNOWN ERROR: </color> " + err);}}
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -125,14 +125,14 @@ function createWindow() {
 
       if (sizeBytes) {
         const sizeMB = (parseInt(sizeBytes, 10) / (1024 * 1024)).toFixed(2);
-        console.log(`[DEBUG] Latest version size: ${sizeMB} MB`);
+        console.log(`[ℹ️ INFO] Latest version size: ${sizeMB} MB`);
         return parseFloat(sizeMB);
       } else {
-        console.warn('[DEBUG] Content-Length not available.');
+        console.warn('[🐛 DEBUG] Content-Length not available.');
         return 0;
       }
     } catch (error) {
-      console.error('[DEBUG] Error retrieving version size:', error);
+      console.error('🐛 [DEBUG] Error retrieving version size:', error);
       return 0;
     }
   }
@@ -173,18 +173,18 @@ function createWindow() {
           outputPath = path.join(app.getPath('temp'), 'installer.tmp.download');
         }
 
-        console.log('[DEBUG] request URL:', currentUrl);
-        console.log('[DEBUG] provisional outputPath:', outputPath);
+        console.log('[ℹ️ INFO] request URL:', currentUrl);
+        console.log('[ℹ️ INFO] provisional outputPath:', outputPath);
 
         try { fs.mkdirSync(path.dirname(outputPath), { recursive: true }); } catch (e) {}
 
         const file = fs.createWriteStream(outputPath, { flags: 'w' });
 
         const req = https.get(encodeURI(currentUrl), response => {
-          console.log('[DEBUG] HTTP statusCode:', response.statusCode);
+          console.log('[ℹ️ INFO] HTTP statusCode:', response.statusCode);
           if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
             const loc = response.headers.location.startsWith('http') ? response.headers.location : new URL(response.headers.location, currentUrl).toString();
-            console.log('[DEBUG] redirect to:', loc);
+            console.log('[ℹ️ INFO] redirect to:', loc);
             file.close();
             req.destroy();
             redirects += 1;
@@ -202,8 +202,8 @@ function createWindow() {
 
           const chosenName = chooseFilenameFrom(response, currentUrl);
           const finalPath = path.join(app.getPath('temp'), chosenName);
-          console.log('[DEBUG] chosen filename:', chosenName);
-          console.log('[DEBUG] switching provisional path -> final path:', finalPath);
+          console.log('[ℹ️ INFO] chosen filename:', chosenName);
+          console.log('[ℹ️ INFO] switching provisional path -> final path:', finalPath);
 
           const provisionalPath = outputPath;
 
@@ -249,15 +249,15 @@ function createWindow() {
               if (err) return reject(err);
               try {
                 const stats = fs.statSync(outputPath);
-                console.log('[DEBUG] Download complete:', outputPath);
-                console.log('[DEBUG] final file size:', stats.size);
+                console.log('[ℹ️ INFO] Download complete:', outputPath);
+                console.log('[ℹ️ INFO] final file size:', stats.size);
                 if (stats.size === 0) return reject(new Error('Downloaded file is empty'));
 
                 let finalPath = outputPath;
                 if (!finalPath.toLowerCase().endsWith('.exe')) {
                   finalPath += '.exe';
                   fs.renameSync(outputPath, finalPath);
-                  console.log('[DEBUG] Renamed to:', finalPath);
+                  console.log('[ℹ️ INFO] Renamed to:', finalPath);
                 }
 
                 resolve(finalPath);
@@ -283,16 +283,16 @@ function createWindow() {
   //* AFTER DOWNLOAD, CLOSE & RUN INSTALLER
   async function downloadAndInstallUpdate(filePath, latestVersion) {
     try {
-      console.log(`[DEBUG] launching installer ${filePath}`);
+      console.log(`[ℹ️ INFO] launching installer ${filePath}`);
 
       if (!fs.existsSync(filePath)) {
-        console.error('[DEBUG] installer not found:', filePath);
+        console.error('[🐛 DEBUG] installer not found:', filePath);
         return { ok: false, message: 'installer not found' };
       }
 
       const stats = fs.statSync(filePath);
       if (stats.size === 0) {
-        console.error('[DEBUG] installer is empty');
+        console.error('🐛 DEBUG] installer is empty');
         return { ok: false, message: 'installer is empty' };
       }
 
@@ -302,22 +302,24 @@ function createWindow() {
           stdio: 'ignore',
           shell: false
         });
-        child.on('error', err => console.error('[DEBUG] spawn error:', err));
+        child.on('error', err => console.error('[🐛 DEBUG] spawn error:', err));
         child.unref();
-      } else {
+      } 
+      else {
         const child = spawn(filePath, [], {
           detached: true,
           stdio: 'ignore',
           shell: true
         });
-        child.on('error', err => console.error('[DEBUG] spawn error:', err));
+        child.on('error', err => console.error('[🐛DEBUG] spawn error:', err));
         child.unref();
       }
 
       app.quit();
       return { ok: true };
-    } catch (error) {
-      console.error('[DEBUG] Error launching installer:', error);
+    } 
+    catch (error) {
+      console.error('[🐛 DEBUG] Error launching installer:', error);
       return { ok: false, message: error.message };
     }
   }
@@ -334,7 +336,7 @@ function createWindow() {
 
     try {
       const downloadedPath = await downloadFileWithProgress(url, megabytesTotal, progressBar, null);
-      console.log('[DEBUG] downloadFileWithProgress returned:', downloadedPath);
+      console.log('[ℹ️ INFO] downloadFileWithProgress returned:', downloadedPath);
 
       progressBar.detail = "Download completed, follow the on-screen instructions.";
       setTimeout(() => {
@@ -343,16 +345,16 @@ function createWindow() {
 
       const installResult = await downloadAndInstallUpdate(downloadedPath, latestVersion);
       if (!installResult.ok) {
-        console.error('[DEBUG] installResult error:', installResult.message);
+        console.error('[ℹ️ INFO] installResult error:', installResult.message);
         return { ok: false, message: installResult.message };
       }
 
       return { ok: true, path: downloadedPath };
     } 
     catch (err) {
-      console.error('[DEBUG] download handler failed:', err);
+      console.error('[🐛 DEBUG] download handler failed:', err);
       try { progressBar.close(); }
-      catch(e){ console.log('[DEBUG] Unknown Error'); }
+      catch(e){ console.log('[🐛 DEBUG] Unknown Error'); }
       return { ok: false, message: err.message || String(err) };
     }
   });

@@ -26,12 +26,6 @@ let chartData = loaded.chartData || {
 
 let tasksChart = null;
 
-function OnLoad(){
-  console.log("[DEBUG] core platform: " + process.platform)
-  fetchVersion();
-  fetchBuildNumber();
-}
-
 ///MARK: TASK MANAGEMENT SECTION
 window.todoManager = new class TodoManager {
   constructor() {
@@ -789,4 +783,8 @@ document.getElementById("feedbackBtn").addEventListener('click', () =>{shell.ope
 document.getElementById('contactUs').addEventListener('click', () =>{shell.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
 
 //ON LOAD
-document.body.onload = OnLoad();
+document.body.onload = () =>{
+  console.log("[ℹ️ INFO] core platform: " + process.platform)
+  fetchVersion();
+  fetchBuildNumber();
+};

@@ -9,7 +9,7 @@ function retrieveDatasFromServer(){
     .then(response => response.json())
           .then(data => {
             latestVersion = data.versionTaskify;
-            document.getElementById('latestversion').innerText = "Latest version avaible: " + data.versionTaskify;
+            document.getElementById('latestversion').innerText = "Latest version available: " + data.versionTaskify;
           })
 }
 
@@ -19,8 +19,13 @@ function getCurrentVersion(){
   .then(response => response.json())
           .then(data => {
             currentVersion = data.Version;
-            document.getElementById('version').innerHTML = "Version: " + currentVersion;
+            document.getElementById('version').innerHTML = "Version: " + currentVersion + ' <img src="assets/_updateWarn.png" alt="Update available" draggable="false" style="width: 20px; height: 20px;" id="updateIcon" title="Update Available!">';
             document.getElementById('build').innerHTML = "Build: " + data.BuildNumber;
+
+            //* ADD A FUNCTION FOR THE "Update Available" BUTTON
+            document.getElementById("updateIcon").addEventListener("click", () =>{
+              checkForUpdates();
+            })
           });
 
   //* TIMEOUT FOR AVOID DATA CONFLICTS OR UNDEFINED VALUES.
@@ -30,8 +35,9 @@ function getCurrentVersion(){
 function checkForUpdates(){
   //* CHECK FOR UPDATES 
   if(latestVersion > currentVersion){
+    document.getElementById("updateIcon").style.display = "inline";
     let url; //* THIS WILL STORE THE URL FOR DOWNLOAD THE INSTALLER
-    let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is avaible! (" + latestVersion + ")")
+    let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is available! (" + latestVersion + ")")
     .then(res =>{
       if(res){
         switch(process.platform){
@@ -39,7 +45,7 @@ function checkForUpdates(){
               url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/TaskifyBusiness-${latestVersion}-${process.arch}.exe`
               break;
             case "linux":
-              url = `linux_invalid_format`;
+              url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/Taskify-Business-${latestVersion}.AppImage`;
               break;
             case "darwin":
               url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/Taskify-Business-${latestVersion}.dmg`
@@ -47,12 +53,13 @@ function checkForUpdates(){
         }
         ipcRenderer.invoke('downloadProgress', url, latestVersion)
       }
-      else{
-        console.log("[DEBUG] action cancelled by the user.")
-      }
+      else
+        console.log("[ℹ️ INFO] action cancelled by the user.")
     })
   }
+  else
+    document.getElementById("updateIcon").style.display = "none";
 }
 
 //START CHECKING FILES
-document.onload = retrieveDatasFromServer();
+document.body.onload = retrieveDatasFromServer();
