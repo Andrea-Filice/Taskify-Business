@@ -27,6 +27,7 @@ let chartData = loaded.chartData || {
 let tasksChart = null;
 
 function OnLoad(){
+  console.log("[DEBUG] core platform: " + process.platform)
   fetchVersion();
   fetchBuildNumber();
 }
