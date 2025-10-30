@@ -105,15 +105,34 @@ function createWindow() {
     return result.response === 0
   })
 
+  //* CLEAN THE NAME OF THE INSTALLER
   function sanitizeFilename(name) {return name.replace(/[^a-zA-Z0-9._-]/g, '_');}
 
   function getSafeTempPathFromUrl(urlStr) {
     const parsed = new URL(urlStr);
-    const rawName = path.basename(parsed.pathname) || 'installer.exe';
-    let safeName = sanitizeFilename(rawName);
-    if (!safeName.toLowerCase().endsWith('.exe')) {
-      safeName += '.exe';
+    
+    //* CLASSIC NAME FOR ALL OPERATING SYSTEMS
+    let rawName;
+    switch(process.platform){
+      case "win32":
+        rawName = path.basename(parsed.pathname) || 'installer.exe';
+        break;
+      case "linux":
+        rawName = path.basename(parsed.pathname) || 'installer.deb';
+        break;
+      case "darwin":
+        rawName = path.basename(parsed.pathname) || 'installer.dmg';
+        break;
     }
+
+    //* IF THE NAME IS NOT CORRECT, SANITIZE IT
+    let safeName = sanitizeFilename(rawName);
+    if (!safeName.toLowerCase().endsWith('.exe') && process.platform == "win32")
+      safeName += '.exe';
+    else if(!safeName.toLowerCase().endsWith('.deb') && process.platform == "linux")
+      safeName += ".deb";
+    else if(!safeName.toLowerCase().endsWith('.dmg') && process.platform == "darwin")
+      safeName += ".dmg";
 
     return path.join(app.getPath('temp'), safeName);
   }
@@ -133,7 +152,7 @@ function createWindow() {
         return 0;
       }
     } catch (error) {
-      console.error('🐛 [DEBUG] Error retrieving version size:', error);
+      console.error('[🐛 DEBUG] Error retrieving version size:', error);
       return 0;
     }
   }
@@ -155,10 +174,24 @@ function createWindow() {
       }
       try {
         const parsed = new URL(requestedUrl);
-        const raw = path.basename(parsed.pathname) || 'installer.exe';
+        
+        //* CLASSIC NAME FOR ALL OPERATING SYSTEM
+        let raw;
+
+        switch(process.platform){
+          case "win32":
+            raw = path.basename(parsed.pathname) || 'installer.exe';
+            break;
+          case "linux":
+            raw = path.basename(parsed.pathname) || 'installer.deb';
+            break;
+          case "darwin":
+            raw = path.basename(parsed.pathname) || 'installer.dmg';
+        }
+
         return sanitizeFilename(raw);
       } catch (e) {
-        return 'installer.exe';
+        mainWindow.webContents.send("show-alert", "There was an error during the download of the Installer.", "Taskify Updater - Error")
       }
     }
 
@@ -175,8 +208,8 @@ function createWindow() {
         const provisionalPath = path.join(app.getPath('temp'), provisionalName);
         try { fs.mkdirSync(path.dirname(provisionalPath), { recursive: true }); } catch (e) {}
 
-        console.log('[DEBUG] request URL:', currentUrl);
-        console.log('[DEBUG] provisional outputPath:', provisionalPath);
+        console.log('[🐛 DEBUG] request URL:', currentUrl);
+        console.log('[🐛 DEBUG] provisional outputPath:', provisionalPath);
 
         const req = httpsFollow.request(encodeURI(currentUrl), {
           method: 'GET',
@@ -184,11 +217,11 @@ function createWindow() {
           timeout: requestTimeout,
           maxRedirects
         }, response => {
-          console.log('[DEBUG] HTTP statusCode:', response.statusCode);
+          console.log('[🐛 DEBUG] HTTP statusCode:', response.statusCode);
 
           if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
             const loc = response.headers.location.startsWith('http') ? response.headers.location : new URL(response.headers.location, currentUrl).toString();
-            console.log('[DEBUG] redirect to:', loc);
+            console.log('[🐛 DEBUG] redirect to:', loc);
             req.destroy();
             return doRequest(loc);
           }
@@ -200,8 +233,8 @@ function createWindow() {
 
           const chosenName = chooseFilenameFrom(response, currentUrl);
           let finalPath = path.join(app.getPath('temp'), chosenName);
-          console.log('[DEBUG] chosen filename:', chosenName);
-          console.log('[DEBUG] switching provisional path -> final path:', finalPath);
+          console.log('[🐛 DEBUG] chosen filename:', chosenName);
+          console.log('[🐛 DEBUG] switching provisional path -> final path:', finalPath);
 
           const file = fs.createWriteStream(provisionalPath, { flags: 'w' });
           let downloadedBytes = 0;
@@ -246,21 +279,24 @@ function createWindow() {
               }
               try {
                 const stats = fs.statSync(provisionalPath);
-                console.log('[DEBUG] provisional file written size:', stats.size);
+                console.log('[🐛 DEBUG] provisional file written size:', stats.size);
                 if (stats.size === 0) {
                   try { fs.unlinkSync(provisionalPath); } catch (e) {}
                   return reject(new Error('Downloaded file is empty'));
                 }
-                if (!finalPath.toLowerCase().endsWith('.exe')) {
+                if (!finalPath.toLowerCase().endsWith('.exe') && process.platform == "win32")
                   finalPath = finalPath + '.exe';
-                }
+                else if (!finalPath.toLowerCase().endsWith('.deb') && process.platform == "linux")
+                  finalPath = finalPath + '.deb';
+                else if (!finalPath.toLowerCase().endsWith('.dmg') && process.platform == "darwin")
+                  finalPath = finalPath + '.deb';
                 try {
                   if (fs.existsSync(finalPath)) fs.unlinkSync(finalPath);
                   fs.renameSync(provisionalPath, finalPath);
-                  console.log('[DEBUG] moved to final path:', finalPath);
+                  console.log('[🐛 DEBUG] moved to final path:', finalPath);
                   return resolve(finalPath);
                 } catch (renameErr) {
-                  console.warn('[DEBUG] rename failed, keeping provisional file as fallback:', renameErr);
+                  console.warn('[🐛 DEBUG] rename failed, keeping provisional file as fallback:', renameErr);
                   return resolve(provisionalPath);
                 }
               } catch (e) {
@@ -273,16 +309,16 @@ function createWindow() {
         });
 
         req.on('timeout', () => {
-          console.warn('[DEBUG] request timeout');
+          console.warn('[🐛 DEBUG] request timeout');
           req.destroy(new Error('Request timeout'));
         });
 
         req.on('error', err => {
-          console.error('[DEBUG] request error:', err && err.code ? err.code : err);
+          console.error('[🐛 DEBUG] request error:', err && err.code ? err.code : err);
           try { fs.unlinkSync(provisionalPath); } catch (e) {}
           if ((err.code === 'ECONNRESET' || err.message === 'aborted') && retries < maxRetries) {
             retries += 1;
-            console.log(`[DEBUG] retrying download (${retries}/${maxRetries})...`);
+            console.log(`[🐛 DEBUG] retrying download (${retries}/${maxRetries})...`);
             return setTimeout(() => doRequest(url), 500 * retries);
           }
           return reject(err);
@@ -321,13 +357,23 @@ function createWindow() {
         child.on('error', err => console.error('[🐛 DEBUG] spawn error:', err));
         child.unref();
       } 
-      else {
-        const child = spawn(filePath, [], {
+      else if (process.platform === 'linux'){
+        const opener = 'xdg-open';
+        const child = spawn(opener, [filePath], {
           detached: true,
           stdio: 'ignore',
-          shell: true
+          shell: false
         });
-        child.on('error', err => console.error('[🐛DEBUG] spawn error:', err));
+        child.on('error', err => console.error('[🐛 DEBUG] spawn error:', err));
+        child.unref();
+      }
+      else if(process.platform === 'darwin'){
+        const child = spawn('open', [filePath], {
+          detached: true,
+          stdio: 'ignore',
+          shell: false
+        });
+        child.on('error', err => console.error('[🐛 DEBUG] spawn error:', err));
         child.unref();
       }
 

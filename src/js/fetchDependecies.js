@@ -45,7 +45,7 @@ function checkForUpdates(){
               url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/TaskifyBusiness-${latestVersion}-${process.arch}.exe`
               break;
             case "linux":
-              url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/Taskify-Business-${latestVersion}.AppImage`;
+              url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/taskify-business_${latestVersion}_amd64.deb`;
               break;
             case "darwin":
               url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/Taskify-Business-${latestVersion}.dmg`
