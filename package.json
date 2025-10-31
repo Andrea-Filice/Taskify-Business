@@ -27,6 +27,14 @@
       "target": "nsis",
       "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
     },
+    "linux": {
+      "icon": "src/assets/_icon.png",
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
+    },
     "nsis": {
       "oneClick": false,
       "installerIcon": "src/assets/icon_installer.ico",

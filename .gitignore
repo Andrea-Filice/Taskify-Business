@@ -1,4 +1,6 @@
 #MODULES
 .vscode
 node_modules
-.qodo
+
+#BUILD
+dist/
