@@ -414,7 +414,7 @@ window.todoManager = new class TodoManager {
           };
           ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
           this.updateUI();
-          const res = ipcRenderer.invoke('show-alert', "Data successfully reset, the app will be restarted soon.")
+          ipcRenderer.invoke('show-alert', "Data successfully reset, the app will be restarted soon.")
           .then(() => {window.location.href = "boot.html";});
         }
       });
