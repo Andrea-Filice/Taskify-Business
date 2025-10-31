@@ -19,3 +19,4 @@
 [4d88b61] Fixed some tooltips.
 [95c0df5] Fixed "Options" text in "Charts settings".
 [8047d82] Fixed some mismatchs in translations.
+[e7452ce] Fixed app icon for Linux users.
