@@ -201,7 +201,7 @@ function createWindow() {
 
         return sanitizeFilename(raw);
       } catch (e) {
-        mainWindow.webContents.send("show-alert", "There was an error during the download of the Installer. (Error code: " + e + ")", "Taskify Updater - Error")
+        console.log('[🐛 DEBUG] URL parsing failed, using default name.');
       }
     }
 
