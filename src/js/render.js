@@ -26,11 +26,6 @@ let chartData = loaded.chartData || {
 
 let tasksChart = null;
 
-function OnLoad(){
-  fetchVersion();
-  fetchBuildNumber();
-}
-
 ///MARK: TASK MANAGEMENT SECTION
 window.todoManager = new class TodoManager {
   constructor() {
@@ -201,8 +196,8 @@ window.todoManager = new class TodoManager {
     joinBetaCheckBox.checked = joinBeta;
     characterLimitCheckbox.checked = characterLimit;
 
-    //COLOR SELECTION
-    ///TASK COMPLETED
+    //* COLOR SELECTION
+    //* TASK COMPLETED
     switch(dropDowntaskCompleted){
       case 'red':
         colorTCompleted = 'rgba(255, 0, 0, 1)'; 
@@ -226,7 +221,7 @@ window.todoManager = new class TodoManager {
         break;
     }
 
-    ///TASK CREATED
+    //* TASK CREATED
     switch(dropDowntaskCreated){
       case 'red':
         colorTCreated = 'rgba(255, 0, 0, 1)'; 
@@ -402,6 +397,9 @@ window.todoManager = new class TodoManager {
             softwareComponents: [],
             fuoriManutenzione: []
           };
+          characterLimit = true;
+          autoClose = false;
+          joinBeta = true;
           taskCreated = 0;
           taskCompleted = 0;
           companyName = "";
@@ -416,7 +414,7 @@ window.todoManager = new class TodoManager {
           };
           ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
           this.updateUI();
-          const res = ipcRenderer.invoke('show-alert', "Data successfully reset, the app will be restarted soon.")
+          ipcRenderer.invoke('show-alert', "Data successfully reset, the app will be restarted soon.")
           .then(() => {window.location.href = "boot.html";});
         }
       });
@@ -495,6 +493,7 @@ window.todoManager = new class TodoManager {
     chartData.labels.push(label);
     chartData.created.push(taskCreated);
     chartData.completed.push(taskCompleted);
+    
     if (chartData.labels.length > 10) {
       chartData.labels.shift();
       chartData.created.shift();
@@ -549,7 +548,7 @@ window.todoManager = new class TodoManager {
   }
 }();
 
-//OPEN INFO AND SETTINGS
+//* OPEN INFO AND SETTINGS
 const buttons =[
   info = document.getElementById('ibtn'),
   settings = document.getElementById('sbtn'),
@@ -574,9 +573,7 @@ function openSettings(){
   toggleButtons(false);
 }
 
-function toggleButtons(value){
-  buttons.forEach(e  => {e.style.display = (value) ? "block" : "none";});
-}
+function toggleButtons(value){buttons.forEach(e  => {e.style.display = (value) ? "block" : "none";});}
 
 async function quitApplication() {
   const userConfirmed = await ipcRenderer.invoke('show-confirm', "Are you sure you want to close the app?");
@@ -640,7 +637,7 @@ ipcRenderer.on('delete-task', (event, category, index) => {
 });
 
 ///MARK: AI SECTION
-//AI ASSISTANT
+//* AI ASSISTANT
 function CallAIFunction(input){
   let scriptPath;
   const unpackedPath = path.join(process.resourcesPath, 'app.asar.unpacked', 'src', 'ai', 'contentAnalizer.py');
@@ -733,7 +730,6 @@ aiSendBtn.onclick = () => {
 }
 
 aiInput.addEventListener('keydown', function(e){if(e.key === 'Enter') aiSendBtn.click();});
-
 aiInput.addEventListener('focus', () => aiInput.classList.add('ai-glow'));
 aiInput.addEventListener('blur', () => aiInput.classList.remove('ai-glow'));
 
@@ -788,4 +784,8 @@ document.getElementById("feedbackBtn").addEventListener('click', () =>{shell.ope
 document.getElementById('contactUs').addEventListener('click', () =>{shell.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
 
 //ON LOAD
-document.body.onload = OnLoad();
+document.body.onload = () =>{
+  console.log("[ℹ️ INFO] core platform: " + process.platform)
+  fetchVersion();
+  fetchBuildNumber();
+};

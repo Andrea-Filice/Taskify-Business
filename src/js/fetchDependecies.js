@@ -1,35 +1,65 @@
-let taskifyVersion, version;
+let latestVersion, currentVersion; //VARIABLES FOR STORE LOCAL VALUES
 
-try{
-    fetch('https://playepikservercontents.netlify.app/dependencies/dependencies.json')
+function retrieveDatasFromServer(){
+  //* GET CURRENT VERSION FROM THE .JSON FILE:
+  getCurrentVersion();
+
+  //* GET LATEST VERSION FROM THE SERVER:
+  fetch('https://playepikservercontents.netlify.app/dependencies/dependencies.json')
     .then(response => response.json())
           .then(data => {
-            taskifyVersion = data.versionTaskify;
-            document.getElementById('latestversion').innerText = "Latest version avaible: " + data.versionTaskify;
+            latestVersion = data.versionTaskify;
+            document.getElementById('latestversion').innerText = "Latest version available: " + data.versionTaskify;
           })
-} catch (ex) {document.getElementById('latestversion').innerText = `Latest version avaible: Impossible to retrieve the latest version, check your internet wi-fi.`;}
-
+}
 
 function getCurrentVersion(){
+  //* GET THE CURRENT VERSION FROM THE LOCAL .JSON FILE
   fetch('version.json')
   .then(response => response.json())
           .then(data => {
-            version = data.Version;
-            document.getElementById('version').innerHTML = "Version: " + version;
+            currentVersion = data.Version;
+            document.getElementById('version').innerHTML = "Version: " + currentVersion + ' <img src="assets/_updateWarn.png" alt="Update available" draggable="false" style="width: 20px; height: 20px;" id="updateIcon" title="Update Available!">';
             document.getElementById('build').innerHTML = "Build: " + data.BuildNumber;
+
+            //* ADD A FUNCTION FOR THE "Update Available" BUTTON
+            document.getElementById("updateIcon").addEventListener("click", () =>{
+              checkForUpdates();
+            })
           });
 
+  //* TIMEOUT FOR AVOID DATA CONFLICTS OR UNDEFINED VALUES.
   setTimeout(checkForUpdates, 1000);
 }
 
 function checkForUpdates(){
-  if(taskifyVersion > version){
-    let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is avaible! (" + taskifyVersion + ")")
+  //* CHECK FOR UPDATES 
+  if(latestVersion > currentVersion){
+    document.getElementById("updateIcon").style.display = "inline";
+    let url; //* THIS WILL STORE THE URL FOR DOWNLOAD THE INSTALLER
+    let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is available! (" + latestVersion + ")")
     .then(res =>{
-      if(res)
-        shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/releases/latest")
+      if(res){
+        switch(process.platform){
+            case "win32":
+              url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/TaskifyBusiness-${latestVersion}-${process.arch}.exe`
+              break;
+            case "linux":
+              url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/taskify-business_${latestVersion}_amd64.deb`;
+              break;
+            case "darwin":
+              url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/Taskify-Business-${latestVersion}.dmg`
+              break;
+        }
+        ipcRenderer.invoke('downloadProgress', url, latestVersion)
+      }
+      else
+        console.log("[ℹ️ INFO] action cancelled by the user.")
     })
   }
+  else
+    document.getElementById("updateIcon").style.display = "none";
 }
 
-document.body.onload = getCurrentVersion();
+//START CHECKING FILES
+document.body.onload = retrieveDatasFromServer();

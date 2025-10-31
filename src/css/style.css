@@ -569,3 +569,6 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 }
 
 .arrowMenu{rotate: 180deg;}
+
+#updateIcon:hover{cursor: pointer;}
+#updateIcon:hover::after{cursor: default;}

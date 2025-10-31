@@ -27,6 +27,14 @@
       "target": "nsis",
       "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
     },
+    "linux": {
+      "icon": "src/assets/_icon.png",
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
+    },
     "nsis": {
       "oneClick": false,
       "installerIcon": "src/assets/icon_installer.ico",
@@ -54,9 +62,11 @@
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.77.0",
+    "@supabase/supabase-js": "^2.78.0",
     "chart.js": "^4.5.1",
     "dotenv": "^17.2.3",
+    "electron-progressbar": "^2.2.1",
+    "follow-redirects": "^1.15.11",
     "npm": "^11.6.2"
   }
 }
