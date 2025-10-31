@@ -10,7 +10,7 @@ const ProgressBar = require('electron-progressbar')
 let mainWindow = null
 let categoryModifyTask, indexModifyTask, characterLimit
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
-const DEBUG = true
+const DEBUG = false
 
 let todos = {
   softwareComponents: [],
@@ -127,12 +127,21 @@ function createWindow() {
 
     //* IF THE NAME IS NOT CORRECT, SANITIZE IT
     let safeName = sanitizeFilename(rawName);
-    if (!safeName.toLowerCase().endsWith('.exe') && process.platform == "win32")
-      safeName += '.exe';
-    else if(!safeName.toLowerCase().endsWith('.deb') && process.platform == "linux")
-      safeName += ".deb";
-    else if(!safeName.toLowerCase().endsWith('.dmg') && process.platform == "darwin")
-      safeName += ".dmg";
+
+    switch(process.platform){
+      case "win32":
+        if (!safeName.toLowerCase().endsWith('.exe'))
+          safeName += '.exe';
+        break;
+      case "linux":
+        if (!safeName.toLowerCase().endsWith('.deb'))
+          safeName += '.deb';
+        break;
+      case "darwin":
+        if (!safeName.toLowerCase().endsWith('.dmg'))
+          safeName += '.dmg';
+        break;
+    }
 
     return path.join(app.getPath('temp'), safeName);
   }
@@ -187,11 +196,12 @@ function createWindow() {
             break;
           case "darwin":
             raw = path.basename(parsed.pathname) || 'installer.dmg';
+            break;
         }
 
         return sanitizeFilename(raw);
       } catch (e) {
-        mainWindow.webContents.send("show-alert", "There was an error during the download of the Installer.", "Taskify Updater - Error")
+        mainWindow.webContents.send("show-alert", "There was an error during the download of the Installer. (Error code: " + e + ")", "Taskify Updater - Error")
       }
     }
 
@@ -240,11 +250,10 @@ function createWindow() {
           let downloadedBytes = 0;
           const totalBytes = parseInt(response.headers['content-length'], 10);
 
-          if (!isNaN(totalBytes)) {
+          if (!isNaN(totalBytes)) 
             try { progressBar.max = totalBytes / (1024 * 1024); } catch (e) {}
-          } else if (totalMB) {
+          else if (totalMB) 
             try { progressBar.max = totalMB; } catch (e) {}
-          }
 
           response.on('data', chunk => {
             downloadedBytes += chunk.length;
@@ -253,9 +262,8 @@ function createWindow() {
               progressBar.value = downloadedMB;
               progressBar.detail = `Downloading ${downloadedMB.toFixed(2)}Mb out of ${progressBar.getOptions().maxValue}Mb...`;
             } catch (e) {
-              if (mainWindow && mainWindow.webContents) {
+              if (mainWindow && mainWindow.webContents) 
                 mainWindow.webContents.send('download-progress', { mb: downloadedMB, totalMB: isNaN(totalBytes) ? null : totalBytes / (1024 * 1024) });
-              }
             }
           });
 
@@ -284,12 +292,21 @@ function createWindow() {
                   try { fs.unlinkSync(provisionalPath); } catch (e) {}
                   return reject(new Error('Downloaded file is empty'));
                 }
-                if (!finalPath.toLowerCase().endsWith('.exe') && process.platform == "win32")
-                  finalPath = finalPath + '.exe';
-                else if (!finalPath.toLowerCase().endsWith('.deb') && process.platform == "linux")
-                  finalPath = finalPath + '.deb';
-                else if (!finalPath.toLowerCase().endsWith('.dmg') && process.platform == "darwin")
-                  finalPath = finalPath + '.deb';
+                switch(process.platform){
+                  case "win32":
+                    if (!finalPath.toLowerCase().endsWith('.exe'))
+                      finalPath += '.exe';
+                    break;
+                  case "linux":
+                    if (!finalPath.toLowerCase().endsWith('.deb'))
+                      finalPath += '.deb';
+                    break;
+                  case "darwin":
+                    if (!finalPath.toLowerCase().endsWith('.dmg'))
+                      finalPath += '.dmg';
+                    break;
+                }
+
                 try {
                   if (fs.existsSync(finalPath)) fs.unlinkSync(finalPath);
                   fs.renameSync(provisionalPath, finalPath);
@@ -316,11 +333,13 @@ function createWindow() {
         req.on('error', err => {
           console.error('[🐛 DEBUG] request error:', err && err.code ? err.code : err);
           try { fs.unlinkSync(provisionalPath); } catch (e) {}
+
           if ((err.code === 'ECONNRESET' || err.message === 'aborted') && retries < maxRetries) {
             retries += 1;
             console.log(`[🐛 DEBUG] retrying download (${retries}/${maxRetries})...`);
             return setTimeout(() => doRequest(url), 500 * retries);
           }
+          
           return reject(err);
         });
         req.end();

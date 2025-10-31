@@ -7,7 +7,7 @@ function OnLoad(){
     document.getElementById('main').style.animation = "FadeIn 0.5s linear forwards";
   }, 500);
 
-  //*ENTER HANDLER
+  //* ENTER HANDLER
   document.getElementById("inputName").addEventListener("keypress", e => submitInputHandler(e));
   document.getElementById("inputPV").addEventListener("keypress", e => submitInputHandler(e));
   document.getElementById("inputNV").addEventListener("keypress", e => submitInputHandler(e));
