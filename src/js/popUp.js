@@ -7,7 +7,7 @@ function OnLoad(){
     document.getElementById('main').style.animation = "FadeIn 0.5s linear forwards";
   }, 500);
 
-  //ENTER HANDLER
+  //* ENTER HANDLER
   document.getElementById("inputName").addEventListener("keypress", e => submitInputHandler(e));
   document.getElementById("inputPV").addEventListener("keypress", e => submitInputHandler(e));
   document.getElementById("inputNV").addEventListener("keypress", e => submitInputHandler(e));
@@ -24,14 +24,12 @@ function submitInput() {
   const newerVersion = document.getElementById('inputNV').value.trim();
 
   //SEND NEW VALUES
-  if(inputName){
+  if(inputName)
     ipcRenderer.send('inputSend', inputName, "task_name")
-  }
   else
     ipcRenderer.invoke("show-alert", "Unable to modify the Task. Invalid Task name.")
-  if(previousVersion && !newerVersion || !previousVersion && newerVersion){
+  if(previousVersion && !newerVersion || !previousVersion && newerVersion)
     ipcRenderer.invoke("show-alert", "Unable to modify the Task. You cannot add just one version.")
-  }
   else if(previousVersion && newerVersion){
     ipcRenderer.send('inputSend', previousVersion, "prev_version");
     ipcRenderer.send('inputSend', newerVersion, "next_version");
