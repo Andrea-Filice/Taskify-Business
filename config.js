@@ -362,7 +362,7 @@ function createWindow() {
 
       const stats = fs.statSync(filePath);
       if (stats.size === 0) {
-        console.error('🐛 DEBUG] installer is empty');
+        console.error('[🐛 DEBUG] installer is empty');
         mainWindow.webContents.send("show-alert", "There was an error during the downloading of the Installer.", "Taskify Updater - Error")
         return { ok: false, message: 'installer is empty' };
       }
