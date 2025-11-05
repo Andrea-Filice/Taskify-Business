@@ -27,7 +27,6 @@ Keep track of new versions of third-party tools and apps. You won't forget to up
 
 Check more <a href="https://play-epik-incorporation.netlify.app/developers#taskifyBusiness">here.</a>
 
-
 ## Tech Stack
 
 - **Electron** for cross-platform desktop application
