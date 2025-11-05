@@ -290,24 +290,24 @@ window.todoManager = new class TodoManager {
               labels: {
                 color: '#fff',
                 font: {
-                  family: 'Excon, Sans Serif',
+                  family: 'Manrope, Sans Serif',
                   size: 16
                 }
               }
             },
             tooltip: {
               titleFont: {
-                family: 'Excon, Sans Serif',
+                family: 'Manrope, Sans Serif',
                 size: 14,
                 weight: 500
               },
               bodyFont: {
-                family: 'Excon, Sans Serif',
+                family: 'Manrope, Sans Serif',
                 size: 12,
                 weight: 'normal'
               },
               footerFont: {
-                family: 'Excon, Sans Serif',
+                family: 'Manrope, Sans Serif',
                 size: 10,
                 style: 'italic'
               },
@@ -318,7 +318,7 @@ window.todoManager = new class TodoManager {
               ticks: {
                 color: '#fff',
                 font: {
-                  family: 'Excon, Sans Serif',
+                  family: 'Manrope, Sans Serif',
                   size: 12
                 }
               }
@@ -327,7 +327,7 @@ window.todoManager = new class TodoManager {
               ticks: {
                 color: '#fff',
                 font: {
-                  family: 'Excon, Sans Serif',
+                  family: 'Manrope, Sans Serif',
                   size: 10
                 },
                 callback: function(value) {return Number.isInteger(value) ? value : null;}
