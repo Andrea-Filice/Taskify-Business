@@ -45,7 +45,8 @@ window.todoManager = new class TodoManager {
     companyName = loaded.companyName || undefined
     characterLimit = typeof loaded.characterLimit === 'boolean' ? loaded.characterLimit : true;
 
-    //SET DEFAULT CHARACTER LIMIT
+    //SET DEFAULT BOOLEAN VALUES
+    this.joinBetaClicked(true);
     this.inputCharactersUpdate(characterLimit);
 
     document.getElementById('colorTaskCreated').value = loaded.taskCompletedColor || "blue";
@@ -456,10 +457,10 @@ window.todoManager = new class TodoManager {
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
   }
 
-  joinBetaClicked(){
-    joinBeta = !joinBeta;
+  joinBetaClicked(updateUI){
+    if(!updateUI)
+      joinBeta = !joinBeta;
     showBetaOptions(joinBeta);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
     this.updateUI();
   }
   
