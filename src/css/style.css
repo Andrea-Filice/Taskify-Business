@@ -140,7 +140,7 @@ input::after{
     animation: animInputOut 1s ease-in-out forwards;
 }
 
-button:focus:not(.infoButton):not(.settingsButton):not(.quitButton):not(.closeButton), .aiButton {
+button:focus:not(.infoButton):not(.settingsButton):not(#resetBtn):not(.closeButton), .aiButton {
     outline: none;
     animation: animButtonIn 2s ease-in-out infinite;
 }
@@ -150,12 +150,12 @@ button:not(.infoButton):not(.settingsButton)::after{
     animation: animButtonOut 1s ease-in-out forwards;
 }
 
-.quitButton:focus, .closeButton:focus {
+#resetBtn:focus, .closeButton:focus {
     outline: none;
     animation: animRedIn 2s ease-in-out infinite;
 }
 
-.quitButton::after, .closeButton::after {
+#resetBtn::after, .closeButton::after {
     outline: none;
     animation: animRedOut 1s ease-in-out forwards;
 }
