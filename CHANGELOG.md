@@ -10,4 +10,5 @@
 [fe55e30] Fixed some bugs with Taskify-Updater in Linux version.
 [295fcbe] Fixed tooltip for "Open on GitHub" button.
 [1463314] Fixed the issue that prevented saving the “Join Beta Program” option.
-[ce27341] Fixed some hover animations on buttons in the "Actions" section. 
+[ce27341] Fixed some hover animations on buttons in the "Actions" section.
+[b579393] Fixed icon for macOS users.
