@@ -35,6 +35,15 @@
       ],
       "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
     },
+    "macos":
+    {
+      "icon": "src/assets/_icon.png",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "artifactName": "TaskifyBusiness-${version}.${ext}"
+    },
     "nsis": {
       "oneClick": false,
       "installerIcon": "src/assets/icon_installer.ico",
