@@ -1,10 +1,10 @@
 # Release Notes for Taskify Business 1.9.1
 
 # Stack Upgrades
-- supabase-js `2.79.0`
-  - [New in 2.79.0](https://github.com/supabase/supabase-js/releases/tag/v2.79.0)
-- Electron `39.1.0`
-  - [New in 39.1.0](https://github.com/electron/electron/releases/tag/v39.1.0)
+- supabase-js `2.80.0`
+  - [New in 2.79.0](https://github.com/supabase/supabase-js/releases/tag/v2.80.0)
+- Electron `39.1.1`
+  - [New in 39.1.1](https://github.com/electron/electron/releases/tag/v39.1.1)
 
 # Bug Fixes
 [fe55e30] Fixed some bugs with Taskify-Updater in Linux version.

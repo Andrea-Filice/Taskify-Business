@@ -35,7 +35,7 @@
       ],
       "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
     },
-    "macos":
+    "darwin":
     {
       "icon": "src/assets/_icon.png",
       "target": [
