@@ -37,7 +37,7 @@
     },
     "darwin":
     {
-      "icon": "src/assets/_icon.png",
+      "icon": "src/assets/_icon.icns",
       "target": [
         "dmg",
         "zip"
