@@ -45,7 +45,8 @@ window.todoManager = new class TodoManager {
     companyName = loaded.companyName || undefined
     characterLimit = typeof loaded.characterLimit === 'boolean' ? loaded.characterLimit : true;
 
-    //SET DEFAULT CHARACTER LIMIT
+    //SET DEFAULT BOOLEAN VALUES
+    this.joinBetaClicked(true);
     this.inputCharactersUpdate(characterLimit);
 
     document.getElementById('colorTaskCreated').value = loaded.taskCompletedColor || "blue";
@@ -290,24 +291,24 @@ window.todoManager = new class TodoManager {
               labels: {
                 color: '#fff',
                 font: {
-                  family: 'Excon, Sans Serif',
+                  family: 'Manrope, Sans Serif',
                   size: 16
                 }
               }
             },
             tooltip: {
               titleFont: {
-                family: 'Excon, Sans Serif',
+                family: 'Manrope, Sans Serif',
                 size: 14,
                 weight: 500
               },
               bodyFont: {
-                family: 'Excon, Sans Serif',
+                family: 'Manrope, Sans Serif',
                 size: 12,
                 weight: 'normal'
               },
               footerFont: {
-                family: 'Excon, Sans Serif',
+                family: 'Manrope, Sans Serif',
                 size: 10,
                 style: 'italic'
               },
@@ -318,7 +319,7 @@ window.todoManager = new class TodoManager {
               ticks: {
                 color: '#fff',
                 font: {
-                  family: 'Excon, Sans Serif',
+                  family: 'Manrope, Sans Serif',
                   size: 12
                 }
               }
@@ -327,7 +328,7 @@ window.todoManager = new class TodoManager {
               ticks: {
                 color: '#fff',
                 font: {
-                  family: 'Excon, Sans Serif',
+                  family: 'Manrope, Sans Serif',
                   size: 10
                 },
                 callback: function(value) {return Number.isInteger(value) ? value : null;}
@@ -456,10 +457,10 @@ window.todoManager = new class TodoManager {
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
   }
 
-  joinBetaClicked(){
-    joinBeta = !joinBeta;
+  joinBetaClicked(updateUI){
+    if(!updateUI)
+      joinBeta = !joinBeta;
     showBetaOptions(joinBeta);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
     this.updateUI();
   }
   

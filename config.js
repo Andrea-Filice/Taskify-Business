@@ -10,7 +10,7 @@ const ProgressBar = require('electron-progressbar')
 let mainWindow = null
 let categoryModifyTask, indexModifyTask, characterLimit
 const dataPath = path.join(app.getPath('userData'), 'todos.json')
-const DEBUG = false
+const DEBUG = true
 
 let todos = {
   softwareComponents: [],
@@ -34,7 +34,7 @@ function loadTodosFromDisk() {
       todos.taskCreated = todos.taskCreated || 0
       todos.taskCompleted = todos.taskCompleted || 0
       todos.autoClose = todos.autoClose || false
-      todos.joinBeta = todos.joinBeta || true
+      todos.joinBeta = typeof todos.joinBeta === 'boolean' ? todos.joinBeta : true
       todos.companyName = todos.companyName || undefined
       todos.chartData = todos.chartData || { labels: [], created: [], completed: [] }
       todos.taskCompletedColor = todos.taskCompletedColor || "green"
@@ -362,7 +362,7 @@ function createWindow() {
 
       const stats = fs.statSync(filePath);
       if (stats.size === 0) {
-        console.error('🐛 DEBUG] installer is empty');
+        console.error('[🐛 DEBUG] installer is empty');
         mainWindow.webContents.send("show-alert", "There was an error during the downloading of the Installer.", "Taskify Updater - Error")
         return { ok: false, message: 'installer is empty' };
       }
