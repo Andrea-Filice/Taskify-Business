@@ -62,9 +62,20 @@ function loadTodosFromDisk() {
 function saveTodosToDisk() {try {fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')} catch (err){console.log("[🐛 DEBUG] <color='red'>UNKNOWN ERROR: </color> " + err);}}
 
 function createWindow() {
+  let width, height;
+
+  if(process.platform == "linux"){
+    width = 1100;
+    height = 650;
+  }
+  else{
+    width = 1000;
+    height = 600;
+  }
+
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: width,
+    height: height,
     fullscreenable: false,
     resizable: false,
     show: true,
