@@ -5,7 +5,7 @@
   "license": "Apache",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Play-Epik-Inc/Taskify-Business"
+    "url": "https://github.com/Andrea-Filice/Taskify-Business"
   },
   "author": {
     "name": "Play Epik, Incoporation",
@@ -39,8 +39,7 @@
     {
       "icon": "src/assets/_icon.icns",
       "target": [
-        "dmg",
-        "zip"
+        "dmg"
       ],
       "artifactName": "TaskifyBusiness-${version}.${ext}"
     },
