@@ -783,7 +783,7 @@ document.getElementById('feedback').addEventListener('click', () =>{
   else
     document.getElementById('menuFeedback').style.animation = "rotateAnimation 0.3s forwards ease-in-out";
 
-  setTimeout(() =>{
+  setTimeout(() =>{ //TIMEOUT FOR ENDING THE ANIMATION
     document.getElementById('menuFeedback').classList.toggle("arrowMenu");
   }, 500);
 });

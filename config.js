@@ -91,27 +91,33 @@ function createWindow() {
   mainWindow.loadFile('src/boot.html')
 
   ipcMain.handle('show-confirm', async (event, message) => {
-    const result = await dialog.showMessageBox({
+    const currentWin = BrowserWindow.fromWebContents(event.sender);
+
+    const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
       buttons: ['OK', 'Cancel'],
       defaultId: 1,
       cancelId: 0,
       message,
       title: 'Taskify Business',
-      noLink: true
+      noLink: true,
+      modal: true
     })
     return result.response === 0
   })
 
   ipcMain.handle('new-version', async (event, message) => {
-    const result = await dialog.showMessageBox({
+    const currentWin = BrowserWindow.fromWebContents(event.sender);
+
+    const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
       buttons: ['Install Now', 'Remind me Later'],
       defaultId: 1,
       cancelId: 0,
       message,
       title: 'Taskify Updater',
-      noLink: true
+      noLink: true,
+      modal: true
     })
     return result.response === 0
   })
@@ -454,7 +460,9 @@ function createWindow() {
   });
 
   ipcMain.handle('show-alert', async (event, message, title) => {
-    await dialog.showMessageBox({
+    const currentWin = BrowserWindow.fromWebContents(event.sender);
+
+    await dialog.showMessageBox(currentWin, {
       type: 'info',
       buttons: ['OK'],
       defaultId: 0,
@@ -551,9 +559,11 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {if (!mainWindow) createWindow()})
 
 function createInputPopUp() {
+  const height = (process.platform == "linux") ? 480 : 450;
+
   const inputWindow = new BrowserWindow({
     width: 600,
-    height: 450,
+    height: height,
     fullscreenable: false,
     resizable: false,
     show: true,
