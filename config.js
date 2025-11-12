@@ -572,7 +572,6 @@ function createInputPopUp() {
       contextIsolation: false,
       webSecurity: true
     },
-    icon: 'src/assets/icon.ico'
   })
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')
