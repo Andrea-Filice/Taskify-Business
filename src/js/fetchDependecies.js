@@ -1,4 +1,4 @@
-let latestVersion, currentVersion; //VARIABLES FOR STORE LOCAL VALUES
+let latestVersion, currentVersion;
 
 function retrieveDatasFromServer(){
   //* GET CURRENT VERSION FROM THE .JSON FILE:
@@ -51,6 +51,7 @@ function checkForUpdates(){
               url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/TaskifyBusiness-${latestVersion}.dmg`
               break;
         }
+        console.log("[ℹ️ INFO] DOWNLOAD LINK: " + url + ".")
         ipcRenderer.invoke('downloadProgress', url, latestVersion)
       }
       else

@@ -1,16 +1,16 @@
 const https = require('https');
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
-const path = require('path')
-const fs = require('fs')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const path = require('path');
+const fs = require('fs');
 const {spawn} = require('child_process');
 const { https: httpsFollow } = require('follow-redirects');
 
-const ProgressBar = require('electron-progressbar')
+const ProgressBar = require('electron-progressbar');
 
-let mainWindow = null
-let categoryModifyTask, indexModifyTask, characterLimit
-const dataPath = path.join(app.getPath('userData'), 'todos.json')
-const DEBUG = true
+let mainWindow = null;
+let categoryModifyTask, indexModifyTask, characterLimit;
+const dataPath = path.join(app.getPath('userData'), 'todos.json');
+const DEBUG = true;
 
 let todos = {
   softwareComponents: [],
@@ -84,7 +84,8 @@ function createWindow() {
       contextIsolation: false,
       webSecurity: true
     },
-    icon: 'src/assets/icon.ico'
+    icon: 'src/assets/icon.ico',
+    maximizable: false
   })
 
   mainWindow.setMenu(null)
