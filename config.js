@@ -64,14 +64,10 @@ function saveTodosToDisk() {try {fs.writeFileSync(dataPath, JSON.stringify(todos
 function createWindow() {
   let width, height;
 
-  if(process.platform == "linux"){
-    width = 1100;
-    height = 650;
-  }
-  else{
-    width = 1000;
-    height = 600;
-  }
+  //* SET THE WIDTH AND HEIGHT BETWEEN LINUX AND OTHER PLATFORMS
+  //? BECAUSE LINUX IS A MINOR RENDERING SCALE.
+  width = (process.platform == "linux") ? 1100 : 1000;
+  height = (process.platform == "linux") ? 650 : 600;
 
   mainWindow = new BrowserWindow({
     width: width,
