@@ -1,16 +1,16 @@
 const https = require('https');
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
-const path = require('path')
-const fs = require('fs')
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const path = require('path');
+const fs = require('fs');
 const {spawn} = require('child_process');
 const { https: httpsFollow } = require('follow-redirects');
 
-const ProgressBar = require('electron-progressbar')
+const ProgressBar = require('electron-progressbar');
 
-let mainWindow = null
-let categoryModifyTask, indexModifyTask, characterLimit
-const dataPath = path.join(app.getPath('userData'), 'todos.json')
-const DEBUG = true
+let mainWindow = null;
+let categoryModifyTask, indexModifyTask, characterLimit;
+const dataPath = path.join(app.getPath('userData'), 'todos.json');
+const DEBUG = true;
 
 let todos = {
   softwareComponents: [],
@@ -62,9 +62,16 @@ function loadTodosFromDisk() {
 function saveTodosToDisk() {try {fs.writeFileSync(dataPath, JSON.stringify(todos, null, 2), 'utf-8')} catch (err){console.log("[🐛 DEBUG] <color='red'>UNKNOWN ERROR: </color> " + err);}}
 
 function createWindow() {
+  let width, height;
+
+  //* SET THE WIDTH AND HEIGHT BETWEEN LINUX AND OTHER PLATFORMS
+  //? BECAUSE LINUX IS A MINOR RENDERING SCALE.
+  width = (process.platform == "linux") ? 1100 : 1000;
+  height = (process.platform == "linux") ? 650 : 600;
+
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
+    width: width,
+    height: height,
     fullscreenable: false,
     resizable: false,
     show: true,
@@ -73,34 +80,41 @@ function createWindow() {
       contextIsolation: false,
       webSecurity: true
     },
-    icon: 'src/assets/icon.ico'
+    icon: 'src/assets/icon.ico',
+    maximizable: false
   })
 
   mainWindow.setMenu(null)
   mainWindow.loadFile('src/boot.html')
 
   ipcMain.handle('show-confirm', async (event, message) => {
-    const result = await dialog.showMessageBox({
+    const currentWin = BrowserWindow.fromWebContents(event.sender);
+
+    const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
       buttons: ['OK', 'Cancel'],
       defaultId: 1,
       cancelId: 0,
       message,
       title: 'Taskify Business',
-      noLink: true
+      noLink: true,
+      modal: true
     })
     return result.response === 0
   })
 
   ipcMain.handle('new-version', async (event, message) => {
-    const result = await dialog.showMessageBox({
+    const currentWin = BrowserWindow.fromWebContents(event.sender);
+
+    const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
       buttons: ['Install Now', 'Remind me Later'],
       defaultId: 1,
       cancelId: 0,
       message,
       title: 'Taskify Updater',
-      noLink: true
+      noLink: true,
+      modal: true
     })
     return result.response === 0
   })
@@ -443,7 +457,9 @@ function createWindow() {
   });
 
   ipcMain.handle('show-alert', async (event, message, title) => {
-    await dialog.showMessageBox({
+    const currentWin = BrowserWindow.fromWebContents(event.sender);
+
+    await dialog.showMessageBox(currentWin, {
       type: 'info',
       buttons: ['OK'],
       defaultId: 0,
@@ -540,9 +556,11 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {if (!mainWindow) createWindow()})
 
 function createInputPopUp() {
+  const height = (process.platform == "linux") ? 480 : 450;
+
   const inputWindow = new BrowserWindow({
     width: 600,
-    height: 450,
+    height: height,
     fullscreenable: false,
     resizable: false,
     show: true,
@@ -551,7 +569,6 @@ function createInputPopUp() {
       contextIsolation: false,
       webSecurity: true
     },
-    icon: 'src/assets/icon.ico'
   })
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')

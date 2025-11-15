@@ -777,8 +777,15 @@ document.getElementById('licenseBtn').addEventListener('click', () =>{shell.open
 
 //NEED HELP SECTION
 document.getElementById('feedback').addEventListener('click', () =>{
-  document.getElementById("feedbackSelection").classList.toggle("feedbackSelection")
-  document.getElementById('menuFeedback').classList.toggle("arrowMenu")
+  document.getElementById("feedbackSelection").classList.toggle("feedbackSelection");
+  if(document.getElementById('menuFeedback').classList.contains("arrowMenu"))
+    document.getElementById('menuFeedback').style.animation = "rotateAnimationBackward 0.3s forwards ease-in-out";
+  else
+    document.getElementById('menuFeedback').style.animation = "rotateAnimation 0.3s forwards ease-in-out";
+
+  setTimeout(() =>{ //TIMEOUT FOR ENDING THE ANIMATION
+    document.getElementById('menuFeedback').classList.toggle("arrowMenu");
+  }, 500);
 });
 document.getElementById("bug").addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=bug")})
 document.getElementById("feedbackBtn").addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=enhancement")})
