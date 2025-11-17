@@ -1,4 +1,4 @@
-let latestVersion, currentVersion; //VARIABLES FOR STORE LOCAL VALUES
+let latestVersion, currentVersion;
 
 function retrieveDatasFromServer(){
   //* GET CURRENT VERSION FROM THE .JSON FILE:
@@ -20,7 +20,7 @@ function getCurrentVersion(){
           .then(data => {
             currentVersion = data.Version;
             document.getElementById('version').innerHTML = "Version: " + currentVersion + ' <img src="assets/_updateWarn.png" alt="Update available" draggable="false" style="width: 20px; height: 20px;" id="updateIcon" title="Update Available!">';
-            document.getElementById('build').innerHTML = "Build: " + data.BuildNumber;
+            document.getElementById('build').innerHTML = "Build Number: " + data.BuildNumber;
 
             //* ADD A FUNCTION FOR THE "Update Available" BUTTON
             document.getElementById("updateIcon").addEventListener("click", () =>{
@@ -51,6 +51,7 @@ function checkForUpdates(){
               url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/TaskifyBusiness-${latestVersion}.dmg`
               break;
         }
+        console.log("[ℹ️ INFO] DOWNLOAD LINK: " + url + ".")
         ipcRenderer.invoke('downloadProgress', url, latestVersion)
       }
       else

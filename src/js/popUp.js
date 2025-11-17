@@ -43,14 +43,21 @@ function DeleteTask(){
     .then(userResponse => {
       if(userResponse){
         ipcRenderer.send('deleteTask'); 
-        Quit();
+        window.close();
       }
     });
 }
 
-function Quit() {window.close();}
+function Quit(){
+  ipcRenderer.invoke("show-confirm", "Are you sure you want to quit and not save the unsaved changes?")
+  .then(userResponse => {
+      if(userResponse)
+        window.close();
+    }
+  )
+}
 
-function SetCharacterLimits(value){
+function SetCharacterLimit(value){
   const inputs = document.querySelectorAll("input");
 
   if(!value){
@@ -76,7 +83,7 @@ function SetCharacterLimits(value){
 //GET TASK DATAS 
 ipcRenderer.on('retrieveTaskName', (event, name) =>{document.getElementById('inputName').value = name;});
 ipcRenderer.on('retrieveVersion', (event, version, elementID) => {document.getElementById(elementID).value = version;});
-ipcRenderer.on('retrieveSetting', (event, characterLimit) =>{SetCharacterLimits(characterLimit)});
+ipcRenderer.on('retrieveSetting', (event, characterLimit) =>{SetCharacterLimit(characterLimit)});
 
 //ON LOAD
 document.body.onload = OnLoad();
