@@ -3,8 +3,8 @@
 # Stack Upgrades
 - supabase-js `2.81.1`
   - [New in 2.81.1](https://github.com/supabase/supabase-js/releases/tag/v2.81.1)
-- Electron `39.2.0`
-  - [New in 39.2.0](https://github.com/electron/electron/releases/tag/v39.2.0)
+- Electron `39.2.1`
+  - [New in 39.2.1](https://github.com/electron/electron/releases/tag/v39.2.1)
 - NodeJS `25.2.0`
   - [New in 25.2.0](https://github.com/nodejs/node/releases/tag/v25.2.0)
 
