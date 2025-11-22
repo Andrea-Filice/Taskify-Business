@@ -35,8 +35,7 @@
       ],
       "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
     },
-    "mac":
-    {
+    "mac": {
       "icon": "src/assets/_icon.icns",
       "target": [
         "dmg"
@@ -75,6 +74,6 @@
     "dotenv": "^17.2.3",
     "electron-progressbar": "^2.2.1",
     "follow-redirects": "^1.15.11",
-    "npm": "^11.6.2"
+    "npm": "^11.6.3"
   }
 }
