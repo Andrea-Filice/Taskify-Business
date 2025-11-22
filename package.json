@@ -1,6 +1,6 @@
 {
   "name": "taskify-business",
-  "version": "1.9.1",
+  "version": "1.9.2",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
   "license": "Apache",
   "repository": {
@@ -65,7 +65,7 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^39.2.0",
+    "electron": "^39.2.1",
     "electron-builder": "^26.0.12"
   },
   "dependencies": {
