@@ -74,6 +74,9 @@
     "dotenv": "^17.2.3",
     "electron-progressbar": "^2.2.1",
     "follow-redirects": "^1.15.11",
-    "npm": "^11.6.3"
+    "glob": "^13.0.0",
+    "js-yaml": "^4.1.1",
+    "npm": "^11.6.0",
+    "tar": "^7.5.2"
   }
 }
