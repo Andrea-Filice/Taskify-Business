@@ -3,29 +3,33 @@
 
 ![alt text](https://raw.githubusercontent.com/Andrea-Filice/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide1.png "Main Page")
 
-**Taskify Business** is a powerful desktop application designed to help businesses organize, assign, and track maintenance tasks for their computer softwares. 
+**Taskify Business** is a powerful desktop application designed to help businesses organize, assign, and track maintenance tasks for their computer software. 
 By providing a clear, centralized interface, Maintenance Scheduler streamlines planning, reduces downtime, and ensures each component receives timely updates and checks.
 
 # **Key Features**:
 
 # **Task Categorization**  
-Categorize your activity. Select from 2 categories available, "Maintenance Task" or out.
+Categorize your activity. Select from 2 categories available, **"Maintenance Task" or out**.
+
 ![alt text](https://raw.githubusercontent.com/Andrea-Filice/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide1.png "Task categorization")
   
 # **Version Tracking**  
-Keep track of new versions of third-party tools and apps. You won't forget to update them.
+Keep track of new versions of third-party tools and apps. *You won't forget to update them!*
+
 ![alt text](https://raw.githubusercontent.com/Andrea-Filice/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide2.png "Version Tracking")
   
 # **Powered by AI (Beta)**  
-  /Create, /Delete and /Modify Tasks, only with a few commands ahead.
+  **/Create, /Delete** and **/Modify** Tasks, only with a few commands ahead.
+
 ![alt text](https://play-epik-incorporation.netlify.app/img/_devsAi.webp "AI Assistant")
   
 # **Progress Dashboard**  
-  Keep track of tasks and time at the same time. Simply with a graph.
+  Keep track of tasks and time at the same time. Simply with a *Graph*.
+
   ![alt text](https://raw.githubusercontent.com/Andrea-Filice/Taskify-Business/refs/heads/main/src/assets/gitImages/git_slide3.png "Charts")
 
 
-Check more <a href="https://play-epik-incorporation.netlify.app/developers#taskifyBusiness">here.</a>
+You can learn more on Taskify <a href="https://play-epik-incorporation.netlify.app/developers#taskifyBusiness">here.</a>
 
 ## Tech Stack
 
