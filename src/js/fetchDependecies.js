@@ -60,7 +60,7 @@ function checkForUpdates(){
         }
       }
       else
-        console.log("[ℹ️ INFO] action cancelled by the user.")
+        console.log("[ℹ️ INFO] Action cancelled by the user.")
     })
   }
   else
