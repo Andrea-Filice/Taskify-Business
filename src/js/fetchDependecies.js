@@ -1,3 +1,5 @@
+const { shell } = require("electron");
+
 let latestVersion, currentVersion;
 
 function retrieveDatasFromServer(){
@@ -52,7 +54,10 @@ function checkForUpdates(){
               break;
         }
         console.log("[ℹ️ INFO] DOWNLOAD LINK: " + url + ".")
-        ipcRenderer.invoke('downloadProgress', url, latestVersion)
+        if(process.platform != "linux")
+          ipcRenderer.invoke('downloadProgress', url, latestVersion)
+        else
+          shell.openExternal(url);
       }
       else
         console.log("[ℹ️ INFO] action cancelled by the user.")
