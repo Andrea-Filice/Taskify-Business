@@ -1,5 +1,3 @@
-const { shell } = require("electron");
-
 let latestVersion, currentVersion;
 
 function retrieveDatasFromServer(){
@@ -56,8 +54,10 @@ function checkForUpdates(){
         console.log("[ℹ️ INFO] DOWNLOAD LINK: " + url + ".")
         if(process.platform != "linux")
           ipcRenderer.invoke('downloadProgress', url, latestVersion)
-        else
+        else{ //! DISABLE THE Taskify Updater WITH LINUX.
           shell.openExternal(url);
+          ipcRenderer.invoke('show-alert', "It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.", "Downloaded in Background")
+        }
       }
       else
         console.log("[ℹ️ INFO] action cancelled by the user.")
