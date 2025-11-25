@@ -10,7 +10,7 @@ const ProgressBar = require('electron-progressbar');
 let mainWindow = null;
 let categoryModifyTask, indexModifyTask, characterLimit;
 const dataPath = path.join(app.getPath('userData'), 'todos.json');
-const DEBUG = true;
+const DEBUG = process.argv.includes("--dev");
 
 let todos = {
   softwareComponents: [],
