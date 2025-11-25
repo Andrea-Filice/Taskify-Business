@@ -1,10 +1,15 @@
 const { ipcRenderer } = require('electron')
 
+//* ORIGINAL KEYS FROM THE TASK
+let originalTaskName, originalNewerVersion, originalPreviousVersion;
+
+
 function OnLoad(){
   setTimeout(() =>{document.getElementById('loading').style.animation = "FadeOut 0.5s linear forwards";}, 100)
   setTimeout(() =>{
     document.getElementById('loading').style.display = "none";
     document.getElementById('main').style.animation = "FadeIn 0.5s linear forwards";
+    saveOriginalDatas(); //! SAVE ORIGINAL DATAS OF THE TASK.
   }, 500);
 
   //* ENTER HANDLER
@@ -49,12 +54,23 @@ function DeleteTask(){
 }
 
 function Quit(){
-  ipcRenderer.invoke("show-confirm", "Are you sure you want to quit and not save the unsaved changes?")
-  .then(userResponse => {
-      if(userResponse)
-        window.close();
-    }
-  )
+  if(getUnsavedChanges()){
+    ipcRenderer.invoke("show-confirm", "Are you sure you want to quit and not save the unsaved changes?")
+    .then(userResponse => {
+        if(userResponse)
+          window.close();
+      }
+    )
+  }
+  else
+    window.close();
+}
+
+//* FUNCTION FOR CHECK ALL CONDITIONS WITH UNSAVED CHANGES.
+function getUnsavedChanges(){
+  return originalTaskName != document.getElementById('inputName').value ||
+         originalNewerVersion != document.getElementById('inputNV').value ||
+         originalPreviousVersion != document.getElementById('inputPV').value
 }
 
 function SetCharacterLimit(value){
@@ -84,6 +100,14 @@ function SetCharacterLimit(value){
 ipcRenderer.on('retrieveTaskName', (event, name) =>{document.getElementById('inputName').value = name;});
 ipcRenderer.on('retrieveVersion', (event, version, elementID) => {document.getElementById(elementID).value = version;});
 ipcRenderer.on('retrieveSetting', (event, characterLimit) =>{SetCharacterLimit(characterLimit)});
+
+//* SAVE ORIGINAL VALUES OF THE TASK FROM THIS FUNCTION
+
+function saveOriginalDatas(){
+  originalTaskName = document.getElementById('inputName').value;
+  originalPreviousVersion = document.getElementById('inputPV').value;
+  originalNewerVersion = document.getElementById('inputNV').value;
+}
 
 //ON LOAD
 document.body.onload = OnLoad();

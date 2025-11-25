@@ -65,7 +65,7 @@ function createWindow() {
   let width, height;
 
   //* SET THE WIDTH AND HEIGHT BETWEEN LINUX AND OTHER PLATFORMS
-  //? BECAUSE LINUX IS A MINOR RENDERING SCALE.
+  //? LINUX HAVE A MINOR RENDERING SCALE.
   width = (process.platform == "linux") ? 1100 : 1000;
   height = (process.platform == "linux") ? 650 : 600;
 
