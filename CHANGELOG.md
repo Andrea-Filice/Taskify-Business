@@ -16,3 +16,4 @@
 [a9de668] Fixed an issue with the “unsaved changes” message in the “Edit PopUp”; it now performs more accurate checks.
 [f808f23] Fixed the arrow animation in the “Send Feedback” button.
 [abbc89d] Fixed Windows icon for "Edit PopUp".
+[9836329] Fixed some vulnerabilities with the application.
