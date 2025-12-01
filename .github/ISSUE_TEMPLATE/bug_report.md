@@ -20,8 +20,9 @@ Attach some ScreenShots here
 Describe where the bug happens [e.g. In Settings].
 
 **Desktop (please complete the following information):**
- - OS: [e.g. Windows, macOS etc...]
- - App Version: [latest: [![GitHub release](https://img.shields.io/github/v/release/Play-Epik-Inc/Taskify-Business?color=009dff)](https://github.com/Play-Epik-Inc/Taskify-Business/releases/latest)]
+ - OS: [e.g. Windows, macOS, Ubuntu etc...]
+ - App Version: [latest: [![GitHub release](https://img.shields.io/github/v/release/Andrea-Filice/Taskify-Business?color=009dff)](https://github.com/Andrea-Filice/Taskify-Business/releases/latest)]
+ - OS Version [e.g Windows 11, macOS Monterey, Ubuntu 25 etc...]
 
 **Additional context**
 Add any other context about the problem here.

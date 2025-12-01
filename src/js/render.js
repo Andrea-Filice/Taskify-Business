@@ -768,27 +768,33 @@ function showBetaOptions(value){
     document.getElementById('openSidebarBtn').style.display = (value === true && window.scrollY === 0) ? "block" : "none";
 }
 
-//INFO ABOUT BETA PROGRAM
+//[INFO] ABOUT BETA PROGRAM
 function ShowInfoPanel(textToShow){ipcRenderer.invoke('show-alert', textToShow)}
 
 //WEB REFERENCES SECTION
-document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business");});
-document.getElementById('licenseBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/blob/main/LICENSE");});
+document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});
+document.getElementById('licenseBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Andrea-Filice/Taskify-Business/blob/main/LICENSE");});
 
 //NEED HELP SECTION
 document.getElementById('feedback').addEventListener('click', () =>{
-  document.getElementById("feedbackSelection").classList.toggle("feedbackSelection");
-  if(document.getElementById('menuFeedback').classList.contains("arrowMenu"))
-    document.getElementById('menuFeedback').style.animation = "rotateAnimationBackward 0.3s forwards ease-in-out";
-  else
-    document.getElementById('menuFeedback').style.animation = "rotateAnimation 0.3s forwards ease-in-out";
+  let menuFeedback = document.getElementById('menuFeedback');
 
-  setTimeout(() =>{ //TIMEOUT FOR ENDING THE ANIMATION
-    document.getElementById('menuFeedback').classList.toggle("arrowMenu");
-  }, 500);
+  //* INTERRUPT THE CURRENT ANIMATION
+  menuFeedback.style.animation = "none";
+
+  document.getElementById("feedbackSelection").classList.toggle("feedbackSelection");
+  if(menuFeedback.classList.contains("arrowMenu"))
+    menuFeedback.style.animation = "rotateAnimationBackward 0.3s forwards ease-in-out";
+  else
+    menuFeedback.style.animation = "rotateAnimation 0.3s forwards ease-in-out";
+
+  setTimeout(() =>{ 
+    menuFeedback.classList.toggle("arrowMenu");
+  }, 10);
 });
-document.getElementById("bug").addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=bug")})
-document.getElementById("feedbackBtn").addEventListener('click', () =>{shell.openExternal("https://github.com/Play-Epik-Inc/Taskify-Business/issues/new?labels=enhancement")})
+
+document.getElementById("bug").addEventListener('click', () =>{shell.openExternal("https://github.com/Andrea-Filice/Taskify-Business/issues/new?labels=bug")})
+document.getElementById("feedbackBtn").addEventListener('click', () =>{shell.openExternal("https://github.com/Andrea-Filice/Taskify-Business/issues/new?labels=enhancement")})
 document.getElementById('contactUs').addEventListener('click', () =>{shell.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
 
 //ON LOAD

@@ -10,7 +10,7 @@ const ProgressBar = require('electron-progressbar');
 let mainWindow = null;
 let categoryModifyTask, indexModifyTask, characterLimit;
 const dataPath = path.join(app.getPath('userData'), 'todos.json');
-const DEBUG = true;
+const DEBUG = process.argv.includes("--dev");
 
 let todos = {
   softwareComponents: [],
@@ -65,7 +65,7 @@ function createWindow() {
   let width, height;
 
   //* SET THE WIDTH AND HEIGHT BETWEEN LINUX AND OTHER PLATFORMS
-  //? BECAUSE LINUX IS A MINOR RENDERING SCALE.
+  //? LINUX HAVE A MINOR RENDERING SCALE.
   width = (process.platform == "linux") ? 1100 : 1000;
   height = (process.platform == "linux") ? 650 : 600;
 
@@ -569,6 +569,7 @@ function createInputPopUp() {
       contextIsolation: false,
       webSecurity: true
     },
+    icon: 'src/assets/icon.ico'
   })
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')
