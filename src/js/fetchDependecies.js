@@ -34,7 +34,7 @@ function getCurrentVersion(){
 
 function checkForUpdates(){
   //* CHECK FOR UPDATES 
-  if(latestVersion > currentVersion){
+  if(parseFloat(latestVersion) > parseFloat(currentVersion)){
     document.getElementById("updateIcon").style.display = "inline";
     let url; //* THIS WILL STORE THE URL FOR DOWNLOAD THE INSTALLER
     let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is available! (" + latestVersion + ")")
@@ -68,4 +68,4 @@ function checkForUpdates(){
 }
 
 //START CHECKING FILES
-document.body.onload = retrieveDatasFromServer();
+window.addEventListener("load", retrieveDatasFromServer);

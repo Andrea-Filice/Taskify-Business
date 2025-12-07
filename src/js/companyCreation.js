@@ -24,4 +24,4 @@ function createCompany(){
 }
 
 //DOM ON LOAD
-document.body.onload = OnLoad();
+window.addEventListener("load", OnLoad);

@@ -9,7 +9,7 @@ function OnLoad(){
   setTimeout(() =>{
     document.getElementById('loading').style.display = "none";
     document.getElementById('main').style.animation = "FadeIn 0.5s linear forwards";
-    saveOriginalDatas(); //! SAVE ORIGINAL DATAS OF THE TASK.
+    saveOriginalDatas(); //* SAVE ORIGINAL DATAS OF THE TASK.
   }, 500);
 
   //* ENTER HANDLER
@@ -68,7 +68,7 @@ function Quit(){
 
 //* FUNCTION FOR CHECK ALL CONDITIONS WITH UNSAVED CHANGES.
 function getUnsavedChanges(){
-  return originalTaskName != document.getElementById('inputName').value ||
+  return originalTaskName != document.getElementById('inputName').value.trim ||
          originalNewerVersion != document.getElementById('inputNV').value ||
          originalPreviousVersion != document.getElementById('inputPV').value
 }
@@ -110,4 +110,4 @@ function saveOriginalDatas(){
 }
 
 //ON LOAD
-document.body.onload = OnLoad();
+window.addEventListener("load", OnLoad);
