@@ -5,7 +5,7 @@ function retrieveDatasFromServer(){
   getCurrentVersion();
 
   //* GET LATEST VERSION FROM THE SERVER:
-  fetch('https://playepikservercontents.netlify.app/dependencies/dependencies.json')
+  fetch('https://cdn-playepik.netlify.app/dependencies/dependencies.json')
     .then(response => response.json())
           .then(data => {
             latestVersion = data.versionTaskify;
