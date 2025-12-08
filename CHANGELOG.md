@@ -1,8 +1,8 @@
 # Release Notes for Taskify Business 1.9.4
 
 # Stack Upgrades
-- supabase-js `2.86.2`
-  - [New in 2.86.2](https://github.com/supabase/supabase-js/releases/tag/v2.86.2)
+- supabase-js `2.87.0`
+  - [New in 2.87.0](https://github.com/supabase/supabase-js/releases/tag/v2.87.0)
 - Electron `39.2.6`
   - [New in 39.2.6](https://github.com/electron/electron/releases/tag/v39.2.6)
 
