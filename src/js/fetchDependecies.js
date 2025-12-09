@@ -1,3 +1,4 @@
+const semver = require("semver")
 let latestVersion, currentVersion;
 
 function retrieveDatasFromServer(){
@@ -34,7 +35,7 @@ function getCurrentVersion(){
 
 function checkForUpdates(){
   //* CHECK FOR UPDATES 
-  if(parseFloat(latestVersion) > parseFloat(currentVersion)){
+  if(semver.gt(latestVersion, currentVersion)){
     document.getElementById("updateIcon").style.display = "inline";
     let url; //* THIS WILL STORE THE URL FOR DOWNLOAD THE INSTALLER
     let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is available! (" + latestVersion + ")")

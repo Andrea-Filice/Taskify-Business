@@ -16,7 +16,7 @@
   "main": "config.js",
   "scripts": {
     "start": "electron .",
-    "dev" : "npm run start -- --dev",
+    "dev": "npm run start -- --dev",
     "build": "electron-builder",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -78,6 +78,7 @@
     "glob": "^13.0.0",
     "js-yaml": "^4.1.1",
     "npm": "^11.7.0",
+    "semver": "^7.7.3",
     "tar": "^7.5.2"
   }
 }

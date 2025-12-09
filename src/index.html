@@ -5,14 +5,22 @@
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/style.css">
         <link href="https://api.fontshare.com/v2/css?f[]=supreme@1&display=swap" rel="stylesheet">
-        <link href="https://api.fontshare.com/v2/css?f[]=excon@1&display=swap" rel="stylesheet">
         <link href="https://api.fontshare.com/v2/css?f[]=clash-display@1&display=swap" rel="stylesheet">
-        <link href="https://api.fontshare.com/v2/css?f[]=manrope@1&display=swap" rel="stylesheet">
+        <link href="https://api.fontshare.com/v2/css?f[]=general-sans@1&display=swap" rel="stylesheet">
+        <link href="https://api.fontshare.com/v2/css?f[]=switzer@1&display=swap" rel="stylesheet">
     </head>
     <body>
+        <h1 style="font-family: 'General Sans', sans-serif; font-size: 60px;"><img src="assets/_maintenanceIcon.png" alt="Icon" style="width: 40px; height: 40px;" draggable="false" title="Tasks"> TASKS</h1>
+        <div class="bubbleMaintenance">Maintenance Tasks</div><br>
+        <ul id="softwareList"></ul><br>
+        <div class="bubbleOut">Out Of Maintenance Tasks</div><br>
+        <ul id="fuoriList"></ul><br>
+        <input class="inputName" id="aiInput" type="text" placeholder="Task name..." autocomplete="on" style="display: block;" spellcheck="false"/>
+        <button id="categorySelection">Maintenance Tasks</button>
+        <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px"></button>
         <div class="container" id="app">
-            <div class="column">
-                <h1 style="font-family: 'Excon', sans-serif;"><img src="assets/_maintenanceIcon.png" alt="Icon" style="width: 20px; height: 20px;" draggable="false" title="Maintenance Task"> MAINTENANCE TASKS</h1>
+            <!--<div class="column">
+                <h1 style="font-family: 'General Sans', sans-serif;"><img src="assets/_maintenanceIcon.png" alt="Icon" style="width: 20px; height: 20px;" draggable="false" title="Maintenance Task"> MAINTENANCE TASKS</h1>
                 <div class="input-group">
                     <input type="text" id="softwareInput" placeholder="Enter Task name..." required spellcheck="false" title="Task name" maxlength="20">
                     <div class="version-inputs" id="software">
@@ -29,7 +37,7 @@
                 <ul id="softwareList"></ul>
             </div>
             <div class="column">
-                <h1 style="font-family: 'Excon', sans-serif;"><img src="assets/_outMaintenanceIcon.png" alt="Icon" style="width: 20px; height: 20px;" draggable="false" title="Out of Maintenance"> OUT OF MAINTENANCE</h1>
+                <h1 style="font-family: 'General Sans', sans-serif;"><img src="assets/_outMaintenanceIcon.png" alt="Icon" style="width: 20px; height: 20px;" draggable="false" title="Out of Maintenance"> OUT OF MAINTENANCE</h1>
                 <div class="input-group">
                     <input type="text" id="fuoriInput" placeholder="Enter Task name... " required spellcheck="false" title="Task name" maxlength="20">
                     <div class="version-inputs" id="out">
@@ -44,24 +52,24 @@
                 </div>
                 <hr style="color: grey; opacity: 0.5;">
                 <ul id="fuoriList"></ul>
-            </div>
-            <button class="aiButton" id="openSidebarBtn" title="Open AI Assistant"><img src="assets/_aiIcon.png" draggable="false"></button>
+            </div>-->
+            <!--<button class="aiButton" id="openSidebarBtn" title="Open AI Assistant"><img src="assets/_aiIcon.png" draggable="false"></button>-->
             <button onclick="openInfoBox()" class="infoButton" id="ibtn" title="About"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
             <button onclick="openSettings()" class="settingsButton" id="sbtn" title="Settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
         </div>
         <br> 
         <div class="info" id="infoBox">
-            <h1 style="font-size: 50px; font-family: 'Excon', sans-serif;"><img src="assets/_info.png" draggable="false" height="35px" width="35px"> About:</h1>
+            <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;"><img src="assets/_info.png" draggable="false" height="35px" width="35px"> About:</h1>
             <div class="content" style="margin-top: -35px;">
                 <h2 id="version">Version: </h2>
                 <p style="margin-top: -20px;" id="latestversion">Latest version avaible: </p>
                 <h2 id="build">Build Number:</h2>
                 <hr>
-                <h1 style="font-size: 50px; font-family: 'Excon', sans-serif;"><img src="assets/_chart.png" draggable="false" width="35px" height="35px"> Charts:</h1>
+                <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;"><img src="assets/_chart.png" draggable="false" width="35px" height="35px"> Charts:</h1>
                 <h2><img src="assets/_createTask.png" draggable="false" height="20px" width="20px">  Tasks created:  <p style="display: inline; font-weight: 500; font-style: italic;" id="taskCreated"></p></h2>
                 <h2><img src="assets/_completeIcon.png" draggable="false" height="23px" width="23px">  Tasks completed:  <p style="display: inline; font-weight: 500; font-style: italic;" id="taskCompleted"></p></h2>
                 <canvas id="tasksChart" width="400" height="150" style="background: #232323; border-radius: 10px; margin-bottom: 30px;"></canvas>
-                <h1 style="font-family: 'Excon', sans-serif; font-size: 35px; text-align: center;"><img src="assets/_settings.png" alt="Charts settings" width="30px" height="30px" draggable="false"> Charts Settings:</h1>
+                <h1 style="font-family: 'General Sans', sans-serif; font-size: 35px; text-align: center;"><img src="assets/_settings.png" alt="Charts settings" width="30px" height="30px" draggable="false"> Charts Settings:</h1>
                 <center>
                     <div class="selections">
                         <label for="colorTaskCreated" style="margin-left: 20px;">Color <b>Tasks created:</b></label>
@@ -84,9 +92,9 @@
                 </center>
                 <h3 class="tip" style="font-weight: 300;"><img src="assets/_tip.png" height="20px" width="20px" draggable="false" id="tipImage"><p style="display: inline; color: orange;"><b style="font-weight: 800;">TIP:</b>  </p> Click on <i style="font-weight: 800;">"Tasks Completed" </i> or <i style="font-weight: 800;">"Tasks Created"</i> &nbsp;to see the progress of an individual item.</h3>
                 <hr>
-                <h1 style="font-size: 50px; font-family: 'Excon', sans-serif;"><img src="assets/_settings.png" draggable="false" height="35px" width="35px"> Settings:</h1>
+                <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;"><img src="assets/_settings.png" draggable="false" height="35px" width="35px"> Settings:</h1>
                 <div class="settings" id="settings">
-                    <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_general.png" draggable="false" height="20px" width="20px"> General:</h2>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_general.png" draggable="false" height="20px" width="20px"> General:</h2>
                     <div class="cleanSection">
                         <select name="selectCategory" id="categoryClean">
                             <option value="softwareComponents"> Maintenance Tasks</option>
@@ -107,12 +115,12 @@
                     <input type="checkbox" id="joinBeta" style="transform: scale(1.7);">
                     <label for="joinBeta" style="font-size: 20px;">Join Beta Program for AI Assistant.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will show the button for AI in Beta version.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will show the button for AI in Beta version"><br><br>
                     <br>
-                    <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_references.png" draggable="false" height="20px" width="20px"> Web References:</h2>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_references.png" draggable="false" height="20px" width="20px"> Web References:</h2>
                     <div class="references">
                         <button id="repoGitBtn" title="Open on GitHub"><img src="assets/_github.png" width="20px" height="20px" draggable="false"> Open on GitHub</button>
                         <button id="licenseBtn" title="See License"><img src="assets/_license.png" width="20px" height="20px" draggable="false"> See License</button>
                     </div>
-                    <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_help.png" draggable="false" height="20px" width="20px"> Need help?</h2>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_help.png" draggable="false" height="20px" width="20px"> Need help?</h2>
                     <div class="needHelp">
                         <button id="feedback" title="Leave a Feedback"><img src="assets/_feedback.png" width="20px" height="20px" draggable="false"> Leave a Feedback <img src="assets/_arrowDown.png" alt="Icon arrow" style="display: inline;" width="20px" height="20px" id="menuFeedback"></button>
                         <button id="contactUs" title="Contact Us"><img src="assets/_contact.png" width="20px" height="20px" draggable="false"> Contact Us</button>
@@ -122,7 +130,7 @@
                         <a id="feedbackBtn" style="color: white; margin-left: 170px;">Leave a Feedback.</a>
                     </div>
                     <br>
-                    <h2 style="text-align: center; font-family: 'Excon', sans-serif;"><img src="assets/_actions.png" draggable="false" height="20px" width="20px"> Actions:</h2>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_actions.png" draggable="false" height="20px" width="20px"> Actions:</h2>
                     <button onclick="quitApplication()" class="quitButton" title="Quit application"><img src="assets/_quit.png" draggable="false" height="25px" width="25px"> Quit application</button>
                     <br> <br>
                     <button id="restartBtn" class="btn" title="Restart"><img src="assets/_reload.png" draggable="false" width="23px" height="23px">  Restart</button>
@@ -136,11 +144,11 @@
         <div id="sidebarAI" class="sidebar-ai">
             <a href="javascript:void(0)" id="closeSidebarBtn" class="close-sidebar-btn" title="Close AI" draggable="false">&times;</a>
             <div class="sidebar-ai-content">
-                <h2 style="margin-top: -35px; font-family: 'Excon', sans-serif;" class="assistantText">AI Assistant <img src="assets/_betaIcon.png" height="40px" width="40px" style="margin-top: 10px;" draggable="false"></h2>
+                <h2 style="margin-top: -35px; font-family: 'General Sans', sans-serif;" class="assistantText">AI Assistant <img src="assets/_betaIcon.png" height="40px" width="40px" style="margin-top: 10px;" draggable="false"></h2>
                 <div id="aiChatHistory" class="ai-chat-history"></div>
                 <div class="ai-chat-input-row">
                     <input id="aiInput" type="text" placeholder="Write a command..." autocomplete="on" style="display: block;" spellcheck="false"/>
-                    <button id="aiSendBtn" style="font-family: 'Supreme', sans-serif; height: 100%;"><img src="assets/_send.png" height="20px" width="20px" draggable="false"></button>
+                    <button id="aiSendBtn" style="font-family: 'Switzer', sans-serif; height: 100%;"><img src="assets/_send.png" height="20px" width="20px" draggable="false"></button>
                 </div>
             </div>
         </div>

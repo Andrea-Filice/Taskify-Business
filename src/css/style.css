@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 20px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
     background: #1a1a1a;
     color: #fff;
     overflow-x: hidden;
@@ -42,7 +42,7 @@ input {
     background: #3d3d3d;
     color: #fff;
     font-size: 15px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 #fuoriAddBtn, #softwareAddBtn, .delete-btn, .closeButton, .btn, .quitButton, .edit-btn{
@@ -56,7 +56,7 @@ input {
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 #repoGitBtn, #licenseBtn, #feedback, #contactUs{
@@ -70,7 +70,7 @@ input {
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 #aiSendBtn{
@@ -84,7 +84,7 @@ input {
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 button:hover {opacity: 0.8;}
@@ -106,7 +106,7 @@ li {
 }
 
 .delete-btn {
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
     background: #ff0000;
     color: white;
     padding: 5px 10px;
@@ -118,7 +118,7 @@ li {
 }
 
 .edit-btn {
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
     background: #009dff;
     color: white;
     padding: 5px 10px;
@@ -267,7 +267,7 @@ html {
     width: 30px;
     border-color: transparent;
     position: fixed;
-    bottom: 20px;
+    bottom: 23px;
     right: 20px;
 }
 
@@ -277,7 +277,7 @@ html {
     width: 30px;
     border-color: transparent;
     position: fixed;
-    bottom: 20px;
+    bottom: 23px;
     right: 60px;
     z-index: 3000;
 }
@@ -344,7 +344,7 @@ html {
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 .cleanSection input {width: 70%;}
@@ -370,7 +370,7 @@ html {
     background: #3d3d3d;
     color: #fff;
     font-size: 15px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 .versionPrev{display: inline;}
@@ -385,15 +385,15 @@ html {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
-canvas{font-family: 'Excon', sans-serif;}
+canvas{font-family: 'General Sans', sans-serif;}
 
 select{
     width: 72%;
     height: 40px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
     background-color: #3d3d3d;
     color: #fff;
     border: none;
@@ -405,7 +405,7 @@ select:focus{
     animation: animationInput 2s ease-in-out infinite;
 }
 
-option{font-family: 'Supreme', sans-serif; color: #009dff;;}
+option{font-family: 'Switzer', sans-serif; color: #009dff;;}
 
 /* Sidebar AI Chat */
 .sidebar-ai {
@@ -445,7 +445,7 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 
 .sidebar-ai-content h2 {
     color: #fff;
-    font-family: 'Excon', sans-serif;
+    font-family: 'General Sans', sans-serif;
     margin-bottom: 16px;
     text-align: center;
 }
@@ -458,7 +458,7 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
     padding: 12px;
     margin-bottom: 16px;
     color: #fff;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-size: 15px;
     display: flex;
     flex-direction: column;
@@ -491,7 +491,6 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 }
 
 #aiInput {
-    position: relative;
     z-index: 1;
     background: #292929;
     color: #fff;
@@ -499,21 +498,18 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
     border-radius: 5px;
     padding: 10px;
     font-size: 15px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
     box-shadow: none;
-    width: 80%;
 }
 
-#aiInput:focus {outline: none;}
-
-#aiInput.ai-glow {
+#aiInput:focus {
+    outline: none;
     border: 2.5px solid transparent;
     background: 
         linear-gradient(#292929, #292929) padding-box,
         linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400) border-box;
     background-origin: border-box;
     background-clip: padding-box, border-box;
-    width: 80%;
     background-size: 400% auto;
     animation: gradient 15s linear infinite;
 }
@@ -583,3 +579,89 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 
 #updateIcon:hover{cursor: pointer;}
 #updateIcon:hover::after{cursor: default;}
+
+/*NEW DESIGN*/
+.bubbleMaintenance{
+    background-color: #007acc;
+    border-radius: 25px;
+    color: white;
+    height: 125%;
+    width: 15%;
+    padding: 10px;
+    margin-top: -20px;
+}
+
+.bubbleOut{
+    background-color: #cc2200;
+    border-radius: 25px;
+    color: white;
+    height: 125%;
+    width: 20%;
+    padding: 10px;
+}
+
+.inputName{
+    position: fixed;
+    bottom: 15px;
+    width: 50%;
+}
+
+#categorySelection{
+    background-color: #007acc;
+    color: white;
+    outline: none;
+    border-radius: 25px;
+    text-decoration: none;
+    border: none;
+    position: fixed;
+    bottom: 15px;
+    right: 150px;
+    width: 30%;
+    height: 7%;
+    font-family: 'General Sans', sans-serif;
+}
+
+#categorySelection.out{
+    background-color: #cc2200;
+    color: white;
+    outline: none;
+    border-radius: 25px;
+    text-decoration: none;
+    border: none;
+    position: fixed;
+    bottom: 15px;
+    right: 150px;
+    width: 30%;
+    height: 7%;
+    font-family: 'General Sans', sans-serif;
+}
+
+@keyframes animClickedButton{
+    0%{
+        transform: scale(1);
+        filter: blur(1px);
+    }
+    50%{
+        transform: scale(0.5);
+        filter: blur(5px);
+    }
+    100%{
+        transform: scale(1);
+        filter: blur(1px);
+    }
+}
+
+.addTask{
+    background-color: #007acc;
+    color: white;
+    outline: none;
+    border-radius: 25px;
+    text-decoration: none;
+    border: none;
+    position: fixed;
+    bottom: 15px;
+    right: 90px;
+    width: 5%;
+    height: 7%;
+    font-family: 'General Sans', sans-serif;
+}
