@@ -25,7 +25,7 @@ function getCurrentVersion(){
           });
 
   //* TIMEOUT FOR AVOID DATA CONFLICTS OR UNDEFINED VALUES.
-  setTimeout(checkForUpdates, 1000);
+  setTimeout(checkForUpdates, 1100);
 }
 
 function checkForUpdates(){
@@ -35,7 +35,7 @@ function checkForUpdates(){
     let url; //* THIS WILL STORE THE URL FOR DOWNLOAD THE INSTALLER
     let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is available! (" + latestVersion + ")")
     .then(res =>{
-      if(res){
+      if(res === true){
         switch(process.platform){
             case "win32":
               url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/TaskifyBusiness-${latestVersion}-${process.arch}.exe`

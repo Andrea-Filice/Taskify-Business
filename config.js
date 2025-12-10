@@ -106,8 +106,8 @@ function createWindow() {
     const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
       buttons: ['Install Now', 'Remind me Later'],
-      defaultId: 1,
-      cancelId: 0,
+      defaultId: 0,
+      cancelId: 1,
       message,
       title: 'Taskify Updater',
       noLink: true,
