@@ -11,49 +11,25 @@
     </head>
     <body>
         <h1 style="font-family: 'General Sans', sans-serif; font-size: 60px;"><img src="assets/_maintenanceIcon.png" alt="Icon" style="width: 40px; height: 40px;" draggable="false" title="Tasks"> TASKS</h1>
-        <div class="bubbleMaintenance">Maintenance Tasks</div><br>
+        <div class="bubbleMaintenance">Maintenance Tasks <p id="maintenanceNumber" style="display: inline; right: 0px; background-color: rgb(31, 31, 163); border-radius: 5px; font-family: 'General Sans', sans-serif;">&nbsp;&nbsp;null&nbsp;&nbsp;</p></div><br>
         <ul id="softwareList"></ul><br>
-        <div class="bubbleOut">Out Of Maintenance Tasks</div><br>
+        <div class="bubbleOut">Out Of Maintenance Tasks <p id="outNumber" style="display: inline; right: 0px; background-color: #88210c; border-radius: 5px; font-family: 'General Sans', sans-serif;">&nbsp;&nbsp;null&nbsp;&nbsp;</p></div><br>
         <ul id="fuoriList"></ul><br>
-        <input class="inputName" id="aiInput" type="text" placeholder="Task name..." autocomplete="on" style="display: block;" spellcheck="false"/>
-        <button id="categorySelection">Maintenance Tasks</button>
-        <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px"></button>
-        <div class="container" id="app">
-            <!--<div class="column">
-                <h1 style="font-family: 'General Sans', sans-serif;"><img src="assets/_maintenanceIcon.png" alt="Icon" style="width: 20px; height: 20px;" draggable="false" title="Maintenance Task"> MAINTENANCE TASKS</h1>
-                <div class="input-group">
-                    <input type="text" id="softwareInput" placeholder="Enter Task name..." required spellcheck="false" title="Task name" maxlength="20">
-                    <div class="version-inputs" id="software">
-                        <input type="text" id="softwarePrevVersion" placeholder="Previous version" spellcheck="false" title="Previous version" maxlength="10">
-                        <input type="text" id="softwareNextVersion" placeholder="Newer version" spellcheck="false" title="Newer version" maxlength="10">
-                    </div>
-                    <div class="nameTaskUser">
-                        <img src="assets/_employee.png" draggable="false" class="nameTaskUserImg">
-                        <input type="text" id="userTypeIn" placeholder="Employee name..." spellcheck="false" title="Employee name (Optional)">
-                    </div>
-                    <button id="softwareAddBtn" title="Add to Tasks"><img src="assets/_add.png" width="20px" height="20px" draggable="false"> Add to Tasks</button>
-                </div>
-                <hr style="color: grey; opacity: 0.5;">
-                <ul id="softwareList"></ul>
+        <div class="app" id="taskCreation">
+            <div class="version-inputs" id="versions">
+                <input type="text" id="prevVersion" placeholder="Previous version" spellcheck="false" title="Previous version" maxlength="10">
+                <input type="text" id="nextVersion" placeholder="Newer version" spellcheck="false" title="Newer version" maxlength="10">
+                <button id="employeeBtn" style="background-color: #232323; border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" title="Add Employee"></button>
             </div>
-            <div class="column">
-                <h1 style="font-family: 'General Sans', sans-serif;"><img src="assets/_outMaintenanceIcon.png" alt="Icon" style="width: 20px; height: 20px;" draggable="false" title="Out of Maintenance"> OUT OF MAINTENANCE</h1>
-                <div class="input-group">
-                    <input type="text" id="fuoriInput" placeholder="Enter Task name... " required spellcheck="false" title="Task name" maxlength="20">
-                    <div class="version-inputs" id="out">
-                        <input type="text" id="fuoriPrevVersion" placeholder="Previous Version" spellcheck="false" title="Previous version" maxlength="10">
-                        <input type="text" id="fuoriNextVersion" placeholder="Newer Version" spellcheck="false" title="Newer version" maxlength="10">
-                    </div>
-                    <div class="nameTaskUser">
-                        <img src="assets/_employee.png" draggable="false" class="nameTaskUserImg">
-                        <input type="text" id="userTypeOut" placeholder="Employee name..." spellcheck="false" title="Employee name (Optional)">
-                    </div>
-                    <button id="fuoriAddBtn" title="Add to Tasks"><img src="assets/_add.png" width="20px" height="20px" draggable="false"> Add to Tasks</button>
-                </div>
-                <hr style="color: grey; opacity: 0.5;">
-                <ul id="fuoriList"></ul>
-            </div>-->
-            <!--<button class="aiButton" id="openSidebarBtn" title="Open AI Assistant"><img src="assets/_aiIcon.png" draggable="false"></button>-->
+            <div class="employee-inputs" id="employeeIn">
+                <input type="text" id="employeeInput" placeholder="Employee Name..." spellcheck="false" title="Previous version" maxlength="10" style="width: 390px;">
+                <button id="closeEmployeeBtn" style="background-color: #232323; border: none; border-radius: 5px;"><img src="assets/_close.png" alt="Add Employee" height="20px" width="20px" title="Add Employee"></button>
+            </div>
+            <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" spellcheck="false"/>
+            <button id="categorySelection">Maintenance Tasks</button>
+            <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px"></button>
+        </div>
+        <div class="container" id="app">
             <button onclick="openInfoBox()" class="infoButton" id="ibtn" title="About"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
             <button onclick="openSettings()" class="settingsButton" id="sbtn" title="Settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
         </div>
@@ -112,8 +88,6 @@
                     <label for="checkbox" style="font-size: 20px;">Disables the auto-close of the settings panel.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will disables the auto-close of the settings panel.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will disables the auto-close of the settings panel."><br><br>
                     <input type="checkbox" id="characterLimit" style="transform: scale(1.7);">
                     <label for="characterLimit" style="font-size: 20px;">Enable character limit.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will set a character limit for Task names and version numbers.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will set a character limit for Task names and version numbers."><br><br>
-                    <input type="checkbox" id="joinBeta" style="transform: scale(1.7);">
-                    <label for="joinBeta" style="font-size: 20px;">Join Beta Program for AI Assistant.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will show the button for AI in Beta version.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will show the button for AI in Beta version"><br><br>
                     <br>
                     <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_references.png" draggable="false" height="20px" width="20px"> Web References:</h2>
                     <div class="references">
@@ -147,7 +121,7 @@
                 <h2 style="margin-top: -35px; font-family: 'General Sans', sans-serif;" class="assistantText">AI Assistant <img src="assets/_betaIcon.png" height="40px" width="40px" style="margin-top: 10px;" draggable="false"></h2>
                 <div id="aiChatHistory" class="ai-chat-history"></div>
                 <div class="ai-chat-input-row">
-                    <input id="aiInput" type="text" placeholder="Write a command..." autocomplete="on" style="display: block;" spellcheck="false"/>
+                    <input id="aiInputSide" type="text" placeholder="Write a command..." autocomplete="on" style="display: block; width: 70%;" spellcheck="false"/>
                     <button id="aiSendBtn" style="font-family: 'Switzer', sans-serif; height: 100%;"><img src="assets/_send.png" height="20px" width="20px" draggable="false"></button>
                 </div>
             </div>

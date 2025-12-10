@@ -9,12 +9,6 @@ body {
 
 #app{opacity: 0;}
 
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
 .column {
     background: #2d2d2d;
     padding: 10px;
@@ -130,7 +124,7 @@ li {
     width: 100px;
 }
 
-input:focus:not(#checkbox):not(#joinBeta):not(#aiInput):not(#characterLimit){
+input:focus:not(#checkbox):not(#aiInput):not(#characterLimit){
     outline: none;
     animation: animInputIn 2s ease-in-out infinite;
 }
@@ -140,12 +134,12 @@ input::after{
     animation: animInputOut 1s ease-in-out forwards;
 }
 
-button:focus:not(.infoButton):not(.settingsButton):not(#resetBtn):not(.closeButton), .aiButton {
+button:focus:not(.infoButton):not(.settingsButton):not(#resetBtn):not(.closeButton):not(#employeeBtn){
     outline: none;
     animation: animButtonIn 2s ease-in-out infinite;
 }
 
-button:not(.infoButton):not(.settingsButton)::after{
+button:not(.infoButton):not(.settingsButton):not(#employeeBtn)::after{
     outline: none;
     animation: animButtonOut 1s ease-in-out forwards;
 }
@@ -240,10 +234,30 @@ button:not(.infoButton):not(.settingsButton)::after{
 
 .version-inputs {
     display: flex;
+    position: fixed;
+    bottom: 51px;
     gap: 10px;
+    width: 30%;
+    margin-left: 1px;
 }
 
-.version-inputs input {flex: 1;}
+.version-inputs input {
+    flex: 1;
+    background: #141414;
+}
+
+.employee-inputs {
+    display: flex;
+    position: fixed;
+    bottom: 51px;
+    gap: 10px;
+    margin-left: 1px;
+}
+
+.employee-inputs input {
+    flex: 1;
+    background: #141414;
+}
 
 html {
     scrollbar-color: #888 #1a1a1a;
@@ -545,7 +559,7 @@ option{font-family: 'Switzer', sans-serif; color: #009dff;;}
     animation: gradient 8s linear infinite;
 }
 
-#checkbox:checked, #joinBeta:checked, #characterLimit:checked{accent-color: #009dff; color-scheme: light;}
+#checkbox:checked, #characterLimit:checked{accent-color: #009dff; color-scheme: light;}
 
 /*TIP*/
 .tip{
@@ -586,7 +600,7 @@ option{font-family: 'Switzer', sans-serif; color: #009dff;;}
     border-radius: 25px;
     color: white;
     height: 125%;
-    width: 15%;
+    width: 25%;
     padding: 10px;
     margin-top: -20px;
 }
@@ -596,7 +610,7 @@ option{font-family: 'Switzer', sans-serif; color: #009dff;;}
     border-radius: 25px;
     color: white;
     height: 125%;
-    width: 20%;
+    width: 30%;
     padding: 10px;
 }
 
@@ -665,3 +679,23 @@ option{font-family: 'Switzer', sans-serif; color: #009dff;;}
     height: 7%;
     font-family: 'General Sans', sans-serif;
 }
+
+@keyframes animCompareIn{
+    0%{
+        bottom: 15px;
+    }
+    100%{
+        bottom: 51px;
+    }
+}
+
+@keyframes animCompareOut{
+    0%{
+        bottom: 51px;
+    }
+    100%{
+        bottom: 15px;
+    }
+}
+
+#employeeIn{display: none;}

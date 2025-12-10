@@ -18,7 +18,6 @@ let todos = {
   taskCreated: 0,
   taskCompleted: 0,
   autoClose: false,
-  joinBeta: true,
   companyName: undefined,
   chartData: { labels: [], created: [], completed: [] },
   taskCompletedColor : "green",
@@ -34,7 +33,6 @@ function loadTodosFromDisk() {
       todos.taskCreated = todos.taskCreated || 0
       todos.taskCompleted = todos.taskCompleted || 0
       todos.autoClose = todos.autoClose || false
-      todos.joinBeta = typeof todos.joinBeta === 'boolean' ? todos.joinBeta : true
       todos.companyName = todos.companyName || undefined
       todos.chartData = todos.chartData || { labels: [], created: [], completed: [] }
       todos.taskCompletedColor = todos.taskCompletedColor || "green"
@@ -49,7 +47,6 @@ function loadTodosFromDisk() {
         taskCreated: 0,
         taskCompleted: 0,
         autoClose: false,
-        joinBeta: true,
         companyName: undefined,
         chartData: { labels: [], created: [], completed: [] },
         taskCompletedColor : "green",
