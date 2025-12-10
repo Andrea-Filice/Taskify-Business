@@ -543,7 +543,6 @@ option{font-family: 'Switzer', sans-serif; color: #009dff;;}
 }
 
 .youText{color: white;}
-
 .suggestion{display: none;}
 
 .references, .needHelp{
@@ -556,6 +555,7 @@ option{font-family: 'Switzer', sans-serif; color: #009dff;;}
     background-image: linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400);
     background-size: 200% auto;
     -webkit-background-clip: text;
+    background-clip: none;
     animation: gradient 8s linear infinite;
 }
 
@@ -656,7 +656,7 @@ option{font-family: 'Switzer', sans-serif; color: #009dff;;}
         filter: blur(1px);
     }
     50%{
-        transform: scale(0.5);
+        transform: scale(0.75);
         filter: blur(5px);
     }
     100%{

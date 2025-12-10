@@ -100,8 +100,11 @@ window.todoManager = new class TodoManager {
 
     if(companyName === undefined)
       window.location.href = "createCompany.html";
-    else
+    else{
       document.getElementById("app").style.animation = "FadeIn 1s forwards";
+      document.getElementById("AppTasks").style.animation = "FadeIn 1s forwards";
+      document.getElementById("mainSection").style.animation = "FadeIn 1s forwards";
+    }
     
     //EVENT LISTENERS
     document.getElementById('aiInput')
@@ -519,7 +522,7 @@ window.todoManager = new class TodoManager {
   
   handleScroll() {
     if (window.scrollY === 0) {
-      document.getElementById('taskCreation').style.display = "block";
+      document.getElementById('AppTasks').style.display = "block";
       document.getElementById('infoBox').style.display = "none";
       toggleButtons(true);
     }
@@ -609,7 +612,7 @@ const buttons =[
 ];
 
 function openInfoBox(){
-  document.getElementById('taskCreation').style.display = "none";
+  document.getElementById('AppTasks').style.display = "none";
 
   document.getElementById('infoBox').style.display = 'block';
   document.getElementById('infoBox').scrollIntoView({ behavior: 'smooth' });
@@ -617,7 +620,7 @@ function openInfoBox(){
 }
 
 function closeInfoBox(){
-  document.getElementById('taskCreation').style.display = "block";
+  document.getElementById('AppTasks').style.display = "block";
 
   document.getElementById('softwareList').scrollIntoView({ behavior: 'smooth'});
   document.getElementById('infoBox').style.display = 'none';
@@ -625,7 +628,7 @@ function closeInfoBox(){
 }
 
 function openSettings(){
-  document.getElementById('taskCreation').style.display = "none";
+  document.getElementById('AppTasks').style.display = "none";
 
   document.getElementById('infoBox').style.display = 'block';
   document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
