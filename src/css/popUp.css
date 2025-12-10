@@ -1,7 +1,7 @@
 body{
   margin: 0;
   padding: 20px;
-  font-family: 'Supreme', sans-serif;
+  font-family: 'Switzer', sans-serif;
   background: #1a1a1a;
   color: #fff;
   overflow: hidden;
@@ -14,7 +14,7 @@ input {
   background: #3d3d3d;
   color: #fff;
   font-size: 15px;
-  font-family: 'Supreme', sans-serif;
+  font-family: 'Switzer', sans-serif;
   flex: 1; 
 }
 
@@ -41,7 +41,7 @@ button {
   cursor: pointer;
   font-size: 18px;
   width: 10%;
-  font-family: 'Supreme', sans-serif;
+  font-family: 'Switzer', sans-serif;
   display: inline-flex;
   align-items: center;
   justify-content: center;
