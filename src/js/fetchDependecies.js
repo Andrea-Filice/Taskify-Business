@@ -10,7 +10,7 @@ function retrieveDatasFromServer(){
     .then(response => response.json())
           .then(data => {
             latestVersion = data.versionTaskify;
-            document.getElementById('latestversion').innerText = "Latest version available: " + data.versionTaskify;
+            document.getElementById('latestversion').innerHTML = "Latest version available: " + data.versionTaskify;
           })
 }
 
@@ -22,11 +22,6 @@ function getCurrentVersion(){
             currentVersion = data.Version;
             document.getElementById('version').innerHTML = "Version: " + currentVersion + ' <img src="assets/_updateWarn.png" alt="Update available" draggable="false" style="width: 20px; height: 20px;" id="updateIcon" title="Update Available!">';
             document.getElementById('build').innerHTML = "Build Number: " + data.BuildNumber;
-
-            //* ADD A FUNCTION FOR THE "Update Available" BUTTON
-            document.getElementById("updateIcon").addEventListener("click", () =>{
-              checkForUpdates();
-            })
           });
 
   //* TIMEOUT FOR AVOID DATA CONFLICTS OR UNDEFINED VALUES.
