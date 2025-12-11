@@ -812,13 +812,13 @@ function clearChat() {
   chatHistory.innerHTML = (chatHistory) ? '' : chatHistory.innerHTML;
 }
 
-function showBetaOptions(value){
-  if(!autoClose)
-    document.getElementById('openSidebarBtn').style.display = (value === true && window.scrollY === 0) ? "block" : "none";
-}
+//APPEARANCE SECTION
+const htmlElement = document.documentElement;
+const themeDropdown = document.getElementById("themeDropDown");
 
-//[INFO] ABOUT BETA PROGRAM
-function ShowInfoPanel(textToShow){ipcRenderer.invoke('show-alert', textToShow)}
+themeDropdown.addEventListener("change", () =>{
+  htmlElement.setAttribute('data-theme', themeDropdown.value);
+})
 
 //WEB REFERENCES SECTION
 document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});

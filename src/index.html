@@ -21,11 +21,11 @@
             <div class="version-inputs" id="versions">
                 <input type="text" id="prevVersion" placeholder="Previous version" spellcheck="false" title="Previous version" maxlength="10">
                 <input type="text" id="nextVersion" placeholder="Newer version" spellcheck="false" title="Newer version" maxlength="10">
-                <button id="employeeBtn" style="background-color: #232323; border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" title="Add Employee"></button>
+                <button id="employeeBtn" style="border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" title="Add Employee"></button>
             </div>
             <div class="employee-inputs" id="employeeIn">
                 <input type="text" id="employeeInput" placeholder="Employee Name..." spellcheck="false" title="Employee Name" maxlength="10" style="width: 390px;">
-                <button id="closeEmployeeBtn" style="background-color: #232323; border: none; border-radius: 5px; font-size: 23px; color: white; font-family: 'General Sans', sans-serif;">X</button>
+                <button id="closeEmployeeBtn" style="border: none; border-radius: 5px; font-size: 23px; font-family: 'General Sans', sans-serif;">X</button>
             </div>
             <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" spellcheck="false"/>
             <button id="categorySelection">Maintenance Tasks</button>
@@ -89,8 +89,13 @@
                     <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
                     <label for="checkbox" style="font-size: 20px;">Disables the auto-close of the settings panel.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will disables the auto-close of the settings panel.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will disables the auto-close of the settings panel."><br><br>
                     <input type="checkbox" id="characterLimit" style="transform: scale(1.7);">
-                    <label for="characterLimit" style="font-size: 20px;">Enable character limit.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will set a character limit for Task names and version numbers.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will set a character limit for Task names and version numbers."><br><br>
-                    <br>
+                    <label for="characterLimit" style="font-size: 20px;">Enable character limit.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will set a character limit for Task names and version numbers.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will set a character limit for Task names and version numbers."><br>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_appearance.png" draggable="false" height="20px" width="20px"> Appearance:</h2>
+                    <select name="selectTheme" id="themeDropDown" class="appTheme">
+                        <option value="light"> ☀️ Light Theme</option>
+                        <option value="dark"> 🌙 Dark Theme</option>
+                    </select>
+                    <br><br><br>
                     <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_references.png" draggable="false" height="20px" width="20px"> Web References:</h2>
                     <div class="references">
                         <button id="repoGitBtn" title="Open on GitHub"><img src="assets/_github.png" width="20px" height="20px" draggable="false"> Open on GitHub</button>
@@ -102,8 +107,8 @@
                         <button id="contactUs" title="Contact Us"><img src="assets/_contact.png" width="20px" height="20px" draggable="false"> Contact Us</button>
                     </div>
                     <div class="feedbackSelection" id="feedbackSelection">
-                        <a id="bug" style="color: white; margin-left: 170px;"><img src="assets/_bugIcon.png" alt="Bug Icon" width="15px" height="15px">&nbsp; Write a Bug Report.</a><br>
-                        <a id="feedbackBtn" style="color: white; margin-left: 170px;"><img src="assets/_feedbackDropdown.png" alt="Bug Icon" width="15px" height="15px">&nbsp; Leave a Feedback.</a>
+                        <a id="bug" style="margin-left: 170px;"><img src="assets/_bugIcon.png" alt="Bug Icon" width="15px" height="15px">&nbsp; Write a Bug Report.</a><br>
+                        <a id="feedbackBtn" style="margin-left: 170px;"><img src="assets/_feedbackDropdown.png" alt="Bug Icon" width="15px" height="15px">&nbsp; Leave a Feedback.</a>
                     </div>
                     <br>
                     <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_actions.png" draggable="false" height="20px" width="20px"> Actions:</h2>

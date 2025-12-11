@@ -1,26 +1,46 @@
+:root{
+    --background: #1a1a1a;
+    --color: #fff;
+    --input-background: #3d3d3d;
+    --button-foreground: #009dff;
+    --input-foreground: #141414;
+    --maintenanceOutColor: #cc2200;
+}
+
+html[data-theme="light"]{
+    --background: #ffffff;
+    --color: #000000;
+    --input-background: #adadad;
+    --button-foreground: #009dff;
+    --input-foreground: #e2e2e2;
+    --maintenanceOutColor: #cc2200;
+}
+
+html[data-theme="light"] img{filter: invert(1) brightness(0.8) contrast(1);}
+html[data-theme="dark"] img{filter: none;}
+
+#closeEmployeeBtn, #employeeBtn{
+    background-color: var(--input-foreground);
+    color: var(--color);
+}
+
 body {
     margin: 0;
     padding: 20px;
     font-family: 'Switzer', sans-serif;
-    background: #1a1a1a;
-    color: #fff;
+    background: var(--background);
+    color: var(--color);
     overflow-x: hidden;
 }
 
 #app{opacity: 0;}
 
-.column {
-    background: #2d2d2d;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 h1{
     margin-top: 0;
-    color: #ffffff;
+    color: var(--color);
     font-size: 1.6em;
 }
+h2, h3, h4, h5, h6, a{color: var(--color);}
 
 .input-group {
     display: flex;
@@ -33,8 +53,8 @@ input {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background: #3d3d3d;
-    color: #fff;
+    background: var(--input-background);
+    color: var(--color);
     font-size: 15px;
     font-family: 'Switzer', sans-serif;
 }
@@ -45,8 +65,8 @@ input {
     width: 100%;
     border: none;
     border-radius: 5px;
-    background: #009dff;
-    color: white;
+    background: var(--button-foreground);
+    color: var(--color);
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
@@ -59,8 +79,8 @@ input {
     width: 50%;
     border: none;
     border-radius: 5px;
-    background: #009dff;
-    color: white;
+    background: var(--button-foreground);
+    color: var(--color);
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
@@ -73,8 +93,8 @@ input {
     width: 20%;
     border: none;
     border-radius: 5px;
-    background: #009dff;
-    color: white;
+    background: var(--button-foreground);
+    color: var(--color);
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
@@ -92,7 +112,7 @@ ul {
 li {
     padding: 10px;
     margin: 5px 0;
-    background: #3d3d3d;
+    background: var(--input-background);
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
@@ -102,7 +122,7 @@ li {
 .delete-btn {
     font-family: 'Switzer', sans-serif;
     background: #ff0000;
-    color: white;
+    color: var(--color);
     padding: 5px 10px;
     border-radius: 3px;
     display: inline-flex;
@@ -113,8 +133,8 @@ li {
 
 .edit-btn {
     font-family: 'Switzer', sans-serif;
-    background: #009dff;
-    color: white;
+    background: var(--button-foreground);
+    color: var(--color);
     padding: 5px 10px;
     border-radius: 3px;
     display: inline-flex;
@@ -243,7 +263,7 @@ button:not(.infoButton):not(.settingsButton):not(#employeeBtn)::after{
 
 .version-inputs input {
     flex: 1;
-    background: #141414;
+    background: var(--input-foreground);
 }
 
 .employee-inputs {
@@ -256,7 +276,7 @@ button:not(.infoButton):not(.settingsButton):not(#employeeBtn)::after{
 
 .employee-inputs input {
     flex: 1;
-    background: #141414;
+    background: var(--input-foreground);
 }
 
 html {
@@ -296,35 +316,7 @@ html {
     z-index: 3000;
 }
 
-.aiButton {
-    background-color: #009dff !important;
-    border: none !important;
-    position: fixed;
-    bottom: 10px;
-    right: 90px;
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
-    z-index: 3000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px #000a;
-    transition: background 0.2s;
-}
-
-.aiButton img {
-    width: 28px;
-    height: 28px;
-    filter: drop-shadow(0 0 2px #fff8);
-}
-
-.aiButton:hover {
-    background-color: #007acc !important;
-    cursor: pointer;
-}
-
-.settingsButton:hover, .aiButton:hover, .infoButton:hover, .aboutBeta:hover {cursor: pointer;}
+.settingsButton:hover, .infoButton:hover, .aboutBeta:hover {cursor: pointer;}
 
 .closeButton, .btn{
     display: inline-flex;
@@ -353,8 +345,8 @@ html {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    background: #009dff;
-    color: white;
+    background: var(--button-foreground);
+    color: var(--color);
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
@@ -362,7 +354,6 @@ html {
 }
 
 .cleanSection input {width: 70%;}
-
 .cleanSection button {width: 30%;}
 
 .nameTaskUser{
@@ -381,8 +372,8 @@ html {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background: #3d3d3d;
-    color: #fff;
+    background: var(--input-background);
+    color: var(--color);
     font-size: 15px;
     font-family: 'Switzer', sans-serif;
 }
@@ -408,10 +399,14 @@ select{
     width: 72%;
     height: 40px;
     font-family: 'Switzer', sans-serif;
-    background-color: #3d3d3d;
-    color: #fff;
+    background-color: var(--input-background);
+    color: var(--color);
     border: none;
     border-radius: 5px;
+}
+
+.appTheme{
+    width: 100%;
 }
 
 select:focus{
@@ -421,7 +416,7 @@ select:focus{
 
 option{
     font-family: 'Switzer', sans-serif;
-    color: #009dff;
+    color: var(--color);
 }
 
 /* Sidebar AI Chat */
@@ -627,7 +622,7 @@ option{
 
 #categorySelection{
     background-color: #007acc;
-    color: white;
+    color: var(--color);
     outline: none;
     border-radius: 25px;
     text-decoration: none;
@@ -642,7 +637,7 @@ option{
 
 #categorySelection.out{
     background-color: #cc2200;
-    color: white;
+    color: var(--color);
     outline: none;
     border-radius: 25px;
     text-decoration: none;
