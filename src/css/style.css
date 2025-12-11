@@ -419,7 +419,10 @@ select:focus{
     animation: animationInput 2s ease-in-out infinite;
 }
 
-option{font-family: 'Switzer', sans-serif; color: #009dff;;}
+option{
+    font-family: 'Switzer', sans-serif;
+    color: #009dff;
+}
 
 /* Sidebar AI Chat */
 .sidebar-ai {
@@ -571,7 +574,9 @@ option{font-family: 'Switzer', sans-serif; color: #009dff;;}
 
 #tipImage{padding-right: 5px;}
 
-.feedbackSelection{display: none;}
+.feedbackSelection{
+    display: none;
+}
 
 #bug, #feedbackBtn{
     cursor: pointer;
