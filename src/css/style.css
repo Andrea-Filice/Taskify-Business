@@ -5,6 +5,7 @@
     --button-foreground: #009dff;
     --input-foreground: #141414;
     --maintenanceOutColor: #cc2200;
+    --canvas-background: #232323;
 }
 
 html[data-theme="light"]{
@@ -14,6 +15,7 @@ html[data-theme="light"]{
     --button-foreground: #009dff;
     --input-foreground: #e2e2e2;
     --maintenanceOutColor: #cc2200;
+    --canvas-background: #d6d1d1;
 }
 
 html[data-theme="light"] img{filter: invert(1) brightness(0.8) contrast(1);}
@@ -393,7 +395,10 @@ html {
     font-family: 'Switzer', sans-serif;
 }
 
-canvas{font-family: 'General Sans', sans-serif;}
+canvas{
+    font-family: 'General Sans', sans-serif;
+    background: var(--canvas-background);
+}
 
 select{
     width: 72%;

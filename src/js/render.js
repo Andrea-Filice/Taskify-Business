@@ -80,6 +80,10 @@ window.todoManager = new class TodoManager {
     const categoryID = document.getElementById('categoryClean');
     const newCompanyName = document.getElementById('nameCompany');
     const loaded = ipcRenderer.sendSync('load-todos') || {};
+    //APPEARANCE SECTION
+    const htmlElement = document.documentElement;
+    const themeDropdown = document.getElementById("themeDropDown");
+
 
     this.todos = {
       softwareComponents: loaded.softwareComponents || [],
@@ -135,6 +139,10 @@ window.todoManager = new class TodoManager {
             .addEventListener('change', () => this.updateUI())
     document.getElementById('colorTaskCompleted')
             .addEventListener('change', () => this.updateUI())
+    themeDropdown.addEventListener("change", () =>{
+            htmlElement.setAttribute('data-theme', themeDropdown.value);
+            this.updateUI();
+          })
     this.updateUI();
   }
 
@@ -344,7 +352,7 @@ window.todoManager = new class TodoManager {
           plugins: {
             legend: {
               labels: {
-                color: '#fff',
+                color: getCSSRule("--color"),
                 font: {
                   family: 'Manrope, Sans Serif',
                   size: 16
@@ -372,7 +380,7 @@ window.todoManager = new class TodoManager {
           scales: {
             x: {
               ticks: {
-                color: '#fff',
+                color: getCSSRule("--color"),
                 font: {
                   family: 'Manrope, Sans Serif',
                   size: 12
@@ -381,7 +389,7 @@ window.todoManager = new class TodoManager {
             },
             y: {
               ticks: {
-                color: '#fff',
+                color: getCSSRule("--color"),
                 font: {
                   family: 'Manrope, Sans Serif',
                   size: 10
@@ -395,6 +403,9 @@ window.todoManager = new class TodoManager {
       });
     } else {
       tasksChart.data.labels = chartData.labels;
+      tasksChart.options.plugins.legend.labels.color = getCSSRule('--color');
+      tasksChart.options.scales.x.ticks.color = getCSSRule('--color');
+      tasksChart.options.scales.y.ticks.color = getCSSRule('--color');
       tasksChart.data.datasets[0].data = chartData.created;
       tasksChart.data.datasets[1].data = chartData.completed;
       tasksChart.data.datasets[0].borderColor = colorTCreated;
@@ -605,6 +616,12 @@ window.todoManager = new class TodoManager {
   }
 }();
 
+//*GET CSS RULES
+function getCSSRule(varName){
+  console.log(getComputedStyle(document.documentElement).getPropertyValue(varName))
+  return getComputedStyle(document.documentElement).getPropertyValue(varName);
+}
+
 //* OPEN INFO AND SETTINGS
 const buttons =[
   info = document.getElementById('ibtn'),
@@ -719,19 +736,19 @@ function CallAIFunction(input){
           window.todoManager.addToDo(task.name, task.prev_version, task.next_version, task.category);
         });
       } else if (result.name && !Object.prototype.hasOwnProperty.call(result, 'modify') && !Object.prototype.hasOwnProperty.call(result, 'type')) {
-        appendMsg(`Task Created! ${result.name} (${result.prev_version} → ${result.next_version})`, "AI");
-        window.todoManager.addToDo(result.name, result.prev_version, result.next_version, result.category);
+          appendMsg(`Task Created! ${result.name} (${result.prev_version} → ${result.next_version})`, "AI");
+          window.todoManager.addToDo(result.name, result.prev_version, result.next_version, result.category);
       } else if(Object.prototype.hasOwnProperty.call(result, 'modify')){
-        const todos = window.todoManager.todos[result.category];
-        const index = todos.findIndex(t => t.text === result.name);
+          const todos = window.todoManager.todos[result.category];
+          const index = todos.findIndex(t => t.text === result.name);
 
-        if(index !== -1){
-          window.todoManager.modifyTask(result.category, index);
-          appendMsg(`Editing task: ${result.name}`, "AI");
+          if(index !== -1){
+            window.todoManager.modifyTask(result.category, index);
+            appendMsg(`Editing task: ${result.name}`, "AI");
+          }
+          else
+            appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
         }
-        else
-          appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
-      }
       else if (result.name && Object.prototype.hasOwnProperty.call(result, 'type')){
         const todos = window.todoManager.todos[result.category];
         const index = todos.findIndex(t => t.text === result.name);
@@ -811,14 +828,6 @@ function clearChat() {
   const chatHistory = document.querySelector('.ai-chat-history');
   chatHistory.innerHTML = (chatHistory) ? '' : chatHistory.innerHTML;
 }
-
-//APPEARANCE SECTION
-const htmlElement = document.documentElement;
-const themeDropdown = document.getElementById("themeDropDown");
-
-themeDropdown.addEventListener("change", () =>{
-  htmlElement.setAttribute('data-theme', themeDropdown.value);
-})
 
 //WEB REFERENCES SECTION
 document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});
