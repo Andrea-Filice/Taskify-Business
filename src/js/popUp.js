@@ -73,9 +73,9 @@ function Quit(){
 
 //* FUNCTION FOR CHECK ALL CONDITIONS WITH UNSAVED CHANGES.
 function getUnsavedChanges(){
-  return originalTaskName != document.getElementById('inputName').value.trim ||
-         originalNewerVersion != document.getElementById('inputNV').value ||
-         originalPreviousVersion != document.getElementById('inputPV').value
+  return originalTaskName != document.getElementById('inputName').value.trim() ||
+         originalNewerVersion != document.getElementById('inputNV').value.trim() ||
+         originalPreviousVersion != document.getElementById('inputPV').value.trim()
 }
 
 function SetCharacterLimit(value){
