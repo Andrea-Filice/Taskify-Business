@@ -5,7 +5,7 @@ const Chart = require('chart.js/auto').Chart;
 
 //VARIABLES
 let taskCreated = 0, taskCompleted = 0;
-let autoClose = false, messageSend = false, characterLimit = true;
+let autoClose = false, characterLimit = true;
 let companyName = undefined;
 let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
 let theme = localStorage.getItem("theme") || "dark";
