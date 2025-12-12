@@ -25,7 +25,7 @@ function getCurrentVersion(){
           });
 
   //* TIMEOUT FOR AVOID DATA CONFLICTS OR UNDEFINED VALUES.
-  setTimeout(checkForUpdates, 1100);
+  setTimeout(checkForUpdates, 2000);
 }
 
 function checkForUpdates(){
@@ -59,8 +59,11 @@ function checkForUpdates(){
         console.log("[ℹ️ INFO] Action cancelled by the user.")
     })
   }
-  else
-    document.getElementById("updateIcon").style.display = "none";
+  else{
+    if(document.getElementById("updateIcon")){
+       document.getElementById("updateIcon").style.display = "none";
+    }
+  }
 }
 
 //START CHECKING FILES
