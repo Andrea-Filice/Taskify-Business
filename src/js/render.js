@@ -8,6 +8,8 @@ let taskCreated = 0, taskCompleted = 0;
 let autoClose = false, messageSend = false, characterLimit = true;
 let companyName = undefined;
 let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
+let theme = localStorage.getItem("theme") || "dark";
+const themeDropdown = document.getElementById("themeDropDown");
 
 const DEBUG = ipcRenderer.sendSync('checkForDebug');
 
@@ -80,10 +82,7 @@ window.todoManager = new class TodoManager {
     const categoryID = document.getElementById('categoryClean');
     const newCompanyName = document.getElementById('nameCompany');
     const loaded = ipcRenderer.sendSync('load-todos') || {};
-    //APPEARANCE SECTION
     const htmlElement = document.documentElement;
-    const themeDropdown = document.getElementById("themeDropDown");
-
 
     this.todos = {
       softwareComponents: loaded.softwareComponents || [],
@@ -95,6 +94,10 @@ window.todoManager = new class TodoManager {
     autoClose = loaded.autoClose || false;
     companyName = loaded.companyName || undefined
     characterLimit = typeof loaded.characterLimit === 'boolean' ? loaded.characterLimit : true;
+
+    //*THEME SETTING
+    themeDropdown.value = theme;
+    htmlElement.setAttribute('data-theme', themeDropdown.value);
 
     //SET DEFAULT BOOLEAN VALUES
     this.inputCharactersUpdate(characterLimit);
@@ -142,7 +145,7 @@ window.todoManager = new class TodoManager {
     themeDropdown.addEventListener("change", () =>{
             htmlElement.setAttribute('data-theme', themeDropdown.value);
             this.updateUI();
-          })
+    })
     this.updateUI();
   }
 
@@ -318,7 +321,10 @@ window.todoManager = new class TodoManager {
     taskCreatedColor = document.getElementById('colorTaskCreated').value;
     taskCompletedColor = document.getElementById('colorTaskCompleted').value;
 
+    //*SAVE DATAS
     ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+    localStorage.setItem("theme", themeDropdown.value);
+
     document.title = `Taskify Dashboard - ${companyName}`;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
@@ -617,10 +623,7 @@ window.todoManager = new class TodoManager {
 }();
 
 //*GET CSS RULES
-function getCSSRule(varName){
-  console.log(getComputedStyle(document.documentElement).getPropertyValue(varName))
-  return getComputedStyle(document.documentElement).getPropertyValue(varName);
-}
+function getCSSRule(varName){return getComputedStyle(document.documentElement).getPropertyValue(varName);}
 
 //* OPEN INFO AND SETTINGS
 const buttons =[
@@ -828,6 +831,9 @@ function clearChat() {
   const chatHistory = document.querySelector('.ai-chat-history');
   chatHistory.innerHTML = (chatHistory) ? '' : chatHistory.innerHTML;
 }
+
+//ABOUT PANEL
+function ShowInfoPanel(textToShow){ipcRenderer.invoke('show-alert', textToShow)}
 
 //WEB REFERENCES SECTION
 document.getElementById('repoGitBtn').addEventListener('click', () =>{shell.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});

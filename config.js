@@ -22,8 +22,7 @@ let todos = {
   chartData: { labels: [], created: [], completed: [] },
   taskCompletedColor : "green",
   taskCreatedColor: "blue",
-  characterLimit: true,
-  theme: "dark"
+  characterLimit: true
 }
 
 function loadTodosFromDisk() {
@@ -39,7 +38,6 @@ function loadTodosFromDisk() {
       todos.taskCompletedColor = todos.taskCompletedColor || "green"
       todos.taskCreatedColor = todos.taskCreatedColor || "blue"
       todos.characterLimit = typeof todos.characterLimit === 'boolean' ? todos.characterLimit : true;
-      todos.theme = todos.theme || "dark"
     }
   } catch (err) {
       console.error(err)
@@ -53,8 +51,7 @@ function loadTodosFromDisk() {
         chartData: { labels: [], created: [], completed: [] },
         taskCompletedColor : "green",
         taskCreatedColor: "blue",
-        characterLimit: true,
-        theme: "dark"
+        characterLimit: true
       }
   }
 }
