@@ -1,20 +1,37 @@
+:root{
+  --background: #1a1a1a;
+  --color: #fff;
+  --input-background: #3d3d3d;
+  --input-focused: #292929;
+}
+
+html[data-theme="light"]{
+  --background: #ffffff;
+  --color: #000000;
+  --input-background: #adadad;
+  --input-focused: #b6b6b6;
+}
+
 body{
   margin: 0;
   padding: 20px;
-  font-family: 'Supreme', sans-serif;
-  background: #1a1a1a;
-  color: #fff;
+  font-family: 'Switzer', sans-serif;
+  background: var(--background);
+  color: var(--color);
   overflow: hidden;
 }
+
+html[data-theme="light"] img{filter: invert(1) brightness(0.8) contrast(1);}
+html[data-theme="dark"] img{filter: none;}
 
 input {
   padding: 10px 12px;
   border: none;
   border-radius: 5px;
-  background: #3d3d3d;
-  color: #fff;
+  background: var(--input-background);
+  color: var(--color);
   font-size: 15px;
-  font-family: 'Supreme', sans-serif;
+  font-family: 'Switzer', sans-serif;
   flex: 1; 
 }
 
@@ -23,7 +40,7 @@ input:focus {
   animation: animationInput 2s ease-in-out infinite;
   border: 2.5px solid transparent;
   background: 
-      linear-gradient(#292929, #292929) padding-box,
+      linear-gradient(var(--input-focused), var(--input-focused)) padding-box,
       linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400) border-box;
   background-origin: border-box;
   background-clip: padding-box, border-box;
@@ -37,11 +54,11 @@ button {
   padding: 0 15px;
   border: none;
   border-radius: 5px;
-  color: white;
+  color: var(--color);
   cursor: pointer;
   font-size: 18px;
   width: 10%;
-  font-family: 'Supreme', sans-serif;
+  font-family: 'Switzer', sans-serif;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -175,3 +192,5 @@ button {
     box-shadow: 0 0 8px rgba(102, 175, 233, 0);
   }
 }
+
+label{color: var(--color);}
