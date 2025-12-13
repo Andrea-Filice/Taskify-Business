@@ -50,9 +50,10 @@ function checkForUpdates(){
         console.log("[ℹ️ INFO] DOWNLOAD LINK: " + url + ".")
         if(process.platform != "linux")
           ipcRenderer.invoke('downloadProgress', url, latestVersion)
-        else{ //! DISABLE THE Taskify Updater WITH LINUX.
+        else{ 
+          //! DISABLE THE Taskify Updater WITH LINUX.
           shell.openExternal(url);
-          ipcRenderer.invoke('show-alert', "It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.", "Downloaded in Background")
+          ipcRenderer.invoke('show-alert', "It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.", "Downloading in Background")
         }
       }
       else
@@ -60,9 +61,9 @@ function checkForUpdates(){
     })
   }
   else{
-    if(document.getElementById("updateIcon")){
-       document.getElementById("updateIcon").style.display = "none";
-    }
+    const updateIcon = document.getElementById("updateIcon");
+    if(updateIcon)
+       updateIcon.style.display = "none";
   }
 }
 

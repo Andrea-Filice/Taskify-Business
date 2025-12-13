@@ -21,6 +21,7 @@ body{background-color: var(--background);}
   background: var(--background-loader);
   overflow: hidden;
 }
+
 .loader::after {
   content: '';  
   box-sizing: border-box;

@@ -862,8 +862,8 @@ document.getElementById("feedbackBtn").addEventListener('click', () =>{shell.ope
 document.getElementById('contactUs').addEventListener('click', () =>{shell.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
 
 //ON LOAD
-document.body.onload = () =>{
+window.addEventListener("load", () => {
   console.log("[ℹ️ INFO] core platform: " + process.platform)
   fetchVersion();
   fetchBuildNumber();
-};
+})
