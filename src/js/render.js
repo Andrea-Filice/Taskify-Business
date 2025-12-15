@@ -156,7 +156,7 @@ window.todoManager = new class TodoManager {
     const messageSide = inputSide.value.trim();
 
     if((!input && !inputSide) || (!message && !messageSide) ){
-      ipcRenderer.invoke('show-alert', "Invalid message. You cannot send empty messages.", "Invalid AI Message")
+      ipcRenderer.invoke('show-alert', "Invalid message. You cannot send empty messages.", "Invalid AI Message");
       return;
     }
 
