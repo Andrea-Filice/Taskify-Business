@@ -156,7 +156,7 @@ input::after{
     animation: animInputOut 1s ease-in-out forwards;
 }
 
-button:focus:not(.infoButton):not(.settingsButton):not(#resetBtn):not(.closeButton):not(#employeeBtn){
+button:focus:not(.infoButton):not(.settingsButton):not(#resetBtn):not(.closeButton):not(#employeeBtn):not(#closeEmployeeBtn){
     outline: none;
     animation: animButtonIn 2s ease-in-out infinite;
 }
@@ -410,9 +410,7 @@ select{
     border-radius: 5px;
 }
 
-.appTheme{
-    width: 100%;
-}
+.appTheme{width: 100%;}
 
 select:focus{
     outline: none;
