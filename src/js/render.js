@@ -5,9 +5,11 @@ const Chart = require('chart.js/auto').Chart;
 
 //VARIABLES
 let taskCreated = 0, taskCompleted = 0;
-let autoClose = false, joinBeta = true, messageSend = false, characterLimit = true;
+let autoClose = false, characterLimit = true;
 let companyName = undefined;
 let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
+let theme = localStorage.getItem("theme") || "dark";
+const themeDropdown = document.getElementById("themeDropDown");
 
 const DEBUG = ipcRenderer.sendSync('checkForDebug');
 
@@ -24,6 +26,54 @@ let chartData = loaded.chartData || {
   completed: Array(7).fill(0)
 };
 
+///MARK: UI ANIMATIONS
+//*CHANGE THE CATEGORY
+let currentChoosedCategory = 'softwareComponents';
+const catButton = document.getElementById("categorySelection");
+
+catButton.addEventListener('click', ()=>{
+  //*RESET PREVIOUS ANIMATION
+  catButton.style.animation = "none";
+  void catButton.offsetWidth;
+
+  //*SELECT THE CATEGORY
+  currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
+  catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? "Maintenance Tasks" : "Out of Maintenance";
+  catButton.classList.toggle("out");
+  console.log(currentChoosedCategory)
+
+  //*RESTART THE ANIMATION
+  catButton.style.animation = "animClickedButton ease-in-out 500ms";
+})
+
+//*ADD THE EMPLOYEE NAME
+const buttonAddEmployee = document.getElementById("employeeBtn");
+const closeEmployeeBtn = document.getElementById("closeEmployeeBtn");
+const versionsLayer = document.getElementById("versions");
+const employeeLayer = document.getElementById("employeeIn");
+
+buttonAddEmployee.addEventListener("click", () =>{
+  employeeLayer.style.display = "block";
+
+  versionsLayer.style.animation = "none";
+  void versionsLayer.offsetWidth;
+  versionsLayer.style.animation = "animCompareOut 1s ease-in-out forwards";
+
+  employeeLayer.style.animation = "none";
+  void employeeLayer.offsetWidth;
+  employeeLayer.style.animation = "animCompareIn 1s ease-in-out forwards";
+});
+
+closeEmployeeBtn.addEventListener("click", ()=>{
+  employeeLayer.style.animation = "none";
+  void employeeLayer.offsetWidth;
+  employeeLayer.style.animation = "animCompareOut 1s ease-in-out forwards";
+
+  versionsLayer.style.animation = "none";
+  void versionsLayer.offsetWidth;
+  versionsLayer.style.animation = "animCompareIn 1s ease-in-out forwards";
+})
+
 let tasksChart = null;
 
 ///MARK: TASK MANAGEMENT SECTION
@@ -32,6 +82,7 @@ window.todoManager = new class TodoManager {
     const categoryID = document.getElementById('categoryClean');
     const newCompanyName = document.getElementById('nameCompany');
     const loaded = ipcRenderer.sendSync('load-todos') || {};
+    const htmlElement = document.documentElement;
 
     this.todos = {
       softwareComponents: loaded.softwareComponents || [],
@@ -41,12 +92,14 @@ window.todoManager = new class TodoManager {
     taskCreated = loaded.taskCreated || 0;
     taskCompleted = loaded.taskCompleted || 0;
     autoClose = loaded.autoClose || false;
-    joinBeta = typeof loaded.joinBeta === "boolean" ? loaded.joinBeta : true;
     companyName = loaded.companyName || undefined
     characterLimit = typeof loaded.characterLimit === 'boolean' ? loaded.characterLimit : true;
 
+    //*THEME SETTING
+    themeDropdown.value = theme;
+    htmlElement.setAttribute('data-theme', themeDropdown.value);
+
     //SET DEFAULT BOOLEAN VALUES
-    this.joinBetaClicked(true);
     this.inputCharactersUpdate(characterLimit);
 
     document.getElementById('colorTaskCreated').value = loaded.taskCompletedColor || "blue";
@@ -54,26 +107,23 @@ window.todoManager = new class TodoManager {
 
     if(companyName === undefined)
       window.location.href = "createCompany.html";
-    else
+    else{
       document.getElementById("app").style.animation = "FadeIn 1s forwards";
+      document.getElementById("AppTasks").style.animation = "FadeIn 1s forwards";
+      document.getElementById("mainSection").style.animation = "FadeIn 1s forwards";
+    }
     
     //EVENT LISTENERS
-    document.getElementById('softwareAddBtn')
-            .addEventListener('click', () => this.addTodoHandler('softwareComponents'));
-    document.getElementById('softwareInput')
-            .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
-    document.getElementById('userTypeIn')
-            .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
-    document.getElementById('software')
-            .addEventListener('keypress', e => this.handleEnter(e, 'softwareComponents'));
-    document.getElementById('fuoriInput')
-            .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
-    document.getElementById('out')
-            .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
-    document.getElementById('userTypeOut')
-            .addEventListener('keypress', e => this.handleEnter(e, 'fuoriManutenzione'));
-    document.getElementById('fuoriAddBtn')
-            .addEventListener('click', () => this.addTodoHandler('fuoriManutenzione'));
+    document.getElementById('aiInput')
+            .addEventListener('keypress', e => this.handleEnter(e, currentChoosedCategory));
+    document.getElementById('prevVersion')
+            .addEventListener('keypress', e => this.handleEnter(e, currentChoosedCategory));
+    document.getElementById('nextVersion')
+            .addEventListener('keypress', e => this.handleEnter(e, currentChoosedCategory));
+    document.getElementById('employeeInput')
+            .addEventListener('keypress', e => this.handleEnter(e, currentChoosedCategory));
+    document.getElementById("addTask")
+            .addEventListener('click', ()=> this.addTodoHandler(currentChoosedCategory))
     document.getElementById('resetBtn')
             .addEventListener('click', () => this.resetData());
     document.getElementById('restartBtn')
@@ -84,8 +134,6 @@ window.todoManager = new class TodoManager {
             .addEventListener('click', () => this.changeCompanyName(newCompanyName.value.trim()));
     document.getElementById('checkbox')
             .addEventListener('click', () => this.checkBox());
-    document.getElementById('joinBeta')
-            .addEventListener('click', () => this.joinBetaClicked());
     document.getElementById('characterLimit')
             .addEventListener('change', () => this.setCharacterLimit())
     document.getElementById('aiSendBtn')
@@ -94,20 +142,32 @@ window.todoManager = new class TodoManager {
             .addEventListener('change', () => this.updateUI())
     document.getElementById('colorTaskCompleted')
             .addEventListener('change', () => this.updateUI())
+    themeDropdown.addEventListener("change", () =>{
+            htmlElement.setAttribute('data-theme', themeDropdown.value);
+            this.updateUI();
+    })
     this.updateUI();
   }
 
   sendAIMessage(){
     const input = document.getElementById('aiInput');
+    const inputSide = document.getElementById('aiInputSide');
     const message = input.value.trim();
-    if(!input || !message){
+    const messageSide = inputSide.value.trim();
+
+    if((!input && !inputSide) || (!message && !messageSide) ){
       ipcRenderer.invoke('show-alert', "Invalid message. You cannot send empty messages.", "Invalid AI Message")
       return;
     }
 
-    appendMsg(message, "you");
+    sidebar.classList.add('open');
+    setTimeout(() =>{aiInput.focus();}, 400);
+    const messageToSend = (!message) ? messageSide : message;
+
+    appendMsg(messageToSend, "you");
     input.value = '';
-    CallAIFunction(message);
+    inputSide.value = '';
+    CallAIFunction(messageToSend);
   }
 
   addToDo(taskName, previousVer, nextVer, category){
@@ -120,20 +180,15 @@ window.todoManager = new class TodoManager {
     })
 
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
     this.updateUI();
   }
 
   addTodoHandler(category) {
-    const inputId = category === 'softwareComponents' ? 'softwareInput' : 'fuoriInput';
-    const prevVersionId = category === 'softwareComponents' ? 'softwarePrevVersion' : 'fuoriPrevVersion';
-    const nextVersionId = category === 'softwareComponents' ? 'softwareNextVersion' : 'fuoriNextVersion';
-    const employeeId = category === 'softwareComponents' ? 'userTypeIn': 'userTypeOut';
-
-    const input = document.getElementById(inputId);
-    const prevVersionInput = document.getElementById(prevVersionId);
-    const nextVersionInput = document.getElementById(nextVersionId);
-    const employeeField = document.getElementById(employeeId);
+    const input = document.getElementById("aiInput");
+    const prevVersionInput = document.getElementById("prevVersion");
+    const nextVersionInput = document.getElementById("nextVersion");
+    const employeeField = document.getElementById("employeeInput");
 
     const text = input.value.trim();
     const prevVersion = prevVersionInput.value.trim();
@@ -151,6 +206,7 @@ window.todoManager = new class TodoManager {
     }
     
     if (!employeeName) employeeName = "You";
+
     this.todos[category].push({
       text,
       prevVersion,
@@ -165,17 +221,29 @@ window.todoManager = new class TodoManager {
     employeeField.value = '';
 
     taskCreated++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
     updateDailyData();
     this.updateUI();
   }
 
-  handleEnter(e, category) {if (e.key === 'Enter') this.addTodoHandler(category);}
+  handleEnter(e, category) {
+    const input = document.getElementById('aiInput');
+    const aiMessages = ["/create", "/help", "/edit", "hi", "hello", "/clear", "/cls", "/ai"]
+    var regex = new RegExp(`^(${aiMessages.join("|")})$`, "i");
+    let containsAIMessages =  regex.test(input.value.trim());
+    console.log(regex.test(input.value))
+    console.log(containsAIMessages)
+
+    if(containsAIMessages && e.key === 'Enter')
+      this.sendAIMessage();
+    else if(!containsAIMessages && e.key === 'Enter')
+      this.addTodoHandler(category);
+  }
 
   removeTodo(category, index) {
     this.todos[category].splice(index, 1);
     taskCompleted++;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, joinBeta, taskCompletedColor, taskCreatedColor, characterLimit });
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit });
     updateDailyData(); 
     this.updateUI();
   }
@@ -184,7 +252,6 @@ window.todoManager = new class TodoManager {
     const taskCreatedEl = document.getElementById('taskCreated');
     const taskCompletedEl = document.getElementById('taskCompleted');
     const autoCloseCheckbox = document.getElementById('checkbox');
-    const joinBetaCheckBox = document.getElementById('joinBeta');
     const characterLimitCheckbox = document.getElementById('characterLimit');
     const dropDowntaskCreated = document.getElementById('colorTaskCreated').value;
     const dropDowntaskCompleted = document.getElementById('colorTaskCompleted').value;
@@ -194,7 +261,6 @@ window.todoManager = new class TodoManager {
     taskCreatedEl.innerText = `${taskCreated}`;
     taskCompletedEl.innerText = `${taskCompleted}`;
     autoCloseCheckbox.checked = autoClose;
-    joinBetaCheckBox.checked = joinBeta;
     characterLimitCheckbox.checked = characterLimit;
 
     //* COLOR SELECTION
@@ -255,7 +321,10 @@ window.todoManager = new class TodoManager {
     taskCreatedColor = document.getElementById('colorTaskCreated').value;
     taskCompletedColor = document.getElementById('colorTaskCompleted').value;
 
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+    //*SAVE DATAS
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+    localStorage.setItem("theme", themeDropdown.value);
+
     document.title = `Taskify Dashboard - ${companyName}`;
     this.renderList('softwareComponents', 'softwareList');
     this.renderList('fuoriManutenzione', 'fuoriList');
@@ -289,7 +358,7 @@ window.todoManager = new class TodoManager {
           plugins: {
             legend: {
               labels: {
-                color: '#fff',
+                color: getCSSRule("--color"),
                 font: {
                   family: 'Manrope, Sans Serif',
                   size: 16
@@ -317,7 +386,7 @@ window.todoManager = new class TodoManager {
           scales: {
             x: {
               ticks: {
-                color: '#fff',
+                color: getCSSRule("--color"),
                 font: {
                   family: 'Manrope, Sans Serif',
                   size: 12
@@ -326,7 +395,7 @@ window.todoManager = new class TodoManager {
             },
             y: {
               ticks: {
-                color: '#fff',
+                color: getCSSRule("--color"),
                 font: {
                   family: 'Manrope, Sans Serif',
                   size: 10
@@ -340,6 +409,9 @@ window.todoManager = new class TodoManager {
       });
     } else {
       tasksChart.data.labels = chartData.labels;
+      tasksChart.options.plugins.legend.labels.color = getCSSRule('--color');
+      tasksChart.options.scales.x.ticks.color = getCSSRule('--color');
+      tasksChart.options.scales.y.ticks.color = getCSSRule('--color');
       tasksChart.data.datasets[0].data = chartData.created;
       tasksChart.data.datasets[1].data = chartData.completed;
       tasksChart.data.datasets[0].borderColor = colorTCreated;
@@ -351,43 +423,52 @@ window.todoManager = new class TodoManager {
   }
 
   renderList(category, listId) {
+    const numberToUpdateID = (listId === "softwareList") ? "maintenanceNumber" : "outNumber";
+    const numberToUpdate = document.getElementById(numberToUpdateID);
     const list = document.getElementById(listId);
     list.innerHTML = '';
 
-    this.todos[category].forEach((todo, idx) => {
-        const li = document.createElement('li');
-        const employee = todo.userName;
-        let versionHtml = '';
-        if (todo.prevVersion || todo.nextVersion) {
-            versionHtml = `
-                <small>
-                    ${todo.prevVersion ? `<p class="versionPrev">${todo.prevVersion}</p>` : ''}
-                    ${todo.prevVersion && todo.nextVersion ? ' > ' : ''}
-                    ${todo.nextVersion ? `<p class="versionNext">${todo.nextVersion}</p>` : ''}
-                </small><br>
-            `;
-        }
-        li.innerHTML = `
-            <span><b>${todo.text}</b></span>
-            <div>
-                ${versionHtml}
-                <small>Assigned to: <i>${employee}</i></small>
-                <div style="display: flex; gap: 5px; margin-top: 0px;">
-                    <button class="delete-btn" style="width: 100px; background-color: white;" title="Mark as Completed">
-                      <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
-                    </button>
-                    <button class="edit-btn" id="editBtn" title="Edit Task">
-                      <img src="assets/_edit.png" draggable="false" width="20px" height="20px">
-                    </button>
-                </div>
-            </div>
-        `;
-        li.querySelector('.delete-btn')
-          .addEventListener('click', () => this.removeTodo(category, idx));
-        li.querySelector('.edit-btn')
-          .addEventListener('click',() => this.modifyTask(category, idx));
-        list.appendChild(li);
-    });
+    let localArray = this.todos[category]
+    numberToUpdate.innerHTML = `&nbsp;&nbsp;${localArray.length}&nbsp;&nbsp;`;
+
+    if(localArray.length === 0)
+      list.innerHTML = 'No Tasks in this Category.';
+    else{
+      this.todos[category].forEach((todo, idx) => {
+          const li = document.createElement('li');
+          const employee = todo.userName;
+          let versionHtml = '';
+          if (todo.prevVersion || todo.nextVersion) {
+              versionHtml = `
+                  <small>
+                      ${todo.prevVersion ? `<p class="versionPrev">${todo.prevVersion}</p>` : ''}
+                      ${todo.prevVersion && todo.nextVersion ? ' > ' : ''}
+                      ${todo.nextVersion ? `<p class="versionNext">${todo.nextVersion}</p>` : ''}
+                  </small><br>
+              `;
+          }
+          li.innerHTML = `
+              <span><b>${todo.text}</b></span>
+              <div>
+                  ${versionHtml}
+                  <small>Assigned to: <i>${employee}</i></small>
+                  <div style="display: flex; gap: 5px; margin-top: 0px;">
+                      <button class="delete-btn" style="width: 100px; background-color: white;" title="Mark as Completed">
+                        <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
+                      </button>
+                      <button class="edit-btn" id="editBtn" title="Edit Task">
+                        <img src="assets/_edit.png" draggable="false" width="20px" height="20px">
+                      </button>
+                  </div>
+              </div>
+          `;
+          li.querySelector('.delete-btn')
+            .addEventListener('click', () => this.removeTodo(category, idx));
+          li.querySelector('.edit-btn')
+            .addEventListener('click',() => this.modifyTask(category, idx));
+          list.appendChild(li);
+      });
+    }
   }
 
   resetData() {
@@ -400,7 +481,6 @@ window.todoManager = new class TodoManager {
           };
           characterLimit = true;
           autoClose = false;
-          joinBeta = true;
           taskCreated = 0;
           taskCompleted = 0;
           companyName = "";
@@ -413,7 +493,7 @@ window.todoManager = new class TodoManager {
             created: Array(7).fill(0),
             completed: Array(7).fill(0)
           };
-          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+          ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
           this.updateUI();
           ipcRenderer.invoke('show-alert', "Data successfully reset, the app will be restarted soon.")
           .then(() => {window.location.href = "boot.html";});
@@ -442,7 +522,7 @@ window.todoManager = new class TodoManager {
       taskCompleted += list.length;
 
       this.todos[categoryKey] = [];
-      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+      ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
       this.updateUI();
       ipcRenderer.invoke('show-alert', "Tasks marked as 'Completed'!");
     });
@@ -454,21 +534,14 @@ window.todoManager = new class TodoManager {
       window.addEventListener('scroll', this.handleScroll);
     else
       window.removeEventListener('scroll', this.handleScroll);
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
-  }
-
-  joinBetaClicked(updateUI){
-    if(!updateUI)
-      joinBeta = !joinBeta;
-    showBetaOptions(joinBeta);
-    this.updateUI();
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
   }
   
   handleScroll() {
     if (window.scrollY === 0) {
+      document.getElementById('AppTasks').style.display = "block";
       document.getElementById('infoBox').style.display = "none";
       toggleButtons(true);
-      showBetaOptions(joinBeta);
     }
   }
 
@@ -481,7 +554,7 @@ window.todoManager = new class TodoManager {
       .then(userResponse => {
         if (!userResponse) return;
         companyName = newName;
-        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+        ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
         document.getElementById('nameCompany').value = '';
         ipcRenderer.invoke('show-alert', "Company name changed successfully!");
         this.updateUI();
@@ -545,30 +618,38 @@ window.todoManager = new class TodoManager {
           e.setAttribute('maxlength', 20);
       });
     }
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
   }
 }();
+
+//*GET CSS RULES
+function getCSSRule(varName){return getComputedStyle(document.documentElement).getPropertyValue(varName);}
 
 //* OPEN INFO AND SETTINGS
 const buttons =[
   info = document.getElementById('ibtn'),
-  settings = document.getElementById('sbtn'),
-  ai = document.getElementById('openSidebarBtn')
+  settings = document.getElementById('sbtn')
 ];
 
 function openInfoBox(){
+  document.getElementById('AppTasks').style.display = "none";
+
   document.getElementById('infoBox').style.display = 'block';
   document.getElementById('infoBox').scrollIntoView({ behavior: 'smooth' });
   toggleButtons(false);
 }
 
 function closeInfoBox(){
-  document.getElementById('app').scrollIntoView({ behavior: 'smooth' });
+  document.getElementById('AppTasks').style.display = "block";
+
+  document.getElementById('softwareList').scrollIntoView({ behavior: 'smooth'});
   document.getElementById('infoBox').style.display = 'none';
   toggleButtons(true);
 }
 
 function openSettings(){
+  document.getElementById('AppTasks').style.display = "none";
+
   document.getElementById('infoBox').style.display = 'block';
   document.getElementById('settings').scrollIntoView({behavior: 'smooth'});
   toggleButtons(false);
@@ -626,14 +707,14 @@ ipcRenderer.on('task-modified', (event, category, index, taskData) => {
     window.todoManager.todos[category][index].text = taskData.text;
     window.todoManager.todos[category][index].prevVersion = taskData.prevVersion;
     window.todoManager.todos[category][index].nextVersion = taskData.nextVersion;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
     window.todoManager.updateUI();
 });
 
 ipcRenderer.on('delete-task', (event, category, index) => {
     window.todoManager.todos[category].splice(index, 1);
     taskCreated--;
-    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, joinBeta, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+    ipcRenderer.send('save-todos', { ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
     window.todoManager.updateUI();
 });
 
@@ -658,19 +739,19 @@ function CallAIFunction(input){
           window.todoManager.addToDo(task.name, task.prev_version, task.next_version, task.category);
         });
       } else if (result.name && !Object.prototype.hasOwnProperty.call(result, 'modify') && !Object.prototype.hasOwnProperty.call(result, 'type')) {
-        appendMsg(`Task Created! ${result.name} (${result.prev_version} → ${result.next_version})`, "AI");
-        window.todoManager.addToDo(result.name, result.prev_version, result.next_version, result.category);
+          appendMsg(`Task Created! ${result.name} (${result.prev_version} → ${result.next_version})`, "AI");
+          window.todoManager.addToDo(result.name, result.prev_version, result.next_version, result.category);
       } else if(Object.prototype.hasOwnProperty.call(result, 'modify')){
-        const todos = window.todoManager.todos[result.category];
-        const index = todos.findIndex(t => t.text === result.name);
+          const todos = window.todoManager.todos[result.category];
+          const index = todos.findIndex(t => t.text === result.name);
 
-        if(index !== -1){
-          window.todoManager.modifyTask(result.category, index);
-          appendMsg(`Editing task: ${result.name}`, "AI");
+          if(index !== -1){
+            window.todoManager.modifyTask(result.category, index);
+            appendMsg(`Editing task: ${result.name}`, "AI");
+          }
+          else
+            appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
         }
-        else
-          appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
-      }
       else if (result.name && Object.prototype.hasOwnProperty.call(result, 'type')){
         const todos = window.todoManager.todos[result.category];
         const index = todos.findIndex(t => t.text === result.name);
@@ -698,22 +779,10 @@ function CallAIFunction(input){
 
 //SIDEBAR VARIABLES
 const sidebar = document.getElementById('sidebarAI');
-const openSidebarBtn = document.getElementById('openSidebarBtn');
 const closeSidebarBtn = document.getElementById('closeSidebarBtn');
 const aiSendBtn = document.getElementById('aiSendBtn');
-const aiInput = document.getElementById('aiInput');
+const aiInput = document.getElementById('aiInputSide');
 const aiChatHistory = document.getElementById('aiChatHistory');
-
-//SIDEBAR ACTIONS
-openSidebarBtn.onclick = () =>{
-  sidebar.classList.add('open');
-  setTimeout(() =>{aiInput.focus();}, 400);
-
-  if(!messageSend){
-    CallAIFunction("hello");
-    messageSend = true;
-  }
-};
 
 closeSidebarBtn.onclick = () =>{sidebar.classList.remove('open');}
 
@@ -763,12 +832,7 @@ function clearChat() {
   chatHistory.innerHTML = (chatHistory) ? '' : chatHistory.innerHTML;
 }
 
-function showBetaOptions(value){
-  if(!autoClose)
-    document.getElementById('openSidebarBtn').style.display = (value === true && window.scrollY === 0) ? "block" : "none";
-}
-
-//[INFO] ABOUT BETA PROGRAM
+//ABOUT PANEL
 function ShowInfoPanel(textToShow){ipcRenderer.invoke('show-alert', textToShow)}
 
 //WEB REFERENCES SECTION
@@ -798,8 +862,8 @@ document.getElementById("feedbackBtn").addEventListener('click', () =>{shell.ope
 document.getElementById('contactUs').addEventListener('click', () =>{shell.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
 
 //ON LOAD
-document.body.onload = () =>{
+window.addEventListener("load", () => {
   console.log("[ℹ️ INFO] core platform: " + process.platform)
   fetchVersion();
   fetchBuildNumber();
-};
+})

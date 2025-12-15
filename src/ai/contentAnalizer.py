@@ -95,6 +95,12 @@ def parse_input(text):
     if(clear_match or cls_match):
         return 'cleared'
     
+    #CHECK FOR '/AI' COMMAND
+    ai_match = re.match(r"/ai", text, re.IGNORECASE)
+
+    if(ai_match):
+        return 'HI! Welcome to AI Assistant of Taskify Business! write /help for more commands!'
+    
     delete_match = re.match(r"/delete\s+([^\s]+)\s+!category\s+([^\s]+)", text, re.IGNORECASE)
 
     if(delete_match):

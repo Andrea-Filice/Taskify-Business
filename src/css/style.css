@@ -1,32 +1,48 @@
+:root{
+    --background: #1a1a1a;
+    --color: #fff;
+    --input-background: #3d3d3d;
+    --button-foreground: #009dff;
+    --input-foreground: #141414;
+    --maintenanceOutColor: #cc2200;
+    --canvas-background: #232323;
+}
+
+html[data-theme="light"]{
+    --background: #ffffff;
+    --color: #000000;
+    --input-background: #adadad;
+    --button-foreground: #009dff;
+    --input-foreground: #e2e2e2;
+    --maintenanceOutColor: #cc2200;
+    --canvas-background: #d6d1d1;
+}
+
+html[data-theme="light"] img{filter: invert(1) brightness(0.8) contrast(1);}
+html[data-theme="dark"] img{filter: none;}
+
+#closeEmployeeBtn, #employeeBtn{
+    background-color: var(--input-foreground);
+    color: var(--color);
+}
+
 body {
     margin: 0;
     padding: 20px;
-    font-family: 'Supreme', sans-serif;
-    background: #1a1a1a;
-    color: #fff;
+    font-family: 'Switzer', sans-serif;
+    background: var(--background);
+    color: var(--color);
     overflow-x: hidden;
 }
 
 #app{opacity: 0;}
 
-.container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.column {
-    background: #2d2d2d;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
 h1{
     margin-top: 0;
-    color: #ffffff;
+    color: var(--color);
     font-size: 1.6em;
 }
+h2, h3, h4, h5, h6, a{color: var(--color);}
 
 .input-group {
     display: flex;
@@ -39,10 +55,10 @@ input {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background: #3d3d3d;
-    color: #fff;
+    background: var(--input-background);
+    color: var(--color);
     font-size: 15px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 #fuoriAddBtn, #softwareAddBtn, .delete-btn, .closeButton, .btn, .quitButton, .edit-btn{
@@ -51,12 +67,12 @@ input {
     width: 100%;
     border: none;
     border-radius: 5px;
-    background: #009dff;
-    color: white;
+    background: var(--button-foreground);
+    color: var(--color);
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 #repoGitBtn, #licenseBtn, #feedback, #contactUs{
@@ -65,12 +81,12 @@ input {
     width: 50%;
     border: none;
     border-radius: 5px;
-    background: #009dff;
-    color: white;
+    background: var(--button-foreground);
+    color: var(--color);
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 #aiSendBtn{
@@ -79,12 +95,12 @@ input {
     width: 20%;
     border: none;
     border-radius: 5px;
-    background: #009dff;
-    color: white;
+    background: var(--button-foreground);
+    color: var(--color);
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 button:hover {opacity: 0.8;}
@@ -98,7 +114,7 @@ ul {
 li {
     padding: 10px;
     margin: 5px 0;
-    background: #3d3d3d;
+    background: var(--input-background);
     border-radius: 5px;
     display: flex;
     justify-content: space-between;
@@ -106,9 +122,9 @@ li {
 }
 
 .delete-btn {
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
     background: #ff0000;
-    color: white;
+    color: var(--color);
     padding: 5px 10px;
     border-radius: 3px;
     display: inline-flex;
@@ -118,9 +134,9 @@ li {
 }
 
 .edit-btn {
-    font-family: 'Supreme', sans-serif;
-    background: #009dff;
-    color: white;
+    font-family: 'Switzer', sans-serif;
+    background: var(--button-foreground);
+    color: var(--color);
     padding: 5px 10px;
     border-radius: 3px;
     display: inline-flex;
@@ -130,7 +146,7 @@ li {
     width: 100px;
 }
 
-input:focus:not(#checkbox):not(#joinBeta):not(#aiInput):not(#characterLimit){
+input:focus:not(#checkbox):not(#aiInput):not(#characterLimit){
     outline: none;
     animation: animInputIn 2s ease-in-out infinite;
 }
@@ -140,12 +156,12 @@ input::after{
     animation: animInputOut 1s ease-in-out forwards;
 }
 
-button:focus:not(.infoButton):not(.settingsButton):not(#resetBtn):not(.closeButton), .aiButton {
+button:focus:not(.infoButton):not(.settingsButton):not(#resetBtn):not(.closeButton):not(#employeeBtn){
     outline: none;
     animation: animButtonIn 2s ease-in-out infinite;
 }
 
-button:not(.infoButton):not(.settingsButton)::after{
+button:not(.infoButton):not(.settingsButton):not(#employeeBtn)::after{
     outline: none;
     animation: animButtonOut 1s ease-in-out forwards;
 }
@@ -240,10 +256,30 @@ button:not(.infoButton):not(.settingsButton)::after{
 
 .version-inputs {
     display: flex;
+    position: fixed;
+    bottom: 51px;
     gap: 10px;
+    width: 30%;
+    margin-left: 1px;
 }
 
-.version-inputs input {flex: 1;}
+.version-inputs input {
+    flex: 1;
+    background: var(--input-foreground);
+}
+
+.employee-inputs {
+    display: flex;
+    position: fixed;
+    bottom: 51px;
+    gap: 10px;
+    margin-left: 1px;
+}
+
+.employee-inputs input {
+    flex: 1;
+    background: var(--input-foreground);
+}
 
 html {
     scrollbar-color: #888 #1a1a1a;
@@ -267,7 +303,7 @@ html {
     width: 30px;
     border-color: transparent;
     position: fixed;
-    bottom: 20px;
+    bottom: 23px;
     right: 20px;
 }
 
@@ -277,40 +313,12 @@ html {
     width: 30px;
     border-color: transparent;
     position: fixed;
-    bottom: 20px;
+    bottom: 23px;
     right: 60px;
     z-index: 3000;
 }
 
-.aiButton {
-    background-color: #009dff !important;
-    border: none !important;
-    position: fixed;
-    bottom: 10px;
-    right: 90px;
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
-    z-index: 3000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px #000a;
-    transition: background 0.2s;
-}
-
-.aiButton img {
-    width: 28px;
-    height: 28px;
-    filter: drop-shadow(0 0 2px #fff8);
-}
-
-.aiButton:hover {
-    background-color: #007acc !important;
-    cursor: pointer;
-}
-
-.settingsButton:hover, .aiButton:hover, .infoButton:hover, .aboutBeta:hover {cursor: pointer;}
+.settingsButton:hover, .infoButton:hover, .aboutBeta:hover {cursor: pointer;}
 
 .closeButton, .btn{
     display: inline-flex;
@@ -339,16 +347,15 @@ html {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    background: #009dff;
-    color: white;
+    background: var(--button-foreground);
+    color: var(--color);
     cursor: pointer;
     transition: opacity 0.3s;
     font-size: 20px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 .cleanSection input {width: 70%;}
-
 .cleanSection button {width: 30%;}
 
 .nameTaskUser{
@@ -367,10 +374,10 @@ html {
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background: #3d3d3d;
-    color: #fff;
+    background: var(--input-background);
+    color: var(--color);
     font-size: 15px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
 .versionPrev{display: inline;}
@@ -385,19 +392,26 @@ html {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
 }
 
-canvas{font-family: 'Excon', sans-serif;}
+canvas{
+    font-family: 'General Sans', sans-serif;
+    background: var(--canvas-background);
+}
 
 select{
     width: 72%;
     height: 40px;
-    font-family: 'Supreme', sans-serif;
-    background-color: #3d3d3d;
-    color: #fff;
+    font-family: 'Switzer', sans-serif;
+    background-color: var(--input-background);
+    color: var(--color);
     border: none;
     border-radius: 5px;
+}
+
+.appTheme{
+    width: 100%;
 }
 
 select:focus{
@@ -405,7 +419,10 @@ select:focus{
     animation: animationInput 2s ease-in-out infinite;
 }
 
-option{font-family: 'Supreme', sans-serif; color: #009dff;;}
+option{
+    font-family: 'Switzer', sans-serif;
+    color: var(--color);
+}
 
 /* Sidebar AI Chat */
 .sidebar-ai {
@@ -445,7 +462,7 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 
 .sidebar-ai-content h2 {
     color: #fff;
-    font-family: 'Excon', sans-serif;
+    font-family: 'General Sans', sans-serif;
     margin-bottom: 16px;
     text-align: center;
 }
@@ -458,7 +475,7 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
     padding: 12px;
     margin-bottom: 16px;
     color: #fff;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
     font-size: 15px;
     display: flex;
     flex-direction: column;
@@ -491,7 +508,6 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 }
 
 #aiInput {
-    position: relative;
     z-index: 1;
     background: #292929;
     color: #fff;
@@ -499,21 +515,18 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
     border-radius: 5px;
     padding: 10px;
     font-size: 15px;
-    font-family: 'Supreme', sans-serif;
+    font-family: 'Switzer', sans-serif;
     box-shadow: none;
-    width: 80%;
 }
 
-#aiInput:focus {outline: none;}
-
-#aiInput.ai-glow {
+#aiInput:focus {
+    outline: none;
     border: 2.5px solid transparent;
     background: 
         linear-gradient(#292929, #292929) padding-box,
         linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400) border-box;
     background-origin: border-box;
     background-clip: padding-box, border-box;
-    width: 80%;
     background-size: 400% auto;
     animation: gradient 15s linear infinite;
 }
@@ -533,7 +546,6 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 }
 
 .youText{color: white;}
-
 .suggestion{display: none;}
 
 .references, .needHelp{
@@ -546,10 +558,11 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
     background-image: linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400);
     background-size: 200% auto;
     -webkit-background-clip: text;
+    background-clip: none;
     animation: gradient 8s linear infinite;
 }
 
-#checkbox:checked, #joinBeta:checked, #characterLimit:checked{accent-color: #009dff; color-scheme: light;}
+#checkbox:checked, #characterLimit:checked{accent-color: #009dff; color-scheme: light;}
 
 /*TIP*/
 .tip{
@@ -561,7 +574,9 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 
 #tipImage{padding-right: 5px;}
 
-.feedbackSelection{display: none;}
+.feedbackSelection{
+    display: none;
+}
 
 #bug, #feedbackBtn{
     cursor: pointer;
@@ -583,3 +598,109 @@ option{font-family: 'Supreme', sans-serif; color: #009dff;;}
 
 #updateIcon:hover{cursor: pointer;}
 #updateIcon:hover::after{cursor: default;}
+
+/*NEW DESIGN*/
+.bubbleMaintenance{
+    background-color: #007acc;
+    border-radius: 25px;
+    color: white;
+    height: 125%;
+    width: 25%;
+    padding: 10px;
+    margin-top: -20px;
+}
+
+.bubbleOut{
+    background-color: #cc2200;
+    border-radius: 25px;
+    color: white;
+    height: 125%;
+    width: 30%;
+    padding: 10px;
+}
+
+.inputName{
+    position: fixed;
+    bottom: 15px;
+    width: 50%;
+}
+
+#categorySelection{
+    background-color: #007acc;
+    color: var(--color);
+    outline: none;
+    border-radius: 25px;
+    text-decoration: none;
+    border: none;
+    position: fixed;
+    bottom: 15px;
+    right: 150px;
+    width: 30%;
+    height: 7%;
+    font-family: 'General Sans', sans-serif;
+}
+
+#categorySelection.out{
+    background-color: #cc2200;
+    color: var(--color);
+    outline: none;
+    border-radius: 25px;
+    text-decoration: none;
+    border: none;
+    position: fixed;
+    bottom: 15px;
+    right: 150px;
+    width: 30%;
+    height: 7%;
+    font-family: 'General Sans', sans-serif;
+}
+
+@keyframes animClickedButton{
+    0%{
+        transform: scale(1);
+        filter: blur(1px);
+    }
+    50%{
+        transform: scale(0.75);
+        filter: blur(5px);
+    }
+    100%{
+        transform: scale(1);
+        filter: blur(1px);
+    }
+}
+
+.addTask{
+    background-color: #007acc;
+    color: white;
+    outline: none;
+    border-radius: 25px;
+    text-decoration: none;
+    border: none;
+    position: fixed;
+    bottom: 15px;
+    right: 90px;
+    width: 5%;
+    height: 7%;
+    font-family: 'General Sans', sans-serif;
+}
+
+@keyframes animCompareIn{
+    0%{
+        bottom: 15px;
+    }
+    100%{
+        bottom: 51px;
+    }
+}
+
+@keyframes animCompareOut{
+    0%{
+        bottom: 51px;
+    }
+    100%{
+        bottom: 15px;
+    }
+}
+
+#employeeIn{display: none;}

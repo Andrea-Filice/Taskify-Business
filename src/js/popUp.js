@@ -5,6 +5,11 @@ let originalTaskName, originalNewerVersion, originalPreviousVersion;
 
 
 function OnLoad(){
+  //SET THE THEME
+  const htmlElement = document.documentElement;
+  const theme = localStorage.getItem("theme");
+  htmlElement.setAttribute('data-theme', theme);
+
   setTimeout(() =>{document.getElementById('loading').style.animation = "FadeOut 0.5s linear forwards";}, 100)
   setTimeout(() =>{
     document.getElementById('loading').style.display = "none";
@@ -68,9 +73,9 @@ function Quit(){
 
 //* FUNCTION FOR CHECK ALL CONDITIONS WITH UNSAVED CHANGES.
 function getUnsavedChanges(){
-  return originalTaskName != document.getElementById('inputName').value.trim ||
-         originalNewerVersion != document.getElementById('inputNV').value ||
-         originalPreviousVersion != document.getElementById('inputPV').value
+  return originalTaskName != document.getElementById('inputName').value.trim() ||
+         originalNewerVersion != document.getElementById('inputNV').value.trim() ||
+         originalPreviousVersion != document.getElementById('inputPV').value.trim()
 }
 
 function SetCharacterLimit(value){
