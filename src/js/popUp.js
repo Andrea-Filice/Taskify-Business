@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron')
+const api = window.api
 
 //* ORIGINAL KEYS FROM THE TASK
 let originalTaskName, originalNewerVersion, originalPreviousVersion;
@@ -35,24 +35,24 @@ function submitInput() {
 
   //SEND NEW VALUES
   if(inputName)
-    ipcRenderer.send('inputSend', inputName, "task_name")
+    api.inputSend(inputName, "task_name")
   else
-    ipcRenderer.invoke("show-alert", "Unable to modify the Task. Invalid Task name.")
+    api.showAlert("Unable to modify the Task. Invalid Task name.")
   if(previousVersion && !newerVersion || !previousVersion && newerVersion)
-    ipcRenderer.invoke("show-alert", "Unable to modify the Task. You cannot add just one version.")
+    api.showAlert("Unable to modify the Task. You cannot add just one version.")
   else if(previousVersion && newerVersion){
-    ipcRenderer.send('inputSend', previousVersion, "prev_version");
-    ipcRenderer.send('inputSend', newerVersion, "next_version");
+    api.inputSend(previousVersion, "prev_version");
+    api.inputSend(newerVersion, "next_version");
   }
 
   window.close();
 }
 
 function DeleteTask(){
-  ipcRenderer.invoke("show-confirm", "Are you sure you want to delete this Task?")
+  api.showConfirm("Are you sure you want to delete this Task?")
     .then(userResponse => {
       if(userResponse){
-        ipcRenderer.send('deleteTask'); 
+        api.deleteTask(); 
         window.close();
       }
     });
@@ -60,7 +60,7 @@ function DeleteTask(){
 
 function Quit(){
   if(getUnsavedChanges()){
-    ipcRenderer.invoke("show-confirm", "Are you sure you want to quit and not save the unsaved changes?")
+    api.showConfirm("Are you sure you want to quit and not save the unsaved changes?")
     .then(userResponse => {
         if(userResponse)
           window.close();
@@ -102,9 +102,9 @@ function SetCharacterLimit(value){
 }
 
 //GET TASK DATAS 
-ipcRenderer.on('retrieveTaskName', (event, name) =>{document.getElementById('inputName').value = name;});
-ipcRenderer.on('retrieveVersion', (event, version, elementID) => {document.getElementById(elementID).value = version;});
-ipcRenderer.on('retrieveSetting', (event, characterLimit) =>{SetCharacterLimit(characterLimit)});
+api.onRetrieveTaskName((name) =>{document.getElementById('inputName').value = name;});
+api.onRetrieveVersion((version, elementID) => {document.getElementById(elementID).value = version;});
+api.onRetrieveSetting((characterLimit) =>{SetCharacterLimit(characterLimit)});
 
 //* SAVE ORIGINAL VALUES OF THE TASK FROM THIS FUNCTION
 

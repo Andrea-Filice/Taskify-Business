@@ -1,5 +1,21 @@
-const semver = require("semver")
 let latestVersion, currentVersion;
+
+function isNewerVersion(latest, current) {
+  if (!latest || !current) return false;
+
+  const a = latest.split('.').map(x => parseInt(x, 10) || 0);
+  const b = current.split('.').map(x => parseInt(x, 10) || 0);
+  const len = Math.max(a.length, b.length);
+
+  for (let i = 0; i < len; i++) {
+    const ai = a[i] || 0;
+    const bi = b[i] || 0;
+    if (ai > bi) return true;
+    if (ai < bi) return false;
+  }
+  
+  return false;
+}
 
 function retrieveDatasFromServer(){
   //* GET CURRENT VERSION FROM THE .JSON FILE:
@@ -30,15 +46,15 @@ function getCurrentVersion(){
 
 function checkForUpdates(){
   //* CHECK FOR UPDATES 
-  if(semver.gt(latestVersion, currentVersion)){
+  if(isNewerVersion(latestVersion, currentVersion)){
     document.getElementById("updateIcon").style.display = "inline";
     let url; //* THIS WILL STORE THE URL FOR DOWNLOAD THE INSTALLER
-    let res = ipcRenderer.invoke("new-version", "A newer version of Taskify Business is available! (" + latestVersion + ")")
+    let res = window.api.newVersion("A newer version of Taskify Business is available! (" + latestVersion + ")")
     .then(res =>{
       if(res === true){
-        switch(process.platform){
+        switch(window.api.platform){
             case "win32":
-              url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/TaskifyBusiness-${latestVersion}-${process.arch}.exe`
+              url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/TaskifyBusiness-${latestVersion}-${window.api.arch}.exe`
               break;
             case "linux":
               url = `https://github.com/Andrea-Filice/Taskify-Business/releases/download/v${latestVersion}/TaskifyBusiness-${latestVersion}-amd64.deb`;
@@ -48,12 +64,12 @@ function checkForUpdates(){
               break;
         }
         console.log("[ℹ️ INFO] DOWNLOAD LINK: " + url + ".")
-        if(process.platform != "linux")
-          ipcRenderer.invoke('downloadProgress', url, latestVersion)
+        if(window.api.platform != "linux")
+          window.api.downloadProgress(url, latestVersion)
         else{ 
           //! DISABLE THE Taskify Updater WITH LINUX.
-          shell.openExternal(url);
-          ipcRenderer.invoke('show-alert', "It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.", "Downloading in Background")
+          window.api.openExternal(url);
+          window.api.showAlert("It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.", "Downloading in Background")
         }
       }
       else

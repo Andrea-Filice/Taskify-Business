@@ -1,4 +1,4 @@
-const { ipcRenderer } = require('electron');
+const api = window.api;
 
 function OnLoad(){
     //SET THEME
@@ -18,11 +18,11 @@ function createCompany(){
     const value = input.value.trim();
     
     if (!value || value.length < 8){
-        ipcRenderer.invoke('show-alert', "Invalid Company name. At least 8 characters."); 
+        api.showAlert('Invalid Company name. At least 8 characters.'); 
         return;
     }
     else {
-        ipcRenderer.send('save-companyName', value);
+        api.saveCompanyName(value);
         document.getElementById('container').style.animation = "FadeOut 1s forwards";
         setTimeout(() => {window.location.href = "index.html";}, 1000);
     }
