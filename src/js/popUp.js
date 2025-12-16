@@ -1,5 +1,3 @@
-const api = window.api
-
 //* ORIGINAL KEYS FROM THE TASK
 let originalTaskName, originalNewerVersion, originalPreviousVersion;
 

@@ -14,19 +14,17 @@ body {
     background-color: var(--background);
     font-family: 'Switzer', sans-serif;
 }
-  
-h1{
-    color: var(--color);
-    font-size: 70px;
-    text-align: center;
-    font-family: 'General Sans', sans-serif;
-    line-height: 1.2;
-}
 
-h3{
+h1, h3{
     color: var(--color);
     font-family: 'Switzer', sans-serif;
     text-align: center;
+}
+
+h1{
+    font-family: 'General Sans', sans-serif;
+    font-size: 70px;
+    line-height: 1.2;
 }
 
 .special{
@@ -38,9 +36,7 @@ h3{
     animation: gradient 8s linear infinite;
 }
 
-@keyframes gradient {
-    to {background-position: 200% center}
-}
+@keyframes gradient {to {background-position: 200% center}}
 
 input {
     padding: 10px;
