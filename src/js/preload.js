@@ -1,4 +1,4 @@
-const { contextBridge, ipcRenderer, shell } = require('electron');
+const { contextBridge, ipcRenderer, shell, app } = require('electron');
 
 //*API CALLS FOR AVOID NODEINTEGRATION
 contextBridge.exposeInMainWorld('api', {
