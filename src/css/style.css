@@ -410,17 +410,20 @@ select{
     border-radius: 5px;
 }
 
-.appTheme{width: 100%;}
-
 select:focus{
     outline: none;
     animation: animationInput 2s ease-in-out infinite;
 }
 
+select:hover{cursor: pointer;}
+select:hover::after{cursor: none;}
+
 option{
     font-family: 'Switzer', sans-serif;
     color: var(--color);
 }
+
+.appTheme{width: 100%;}
 
 /* Sidebar AI Chat */
 .sidebar-ai {
@@ -637,6 +640,9 @@ option{
     height: 7%;
     font-family: 'General Sans', sans-serif;
 }
+
+#categorySelection:hover, .addTask:hover, #employeeBtn:hover, #closeEmployeeBtn:hover{cursor: pointer;}
+#categorySelection:hover::after, .addTask:hover::after, #employeeBtn:hover::after, #closeEmployeeBtn:hover::after{cursor: default;}
 
 #categorySelection.out{
     background-color: #cc2200;
