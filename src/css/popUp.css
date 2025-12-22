@@ -77,12 +77,11 @@ button {
   background-image: linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400);
   background-size: 200% auto;
   -webkit-background-clip: text;
+  background-clip: text;
   animation: gradient 8s linear infinite;
 }
 
-@keyframes gradient {
-  to {background-position: 400% center}
-}
+@keyframes gradient {to {background-position: 400% center}}
 
 @keyframes FadeOut{
   0%{opacity: 1;}
@@ -121,16 +120,11 @@ button {
 }
 
 @keyframes animloader {
-  0% {
-    background-position: 0% 0, 120px 0, 120px 40px, 120px 80px;
-  }
-  100% {
-    background-position: 100% 0, 120px 0, 120px 40px, 120px 80px;
-  }
+  0% {background-position: 0% 0, 120px 0, 120px 40px, 120px 80px;}
+  100% {background-position: 100% 0, 120px 0, 120px 40px, 120px 80px;}
 }
 
 /*BUTTONS ANIMATIONS*/
-
 .deleteBtn:focus, .closeBtn:focus{
   outline: none;
   animation: animRedIn 2s ease-in-out infinite;

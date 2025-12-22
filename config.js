@@ -73,8 +73,9 @@ function createWindow() {
     resizable: false,
     show: true,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, 'src', 'js', 'preload.js'),
       webSecurity: true
     },
     icon: 'src/assets/icon.ico',
@@ -114,6 +115,42 @@ function createWindow() {
       modal: true
     })
     return result.response === 0
+  })
+
+  ipcMain.handle('analyze-content', async (event, input) => {
+    return new Promise((resolve, reject) => {
+      try {
+        const unpackedPath = path.join(process.resourcesPath, 'app.asar.unpacked', 'src', 'ai', 'contentAnalizer.py');
+        const packedPath = path.join(process.resourcesPath, 'src', 'ai', 'contentAnalizer.py');
+        const isDev = DEBUG || process.argv.includes('--dev');
+        const scriptPath = isDev ? path.join(__dirname, 'src', 'ai', 'contentAnalizer.py') : (fs.existsSync(unpackedPath) ? unpackedPath : packedPath);
+
+        const child = spawn('python', [scriptPath, input], { shell: false });
+        let stdout = '';
+        let stderr = '';
+
+        child.stdout.on('data', (data) => { stdout += data.toString(); });
+        child.stderr.on('data', (data) => { stderr += data.toString(); });
+
+        child.on('error', (err) => {
+          console.error('[🐛 DEBUG] analyze-content error:', err);
+          reject(err);
+        });
+
+        child.on('close', (code) => {
+          if (code !== 0) {
+            console.error('[🐛 DEBUG] analyze-content stderr:', stderr);
+            return reject(new Error(stderr || `Exit code ${code}`));
+          }
+          try {
+            const parsed = JSON.parse(stdout);
+            resolve(parsed);
+          } catch (e) {
+            resolve(stdout);
+          }
+        });
+      } catch (e) { reject(e); }
+    });
   })
 
   //* CLEAN THE NAME OF THE INSTALLER
@@ -562,8 +599,9 @@ function createInputPopUp() {
     resizable: false,
     show: true,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      preload: path.join(__dirname, 'src', 'js', 'preload.js'),
       webSecurity: true
     },
     icon: 'src/assets/icon.ico'
