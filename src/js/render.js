@@ -665,6 +665,8 @@ if (window.__taskify_render_loaded__) {
     if (userConfirmed)
       api.quitApp();
   }
+  
+  window.quitApplication = quitApplication;
 
   function fetchVersion(){
     fetch('version.json')
@@ -835,8 +837,8 @@ if (window.__taskify_render_loaded__) {
   function ShowInfoPanel(textToShow){api.showAlert(textToShow)}
 
   //WEB REFERENCES SECTION
-  document.getElementById('repoGitBtn').addEventListener('click', () =>{api.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});
-  document.getElementById('licenseBtn').addEventListener('click', () =>{api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/blob/main/LICENSE");});
+  document.getElementById('repoGitBtn').addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});
+  document.getElementById('licenseBtn').addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/blob/main/LICENSE");});
 
   //NEED HELP SECTION
   document.getElementById('feedback').addEventListener('click', () =>{
@@ -856,9 +858,9 @@ if (window.__taskify_render_loaded__) {
     }, 10);
   });
 
-  document.getElementById("bug").addEventListener('click', () =>{api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/issues/new?labels=bug")})
-  document.getElementById("feedbackBtn").addEventListener('click', () =>{api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/issues/new?labels=enhancement")})
-  document.getElementById('contactUs').addEventListener('click', () =>{api.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
+  document.getElementById("bug").addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/issues/new?labels=bug");})
+  document.getElementById("feedbackBtn").addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/issues/new?labels=enhancement");})
+  document.getElementById('contactUs').addEventListener('click', () => {api.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
 
   //ON LOAD
   window.addEventListener("load", () => {
@@ -866,5 +868,4 @@ if (window.__taskify_render_loaded__) {
     fetchVersion();
     fetchBuildNumber();
   })
-
 }

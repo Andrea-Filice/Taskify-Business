@@ -40,7 +40,7 @@ contextBridge.exposeInMainWorld('api', {
     ipcRenderer.on('retrieveSetting', wrapped);
     return () => ipcRenderer.removeListener('retrieveSetting', wrapped);
   },
-  openExternal: (url) => shell.openExternal(url),
+  openExternal: (url) => ipcRenderer.invoke('open-external', url),
   platform: process.platform,
   arch: process.arch,
   getResourcesPath: () => process.resourcesPath,
