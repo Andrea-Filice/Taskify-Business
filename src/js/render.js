@@ -204,7 +204,7 @@ if (window.__taskify_render_loaded__) {
       }
 
       if(prevVersion && !nextVersion){
-        api.showAlert('Invalid version format. Please enter a valid format.', 'Task Creation Error')
+        api.showAlert('Invalid version format. Please enter a valid format.', 'Task Creation Error');
         return;
       }
       
@@ -275,11 +275,11 @@ if (window.__taskify_render_loaded__) {
           break;
         case 'green':
           colorTCompleted = 'rgba(7,185,7,1)'; 
-          colorTCompletedBG = 'rgba(7,185,7,0.1)'
+          colorTCompletedBG = 'rgba(7,185,7,0.1)';
           break;
         case 'blue':
           colorTCompleted = 'rgb(0, 157, 255)'; 
-          colorTCompletedBG = 'rgba(0,157,255,0.1)'
+          colorTCompletedBG = 'rgba(0,157,255,0.1)';
           break;
         case 'orange':
           colorTCompleted = 'rgba(255, 149, 0, 1)';
@@ -299,11 +299,11 @@ if (window.__taskify_render_loaded__) {
           break;
         case 'green':
           colorTCreated = 'rgba(7,185,7,1)'; 
-          colorTCreatedBG = 'rgba(7,185,7,0.1)'
+          colorTCreatedBG = 'rgba(7,185,7,0.1)';
           break;
         case 'blue':
           colorTCreated = 'rgba(0,157,255,1)'; 
-          colorTCreatedBG = 'rgba(0,157,255,0.1)'
+          colorTCreatedBG = 'rgba(0,157,255,0.1)';
           break;
         case 'orange':
           colorTCreated = 'rgba(255, 149, 0, 1)'; 
@@ -756,7 +756,7 @@ if (window.__taskify_render_loaded__) {
               taskCreated--;
             }
             else
-              appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI")
+              appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
           }
           else{
             if (typeof result === "object")
@@ -802,22 +802,26 @@ if (window.__taskify_render_loaded__) {
     const div = document.createElement('div');
     div.className = 'ai-chat-msg ' + (who.toLowerCase() === "you" ? "user" : "ai");
 
-    if(who === "AI")
-      div.innerHTML = `
-              <div>
-                  <label class="aiText">AI Assistant: </label>
-                  <p style="display: inline;"> ${text} </p>
-              </div>
-          `;
-    else{
-      div.innerHTML = `
-          <div>
-              <label class="youText">You: </label>
-              <p style="display: inline;"> ${text} </p>
-          </div>
-      `;
+    const innerDiv = document.createElement('div');
+    const label = document.createElement('label');
+    const p = document.createElement('p');
+
+    if(who === "AI"){
+      label.className = "aiText";
+      label.textContent = 'AI Assistant:';
     }
-    
+    else{
+      label.className = "youText";
+      label.textContent = 'You:';
+    }
+
+    p.style.display = 'inline';
+    p.textContent = text;
+
+    innerDiv.appendChild(label);
+    innerDiv.appendChild(p);
+    div.appendChild(innerDiv);
+
     aiChatHistory.appendChild(div);
     aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
   }
