@@ -363,24 +363,24 @@ if (window.__taskify_render_loaded__) {
                 labels: {
                   color: getCSSRule("--color"),
                   font: {
-                    family: 'General Sans, Sans Serif',
+                    family: 'Manrope, Sans Serif',
                     size: 16
                   }
                 }
               },
               tooltip: {
                 titleFont: {
-                  family: 'General Sans, Sans Serif',
+                  family: 'Manrope, Sans Serif',
                   size: 14,
                   weight: 500
                 },
                 bodyFont: {
-                  family: 'General Sans, Sans Serif',
+                  family: 'Manrope, Sans Serif',
                   size: 12,
                   weight: 'normal'
                 },
                 footerFont: {
-                  family: 'General Sans, Sans Serif',
+                  family: 'Manrope, Sans Serif',
                   size: 10,
                   style: 'italic'
                 },
@@ -391,7 +391,7 @@ if (window.__taskify_render_loaded__) {
                 ticks: {
                   color: getCSSRule("--color"),
                   font: {
-                    family: 'General Sans, Sans Serif',
+                    family: 'Manrope, Sans Serif',
                     size: 12
                   }
                 }
@@ -400,7 +400,7 @@ if (window.__taskify_render_loaded__) {
                 ticks: {
                   color: getCSSRule("--color"),
                   font: {
-                    family: 'General Sans, Sans Serif',
+                    family: 'Manrope, Sans Serif',
                     size: 10
                   },
                   callback: function(value) {return Number.isInteger(value) ? value : null;}
