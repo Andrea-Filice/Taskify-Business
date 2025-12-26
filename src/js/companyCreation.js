@@ -1,5 +1,3 @@
-const api = window.api;
-
 function OnLoad(){
     //SET THEME
     const htmlElement = document.documentElement;
