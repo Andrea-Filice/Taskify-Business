@@ -36,12 +36,12 @@ function getCurrentVersion(){
   .then(response => response.json())
           .then(data => {
             currentVersion = data.Version;
-            document.getElementById('version').innerHTML = `<img src="assets/_icon.png" alt="Icon Logo" width="30px" height="30px">&nbsp; Taskify Business ` + currentVersion;
+            document.getElementById('version').innerHTML = `<img src="assets/_icon.png" alt="Icon Logo" width="30px" height="30px" draggable="false">&nbsp; Taskify Business ` + currentVersion;
             document.getElementById('build').innerHTML = "Build Number: " + data.BuildNumber + ' <img src="assets/_updateWarn.png" alt="Update available" draggable="false" style="width: 20px; height: 20px;" id="updateIcon" title="Update Available!">';
           });
 
   //* TIMEOUT FOR AVOID DATA CONFLICTS OR UNDEFINED VALUES.
-  setTimeout(checkForUpdates, 2000);
+  setTimeout(checkForUpdates, 1000);
 }
 
 function checkForUpdates(){

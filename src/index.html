@@ -20,15 +20,15 @@
             <div class="version-inputs" id="versions">
                 <input type="text" id="prevVersion" placeholder="Previous version" spellcheck="false" title="Previous version" maxlength="10">
                 <input type="text" id="nextVersion" placeholder="Newer version" spellcheck="false" title="Newer version" maxlength="10">
-                <button id="employeeBtn" style="border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" title="Add Employee"></button>
+                <button id="employeeBtn" style="border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" title="Add Employee" draggable="false"></button>
             </div>
             <div class="employee-inputs" id="employeeIn">
                 <input type="text" id="employeeInput" placeholder="Employee Name..." spellcheck="false" title="Employee Name" maxlength="10" style="width: 390px;">
-                <button id="closeEmployeeBtn" style="border: none; border-radius: 5px; font-size: 23px; font-family: 'General Sans', sans-serif;"><img src="assets/_close.png" alt="Close" height="25px" width="25px" style="position: relative; top: 3px; transform: scale(0.7);"></button>
+                <button id="closeEmployeeBtn" style="border: none; border-radius: 5px; font-size: 23px; font-family: 'General Sans', sans-serif;"><img src="assets/_close.png" alt="Close" height="25px" width="25px" style="position: relative; top: 3px; transform: scale(0.7);" draggable="false"></button>
             </div>
             <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" spellcheck="false"/>
             <button id="categorySelection">Maintenance Tasks</button>
-            <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px"></button>
+            <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px" draggable="false"></button>
         </div>
         <div class="container" id="app">
             <button onclick="openInfoBox()" class="infoButton" id="ibtn" title="About"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
@@ -39,7 +39,7 @@
             <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;"><img src="assets/_info.png" draggable="false" height="35px" width="35px"> About:</h1>
             <div class="content" style="margin-top: -35px;">
                 <h2 id="version" style="font-size: 30px;"><img src="assets/_icon.png" alt="Icon Logo" width="20px" height="20px">Taskify Business </h2>
-                <p style="margin-top: -20px;" id="latestversion">Latest version avaible: </p>
+                <p style="margin-top: -20px;" id="latestversion">Latest version available: </p>
                 <h2 id="build">Build Number:</h2>
                 <hr>
                 <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;"><img src="assets/_chart.png" draggable="false" width="35px" height="35px"> Charts:</h1>
@@ -77,18 +77,18 @@
                             <option value="softwareComponents"> Maintenance Tasks</option>
                             <option value="fuoriManutenzione"> Out of Maintenance</option>
                         </select>
-                        <button id="cleanSectionBtn" class="cleanSectionBtn"><img src="assets/_markAsCompleted.png" alt="Mark as Completed" height="25px" width="25px" class="imageCheckbox">Mark as Completed</button>
+                        <button id="cleanSectionBtn" class="cleanSectionBtn"><img src="assets/_markAsCompleted.png" alt="Mark as Completed" height="25px" width="25px" class="imageCheckbox" draggable="false">Mark as Completed</button>
                     </div>
                     <br>
                     <div class="cleanSection">
                         <input id="nameCompany" type="text" required placeholder="Enter new Company name..." spellcheck="false">
-                        <button id="changeNameBtn" class="cleanSectionBtn"><img src="assets/_editCompanyName.png" alt="Edit Company Name" height="25px" width="25px" class="imageCheckbox">Change</button>
+                        <button id="changeNameBtn" class="cleanSectionBtn"><img src="assets/_editCompanyName.png" alt="Edit Company Name" height="25px" width="25px" class="imageCheckbox" draggable="false">Change</button>
                     </div>
                     <br>
                     <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
-                    <label for="checkbox" style="font-size: 20px;"><img src="assets/_automatic.png" alt="Disable Auto-Close" height="25px" width="25px" class="imageCheckbox">&nbsp;Disables the auto-close of the settings panel.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will disables the auto-close of the settings panel.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will disables the auto-close of the settings panel."><br><br>
+                    <label for="checkbox" style="font-size: 20px;"><img src="assets/_automatic.png" alt="Disable Auto-Close" height="25px" width="25px" class="imageCheckbox" draggable="false">&nbsp;Disables the auto-close of the settings panel.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will disables the auto-close of the settings panel.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will disables the auto-close of the settings panel."><br><br>
                     <input type="checkbox" id="characterLimit" style="transform: scale(1.7);">
-                    <label for="characterLimit" style="font-size: 20px;"><img src="assets/_keyboardLimit.png" alt="Character Limit" height="25px" width="25px" class="imageCheckbox">&nbsp;Enable character limit.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will set a character limit for Task names and version numbers.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will set a character limit for Task names and version numbers."><br>
+                    <label for="characterLimit" style="font-size: 20px;"><img src="assets/_keyboardLimit.png" alt="Character Limit" height="25px" width="25px" class="imageCheckbox" draggable="false">&nbsp;Enable character limit.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will set a character limit for Task names and version numbers.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will set a character limit for Task names and version numbers."><br>
                     <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_appearance.png" draggable="false" height="20px" width="20px"> Appearance:</h2>
                     <select name="selectTheme" id="themeDropDown" class="appTheme">
                         <option value="dark"> 🌙 Dark Theme</option>
