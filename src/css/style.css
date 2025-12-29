@@ -708,3 +708,9 @@ option{
 }
 
 #employeeIn{display: none;}
+
+.imageCheckbox{
+    position: relative;
+    top: 5px;
+    padding: 0 5px;
+}

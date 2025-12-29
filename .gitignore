@@ -4,3 +4,7 @@ node_modules
 
 #BUILD
 dist/
+
+#MACOS FILES
+src/assets/.DS_Store
+.DS_Store

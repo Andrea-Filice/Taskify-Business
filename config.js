@@ -117,6 +117,17 @@ function createWindow() {
     return result.response === 0
   })
 
+  ipcMain.handle('open-external', async (event, url) => {
+    try {
+      const { shell } = require('electron');
+      await shell.openExternal(url);
+      return { ok: true };
+    } catch (err) {
+      console.error('[🐛 DEBUG] open-external failed:', err);
+      return { ok: false, error: String(err) };
+    }
+  });
+
   ipcMain.handle('analyze-content', async (event, input) => {
     return new Promise((resolve, reject) => {
       try {
