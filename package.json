@@ -45,7 +45,6 @@
       "artifactName": "TaskifyBusiness-${version}.${ext}"
     },
     "dmg": {
-      "backgroundColor" : "#fff",
       "background": "src/assets/_macOSBackground.png",
       "icon": "src/assets/_icon.icns",
       "title": "Install Taskify Business",
