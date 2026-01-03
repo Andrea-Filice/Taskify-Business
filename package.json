@@ -38,16 +38,16 @@
     },
     "mac": {
       "appId": "com.playepik.taskifybusiness",
-      "icon": "src/assets/_icon.icns",
+      "icon": "build/_icon.icns",
       "target": [
         "dmg"
       ],
       "artifactName": "TaskifyBusiness-${version}.${ext}"
     },
     "dmg": {
-      "background": "src/assets/_macOSBackground.png",
-      "icon": "src/assets/_icon.icns",
-      "title": "Install Taskify Business",
+      "background": "build/bg.png",
+      "icon": "build/_icon.icns",
+      "title": "Install Taskify ${version}",
       "window": {
         "width": 600,
         "height": 400
