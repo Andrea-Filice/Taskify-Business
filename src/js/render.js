@@ -34,19 +34,21 @@ if (window.__taskify_render_loaded__) {
   let currentChoosedCategory = 'softwareComponents';
   const catButton = document.getElementById("categorySelection");
 
-  catButton.addEventListener('click', ()=>{
-    //*RESET PREVIOUS ANIMATION
-    catButton.style.animation = "none";
-    void catButton.offsetWidth;
+  catButton.addEventListener('click', function(event){
+    if(!event.detail || event.detail === 1){
+      //*RESET PREVIOUS ANIMATION
+      catButton.style.animation = "none";
+      void catButton.offsetWidth;
 
-    //*SELECT THE CATEGORY
-    currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
-    catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? "Maintenance Tasks" : "Out of Maintenance";
-    catButton.classList.toggle("out");
-    console.log(currentChoosedCategory)
+      //*SELECT THE CATEGORY
+      currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
+      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? "Maintenance Tasks" : "Out of Maintenance";
+      catButton.classList.toggle("out");
+      console.log(currentChoosedCategory)
 
-    //*RESTART THE ANIMATION
-    catButton.style.animation = "animClickedButton ease-in-out 500ms";
+      //*RESTART THE ANIMATION
+      catButton.style.animation = "animClickedButton ease-in-out 500ms";
+    }
   })
 
   //*ADD THE EMPLOYEE NAME
