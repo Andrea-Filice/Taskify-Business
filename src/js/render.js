@@ -55,27 +55,31 @@ if (window.__taskify_render_loaded__) {
   const versionsLayer = document.getElementById("versions");
   const employeeLayer = document.getElementById("employeeIn");
 
-  buttonAddEmployee.addEventListener("click", () =>{
-    employeeLayer.style.display = "block";
+  buttonAddEmployee.addEventListener("click", function(event){
+    if(!event.detail || event.detail === 1){
+      employeeLayer.style.display = "block";
 
-    versionsLayer.style.animation = "none";
-    void versionsLayer.offsetWidth;
-    versionsLayer.style.animation = "animCompareOut 1s ease-in-out forwards";
+      versionsLayer.style.animation = "none";
+      void versionsLayer.offsetWidth;
+      versionsLayer.style.animation = "animCompareOut 1s ease-in-out forwards";
 
-    employeeLayer.style.animation = "none";
-    void employeeLayer.offsetWidth;
-    employeeLayer.style.animation = "animCompareIn 1s ease-in-out forwards";
+      employeeLayer.style.animation = "none";
+      void employeeLayer.offsetWidth;
+      employeeLayer.style.animation = "animCompareIn 1s ease-in-out forwards";
+    }
   });
 
-  closeEmployeeBtn.addEventListener("click", ()=>{
-    employeeLayer.style.animation = "none";
-    void employeeLayer.offsetWidth;
-    employeeLayer.style.animation = "animCompareOut 1s ease-in-out forwards";
+  closeEmployeeBtn.addEventListener("click", function(event){
+    if(!event.detail || event.detail === 1){
+      employeeLayer.style.animation = "none";
+      void employeeLayer.offsetWidth;
+      employeeLayer.style.animation = "animCompareOut 1s ease-in-out forwards";
 
-    versionsLayer.style.animation = "none";
-    void versionsLayer.offsetWidth;
-    versionsLayer.style.animation = "animCompareIn 1s ease-in-out forwards";
-  })
+      versionsLayer.style.animation = "none";
+      void versionsLayer.offsetWidth;
+      versionsLayer.style.animation = "animCompareIn 1s ease-in-out forwards";
+    }
+  });
 
   let tasksChart = null;
 

@@ -523,7 +523,7 @@ option{
 #aiInput:focus {
     outline: none;
     border: 2.5px solid transparent;
-    background: 
+    background:
         linear-gradient(#292929, #292929) padding-box,
         linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400) border-box;
     background-origin: border-box;
