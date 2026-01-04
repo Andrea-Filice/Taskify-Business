@@ -547,6 +547,15 @@ if (window.__taskify_render_loaded__) {
     handleScroll() {
       if (window.scrollY === 0) {
         document.getElementById('AppTasks').style.display = "block";
+        
+        //* RESET ANIMATIONS
+        employeeLayer.style.animation = "none";
+        void employeeLayer.offsetWidth;
+        employeeLayer.style.display = "none";
+        versionsLayer.style.animation = "none";
+        void versionsLayer.offsetWidth;
+        catButton.style.animation = "none";
+
         document.getElementById('infoBox').style.display = "none";
         toggleButtons(true);
       }
