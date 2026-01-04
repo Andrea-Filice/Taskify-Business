@@ -146,7 +146,7 @@ li {
     width: 100px;
 }
 
-input:focus:not(#checkbox):not(#aiInput):not(#characterLimit){
+input:focus:not(#checkbox):not(#aiInput):not(#characterLimit):not(#doublePressChecks){
     outline: none;
     animation: animInputIn 2s ease-in-out infinite;
 }
@@ -563,7 +563,7 @@ option{
     animation: gradient 8s linear infinite;
 }
 
-#checkbox:checked, #characterLimit:checked{accent-color: #009dff; color-scheme: light;}
+#checkbox:checked, #characterLimit:checked, #doublePressChecks:checked{accent-color: #009dff; color-scheme: light;}
 
 /*TIP*/
 .tip{

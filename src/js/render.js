@@ -8,7 +8,7 @@ if (window.__taskify_render_loaded__) {
 
   //VARIABLES
   let taskCreated = 0, taskCompleted = 0;
-  let autoClose = false, characterLimit = true;
+  let autoClose = false, characterLimit = true, doublePressChecks = true;
   let companyName = undefined;
   let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
   let theme = localStorage.getItem("theme") || "dark";
@@ -35,7 +35,21 @@ if (window.__taskify_render_loaded__) {
   const catButton = document.getElementById("categorySelection");
 
   catButton.addEventListener('click', function(event){
-    if(!event.detail || event.detail === 1){
+    if(!event.detail || event.detail === 1 && doublePressChecks){
+      //*RESET PREVIOUS ANIMATION
+      catButton.style.animation = "none";
+      void catButton.offsetWidth;
+
+      //*SELECT THE CATEGORY
+      currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
+      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? "Maintenance Tasks" : "Out of Maintenance";
+      catButton.classList.toggle("out");
+      console.log(currentChoosedCategory)
+
+      //*RESTART THE ANIMATION
+      catButton.style.animation = "animClickedButton ease-in-out 500ms";
+    }
+    else if(!doublePressChecks){
       //*RESET PREVIOUS ANIMATION
       catButton.style.animation = "none";
       void catButton.offsetWidth;
@@ -101,8 +115,9 @@ if (window.__taskify_render_loaded__) {
       taskCreated = loaded.taskCreated || 0;
       taskCompleted = loaded.taskCompleted || 0;
       autoClose = loaded.autoClose || false;
-      companyName = loaded.companyName || undefined
+      companyName = loaded.companyName || undefined;
       characterLimit = typeof loaded.characterLimit === 'boolean' ? loaded.characterLimit : true;
+      doublePressChecks = typeof loaded.doublePressChecks === 'boolean' ? loaded.doublePressChecks : true;
 
       //*THEME SETTING
       themeDropdown.value = theme;
@@ -151,6 +166,8 @@ if (window.__taskify_render_loaded__) {
               .addEventListener('change', () => this.updateUI())
       document.getElementById('colorTaskCompleted')
               .addEventListener('change', () => this.updateUI())
+      document.getElementById('doublePressChecks')
+              .addEventListener('click', () => this.toggleDoublePressChecks());
       themeDropdown.addEventListener("change", () =>{
               htmlElement.setAttribute('data-theme', themeDropdown.value);
               this.updateUI();
@@ -189,7 +206,7 @@ if (window.__taskify_render_loaded__) {
       })
 
       taskCreated++;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
       this.updateUI();
     }
 
@@ -230,7 +247,7 @@ if (window.__taskify_render_loaded__) {
       employeeField.value = '';
 
       taskCreated++;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
       updateDailyData();
       this.updateUI();
     }
@@ -252,7 +269,7 @@ if (window.__taskify_render_loaded__) {
     removeTodo(category, index) {
       this.todos[category].splice(index, 1);
       taskCompleted++;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit });
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
       updateDailyData(); 
       this.updateUI();
     }
@@ -262,6 +279,7 @@ if (window.__taskify_render_loaded__) {
       const taskCompletedEl = document.getElementById('taskCompleted');
       const autoCloseCheckbox = document.getElementById('checkbox');
       const characterLimitCheckbox = document.getElementById('characterLimit');
+      const doublePressChecksCheckbox = document.getElementById('doublePressChecks');
       const dropDowntaskCreated = document.getElementById('colorTaskCreated').value;
       const dropDowntaskCompleted = document.getElementById('colorTaskCompleted').value;
 
@@ -271,6 +289,7 @@ if (window.__taskify_render_loaded__) {
       taskCompletedEl.innerText = `${taskCompleted}`;
       autoCloseCheckbox.checked = autoClose;
       characterLimitCheckbox.checked = characterLimit;
+      doublePressChecksCheckbox.checked = doublePressChecks;
 
       //* COLOR SELECTION
       //* TASK COMPLETED
@@ -331,7 +350,7 @@ if (window.__taskify_render_loaded__) {
       taskCompletedColor = document.getElementById('colorTaskCompleted').value;
 
       //*SAVE DATAS
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
       localStorage.setItem("theme", themeDropdown.value);
 
       document.title = `Taskify Dashboard - ${companyName}`;
@@ -502,7 +521,7 @@ if (window.__taskify_render_loaded__) {
               created: Array(7).fill(0),
               completed: Array(7).fill(0)
             };
-            api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+            api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
             this.updateUI();
             api.showAlert("Data successfully reset, the app will be restarted soon.")
             .then(() => {window.location.href = "boot.html";});
@@ -531,7 +550,7 @@ if (window.__taskify_render_loaded__) {
         taskCompleted += list.length;
 
         this.todos[categoryKey] = [];
-        api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+        api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
         this.updateUI();
         api.showAlert("Tasks marked as 'Completed'!");
       });
@@ -543,7 +562,12 @@ if (window.__taskify_render_loaded__) {
         window.addEventListener('scroll', this.handleScroll);
       else
         window.removeEventListener('scroll', this.handleScroll);
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+    }
+
+    toggleDoublePressChecks(){
+      doublePressChecks = !doublePressChecks;
+      this.updateUI();
     }
     
     handleScroll() {
@@ -572,7 +596,7 @@ if (window.__taskify_render_loaded__) {
         .then(userResponse => {
           if (!userResponse) return;
           companyName = newName;
-          api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+          api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
           document.getElementById('nameCompany').value = '';
           api.showAlert('Company name changed successfully!');
           this.updateUI();
@@ -636,7 +660,7 @@ if (window.__taskify_render_loaded__) {
             e.setAttribute('maxlength', 20);
         });
       }
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
     }
   }();
 
@@ -727,14 +751,14 @@ if (window.__taskify_render_loaded__) {
       window.todoManager.todos[category][index].text = taskData.text;
       window.todoManager.todos[category][index].prevVersion = taskData.prevVersion;
       window.todoManager.todos[category][index].nextVersion = taskData.nextVersion;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
       window.todoManager.updateUI();
   });
 
   api.onDeleteTask((category, index) => {
       window.todoManager.todos[category].splice(index, 1);
       taskCreated--;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
       window.todoManager.updateUI();
   });
 
