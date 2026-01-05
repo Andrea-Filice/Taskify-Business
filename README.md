@@ -1,7 +1,7 @@
 # <img src="src/assets/_gear.png" alt="Icon" width="30px" height="30px"> Taskify Business
 [![GitHub release](https://img.shields.io/github/v/release/Andrea-Filice/Taskify-Business?color=009dff)](https://github.com/Andrea-Filice/Taskify-Business/releases/latest) [![GitHub license](https://img.shields.io/badge/license-Apache-blue.svg)](https://github.com/Andrea-Filice/Taskify-Business/blob/main/LICENSE) [![Build](https://github.com/Andrea-Filice/Taskify-Business/actions/workflows/windows.yml/badge.svg?branch=dev)](https://github.com/Andrea-Filice/Taskify-Business/actions/workflows/windows.yml)
 
-![alt text](src/assets/gitImages/git_slide1.png "Main Page")
+![alt text](src/assets/gitImages/git_slide1.webp "Main Page")
 
 **Taskify Business** is a powerful desktop application designed to help businesses organize, assign, and track maintenance tasks for their computer software. 
 By providing a clear, centralized interface, Maintenance Scheduler streamlines planning, reduces downtime, and ensures each component receives timely updates and checks.
@@ -11,12 +11,12 @@ By providing a clear, centralized interface, Maintenance Scheduler streamlines p
 # **Task Categorization**  
 Categorize your activity. Select from 2 categories available, **"Maintenance Task" or out**.
 
-![alt text](src/assets/gitImages/git_slide1.png "Task categorization")
+![alt text](src/assets/gitImages/git_slide1.webp "Task categorization")
   
 # **Version Tracking**  
 Keep track of new versions of third-party tools and apps. *You won't forget to update them!*
 
-![alt text](src/assets/gitImages/git_slide2.png "Version Tracking")
+![alt text](src/assets/gitImages/git_slide2.webp "Version Tracking")
   
 # **Powered by AI (Beta)**  
   **/Create, /Delete** and **/Modify** Tasks, only with a few commands ahead.
@@ -26,7 +26,7 @@ Keep track of new versions of third-party tools and apps. *You won't forget to u
 # **Progress Dashboard**  
   Keep track of tasks and time at the same time. Simply with a *Graph*.
 
-  ![alt text](src/assets/gitImages/git_slide3.png "Charts")
+  ![alt text](src/assets/gitImages/git_slide3.webp "Charts")
 
 
 You can learn more on Taskify <a href="https://play-epik-incorporation.netlify.app/developers#taskifyBusiness">here.</a>
