@@ -1,6 +1,6 @@
 {
   "name": "taskify-business",
-  "version": "1.10.2",
+  "version": "1.10.3",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
   "license": "Apache",
   "repository": {
@@ -34,7 +34,8 @@
         "AppImage",
         "deb"
       ],
-      "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
+      "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}",
+      "category": "Utility"
     },
     "mac": {
       "appId": "com.playepik.taskifybusiness",
