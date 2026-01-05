@@ -37,11 +37,34 @@
       "artifactName": "TaskifyBusiness-${version}-${arch}.${ext}"
     },
     "mac": {
-      "icon": "src/assets/_icon.icns",
+      "appId": "com.playepik.taskifybusiness",
+      "icon": "build/_icon.icns",
       "target": [
         "dmg"
       ],
       "artifactName": "TaskifyBusiness-${version}.${ext}"
+    },
+    "dmg": {
+      "background": "build/bg.png",
+      "icon": "build/_icon.icns",
+      "title": "Install Taskify ${version}",
+      "window": {
+        "width": 600,
+        "height": 400
+      },
+      "contents": [
+        {
+          "x": 130,
+          "y": 220,
+          "type": "file"
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
     },
     "nsis": {
       "oneClick": false,

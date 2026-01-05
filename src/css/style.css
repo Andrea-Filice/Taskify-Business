@@ -146,7 +146,7 @@ li {
     width: 100px;
 }
 
-input:focus:not(#checkbox):not(#aiInput):not(#characterLimit){
+input:focus:not(#checkbox):not(#aiInput):not(#characterLimit):not(#doublePressChecks){
     outline: none;
     animation: animInputIn 2s ease-in-out infinite;
 }
@@ -523,7 +523,7 @@ option{
 #aiInput:focus {
     outline: none;
     border: 2.5px solid transparent;
-    background: 
+    background:
         linear-gradient(#292929, #292929) padding-box,
         linear-gradient(to right, #ffc400, #ff9100, #ff530f, #e62c6d, #b25aff, #b25aff, #e62c6d, #ff530f, #ff9100, #ffc400) border-box;
     background-origin: border-box;
@@ -563,7 +563,7 @@ option{
     animation: gradient 8s linear infinite;
 }
 
-#checkbox:checked, #characterLimit:checked{accent-color: #009dff; color-scheme: light;}
+#checkbox:checked, #characterLimit:checked, #doublePressChecks:checked{accent-color: #009dff; color-scheme: light;}
 
 /*TIP*/
 .tip{

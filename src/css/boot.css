@@ -63,6 +63,12 @@ body{background-color: var(--background);}
   display: inline-block;
 }
 
+.logoMacOS{
+  margin-top: 50px;
+  width: 200px;
+  height: 200px;
+}
+
 @keyframes gradient {
   95% {background-position: 200% center}
   100%{background-position: 204% center;}

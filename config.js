@@ -22,7 +22,8 @@ let todos = {
   chartData: { labels: [], created: [], completed: [] },
   taskCompletedColor : "green",
   taskCreatedColor: "blue",
-  characterLimit: true
+  characterLimit: true,
+  doublePressChecks: true
 }
 
 function loadTodosFromDisk() {
@@ -37,7 +38,8 @@ function loadTodosFromDisk() {
       todos.chartData = todos.chartData || { labels: [], created: [], completed: [] }
       todos.taskCompletedColor = todos.taskCompletedColor || "green"
       todos.taskCreatedColor = todos.taskCreatedColor || "blue"
-      todos.characterLimit = typeof todos.characterLimit === 'boolean' ? todos.characterLimit : true;
+      todos.characterLimit = typeof todos.characterLimit === 'boolean' ? todos.characterLimit : true
+      todos.doublePressChecks = typeof todos.doublePressChecks === 'boolean' ? todos.doublePressChecks : true
     }
   } catch (err) {
       console.error(err)
@@ -51,7 +53,8 @@ function loadTodosFromDisk() {
         chartData: { labels: [], created: [], completed: [] },
         taskCompletedColor : "green",
         taskCreatedColor: "blue",
-        characterLimit: true
+        characterLimit: true,
+        doublePressChecks: true
       }
   }
 }
