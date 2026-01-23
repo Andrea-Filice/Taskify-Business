@@ -17,31 +17,25 @@ function isNewerVersion(latest, current) {
   return false;
 }
 
-function retrieveDatasFromServer(){
-  //* GET CURRENT VERSION FROM THE .JSON FILE:
-  getCurrentVersion();
+async function startUpdates(){
+  try{
+    const [localData, remoteData] = await Promise.all([
+      fetch('version.json').then(res => res.json()),
+      fetch('https://cdn-playepik.netlify.app/dependencies/dependencies.json?t=' + Date.now()).then(res => res.json())
+    ]);
 
-  //* GET LATEST VERSION FROM THE SERVER:
-  fetch('https://cdn-playepik.netlify.app/dependencies/dependencies.json')
-    .then(response => response.json())
-          .then(data => {
-            latestVersion = data.versionTaskify;
-            document.getElementById('latestversion').innerHTML = "Latest version available: " + data.versionTaskify;
-          })
-}
+    currentVersion = localData.Version;
+    document.getElementById('version').innerHTML = `<img src="assets/_icon.png" alt="Icon Logo" width="30px" height="30px" draggable="false">&nbsp; Taskify Business ` + currentVersion;
+    document.getElementById('build').innerHTML = "Build Number: " + localData.BuildNumber + ' <img src="assets/_updateWarn.png" alt="Update available" draggable="false" style="width: 20px; height: 20px;" id="updateIcon" title="Update Available!">';
 
-function getCurrentVersion(){
-  //* GET THE CURRENT VERSION FROM THE LOCAL .JSON FILE
-  fetch('version.json')
-  .then(response => response.json())
-          .then(data => {
-            currentVersion = data.Version;
-            document.getElementById('version').innerHTML = `<img src="assets/_icon.png" alt="Icon Logo" width="30px" height="30px" draggable="false">&nbsp; Taskify Business ` + currentVersion;
-            document.getElementById('build').innerHTML = "Build Number: " + data.BuildNumber + ' <img src="assets/_updateWarn.png" alt="Update available" draggable="false" style="width: 20px; height: 20px;" id="updateIcon" title="Update Available!">';
-          });
+    latestVersion = remoteData.versionTaskify;
+    document.getElementById('latestversion').innerHTML = "Latest version available: " + remoteData.versionTaskify;
 
-  //* TIMEOUT FOR AVOID DATA CONFLICTS OR UNDEFINED VALUES.
-  setTimeout(checkForUpdates, 1000);
+    checkForUpdates();
+  }
+  catch (error){
+    console.log("ERROR RETRIEVING DATAs");
+  }
 }
 
 function checkForUpdates(){
@@ -84,4 +78,4 @@ function checkForUpdates(){
 }
 
 //START CHECKING FILES
-window.addEventListener("load", retrieveDatasFromServer);
+window.addEventListener("load", startUpdates);

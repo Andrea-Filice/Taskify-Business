@@ -44,7 +44,7 @@ if (window.__taskify_render_loaded__) {
       currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
       catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? "Maintenance Tasks" : "Out of Maintenance";
       catButton.classList.toggle("out");
-      console.log(currentChoosedCategory)
+      console.log("[ℹ️ INFO] Category switching: " + currentChoosedCategory)
 
       //*RESTART THE ANIMATION
       catButton.style.animation = "animClickedButton ease-in-out 500ms";

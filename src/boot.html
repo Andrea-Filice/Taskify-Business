@@ -12,8 +12,8 @@
     <body>
         <center>
             <div id="loading">
-                <div class="logo" style="display: none;"></div>
-                <img src="assets/iconComposer/iconMacOs.png" alt="macOS Boot" class="logoMacOS" draggable="false">
+                <div id="logo" style="display: none;"></div>
+                <img src="assets/iconComposer/iconMacOs.png" alt="macOS Boot" id="logoMacOS" draggable="false">
                 <br> <br> <br>
                 <span class="loader" style="margin-top: 200px;"></span>
             </div>
@@ -22,8 +22,8 @@
     <script>
         function OnLoad(){
             //SET THE LOGO
-            document.querySelector(".logo").style.display = (window.api.platform == "darwin") ? "none" : "block";
-            document.querySelector(".logoMacOS").style.display = (window.api.platform == "darwin") ? "block" : "none";
+            document.getElementById("logo").style.display = (window.api.platform == "darwin") ? "none" : "block";
+            document.getElementById("logoMacOS").style.display = (window.api.platform == "darwin") ? "block" : "none";
 
             //SET THE THEME FROM LOCALSTORAGE
             const htmlElement = document.documentElement;

@@ -1,9 +1,13 @@
-# Release Notes for Taskify Business 1.10.3
+# Release Notes for Taskify Business 1.10.4
+
+# Stack Upgrades
+- supabase-js `2.91.1`
+  - [New in 2.91.1](https://github.com/supabase/supabase-js/releases/tag/v2.91.1)
+- npm `11.8.0`
+  - [New in 11.8.0](https://github.com/npm/cli/releases/tag/v11.8.0)
+- Electron `40.0.0`
+  - [New in 40.0.0](https://github.com/electron/electron/releases/tag/v40.0.0)
 
 # Bug Fixes
-[616f554] Added a custom installer for macOS.
-[b167b61] Boot icon fixed. Now the correct icon is displayed based on the OS.
-[82e4c38] Fixed an issue with animations starting when the button was clicked multiple times.
-[99ca0a6] Fixed animations when returning to Tasks from Settings.
-[728af75] Added an option to control accidental double-tapping on the button to change categories.
-[5135352] Separate the sections better in the settings.
+[816ff86] Fixed some bugs with the update check, now should works normally.
+[b009b8a] Fixed missing logo for macOS.

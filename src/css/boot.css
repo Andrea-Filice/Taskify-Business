@@ -45,7 +45,7 @@ body{background-color: var(--background);}
   100%{opacity: 0;}
 }
 
-.logo {
+#logo {
   margin-top: 50px;
   width: 200px;
   height: 200px;
@@ -63,7 +63,7 @@ body{background-color: var(--background);}
   display: inline-block;
 }
 
-.logoMacOS{
+#logoMacOS{
   margin-top: 50px;
   width: 200px;
   height: 200px;
