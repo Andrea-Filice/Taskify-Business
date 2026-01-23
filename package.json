@@ -106,6 +106,9 @@
     "tar": "^7.5.6"
   },
   "overrides": {
-    "tar": "^7.5.6"
+    "tar": "^7.5.6",
+    "@electron/rebuild": {
+      "tar": "^6.2.3"
+    }
   }
 }
