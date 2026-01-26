@@ -1,6 +1,6 @@
 {
   "name": "taskify-business",
-  "version": "1.10.3",
+  "version": "1.10.4",
   "description": "An app for Professionals Companies with better management of Maintenance Tasks",
   "license": "Apache",
   "repository": {
@@ -79,6 +79,7 @@
     ]
   },
   "files": [
+    "src/**/*",
     "src/ai/**/*",
     "src/js/**/*",
     "src/css/**/*",
@@ -91,10 +92,10 @@
   ],
   "devDependencies": {
     "electron": "^40.0.0",
-    "electron-builder": "^26.4.0"
+    "electron-builder": "^26.5.0"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.91.1",
+    "@supabase/supabase-js": "^2.93.0",
     "chart.js": "^4.5.1",
     "dotenv": "^17.2.3",
     "electron-progressbar": "^2.2.1",
@@ -102,16 +103,6 @@
     "glob": "^13.0.0",
     "js-yaml": "^4.1.1",
     "npm": "^11.8.0",
-    "semver": "^7.7.3",
-    "tar": "^7.5.6"
-  },
-  "overrides": {
-    "tar": "^7.5.6",
-    "@electron/rebuild": {
-      "tar": "6.2.1"
-    },
-    "app-builder-lib": {
-      "tar": "6.2.1"
-    }
+    "semver": "^7.7.3"
   }
 }
