@@ -87,7 +87,6 @@ function createWindow() {
 
   mainWindow.setMenu(null)
   mainWindow.loadFile('src/boot.html')
-  mainWindow.openDevTools();
 
   ipcMain.handle('show-confirm', async (event, message) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
