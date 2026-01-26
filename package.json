@@ -79,6 +79,7 @@
     ]
   },
   "files": [
+    "src/**/*",
     "src/ai/**/*",
     "src/js/**/*",
     "src/css/**/*",
@@ -94,7 +95,7 @@
     "electron-builder": "^26.4.0"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.91.1",
+    "@supabase/supabase-js": "^2.93.0",
     "chart.js": "^4.5.1",
     "dotenv": "^17.2.3",
     "electron-progressbar": "^2.2.1",
