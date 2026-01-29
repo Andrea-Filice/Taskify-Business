@@ -2,6 +2,11 @@
 let originalTaskName, originalNewerVersion, originalPreviousVersion;
 const buttonEditTask = document.getElementById("editBtn");
 
+//INPUT TRIGGERS
+const inputTaskName = document.getElementById('inputName');
+const inputNewVersion = document.getElementById('inputNV');
+const inputPreviousVersion = document.getElementById('inputPV');
+
 function OnLoad(){
   buttonEditTask.disabled = true;
 
@@ -18,20 +23,20 @@ function OnLoad(){
   }, 500);
 
   //* ENTER HANDLER
-  document.getElementById("inputName").addEventListener("keypress", e => submitInputHandler(e));
-  document.getElementById("inputPV").addEventListener("keypress", e => submitInputHandler(e));
-  document.getElementById("inputNV").addEventListener("keypress", e => submitInputHandler(e));
+  inputTaskName.addEventListener("keypress", e => submitInputHandler(e));
+  inputPreviousVersion.addEventListener("keypress", e => submitInputHandler(e));
+  inputNewVersion.addEventListener("keypress", e => submitInputHandler(e));
 }
 
 function submitInputHandler(e){if(e.key === 'Enter') submitInput();}
 
 function submitInput() {
   //NEW TASK NAME
-  const inputName = document.getElementById('inputName').value.trim();
+  const inputName = inputTaskName.value.trim();
 
   //PREVIOUS OR NEWER VERSION
-  const previousVersion = document.getElementById('inputPV').value.trim();
-  const newerVersion = document.getElementById('inputNV').value.trim();
+  const previousVersion = inputPreviousVersion.value.trim();
+  const newerVersion = inputNewVersion.value.trim();
 
   //SEND NEW VALUES
   if(inputName)
@@ -73,9 +78,9 @@ function Quit(){
 
 //* FUNCTION FOR CHECK ALL CONDITIONS WITH UNSAVED CHANGES.
 function getUnsavedChanges(){
-  return originalTaskName != document.getElementById('inputName').value.trim() ||
-         originalNewerVersion != document.getElementById('inputNV').value.trim() ||
-         originalPreviousVersion != document.getElementById('inputPV').value.trim()
+  return originalTaskName != inputTaskName.value.trim() ||
+         originalNewerVersion != inputNewVersion.value.trim() ||
+         originalPreviousVersion != inputPreviousVersion.value.trim()
 }
 
 function SetCharacterLimit(value){
@@ -102,41 +107,28 @@ function SetCharacterLimit(value){
 }
 
 //GET TASK DATAS 
-api.onRetrieveTaskName((name) =>{document.getElementById('inputName').value = name;});
+api.onRetrieveTaskName((name) =>{inputTaskName.value = name;});
 api.onRetrieveVersion((version, elementID) => {document.getElementById(elementID).value = version;});
 api.onRetrieveSetting((characterLimit) =>{SetCharacterLimit(characterLimit)});
 
 //* SAVE ORIGINAL VALUES OF THE TASK FROM THIS FUNCTION
 function saveOriginalDatas(){
-  originalTaskName = document.getElementById('inputName').value;
-  originalPreviousVersion = document.getElementById('inputPV').value;
-  originalNewerVersion = document.getElementById('inputNV').value;
+  originalTaskName = inputTaskName.value;
+  originalPreviousVersion = inputPreviousVersion.value;
+  originalNewerVersion = inputNewVersion.value;
 }
 
 function getButtonBackgroundColor(isDisabled){return (isDisabled) ? "#898989" : "#009dff";}
 
-//INPUT TRIGGER
-const inputTaskName = document.getElementById('inputName');
-const inputNewVersion = document.getElementById('inputNV');
-const inputPreviousVersion = document.getElementById('inputPV');
+inputTaskName.addEventListener('input', () => {setValueOfEditButton();});
+inputPreviousVersion.addEventListener('input', () => {setValueOfEditButton();});
+inputNewVersion.addEventListener('input', () => {setValueOfEditButton();});
 
-inputTaskName.addEventListener('input', () => {
+function setValueOfEditButton(){
   var tempValue = !getUnsavedChanges()
   buttonEditTask.disabled = tempValue;
   buttonEditTask.style.backgroundColor = getButtonBackgroundColor(tempValue);
-});
-
-inputPreviousVersion.addEventListener('input', () => {
-  var tempValue = !getUnsavedChanges()
-  buttonEditTask.disabled = tempValue;
-  buttonEditTask.style.backgroundColor = getButtonBackgroundColor(tempValue);
-});
-
-inputNewVersion.addEventListener('input', () => {
-  var tempValue = !getUnsavedChanges()
-  buttonEditTask.disabled = tempValue;
-  buttonEditTask.style.backgroundColor = getButtonBackgroundColor(tempValue);
-});
+}
 
 //ON LOAD
 window.addEventListener("load", OnLoad);
