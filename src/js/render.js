@@ -126,8 +126,8 @@ if (window.__taskify_render_loaded__) {
       //SET DEFAULT BOOLEAN VALUES
       this.inputCharactersUpdate(characterLimit);
 
-      document.getElementById('colorTaskCreated').value = loaded.taskCompletedColor || "blue";
-      document.getElementById('colorTaskCompleted').value = loaded.taskCreatedColor || "green";
+      document.getElementById('colorTaskCreated').value = loaded.taskCreatedColor || "blue";
+      document.getElementById('colorTaskCompleted').value = loaded.taskCompletedColor || "green";
 
       if(companyName === undefined)
         window.location.href = "createCompany.html";
