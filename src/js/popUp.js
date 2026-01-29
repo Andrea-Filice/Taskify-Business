@@ -1,8 +1,10 @@
-//* ORIGINAL KEYS FROM THE TASK
+//*VARIABLES
+///This variables are for save the original datas of the Task and match them with the newest ones.
 let originalTaskName, originalNewerVersion, originalPreviousVersion;
 const buttonEditTask = document.getElementById("editBtn");
 
 //INPUT TRIGGERS
+///This const variables are for the Inputs in the HTML file.
 const inputTaskName = document.getElementById('inputName');
 const inputNewVersion = document.getElementById('inputNV');
 const inputPreviousVersion = document.getElementById('inputPV');
@@ -11,6 +13,7 @@ function OnLoad(){
   buttonEditTask.disabled = true;
 
   //SET THE THEME
+  ///Set the theme based from localStorage itam
   const htmlElement = document.documentElement;
   const theme = localStorage.getItem("theme");
   htmlElement.setAttribute('data-theme', theme);
@@ -19,10 +22,11 @@ function OnLoad(){
   setTimeout(() =>{
     document.getElementById('loading').style.display = "none";
     document.getElementById('main').style.animation = "FadeIn 0.5s linear forwards";
-    saveOriginalDatas(); //* SAVE ORIGINAL DATAS OF THE TASK.
+    saveOriginalDatas();
   }, 500);
 
   //* ENTER HANDLER
+  ///Actions to input components for submit when pressing ENTER key
   inputTaskName.addEventListener("keypress", e => submitInputHandler(e));
   inputPreviousVersion.addEventListener("keypress", e => submitInputHandler(e));
   inputNewVersion.addEventListener("keypress", e => submitInputHandler(e));
