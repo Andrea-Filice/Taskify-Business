@@ -1,8 +1,10 @@
 //* ORIGINAL KEYS FROM THE TASK
 let originalTaskName, originalNewerVersion, originalPreviousVersion;
-
+const buttonEditTask = document.getElementById("editBtn");
 
 function OnLoad(){
+  buttonEditTask.disabled = true;
+
   //SET THE THEME
   const htmlElement = document.documentElement;
   const theme = localStorage.getItem("theme");
@@ -105,12 +107,36 @@ api.onRetrieveVersion((version, elementID) => {document.getElementById(elementID
 api.onRetrieveSetting((characterLimit) =>{SetCharacterLimit(characterLimit)});
 
 //* SAVE ORIGINAL VALUES OF THE TASK FROM THIS FUNCTION
-
 function saveOriginalDatas(){
   originalTaskName = document.getElementById('inputName').value;
   originalPreviousVersion = document.getElementById('inputPV').value;
   originalNewerVersion = document.getElementById('inputNV').value;
 }
+
+function getButtonBackgroundColor(isDisabled){return (isDisabled) ? "#898989" : "#009dff";}
+
+//INPUT TRIGGER
+const inputTaskName = document.getElementById('inputName');
+const inputNewVersion = document.getElementById('inputNV');
+const inputPreviousVersion = document.getElementById('inputPV');
+
+inputTaskName.addEventListener('input', () => {
+  var tempValue = !getUnsavedChanges()
+  buttonEditTask.disabled = tempValue;
+  buttonEditTask.style.backgroundColor = getButtonBackgroundColor(tempValue);
+});
+
+inputPreviousVersion.addEventListener('input', () => {
+  var tempValue = !getUnsavedChanges()
+  buttonEditTask.disabled = tempValue;
+  buttonEditTask.style.backgroundColor = getButtonBackgroundColor(tempValue);
+});
+
+inputNewVersion.addEventListener('input', () => {
+  var tempValue = !getUnsavedChanges()
+  buttonEditTask.disabled = tempValue;
+  buttonEditTask.style.backgroundColor = getButtonBackgroundColor(tempValue);
+});
 
 //ON LOAD
 window.addEventListener("load", OnLoad);
