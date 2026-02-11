@@ -91,7 +91,7 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^40.2.1",
+    "electron": "^40.3.0",
     "electron-builder": "^26.7.0"
   },
   "dependencies": {
@@ -100,7 +100,7 @@
     "dotenv": "^17.2.4",
     "electron-progressbar": "^2.2.1",
     "follow-redirects": "^1.15.11",
-    "glob": "^13.0.1",
+    "glob": "^13.0.2",
     "js-yaml": "^4.1.1",
     "npm": "^11.9.0",
     "semver": "^7.7.4"
