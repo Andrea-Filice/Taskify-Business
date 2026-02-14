@@ -71,7 +71,13 @@
         "taskCreationError": "Task Creation Error"
     },
     "titles": {
-        "employee": "Add Employee"
+        "employee": "Add Employee",
+        "settings": "Settings",
+        "red": "Red",
+        "green": "Green",
+        "blue": "Blue",
+        "orange": "Orange",
+        "yellow": "Yellow"
     },
     "cancelBtn": "Cancel"
 }

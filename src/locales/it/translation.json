@@ -71,7 +71,13 @@
         "taskCreationError": "Errore creazione Task"
     },
     "titles": {
-        "employee": "Aggiungi Dipendente"
+        "employee": "Aggiungi Dipendente",
+        "settings": "Impostazioni",
+        "red": "Rosso",
+        "green": "Verde",
+        "blue": "Blu",
+        "orange": "Arancione",
+        "yellow": "Giallo"
     },
     "cancelBtn": "Annulla"
 }

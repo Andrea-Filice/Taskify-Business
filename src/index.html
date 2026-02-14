@@ -43,7 +43,7 @@
         </div>
         <div class="container" id="app">
             <button onclick="openInfoBox()" class="infoButton" id="ibtn" data-i18n-title="settings.aboutTitle"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
-            <button onclick="openSettings()" class="settingsButton" id="sbtn" data-i18n-title="settings.settingsTitle"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
+            <button onclick="openSettings()" class="settingsButton" id="sbtn" data-i18n-title="titles.settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
         </div>
         <br> 
         <div class="info" id="infoBox">
@@ -82,22 +82,22 @@
                             <b data-i18n="settings.taskCreated">Tasks created:</b>
                         </label>
                         <select name="selectColor" id="colorTaskCreated" style="width: 4%; height: 25px;">
-                            <option value="red" style="color: #c01212;; background-color: #c01212;" title="Red">🟥</option>
-                            <option value="green" style="color: green; background-color: green;" title="Green">🟩</option>
-                            <option value="blue" style="color: blue; background-color: blue;" title="Blue">🟦</option>
-                            <option value="orange" style="color: orange; background-color: orange;" title="Orange">🟧</option>
-                            <option value="yellow" style="color: yellow; background-color: yellow;" title="Yellow">🟨</option>
+                            <option value="red" style="color: #c01212;; background-color: #c01212;" data-i18n-title="titles.red">🟥</option>
+                            <option value="green" style="color: green; background-color: green;" data-i18n-title="titles.green">🟩</option>
+                            <option value="blue" style="color: blue; background-color: blue;" data-i18n-title="titles.blue">🟦</option>
+                            <option value="orange" style="color: orange; background-color: orange;" data-i18n-title="titles.orange">🟧</option>
+                            <option value="yellow" style="color: yellow; background-color: yellow;" data-i18n-title="titles.yellow">🟨</option>
                         </select>
                         <label for="colorTaskCompleted" style="margin-left: 20px;">
                             <span data-i18n="settings.colorTooltip"></span>
                             <b data-i18n="settings.taskCompleted">Tasks created:</b>
                         </label>
                         <select name="selectColor" id="colorTaskCompleted" style="width: 4%; height: 25px;">
-                            <option value="red" style="color: #c01212;; background-color: #c01212;" title="Red">🟥</option>
-                            <option value="green" style="color: green; background-color: green;" title="Green">🟩</option>
-                            <option value="blue" style="color: blue; background-color: blue;" title="Blue">🟦</option>
-                            <option value="orange" style="color: orange; background-color: orange;" title="Orange">🟧</option>
-                            <option value="yellow" style="color: yellow; background-color: yellow;" title="Yellow">🟨</option>
+                            <option value="red" style="color: #c01212;; background-color: #c01212;" data-i18n-title="titles.red">🟥</option>
+                            <option value="green" style="color: green; background-color: green;" data-i18n-title="titles.green">🟩</option>
+                            <option value="blue" style="color: blue; background-color: blue;" data-i18n-title="titles.blue">🟦</option>
+                            <option value="orange" style="color: orange; background-color: orange;" data-i18n-title="titles.orange">🟧</option>
+                            <option value="yellow" style="color: yellow; background-color: yellow;" data-i18n-title="titles.yellow">🟨</option>
                         </select>
                     </div>
                 </center>
@@ -173,12 +173,12 @@
                         <span data-i18n="settings.webReferences"></span>
                     </h2>
                     <div class="references">
-                        <button id="repoGitBtn" title="Open on GitHub">
+                        <button id="repoGitBtn" data-i18n-title="settings.openOnGithub">
                             <img src="assets/_github.png" width="20px" height="20px" draggable="false">
                             <span data-i18n="settings.openOnGithub"></span>
                         </button>
 
-                        <button id="licenseBtn" title="See License">
+                        <button id="licenseBtn" data-i18n-title="settings.seeLicense">
                             <img src="assets/_license.png" width="20px" height="20px" draggable="false">
                             <span data-i18n="settings.seeLicense"></span>
                         </button>
@@ -188,11 +188,11 @@
                         <span data-i18n="settings.needHelpSettings"></span>
                     </h2>
                     <div class="needHelp">
-                        <button id="feedback" title="Leave a Feedback">
+                        <button id="feedback" data-i18n-title="settings.leaveAFeedback">
                             <img src="assets/_feedback.png" width="20px" height="20px" draggable="false">
                             <span data-i18n="settings.leaveAFeedback"></span>
                             <img src="assets/_arrowDown.png" alt="Icon arrow" style="display: inline;" width="20px" height="20px" id="menuFeedback"></button>
-                        <button id="contactUs" title="Contact Us">
+                        <button id="contactUs" data-i18n-title="settings.contactUs">
                             <img src="assets/_contact.png" width="20px" height="20px" draggable="false">
                             <span data-i18n="settings.contactUs"></span>
                         </button>
@@ -212,22 +212,22 @@
                         <img src="assets/_actions.png" draggable="false" height="20px" width="20px">
                         <span data-i18n="settings.actionsSettings"></span>
                     </h2>
-                    <button onclick="quitApplication()" class="quitButton" title="Quit application">
+                    <button onclick="quitApplication()" class="quitButton" data-i18n-title="settings.quitApplication">
                         <img src="assets/_quit.png" draggable="false" height="25px" width="25px">
                         <span data-i18n="settings.quitApplication"></span>                   
                     </button>
                     <br> <br>
-                    <button id="restartBtn" class="btn" title="Restart">
+                    <button id="restartBtn" class="btn" data-i18n-title="settings.restartApplication">
                         <img src="assets/_reload.png" draggable="false" width="23px" height="23px">
                         <span data-i18n="settings.restartApplication"></span>
                     </button>
                     <br> <br>
-                    <button id="resetBtn" style="background-color: #c01212; font-size: 20px;" class="btn" title="Delete data">
+                    <button id="resetBtn" style="background-color: #c01212; font-size: 20px;" class="btn" data-i18n-title="settings.deleteData">
                         <img src="assets/_delete.png" draggable="false" width="25px" height="25px">
                         <span data-i18n="settings.deleteData"></span>
                     </button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton" title="Close panel">
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton" data-i18n-title="settings.closePanel">
                         <img src="assets/_close.png" draggable="false" height="15px" width="15px">
                         <span data-i18n="settings.closePanel"></span>
                     </button>
