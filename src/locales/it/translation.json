@@ -79,5 +79,23 @@
         "orange": "Arancione",
         "yellow": "Giallo"
     },
-    "cancelBtn": "Annulla"
+    "editPopUp": {
+        "editProprietiesSmall": "Modifica le proprietà del Task selezionato.",
+        "editTask": "Modifica",
+        "taskName": "Nome Task: ",
+        "previousVersion": "Versione Precedente: ",
+        "newerVersion": "Versione Nuova: ",
+        "taskNameEllipsis": "Nome Task...",
+        "previousVersionEllipsis": "Versione Precedente...",
+        "newerVersionEllipsis": "Versione Nuova...",
+        "close": "Chiudi",
+        "delete": "Elimina Task",
+        "edit": "Modifica",
+        "errorEdit": "Impossibile modificare il Task. Nome non valido.",
+        "errorVersions": "Impossibile modificare il Task. Non puoi aggiungere solo una versione.",
+        "deleteConfirm": "Sei sicuro di voler eliminare il Task?",
+        "unsavedChanges": "Sei sicuro di voler uscire con modifiche non salvate?",
+        "optional": "Opzionale",
+        "taskTitle": "Inserisci il nuovo nome del Task"
+    }
 }

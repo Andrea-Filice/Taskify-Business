@@ -663,6 +663,7 @@ function createInputPopUp() {
     },
     icon: 'src/assets/icon.ico'
   })
+
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')
 
