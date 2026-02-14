@@ -97,5 +97,19 @@
         "unsavedChanges": "Sei sicuro di voler uscire con modifiche non salvate?",
         "optional": "Opzionale",
         "taskTitle": "Inserisci il nuovo nome del Task"
+    },
+    "companyCreation":{
+        "createYour": "CREA LA TUA",
+        "company": "AZIENDA.",
+        "description": "Per continuare ad usare Taskify Business, crea una azienda per poter dividere i compiti tra dipendenti, creare Tasks e altro!",
+        "companyName": "Inserisci qui il nome della tua azienda...",
+        "companyTitle": "Inserisci il nome dell'azienda (Massimo 30 caratteri)",
+        "warning": "Il nome deve contenere minimo ",
+        "8Characters": "8 caratteri.",
+        "createBtn": "Crea"
+    },
+    "htmlTitles": {
+        "companyCreation": "Taskify Business - Crea azienda",
+        "editPopUp": "Taskify Business - Modifica Task"
     }
 }

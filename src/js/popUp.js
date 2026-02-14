@@ -21,6 +21,7 @@ async function OnLoad(){
   const htmlElement = document.documentElement;
   const theme = localStorage.getItem("theme");
   htmlElement.setAttribute('data-theme', theme);
+  document.title = window.i18n.t('htmlTitles.editPopUp');
 
   setTimeout(() =>{document.getElementById('loading').style.animation = "FadeOut 0.5s linear forwards";}, 500)
   setTimeout(() =>{

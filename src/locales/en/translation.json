@@ -97,5 +97,19 @@
         "unsavedChanges": "Are you sure you want to quit and not save the unsaved changes?",
         "optional": "Optional",
         "taskTitle": "Enter the new Task Name"
+    },
+    "companyCreation": {
+        "createYour": "CREATE YOUR",
+        "company": "COMPANY.",
+        "description": "To continue using Taskify Business, create a company in order to divide maintenance roles among its members, create Tasks and more!",
+        "companyName": "Enter here the name of your company...",
+        "companyTitle": "Enter the Company name (Max 30 characters)",
+        "warning": "The company name must contain at least ",
+        "8Characters": "8 characters.",
+        "createBtn": "Create"
+    },
+    "htmlTitles": {
+        "companyCreation": "Taskify Business - Create your company",
+        "editPopUp": "Taskify Business - Edit Task"
     }
 }
