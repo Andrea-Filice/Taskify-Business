@@ -167,6 +167,13 @@ function createWindow() {
     });
   })
 
+  ipcMain.handle('get-asset-path', (event, assetPath) => {
+    if (!app.isPackaged) 
+      return path.join(__dirname, 'src', assetPath);
+    return path.join(process.resourcesPath, 'app.asar', 'src', assetPath);
+  });
+
+
   //* CLEAN THE NAME OF THE INSTALLER
   function sanitizeFilename(name) {return name.replace(/[^a-zA-Z0-9._-]/g, '_');}
 

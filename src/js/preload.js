@@ -44,5 +44,6 @@ contextBridge.exposeInMainWorld('api', {
   platform: process.platform,
   arch: process.arch,
   getResourcesPath: () => process.resourcesPath,
-  analyzeContent: (input) => ipcRenderer.invoke('analyze-content', input)
+  analyzeContent: (input) => ipcRenderer.invoke('analyze-content', input),
+  getAssetPath: (assetPath) => ipcRenderer.invoke('get-asset-path', assetPath)
 });
