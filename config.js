@@ -89,12 +89,12 @@ function createWindow() {
   mainWindow.setMenu(null)
   mainWindow.loadFile('src/boot.html')
 
-  ipcMain.handle('show-confirm', async (event, message) => {
+  ipcMain.handle('show-confirm', async (event, message, cancelTxt) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
 
     const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
-      buttons: ['OK', 'Cancel'],
+      buttons: ['OK', "Cancel"],
       defaultId: 1,
       cancelId: 0,
       message,

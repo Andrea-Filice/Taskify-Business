@@ -29,12 +29,12 @@
         </div>
         <div class="app" id="AppTasks">
             <div class="version-inputs" id="versions">
-                <input type="text" id="prevVersion" placeholder="Previous version" spellcheck="false" title="Previous version" maxlength="10" data-i18n-placeholder="homePage.previousVersionTooltip">
-                <input type="text" id="nextVersion" placeholder="Newer version" spellcheck="false" title="Newer version" maxlength="10" data-i18n-placeholder="homePage.newerVersionTooltip">
-                <button id="employeeBtn" style="border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" title="Add Employee" draggable="false"></button>
+                <input type="text" id="prevVersion" placeholder="Previous version" spellcheck="false" data-i18n-title="homePage.previousVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.previousVersionTooltip">
+                <input type="text" id="nextVersion" placeholder="Newer version" spellcheck="false" data-i18n-title="homePage.newerVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.newerVersionTooltip">
+                <button id="employeeBtn" style="border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" data-i18n-title="titles.employee" draggable="false"></button>
             </div>
             <div class="employee-inputs" id="employeeIn">
-                <input type="text" id="employeeInput" placeholder="Employee Name..." spellcheck="false" title="Employee Name" maxlength="10" style="width: 390px;" data-i18n-placeholder="homePage.employeeName">
+                <input type="text" id="employeeInput" placeholder="Employee Name..." spellcheck="false" data-i18n-title="homePage.employeeName" maxlength="10" style="width: 390px;" data-i18n-placeholder="homePage.employeeName">
                 <button id="closeEmployeeBtn" style="border: none; border-radius: 5px; font-size: 23px; font-family: 'General Sans', sans-serif;"><img src="assets/_close.png" alt="Close" height="25px" width="25px" style="position: relative; top: 3px; transform: scale(0.7);" draggable="false"></button>
             </div>
             <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" spellcheck="false"/ data-i18n-placeholder="homePage.taskNameTooltip">
@@ -42,8 +42,8 @@
             <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px" draggable="false"></button>
         </div>
         <div class="container" id="app">
-            <button onclick="openInfoBox()" class="infoButton" id="ibtn" title="About"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
-            <button onclick="openSettings()" class="settingsButton" id="sbtn" title="Settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
+            <button onclick="openInfoBox()" class="infoButton" id="ibtn" data-i18n-title="settings.aboutTitle"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
+            <button onclick="openSettings()" class="settingsButton" id="sbtn" data-i18n-title="settings.settingsTitle"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
         </div>
         <br> 
         <div class="info" id="infoBox">
@@ -145,19 +145,19 @@
                     <label for="checkbox" style="font-size: 20px;">
                         <img src="assets/_automatic.png" alt="Disable Auto-Close" height="25px" width="25px" class="imageCheckbox" draggable="false">
                         <span data-i18n="settings.disableAutoClose"></span>
-                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will disables the auto-close of the settings panel.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will disables the auto-close of the settings panel."><br><br>
+                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.descriptionAutoClose')" src="assets/_about.png" width="20px" height="20px" data-i18n-placeholder="popUps.descriptionAutoClose"><br><br>
 
                     <input type="checkbox" id="characterLimit" style="transform: scale(1.7);">
                     <label for="characterLimit" style="font-size: 20px;">
                         <img src="assets/_keyboardLimit.png" alt="Character Limit" height="25px" width="25px" class="imageCheckbox" draggable="false">
                         <span data-i18n="settings.enableCharacterLimit"></span>
-                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will set a character limit for Task names and version numbers.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will set a character limit for Task names and version numbers."><br><br>
+                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.characterLimit')" src="assets/_about.png" width="20px" height="20px" data-i18n-title="popUps.characterLimit"><br><br>
 
                     <input type="checkbox" id="doublePressChecks" style="transform: scale(1.7);">
                     <label for="doublePressChecks" style="font-size: 20px;">
                         <img src="assets/_touchIcon.png" alt="Touch Limit" height="25px" width="25px" class="imageCheckbox" draggable="false">
                         <span data-i18n="settings.enableDoublePress"></span>
-                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('When enabled, enables double-tap control on the Category button, allowing for faster category switching.')" src="assets/_about.png" width="20px" height="20px" title="When enabled, disables double-tap control on the Category button, allowing for faster category switching."><br>
+                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.doubleTap')" src="assets/_about.png" width="20px" height="20px" data-i18n-title="popUps.doubleTap"><br>
 
                     <h2 style="text-align: center; font-family: 'General Sans', sans-serif;">
                         <img src="assets/_appearance.png" draggable="false" height="20px" width="20px">

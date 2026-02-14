@@ -52,9 +52,26 @@
         "closePanel": "Chiudi pannello"
     },
     "popUps": {
-        "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome Task valido."
+        "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome Task valido.",
+        "invalidVersionFormat": "Formato versioni invalido. Inserisci un formato valido.",
+        "dataReset": "Dati rimossi correttamente. L'App si riavvierà a presto.",
+        "markCategoryComplete" : "Sei sicuro di voler segnare come completato questa categoria?",
+        "markedAsCompleted": "Tasks segnato come \"Completato\"!",
+        "invalidCharacters": "Nome azienda non valido. Minimo 8 caratteri.",
+        "changeCompanyName": "Sei sicuro di voler cambiare il nome dell'azienda a ",
+        "companyChanged": "Nome azienda cambiato correttamente!",
+        "descriptionAutoClose": "Se attivata, questa opzione disattiverà la chiusura automatica di questo pannello.",
+        "characterLimit": "Se attivata, questa opzione imposterà un limite di caratteri per il nome Task e i numeri Versione.",
+        "doubleTap": "Quando attivata, controlla il tocco doppio nel pulsante per cambiare categoria, permettendo una velocià maggiore nello Switch di essa.",
+        "resetDataConfirm": "Sei sicuro di voler eliminare tutti i dati?",
+        "restartConfirm": "Sei sicuro di voler riavviare l'app?",
+        "quitAppConfirm": "Sei sicuro di voler chiudere l'app?"
     },
     "errorTitles": {
         "taskCreationError": "Errore creazione Task"
-    }
+    },
+    "titles": {
+        "employee": "Aggiungi Dipendente"
+    },
+    "cancelBtn": "Annulla"
 }

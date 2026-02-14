@@ -52,9 +52,26 @@
         "closePanel": "Close panel"
     },
     "popUps": {
-        "errorInvalidTaskName": "Invalid task name. Please enter a valid name."
+        "errorInvalidTaskName": "Invalid task name. Please enter a valid name.",
+        "invalidVersionFormat": "Invalid version format. Please enter a valid format.",
+        "dataReset": "Data successfully reset. The app will be restarted soon.",
+        "markCategoryComplete" : "Are you sure to mark complete the following category?",
+        "markedAsCompleted": "Tasks marked as \"Completed\"!",
+        "invalidCharacters": "Invalid Company name. At least 8 characters.",
+        "changeCompanyName": "Are you sure to change the company name to ",
+        "companyChanged": "Company name changed successfully!",
+        "descriptionAutoClose": "If enabled, this option will disables the auto-close of the settings panel.",
+        "characterLimit": "If enabled, this option will set a character limit for Task names and version numbers.",
+        "doubleTap": "When enabled, enables double-tap control on the Category button, allowing for faster category switching.",
+        "resetDataConfirm": "Are you sure you want to reset all data saved?",
+        "restartConfirm": "Are you sure you want to restart the app?",
+        "quitAppConfirm": "Are you sure you want to close the app?"
     },
     "errorTitles": {
         "taskCreationError": "Task Creation Error"
-    }
+    },
+    "titles": {
+        "employee": "Add Employee"
+    },
+    "cancelBtn": "Cancel"
 }

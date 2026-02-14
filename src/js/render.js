@@ -227,7 +227,7 @@ if (window.__taskify_render_loaded__) {
       }
 
       if(prevVersion && !nextVersion){
-        api.showAlert('Invalid version format. Please enter a valid format.', 'Task Creation Error');
+        api.showAlert(window.i18n.t('popUps.invalidVersionFormat'), window.i18n.t('errorTitles.taskCreationError'));
         return;
       }
       
@@ -514,7 +514,7 @@ if (window.__taskify_render_loaded__) {
     }
 
     resetData() {
-      api.showConfirm("Are you sure you want to reset all data saved?")
+      api.showConfirm(window.i18n.t('popUps.resetDataConfirm'))
         .then(userResponse => {
           if (userResponse) {
             this.todos = {
@@ -537,14 +537,14 @@ if (window.__taskify_render_loaded__) {
             };
             api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
             this.updateUI();
-            api.showAlert("Data successfully reset, the app will be restarted soon.")
+            api.showAlert(window.i18n.t('popUps.dataReset'))
             .then(() => {window.location.href = "boot.html";});
           }
         });
     }
 
     restartApplication(){
-      api.showConfirm('Are you sure you want to restart the app?')
+      api.showConfirm(window.i18n.t('popUps.restartConfirm'))
       .then(userResponse =>{
         if(userResponse)
           window.location.href = "boot.html";
@@ -557,7 +557,7 @@ if (window.__taskify_render_loaded__) {
         return;
       }
 
-      api.showConfirm(`Are you sure to mark complete the following category?`)
+      api.showConfirm(window.i18n.t("popUps.markCategoryComplete"), window.i18n.t('cancelBtn'))
       .then(userResponse => {
         if (!userResponse) return;
         const list = this.todos[categoryKey];
@@ -566,7 +566,7 @@ if (window.__taskify_render_loaded__) {
         this.todos[categoryKey] = [];
         api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
         this.updateUI();
-        api.showAlert("Tasks marked as 'Completed'!");
+        api.showAlert(window.i18n.t("popUps.markedAsCompleted"));
       });
     }
     
@@ -603,16 +603,16 @@ if (window.__taskify_render_loaded__) {
 
     changeCompanyName(newName) {
       if(!newName || newName.length < 8) {
-        api.showAlert('Invalid Company name. At least 8 characters.');
+        api.showAlert(window.i18n.t('popUps.invalidCharacters'));
         return;
       }
-      api.showConfirm(`Are you sure to change the company name to "${newName}"?`)
+      api.showConfirm((window.i18n.t('popUps.changeCompanyName') + `"${newName}"?`))
         .then(userResponse => {
           if (!userResponse) return;
           companyName = newName;
           api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
           document.getElementById('nameCompany').value = '';
-          api.showAlert('Company name changed successfully!');
+          api.showAlert(window.i18n.t('popUps.companyChanged'));
           this.updateUI();
         });
     }
@@ -714,7 +714,7 @@ if (window.__taskify_render_loaded__) {
   function toggleButtons(value){buttons.forEach(e  => {e.style.display = (value) ? "block" : "none";});}
 
   async function quitApplication() {
-    const userConfirmed = await api.showConfirm('Are you sure you want to close the app?');
+    const userConfirmed = await api.showConfirm(window.i18n.t('popUps.quitAppConfirm'));
     if (userConfirmed)
       api.quitApp();
   }
@@ -887,7 +887,7 @@ if (window.__taskify_render_loaded__) {
   }
 
   //ABOUT PANEL
-  function ShowInfoPanel(textToShow){api.showAlert(textToShow)}
+  function ShowInfoPanel(key){api.showAlert(window.i18n.t(key))}
 
   //WEB REFERENCES SECTION
   document.getElementById('repoGitBtn').addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});
