@@ -903,8 +903,13 @@ if (window.__taskify_render_loaded__) {
 
   //ON LOAD
   window.addEventListener("load", () => {
+    loadPageTranslations();
     console.log("[ℹ️ INFO] core platform: " + api.platform)
     fetchVersion();
     fetchBuildNumber();
   })
+
+  async function loadPageTranslations(){
+    await window.i18n.init();
+  }
 }

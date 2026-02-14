@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="mainSection">
-            <h1 style="font-family: 'General Sans', sans-serif; font-size: 60px;"><img src="assets/_list.png" alt="Icon" style="width: 45px; height: 45px;" draggable="false" title="Tasks"> TASKS</h1>
+            <h1 style="font-family: 'General Sans', sans-serif; font-size: 60px;" data-i18n="homePage.tasks"><img src="assets/_list.png" alt="Icon" style="width: 45px; height: 45px;" draggable="false" title="Tasks"> TASKS</h1>
             <div class="bubbleMaintenance">Maintenance Tasks <p id="maintenanceNumber" style="display: inline; right: 0px; background-color: rgb(31, 31, 163); border-radius: 5px; font-family: 'General Sans', sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;</p></div><br>
             <ul id="softwareList"></ul><br>
             <div class="bubbleOut">Out Of Maintenance Tasks <p id="outNumber" style="display: inline; right: 0px; background-color: #88210c; border-radius: 5px; font-family: 'General Sans', sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;</p></div><br>
@@ -136,5 +136,6 @@
             </div>
         </div>
     </body>
+    <script src="js/i18n-render.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script><script src="js/render.js"></script><script src="js/fetchDependecies.js"></script>
 </html>

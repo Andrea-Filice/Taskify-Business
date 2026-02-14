@@ -84,6 +84,7 @@
     "src/js/**/*",
     "src/css/**/*",
     "src/assets/**/*",
+    "src/locales/**/*",
     "src/*.html",
     "src/version.json",
     "config.js",
@@ -101,6 +102,9 @@
     "electron-progressbar": "^2.2.1",
     "follow-redirects": "^1.15.11",
     "glob": "^13.0.3",
+    "i18next": "^25.8.7",
+    "i18next-electron-fs-backend": "^3.0.3",
+    "i18next-fs-backend": "^2.6.1",
     "js-yaml": "^4.1.1",
     "npm": "^11.10.0",
     "semver": "^7.7.4"

@@ -63,6 +63,7 @@ function saveTodosToDisk() {try {fs.writeFileSync(dataPath, JSON.stringify(todos
 
 function createWindow() {
   let width, height;
+  const isDev = !app.isPackaged;
 
   //* SET THE WIDTH AND HEIGHT BETWEEN LINUX AND OTHER PLATFORMS
   //? LINUX HAVE A MINOR RENDERING SCALE.
@@ -103,6 +104,41 @@ function createWindow() {
     })
     return result.response === 0
   })
+
+  ipcMain.handle('get-translations', async (event, language) => {
+    try {
+      const isDev = !app.isPackaged;
+      const localesPath = isDev
+        ? path.join(__dirname, 'src', 'locales', language, 'translation.json')
+        : path.join(process.resourcesPath, 'app.asar', 'src', 'locales', language, 'translation.json');
+      
+      const data = fs.readFileSync(localesPath, 'utf8');
+      return JSON.parse(data);
+    } catch (error) {
+      console.error('Error loading translations:', error);
+      const fallbackPath = isDev
+        ? path.join(__dirname, 'src', 'locales', 'en', 'translation.json')
+        : path.join(process.resourcesPath, 'app.asar', 'src', 'locales', 'en', 'translation.json');
+      
+      const data = fs.readFileSync(fallbackPath, 'utf8');
+      return JSON.parse(data);
+    }
+  });
+
+  ipcMain.handle('get-system-language', () => {
+    const locale = app.getLocale();
+    const language = locale.split('-')[0];
+    
+    const supportedLanguages = ['en', 'it'];
+    return supportedLanguages.includes(language) ? language : 'en';
+  });
+
+  ipcMain.handle('get-supported-languages', () => {
+    return [
+      { code: 'en', name: 'English' },
+      { code: 'it', name: 'Italiano' }
+    ];
+  });
 
   ipcMain.handle('new-version', async (event, message) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
