@@ -111,5 +111,9 @@
     "htmlTitles": {
         "companyCreation": "Taskify Business - Crea azienda",
         "editPopUp": "Taskify Business - Modifica Task"
+    },
+    "languages": {
+        "italian": "🇮🇹 Italiano",
+        "english-us": "🇬🇧/🇺🇸 Inglese"
     }
 }
