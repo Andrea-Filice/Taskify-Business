@@ -1,12 +1,16 @@
 {
     "homePage": {
-        "tasks": "Tasks",
+        "tasks": "TASKS",
         "maintenanceTasks": "Maintenance Tasks",
         "outOfMaintenance": "Out Of Maintenance Tasks",
         "noTasks": "No Tasks in this category.",
         "previousVersionTooltip": "Previous version",
         "newerVersionTooltip": "Newer version",
-        "taskNameTooltip": "Task name or /ai to open AI..." 
+        "taskNameTooltip": "Task name or /ai to open AI...",
+        "employeeName": "Employee Name...",
+        "assignedTo": "Assigned to: ",
+        "you": "You",
+        "editTask": "Edit Task"
     },
     "settings": {
         "aboutTitle": "About",
@@ -14,15 +18,18 @@
         "buildNumber": "Build Number: ",
         "chartsTitle": "Charts",
         "taskCreated": "Task created:",
+        "taskCreatedCanvas": "Task Created",
         "taskCompleted": "Task completed:",
+        "taskCompletedCanvas": "Task Completed",
         "chartsSettingsTitle": "Charts Settings:",
-        "colorToltip": "Color ",
+        "colorTooltip": "Color ",
         "tipTitle": "TIP:",
-        "tipDescription": "Click on or &nbsp;to see the progress of an individual item.",
+        "tipDescription": "Click on {{taskCompleted}} or {{taskCreated}} to see the progress of an element.",
         "settingsTitle": "Settings:",
         "generalSettings": "General:",
         "markAsCompleted": "Mark as Completed",
         "changeBtn": "Change",
+        "enterCompanyNamePlaceholder": "Enter new Company name...",
         "userPreferences": "User Preferences:",
         "disableAutoClose": "Disables the auto-close of the settings panel.",
         "enableCharacterLimit": "Enable character limit.",
@@ -32,7 +39,7 @@
         "lightTheme": " ☀️ Light Theme",
         "webReferences": "Web References:",
         "openOnGithub": "Open on GitHub",
-        "seeLicens": "See License",
+        "seeLicense": "See License",
         "needHelpSettings": "Need help?",
         "leaveAFeedback": "Leave a Feedback",
         "writeBug": "Write a Bug report.",
@@ -43,5 +50,11 @@
         "restartApplication": "Restart",
         "deleteData": "Delete all data",
         "closePanel": "Close panel"
+    },
+    "popUps": {
+        "errorInvalidTaskName": "Invalid task name. Please enter a valid name."
+    },
+    "errorTitles": {
+        "taskCreationError": "Task Creation Error"
     }
 }

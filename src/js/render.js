@@ -42,7 +42,7 @@ if (window.__taskify_render_loaded__) {
 
       //*SELECT THE CATEGORY
       currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
-      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? "Maintenance Tasks" : "Out of Maintenance";
+      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
       catButton.classList.toggle("out");
       console.log("[ℹ️ INFO] Category switching: " + currentChoosedCategory)
 
@@ -56,7 +56,7 @@ if (window.__taskify_render_loaded__) {
 
       //*SELECT THE CATEGORY
       currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
-      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? "Maintenance Tasks" : "Out of Maintenance";
+      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
       catButton.classList.toggle("out");
       console.log(currentChoosedCategory)
 
@@ -222,7 +222,7 @@ if (window.__taskify_render_loaded__) {
       let employeeName = employeeField.value.trim();
 
       if (!text){
-        api.showAlert('Invalid task name. Please enter a valid name.', 'Task Creation Error');
+        api.showAlert(window.i18n.t('popUps.errorInvalidTaskName'), window.i18n.t('errorTitles.taskCreationError'));
         return;
       }
 
@@ -231,7 +231,7 @@ if (window.__taskify_render_loaded__) {
         return;
       }
       
-      if (!employeeName) employeeName = "You";
+      if (!employeeName) employeeName = window.i18n.t('homePage.you');
 
       this.todos[category].push({
         text,
@@ -282,6 +282,11 @@ if (window.__taskify_render_loaded__) {
       const doublePressChecksCheckbox = document.getElementById('doublePressChecks');
       const dropDowntaskCreated = document.getElementById('colorTaskCreated').value;
       const dropDowntaskCompleted = document.getElementById('colorTaskCompleted').value;
+      const tipText = window.i18n.t('settings.tipDescription')
+          .replace('{{taskCompleted}}', '<i style="font-weight: 800;" data-i18n="settings.taskCompleted">"Task Completati"</i>')
+          .replace('{{taskCreated}}', '<i style="font-weight: 800;" data-i18n="settings.taskCreated">"Task Creati"</i>');
+
+      document.getElementById('tipDescription').innerHTML = tipText;
 
       let colorTCompleted = null, colorTCreated = null, colorTCompletedBG = null, colorTCreatedBG = null;
 
@@ -366,14 +371,14 @@ if (window.__taskify_render_loaded__) {
             labels: chartData.labels, 
             datasets: [
               {
-                label: 'Tasks Created',
+                label: window.i18n.t('settings.taskCreatedCanvas'),
                 data: chartData.created,
                 borderColor: colorTCreated,
                 backgroundColor: colorTCreatedBG,
                 tension: 0.3
               },
               {
-                label: 'Tasks Completed',
+                label: window.i18n.t('settings.taskCompletedCanvas'),
                 data: chartData.completed,
                 borderColor: colorTCompleted,
                 backgroundColor: colorTCompletedBG,
@@ -437,11 +442,17 @@ if (window.__taskify_render_loaded__) {
         });
       } else {
         tasksChart.data.labels = chartData.labels;
+        
         tasksChart.options.plugins.legend.labels.color = getCSSRule('--color');
         tasksChart.options.scales.x.ticks.color = getCSSRule('--color');
         tasksChart.options.scales.y.ticks.color = getCSSRule('--color');
+
+        tasksChart.data.datasets[0].label = window.i18n.t('settings.taskCreatedCanvas');
+        tasksChart.data.datasets[1].label = window.i18n.t('settings.taskCompletedCanvas');
+
         tasksChart.data.datasets[0].data = chartData.created;
         tasksChart.data.datasets[1].data = chartData.completed;
+
         tasksChart.data.datasets[0].borderColor = colorTCreated;
         tasksChart.data.datasets[0].backgroundColor = colorTCreatedBG;
         tasksChart.data.datasets[1].borderColor = colorTCompleted;
@@ -460,7 +471,8 @@ if (window.__taskify_render_loaded__) {
       numberToUpdate.innerHTML = `&nbsp;&nbsp;${localArray.length}&nbsp;&nbsp;`;
 
       if(localArray.length === 0)
-        list.innerHTML = 'No Tasks in this Category.';
+        list.innerHTML = window.i18n.t('homePage.noTasks');
+
       else{
         this.todos[category].forEach((todo, idx) => {
             const li = document.createElement('li');
@@ -479,12 +491,14 @@ if (window.__taskify_render_loaded__) {
                 <span><b>${todo.text}</b></span>
                 <div>
                     ${versionHtml}
-                    <small>Assigned to: <i>${employee}</i></small>
+                    <small>
+                      ${window.i18n.t('homePage.assignedTo')} <i>${employee}</i>
+                    </small>
                     <div style="display: flex; gap: 5px; margin-top: 0px;">
-                        <button class="delete-btn" style="width: 100px; background-color: white;" title="Mark as Completed">
+                        <button class="delete-btn" style="width: 100px; background-color: white;" title="${window.i18n.t('settings.markAsCompleted')}">
                           <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
                         </button>
-                        <button class="edit-btn" id="editBtn" title="Edit Task">
+                        <button class="edit-btn" id="editBtn" title="${window.i18n.t('homePage.editTask')}">
                           <img src="assets/_edit.png" draggable="false" width="20px" height="20px">
                         </button>
                     </div>
@@ -902,14 +916,15 @@ if (window.__taskify_render_loaded__) {
   document.getElementById('contactUs').addEventListener('click', () => {api.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
 
   //ON LOAD
-  window.addEventListener("load", () => {
-    loadPageTranslations();
+  window.addEventListener("load", async () => {
+    await window.i18n.init();
+
+    ///When loaded the languages, reset the UI
+    if (window.todoManager) 
+      window.todoManager.updateUI();
+
     console.log("[ℹ️ INFO] core platform: " + api.platform)
     fetchVersion();
     fetchBuildNumber();
   })
-
-  async function loadPageTranslations(){
-    await window.i18n.init();
-  }
 }

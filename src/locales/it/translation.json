@@ -1,12 +1,16 @@
 {
     "homePage": {
-        "tasks": "Da Fare",
+        "tasks": "TASKS",
         "maintenanceTasks": "In Manutenzione",
         "outOfMaintenance": "Fuori Manutenzione",
         "noTasks": "Nessun Task in questa categoria.",
         "previousVersionTooltip": "Versione Precedente",
         "newerVersionTooltip": "Nuova Versione",
-        "taskNameTooltip": "Nome del Task o /ai per l'assistente AI..." 
+        "taskNameTooltip": "Nome del Task o /ai per l'assistente AI...",
+        "employeeName": "Nome dipendente...",
+        "assignedTo": "Assegnato a: ",
+        "you": "Te",
+        "editTask": "Modifica Task"
     },
     "settings": {
         "aboutTitle": "Info",
@@ -14,15 +18,18 @@
         "buildNumber": "Numero Build: ",
         "chartsTitle": "Grafici",
         "taskCreated": "Task creati:",
+        "taskCreatedCanvas": "Task Creati",
         "taskCompleted": "Task completati:",
-        "chartsSettingsTitle": "Impostazioni Grafici:",
-        "colorToltip": "Colore ",
+        "taskCompletedCanvas": "Task Completati",
+        "chartsSettingsTitle": "Impostazioni Grafico:",
+        "colorTooltip": "Colore ",
         "tipTitle": "AIUTO:",
-        "tipDescription": "Clicca su o &nbsp;per vedere il progresso di un elemento.",
+        "tipDescription": "Clicca su {{taskCompleted}} o {{taskCreated}} per vedere il progresso di un elemento.",
         "settingsTitle": "Impostazioni:",
         "generalSettings": "Generali:",
         "markAsCompleted": "Segna come Completato",
         "changeBtn": "Cambia",
+        "enterCompanyNamePlaceholder": "Inserci il nuovo nome...",
         "userPreferences": "Preferenze Utente:",
         "disableAutoClose": "Disabilita l'auto-chiusura del pannello Impostazioni.",
         "enableCharacterLimit": "Attiva limite caratteri.",
@@ -32,10 +39,10 @@
         "lightTheme": " ☀️ Tema Chiaro",
         "webReferences": "Referenze Web:",
         "openOnGithub": "Apri su GitHub",
-        "seeLicens": "Vedi Licenza",
+        "seeLicense": "Vedi Licenza",
         "needHelpSettings": "Bisogno di Aiuto?",
         "leaveAFeedback": "Lascia un Feedback",
-        "writeBug": "Scrivi un Bug Report",
+        "writeBug": "Scrivi un Bug Report.",
         "leaveAFeedbackDot": "Lascia un Feedback.",
         "contactUs": "Contattaci",
         "actionsSettings": "Azioni:",
@@ -43,5 +50,11 @@
         "restartApplication": "Riavvia",
         "deleteData": "Elimina tutti i dati",
         "closePanel": "Chiudi pannello"
+    },
+    "popUps": {
+        "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome Task valido."
+    },
+    "errorTitles": {
+        "taskCreationError": "Errore creazione Task"
     }
 }
