@@ -1,5 +1,47 @@
 {
     "homePage": {
-        "tasks": "Tasks"
+        "tasks": "Tasks",
+        "maintenanceTasks": "Maintenance Tasks",
+        "outOfMaintenance": "Out Of Maintenance Tasks",
+        "noTasks": "No Tasks in this category.",
+        "previousVersionTooltip": "Previous version",
+        "newerVersionTooltip": "Newer version",
+        "taskNameTooltip": "Task name or /ai to open AI..." 
+    },
+    "settings": {
+        "aboutTitle": "About",
+        "latestVersionAvailable": "Latest version available: ",
+        "buildNumber": "Build Number: ",
+        "chartsTitle": "Charts",
+        "taskCreated": "Task created:",
+        "taskCompleted": "Task completed:",
+        "chartsSettingsTitle": "Charts Settings:",
+        "colorToltip": "Color ",
+        "tipTitle": "TIP:",
+        "tipDescription": "Click on or &nbsp;to see the progress of an individual item.",
+        "settingsTitle": "Settings:",
+        "generalSettings": "General:",
+        "markAsCompleted": "Mark as Completed",
+        "changeBtn": "Change",
+        "userPreferences": "User Preferences:",
+        "disableAutoClose": "Disables the auto-close of the settings panel.",
+        "enableCharacterLimit": "Enable character limit.",
+        "enableDoublePress": "Enable double-press checks.",
+        "appearanceSettings": "Appearance:",
+        "darkTheme": " 🌙 Dark Theme",
+        "lightTheme": " ☀️ Light Theme",
+        "webReferences": "Web References:",
+        "openOnGithub": "Open on GitHub",
+        "seeLicens": "See License",
+        "needHelpSettings": "Need help?",
+        "leaveAFeedback": "Leave a Feedback",
+        "writeBug": "Write a Bug report.",
+        "leaveAFeedbackDot": "Leave a Feedback.",
+        "contactUs": "Contact Us",
+        "actionsSettings": "Actions:",
+        "quitApplication": "Quit application",
+        "restartApplication": "Restart",
+        "deleteData": "Delete all data",
+        "closePanel": "Close panel"
     }
 }

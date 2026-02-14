@@ -1,5 +1,47 @@
 {
     "homePage": {
-        "tasks": "Da Fare"
+        "tasks": "Da Fare",
+        "maintenanceTasks": "In Manutenzione",
+        "outOfMaintenance": "Fuori Manutenzione",
+        "noTasks": "Nessun Task in questa categoria.",
+        "previousVersionTooltip": "Versione Precedente",
+        "newerVersionTooltip": "Nuova Versione",
+        "taskNameTooltip": "Nome del Task o /ai per l'assistente AI..." 
+    },
+    "settings": {
+        "aboutTitle": "Info",
+        "latestVersionAvailable": "Ultima versione disponibile: ",
+        "buildNumber": "Numero Build: ",
+        "chartsTitle": "Grafici",
+        "taskCreated": "Task creati:",
+        "taskCompleted": "Task completati:",
+        "chartsSettingsTitle": "Impostazioni Grafici:",
+        "colorToltip": "Colore ",
+        "tipTitle": "AIUTO:",
+        "tipDescription": "Clicca su o &nbsp;per vedere il progresso di un elemento.",
+        "settingsTitle": "Impostazioni:",
+        "generalSettings": "Generali:",
+        "markAsCompleted": "Segna come Completato",
+        "changeBtn": "Cambia",
+        "userPreferences": "Preferenze Utente:",
+        "disableAutoClose": "Disabilita l'auto-chiusura del pannello Impostazioni.",
+        "enableCharacterLimit": "Attiva limite caratteri.",
+        "enableDoublePress": "Attiva controllo doppio-tocco.",
+        "appearanceSettings": "Aspetto:",
+        "darkTheme": " 🌙 Tema Scuro",
+        "lightTheme": " ☀️ Tema Chiaro",
+        "webReferences": "Referenze Web:",
+        "openOnGithub": "Apri su GitHub",
+        "seeLicens": "Vedi Licenza",
+        "needHelpSettings": "Bisogno di Aiuto?",
+        "leaveAFeedback": "Lascia un Feedback",
+        "writeBug": "Scrivi un Bug Report",
+        "leaveAFeedbackDot": "Lascia un Feedback.",
+        "contactUs": "Contattaci",
+        "actionsSettings": "Azioni:",
+        "quitApplication": "Chiudi applicazione",
+        "restartApplication": "Riavvia",
+        "deleteData": "Elimina tutti i dati",
+        "closePanel": "Chiudi pannello"
     }
 }
