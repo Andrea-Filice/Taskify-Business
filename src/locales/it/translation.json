@@ -49,7 +49,9 @@
         "quitApplication": "Chiudi applicazione",
         "restartApplication": "Riavvia",
         "deleteData": "Elimina tutti i dati",
-        "closePanel": "Chiudi pannello"
+        "closePanel": "Chiudi pannello",
+        "languageApplication": "LINGUA APPLICAZIONE",
+        "themeApplication": "TEMA APPLICAZIONE"
     },
     "popUps": {
         "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome Task valido.",

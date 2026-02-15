@@ -49,7 +49,9 @@
         "quitApplication": "Quit application",
         "restartApplication": "Restart",
         "deleteData": "Delete all data",
-        "closePanel": "Close panel"
+        "closePanel": "Close panel",
+        "languageApplication": "APPLICATION LANGUAGE",
+        "themeApplication": "APPLICATION THEME"
     },
     "popUps": {
         "errorInvalidTaskName": "Invalid task name. Please enter a valid name.",
