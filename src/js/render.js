@@ -588,7 +588,7 @@ if (window.__taskify_render_loaded__) {
               created: Array(7).fill(0),
               completed: Array(7).fill(0)
             };
-            localStorage.setItem("daysToShow", 7)
+            localStorage.setItem("daysToShow", 7);
             api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
             this.updateUI();
             api.showAlert(window.i18n.t('popUps.dataReset'))
