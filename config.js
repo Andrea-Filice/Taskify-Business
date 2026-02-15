@@ -94,7 +94,7 @@ function createWindow() {
 
     const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
-      buttons: ['OK', "Cancel"],
+      buttons: ['Cancel', 'OK'],
       defaultId: 1,
       cancelId: 0,
       message,
@@ -102,7 +102,7 @@ function createWindow() {
       noLink: true,
       modal: true
     })
-    return result.response === 0
+    return result.response === 1
   })
 
   ipcMain.handle('get-translations', async (event, language) => {
