@@ -73,7 +73,7 @@
         "resetDataConfirm": "Are you sure you want to reset all data saved?",
         "restartConfirm": "Are you sure you want to restart the app?",
         "quitAppConfirm": "Are you sure you want to close the app?",
-        "spellcheckEnabled": "If enabled, this option will check the Grammar Errors of the user when writing a new Task."
+        "spellcheckEnabled": "If enabled, this option will check the grammar errors of the user when writing a new Task."
     },
     "errorTitles": {
         "taskCreationError": "Task Creation Error"
