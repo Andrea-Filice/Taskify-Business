@@ -12,9 +12,14 @@ if (window.__taskify_render_loaded__) {
   let companyName = undefined;
   let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
   let theme = localStorage.getItem("theme") || "dark";
+  let currentChoosedCategory;
+  console.log(currentChoosedCategory)
+
   const themeDropdown = document.getElementById("themeDropDown");
   const languageDropdown = document.getElementById("languageDropDown");
   const daysToShowDropdown = document.getElementById("daysToShowDropdown");
+  const defaultCategoryDropdown = document.getElementById("defaultCategoryDropdown");
+  const catButton = document.getElementById("categorySelection");
 
   const DEBUG = api.checkForDebug();
 
@@ -24,6 +29,12 @@ if (window.__taskify_render_loaded__) {
 
   daysToShowDropdown.value = localStorage.getItem("daysToShow");
   const daysToShow = parseInt(localStorage.getItem("daysToShow"));
+
+  ///CHECK IF defaultSelectedCategory is null
+  if(localStorage.getItem("defaultSelectedCategory") == null)
+    localStorage.setItem("defaultSelectedCategory", "softwareComponents")
+
+  currentChoosedCategory = localStorage.getItem("defaultSelectedCategory")
 
   //LOADING TODOs
   const loaded = api.loadTodosSync() || {};
@@ -37,12 +48,7 @@ if (window.__taskify_render_loaded__) {
     created: Array(daysToShow).fill(0),
     completed: Array(daysToShow).fill(0)
   };
-
-  ///MARK: UI ANIMATIONS
-  //*CHANGE THE CATEGORY
-  let currentChoosedCategory = 'softwareComponents';
-  const catButton = document.getElementById("categorySelection");
-
+  
   catButton.addEventListener('click', function(event){
     if(!event.detail || event.detail === 1 && doublePressChecks){
       //*RESET PREVIOUS ANIMATION
@@ -207,7 +213,11 @@ if (window.__taskify_render_loaded__) {
         
         this.updateChart();
         this.updateUI();
-      })
+      });
+      defaultCategoryDropdown.addEventListener("change", () => {
+        localStorage.setItem("defaultSelectedCategory", defaultCategoryDropdown.value);
+        currentChoosedCategory = defaultCategoryDropdown.value;
+      });
       this.updateUI();
     }
 
@@ -594,7 +604,7 @@ if (window.__taskify_render_loaded__) {
         return;
       }
 
-      api.showConfirm(window.i18n.t("popUps.markCategoryComplete"), window.i18n.t('cancelBtn'))
+      api.showConfirm(window.i18n.t("popUps.markCategoryComplete"))
       .then(userResponse => {
         if (!userResponse) return;
         const list = this.todos[categoryKey];
@@ -964,8 +974,26 @@ if (window.__taskify_render_loaded__) {
     if (window.todoManager) 
       window.todoManager.updateUI();
 
+    //*CHANGE THE CATEGORY
+    defaultCategoryDropdown.value = localStorage.getItem("defaultSelectedCategory");
+    
+    catButton.style.animation = "none";
+    void catButton.offsetWidth;
+
+    //*SELECT THE CATEGORY
+    currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
+    catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
+
+    if(currentChoosedCategory != "softwareComponents")
+      catButton.classList.toggle("out");
+    
+    console.log("[ℹ️ INFO] Category switching: " + currentChoosedCategory)
+
+    //*RESTART THE ANIMATION
+    catButton.style.animation = "animClickedButton ease-in-out 500ms";
+
     console.log("[ℹ️ INFO] core platform: " + api.platform)
     fetchVersion();
     fetchBuildNumber();
-  })
+})
 }

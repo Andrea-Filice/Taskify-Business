@@ -35,8 +35,8 @@
         "enableCharacterLimit": "Enable character limit.",
         "enableDoublePress": "Enable double-press checks.",
         "appearanceSettings": "Appearance:",
-        "darkTheme": " 🌙 Dark Theme",
-        "lightTheme": " ☀️ Light Theme",
+        "darkTheme": " 🌙  Dark Theme",
+        "lightTheme": " ☀️  Light Theme",
         "webReferences": "Web References:",
         "openOnGithub": "Open on GitHub",
         "seeLicense": "See License",
@@ -52,7 +52,10 @@
         "closePanel": "Close panel",
         "languageApplication": "APPLICATION LANGUAGE",
         "themeApplication": "APPLICATION THEME",
-        "daysToShow": "Days to show: "
+        "daysToShow": "Days to show: ",
+        "defaultCat": "DEFAULT CATEGORY",
+        "outMaintenanceSelect": "🟥 OUT OF MAINTENANCE TASKS",
+        "maintenanceSelect": "🟦 MAINTENANCE TASKS"
     },
     "popUps": {
         "errorInvalidTaskName": "Invalid task name. Please enter a valid name.",

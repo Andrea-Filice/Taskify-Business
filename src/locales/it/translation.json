@@ -35,8 +35,8 @@
         "enableCharacterLimit": "Attiva limite caratteri.",
         "enableDoublePress": "Attiva controllo doppio-tocco.",
         "appearanceSettings": "Aspetto:",
-        "darkTheme": " 🌙 Tema Scuro",
-        "lightTheme": " ☀️ Tema Chiaro",
+        "darkTheme": " 🌙  Tema Scuro",
+        "lightTheme": " ☀️  Tema Chiaro",
         "webReferences": "Collegamenti Web:",
         "openOnGithub": "Apri su GitHub",
         "seeLicense": "Vedi Licenza",
@@ -52,7 +52,10 @@
         "closePanel": "Chiudi pannello",
         "languageApplication": "LINGUA APPLICAZIONE",
         "themeApplication": "TEMA APPLICAZIONE",
-        "daysToShow": "Giorni da mostrare: "
+        "daysToShow": "Giorni da mostrare: ",
+        "defaultCat": "CATEGORIA DI DEFAULT ",
+        "outMaintenanceSelect": "🟥 FUORI MANUTENZIONE",
+        "maintenanceSelect": "🟦 IN MANUTENZIONE"
     },
     "popUps": {
         "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome Task valido.",

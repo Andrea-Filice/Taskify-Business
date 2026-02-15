@@ -38,7 +38,7 @@
                 <button id="closeEmployeeBtn" style="border: none; border-radius: 5px; font-size: 23px; font-family: 'General Sans', sans-serif;"><img src="assets/_close.png" alt="Close" height="25px" width="25px" style="position: relative; top: 3px; transform: scale(0.7);" draggable="false"></button>
             </div>
             <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" spellcheck="false"/ data-i18n-placeholder="homePage.taskNameTooltip">
-            <button id="categorySelection" data-i18n="homePage.maintenanceTasks">Maintenance Tasks</button>
+            <button id="categorySelection"></button>
             <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px" draggable="false"></button>
         </div>
         <div class="container" id="app">
@@ -145,6 +145,11 @@
                             <span data-i18n="settings.changeBtn"></span>
                         </button>
                     </div>
+                    <h3 style="color: rgb(170, 167, 167);" data-i18n="settings.defaultCat"></h3>
+                    <select name="selectDeafultCategory" id="defaultCategoryDropdown" class="appTheme">
+                        <option value="softwareComponents" data-i18n="settings.outMaintenanceSelect"></option>
+                        <option value="fuoriManutenzione" data-i18n="settings.maintenanceSelect"></option>
+                    </select>
                     <br>
                     <h2 style="text-align: center; font-family: 'General Sans', sans-serif;">
                         <img src="assets/_userSettings.png" draggable="false" height="20px" width="20px">
