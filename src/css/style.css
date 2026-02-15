@@ -423,7 +423,7 @@ option{
     color: var(--color);
 }
 
-.appTheme{width: 100%;}
+.appTheme, .appLanguage{width: 100%;}
 
 .sidebar-ai {
     height: 100%;

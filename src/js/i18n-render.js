@@ -1,4 +1,5 @@
 class I18n {
+
   constructor() {
     this.translations = {};
     this.currentLanguage = 'en';

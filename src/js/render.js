@@ -13,6 +13,7 @@ if (window.__taskify_render_loaded__) {
   let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
   let theme = localStorage.getItem("theme") || "dark";
   const themeDropdown = document.getElementById("themeDropDown");
+  const languageDropdown = document.getElementById("languageDropDown");
 
   const DEBUG = api.checkForDebug();
 
@@ -168,10 +169,15 @@ if (window.__taskify_render_loaded__) {
               .addEventListener('change', () => this.updateUI())
       document.getElementById('doublePressChecks')
               .addEventListener('click', () => this.toggleDoublePressChecks());
-      themeDropdown.addEventListener("change", () =>{
+      themeDropdown.addEventListener("change", () => {
               htmlElement.setAttribute('data-theme', themeDropdown.value);
-              this.updateUI();
-      })
+              this.updateUI();})
+      languageDropdown.addEventListener('change', async () => {
+          const newLanguage = languageDropdown.value;
+          await window.i18n.changeLanguage(newLanguage);
+          window.i18n.translatePage();;
+          this.updateUI();
+      });
       this.updateUI();
     }
 
@@ -918,6 +924,10 @@ if (window.__taskify_render_loaded__) {
   //ON LOAD
   window.addEventListener("load", async () => {
     await window.i18n.init();
+
+    const currentLang = window.i18n.getCurrentLanguage();
+    if (languageDropdown) 
+      languageDropdown.value = currentLang;
 
     ///When loaded the languages, reset the UI
     if (window.todoManager) 
