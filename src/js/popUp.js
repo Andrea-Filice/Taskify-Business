@@ -48,18 +48,19 @@ function submitInput() {
   const newerVersion = inputNewVersion.value.trim();
 
   //SEND NEW VALUES
-  if(inputName)
+  if(inputName && inputName != originalTaskName){
     api.inputSend(inputName, "task_name")
-  else
+    window.close();
+  }
+  else if(!inputName)
     api.showAlert(window.i18n.t('editPopUp.errorEdit'))
   if(previousVersion && !newerVersion || !previousVersion && newerVersion)
     api.showAlert(window.i18n.t('editPopUp.errorVersions'))
   else if(previousVersion && newerVersion){
     api.inputSend(previousVersion, "prev_version");
     api.inputSend(newerVersion, "next_version");
+    window.close();
   }
-
-  window.close();
 }
 
 function DeleteTask(){
