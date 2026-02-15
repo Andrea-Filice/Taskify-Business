@@ -33,7 +33,7 @@ if (window.__taskify_render_loaded__) {
   if(localStorage.getItem("defaultSelectedCategory") == null)
     localStorage.setItem("defaultSelectedCategory", "softwareComponents")
 
-  currentChoosedCategory = localStorage.getItem("defaultSelectedCategory")
+  currentChoosedCategory = localStorage.getItem("defaultSelectedCategory") || "softwareComponents"
 
   //LOADING TODOs
   const loaded = api.loadTodosSync() || {};

@@ -31,7 +31,7 @@
         "changeBtn": "Cambia",
         "enterCompanyNamePlaceholder": "Inserci il nuovo nome...",
         "userPreferences": "Preferenze Utente:",
-        "disableAutoClose": "Disabilita l'auto-chiusura del pannello Impostazioni.",
+        "disableAutoClose": "Disattiva l'auto-chiusura del pannello Impostazioni.",
         "enableCharacterLimit": "Attiva limite caratteri.",
         "enableDoublePress": "Attiva controllo doppio-tocco.",
         "appearanceSettings": "Aspetto:",
@@ -63,7 +63,7 @@
         "invalidVersionFormat": "Formato versioni invalido. Inserisci un formato valido.",
         "dataReset": "Dati rimossi correttamente. L'App si riavvierà a presto.",
         "markCategoryComplete" : "Sei sicuro di voler segnare come completato questa categoria?",
-        "markedAsCompleted": "Tasks segnato come \"Completato\"!",
+        "markedAsCompleted": "Task segnati come \"Completato\"!",
         "invalidCharacters": "Nome azienda non valido. Minimo 8 caratteri.",
         "changeCompanyName": "Sei sicuro di voler cambiare il nome dell'azienda a ",
         "companyChanged": "Nome azienda cambiato correttamente!",
@@ -117,7 +117,7 @@
         "createBtn": "Crea"
     },
     "htmlTitles": {
-        "companyCreation": "Taskify Business - Crea azienda",
+        "companyCreation": "Taskify Business - Creazione azienda",
         "editPopUp": "Taskify Business - Modifica Task"
     },
     "languages": {
