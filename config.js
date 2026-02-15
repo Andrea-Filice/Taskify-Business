@@ -132,14 +132,15 @@ function createWindow() {
     const locale = app.getLocale();
     const language = locale.split('-')[0];
     
-    const supportedLanguages = ['en', 'it'];
+    const supportedLanguages = ['en', 'it', 'es'];
     return supportedLanguages.includes(language) ? language : 'en';
   });
 
   ipcMain.handle('get-supported-languages', () => {
     return [
       { code: 'en', name: 'English' },
-      { code: 'it', name: 'Italiano' }
+      { code: 'it', name: 'Italiano' },
+      { code: 'es', name: 'Español' }
     ];
   });
 

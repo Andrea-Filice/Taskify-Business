@@ -36,7 +36,7 @@ class I18n {
       if (value && typeof value === 'object') 
         value = value[k];
         else 
-            break;
+          break;
     }
 
     if (!value || typeof value === 'object') 

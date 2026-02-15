@@ -134,8 +134,6 @@ if (window.__taskify_render_loaded__) {
       doublePressChecks = typeof loaded.doublePressChecks === 'boolean' ? loaded.doublePressChecks : true;
       spellcheckEnabled = typeof loaded.spellcheckEnabled === 'boolean' ? loaded.spellcheckEnabled : true;
 
-      console.log(spellcheckEnabled)
-
       //*THEME SETTING
       themeDropdown.value = theme;
       htmlElement.setAttribute('data-theme', themeDropdown.value);

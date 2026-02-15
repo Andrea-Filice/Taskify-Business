@@ -11,7 +11,7 @@
   - [New in 11.10.0](https://github.com/npm/cli/releases/tag/v11.10.0)
 
 # New Features
-[1491837] Languages added! Now you can choose between 🇮🇹 Italian and 🇬🇧/🇺🇸 English!
+[1491837] Languages added! Now you can choose between 🇮🇹 Italian, 🇪🇸 Spanish and 🇬🇧/🇺🇸 English!
 [fd45eaf] Redesigned settings with subtitles and much more!
 [b961018] Added the option to choose how many days to show in the chart! (You can find it in **Settings** > **Chart Settings** > **Days to Show**).
 [175d140] Added an option where you can customize the default Category of the button for it!
