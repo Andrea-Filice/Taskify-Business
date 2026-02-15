@@ -51,7 +51,8 @@
         "deleteData": "Delete all data",
         "closePanel": "Close panel",
         "languageApplication": "APPLICATION LANGUAGE",
-        "themeApplication": "APPLICATION THEME"
+        "themeApplication": "APPLICATION THEME",
+        "daysToShow": "Days to show: "
     },
     "popUps": {
         "errorInvalidTaskName": "Invalid task name. Please enter a valid name.",

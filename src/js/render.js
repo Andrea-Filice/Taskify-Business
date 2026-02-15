@@ -14,20 +14,28 @@ if (window.__taskify_render_loaded__) {
   let theme = localStorage.getItem("theme") || "dark";
   const themeDropdown = document.getElementById("themeDropDown");
   const languageDropdown = document.getElementById("languageDropDown");
+  const daysToShowDropdown = document.getElementById("daysToShowDropdown");
 
   const DEBUG = api.checkForDebug();
+
+  //CHECK IF daysToShow is null
+  if(localStorage.getItem("daysToShow") == null)
+    localStorage.setItem("daysToShow", 7);
+
+  daysToShowDropdown.value = localStorage.getItem("daysToShow");
+  const daysToShow = parseInt(localStorage.getItem("daysToShow"));
 
   //LOADING TODOs
   const loaded = api.loadTodosSync() || {};
 
   let chartData = loaded.chartData || {
-    labels: Array(7).fill('').map((_, i) => {
+    labels: Array(daysToShow).fill('').map((_, i) => {
       const date = new Date();
-      date.setDate(date.getDate() - (6 - i)); 
+      date.setDate(date.getDate() - ((daysToShow - 1) - i)); 
       return date.toLocaleDateString();
     }),
-    created: Array(7).fill(0),
-    completed: Array(7).fill(0)
+    created: Array(daysToShow).fill(0),
+    completed: Array(daysToShow).fill(0)
   };
 
   ///MARK: UI ANIMATIONS
@@ -178,6 +186,28 @@ if (window.__taskify_render_loaded__) {
           window.i18n.translatePage();;
           this.updateUI();
       });
+      daysToShowDropdown.addEventListener('change', () =>{
+        const newDays = parseInt(daysToShowDropdown.value);
+        localStorage.setItem("daysToShow", newDays);
+        
+        chartData = {
+            labels: Array(newDays).fill('').map((_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() - ((newDays - 1) - i)); 
+                return date.toLocaleDateString();
+            }),
+            created: Array(newDays).fill(0),
+            completed: Array(newDays).fill(0)
+        };
+        
+        if (tasksChart) {
+            tasksChart.destroy();
+            tasksChart = null;
+        }
+        
+        this.updateChart();
+        this.updateUI();
+      })
       this.updateUI();
     }
 
@@ -541,6 +571,7 @@ if (window.__taskify_render_loaded__) {
               created: Array(7).fill(0),
               completed: Array(7).fill(0)
             };
+            localStorage.setItem("daysToShow", 7)
             api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
             this.updateUI();
             api.showAlert(window.i18n.t('popUps.dataReset'))

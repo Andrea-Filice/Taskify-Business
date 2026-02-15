@@ -51,7 +51,8 @@
         "deleteData": "Elimina tutti i dati",
         "closePanel": "Chiudi pannello",
         "languageApplication": "LINGUA APPLICAZIONE",
-        "themeApplication": "TEMA APPLICAZIONE"
+        "themeApplication": "TEMA APPLICAZIONE",
+        "daysToShow": "Giorni da mostrare: "
     },
     "popUps": {
         "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome Task valido.",
