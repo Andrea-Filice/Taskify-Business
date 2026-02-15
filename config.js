@@ -12,6 +12,9 @@ let categoryModifyTask, indexModifyTask, characterLimit;
 const dataPath = path.join(app.getPath('userData'), 'todos.json');
 const DEBUG = process.argv.includes("--dev");
 
+///Sets the name of the about section in macOS
+app.setName("Taskify Business")
+
 let todos = {
   softwareComponents: [],
   fuoriManutenzione: [],
