@@ -55,7 +55,8 @@
         "daysToShow": "Days to show: ",
         "defaultCat": "DEFAULT CATEGORY",
         "outMaintenanceSelect": "🟥 OUT OF MAINTENANCE TASKS",
-        "maintenanceSelect": "🟦 MAINTENANCE TASKS"
+        "maintenanceSelect": "🟦 MAINTENANCE TASKS",
+        "enableSpellCheck": "Enable SpellCheck."
     },
     "popUps": {
         "errorInvalidTaskName": "Invalid task name. Please enter a valid name.",
@@ -71,7 +72,8 @@
         "doubleTap": "When enabled, enables double-tap control on the Category button, allowing for faster category switching.",
         "resetDataConfirm": "Are you sure you want to reset all data saved?",
         "restartConfirm": "Are you sure you want to restart the app?",
-        "quitAppConfirm": "Are you sure you want to close the app?"
+        "quitAppConfirm": "Are you sure you want to close the app?",
+        "spellcheckEnabled": "If enabled, this option will check the Grammar Errors of the user when writing a new Task."
     },
     "errorTitles": {
         "taskCreationError": "Task Creation Error"

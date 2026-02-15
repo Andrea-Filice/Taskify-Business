@@ -8,12 +8,11 @@ if (window.__taskify_render_loaded__) {
 
   //VARIABLES
   let taskCreated = 0, taskCompleted = 0;
-  let autoClose = false, characterLimit = true, doublePressChecks = true;
+  let autoClose = false, characterLimit = true, doublePressChecks = true, spellcheckEnabled = false;
   let companyName = undefined;
   let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
   let theme = localStorage.getItem("theme") || "dark";
   let currentChoosedCategory;
-  console.log(currentChoosedCategory)
 
   const themeDropdown = document.getElementById("themeDropDown");
   const languageDropdown = document.getElementById("languageDropDown");
@@ -133,6 +132,9 @@ if (window.__taskify_render_loaded__) {
       companyName = loaded.companyName || undefined;
       characterLimit = typeof loaded.characterLimit === 'boolean' ? loaded.characterLimit : true;
       doublePressChecks = typeof loaded.doublePressChecks === 'boolean' ? loaded.doublePressChecks : true;
+      spellcheckEnabled = typeof loaded.spellcheckEnabled === 'boolean' ? loaded.spellcheckEnabled : true;
+
+      console.log(spellcheckEnabled)
 
       //*THEME SETTING
       themeDropdown.value = theme;
@@ -140,6 +142,7 @@ if (window.__taskify_render_loaded__) {
 
       //SET DEFAULT BOOLEAN VALUES
       this.inputCharactersUpdate(characterLimit);
+      this.setSpellcheckValue(spellcheckEnabled)
 
       document.getElementById('colorTaskCreated').value = loaded.taskCreatedColor || "blue";
       document.getElementById('colorTaskCompleted').value = loaded.taskCompletedColor || "green";
@@ -183,6 +186,8 @@ if (window.__taskify_render_loaded__) {
               .addEventListener('change', () => this.updateUI())
       document.getElementById('doublePressChecks')
               .addEventListener('click', () => this.toggleDoublePressChecks());
+      document.getElementById("spellcheck")
+              .addEventListener('click', () => this.toggleSpellcheck());
       themeDropdown.addEventListener("change", () => {
               htmlElement.setAttribute('data-theme', themeDropdown.value);
               this.updateUI();})
@@ -252,7 +257,7 @@ if (window.__taskify_render_loaded__) {
       })
 
       taskCreated++;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       this.updateUI();
     }
 
@@ -315,7 +320,7 @@ if (window.__taskify_render_loaded__) {
     removeTodo(category, index) {
       this.todos[category].splice(index, 1);
       taskCompleted++;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       updateDailyData(); 
       this.updateUI();
     }
@@ -326,6 +331,7 @@ if (window.__taskify_render_loaded__) {
       const autoCloseCheckbox = document.getElementById('checkbox');
       const characterLimitCheckbox = document.getElementById('characterLimit');
       const doublePressChecksCheckbox = document.getElementById('doublePressChecks');
+      const spellcheckCheckbox = document.getElementById('spellcheck');
       const dropDowntaskCreated = document.getElementById('colorTaskCreated').value;
       const dropDowntaskCompleted = document.getElementById('colorTaskCompleted').value;
       const tipText = window.i18n.t('settings.tipDescription')
@@ -341,6 +347,7 @@ if (window.__taskify_render_loaded__) {
       autoCloseCheckbox.checked = autoClose;
       characterLimitCheckbox.checked = characterLimit;
       doublePressChecksCheckbox.checked = doublePressChecks;
+      spellcheckCheckbox.checked = spellcheckEnabled;
 
       //* COLOR SELECTION
       //* TASK COMPLETED
@@ -401,7 +408,7 @@ if (window.__taskify_render_loaded__) {
       taskCompletedColor = document.getElementById('colorTaskCompleted').value;
 
       //*SAVE DATAS
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       localStorage.setItem("theme", themeDropdown.value);
 
       document.title = `Taskify Dashboard - ${companyName}`;
@@ -582,7 +589,7 @@ if (window.__taskify_render_loaded__) {
               completed: Array(7).fill(0)
             };
             localStorage.setItem("daysToShow", 7)
-            api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+            api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
             this.updateUI();
             api.showAlert(window.i18n.t('popUps.dataReset'))
             .then(() => {window.location.href = "boot.html";});
@@ -611,7 +618,7 @@ if (window.__taskify_render_loaded__) {
         taskCompleted += list.length;
 
         this.todos[categoryKey] = [];
-        api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+        api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
         this.updateUI();
         api.showAlert(window.i18n.t("popUps.markedAsCompleted"));
       });
@@ -623,11 +630,17 @@ if (window.__taskify_render_loaded__) {
         window.addEventListener('scroll', this.handleScroll);
       else
         window.removeEventListener('scroll', this.handleScroll);
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
     }
 
     toggleDoublePressChecks(){
       doublePressChecks = !doublePressChecks;
+      this.updateUI();
+    }
+
+    toggleSpellcheck(){
+      spellcheckEnabled = !spellcheckEnabled;
+      this.setSpellcheckValue(spellcheckEnabled);
       this.updateUI();
     }
     
@@ -657,7 +670,7 @@ if (window.__taskify_render_loaded__) {
         .then(userResponse => {
           if (!userResponse) return;
           companyName = newName;
-          api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+          api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
           document.getElementById('nameCompany').value = '';
           api.showAlert(window.i18n.t('popUps.companyChanged'));
           this.updateUI();
@@ -721,7 +734,14 @@ if (window.__taskify_render_loaded__) {
             e.setAttribute('maxlength', 20);
         });
       }
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
+    }
+
+    setSpellcheckValue(value){
+        const inputs = document.querySelectorAll('input[type="text"], textarea');
+        inputs.forEach(input => {
+            input.setAttribute('spellcheck', value ? "true" : "false");
+        });
     }
   }();
 
@@ -812,14 +832,14 @@ if (window.__taskify_render_loaded__) {
       window.todoManager.todos[category][index].text = taskData.text;
       window.todoManager.todos[category][index].prevVersion = taskData.prevVersion;
       window.todoManager.todos[category][index].nextVersion = taskData.nextVersion;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       window.todoManager.updateUI();
   });
 
   api.onDeleteTask((category, index) => {
       window.todoManager.todos[category].splice(index, 1);
       taskCreated--;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       window.todoManager.updateUI();
   });
 
@@ -964,36 +984,36 @@ if (window.__taskify_render_loaded__) {
 
   //ON LOAD
   window.addEventListener("load", async () => {
-    await window.i18n.init();
+      await window.i18n.init();
 
-    const currentLang = window.i18n.getCurrentLanguage();
-    if (languageDropdown) 
-      languageDropdown.value = currentLang;
+      const currentLang = window.i18n.getCurrentLanguage();
+      if (languageDropdown) 
+        languageDropdown.value = currentLang;
 
-    ///When loaded the languages, reset the UI
-    if (window.todoManager) 
-      window.todoManager.updateUI();
+      ///When loaded the languages, reset the UI
+      if (window.todoManager) 
+        window.todoManager.updateUI();
 
-    //*CHANGE THE CATEGORY
-    defaultCategoryDropdown.value = localStorage.getItem("defaultSelectedCategory");
-    
-    catButton.style.animation = "none";
-    void catButton.offsetWidth;
+      //*CHANGE THE CATEGORY
+      defaultCategoryDropdown.value = localStorage.getItem("defaultSelectedCategory");
+      
+      catButton.style.animation = "none";
+      void catButton.offsetWidth;
 
-    //*SELECT THE CATEGORY
-    currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
-    catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
+      //*SELECT THE CATEGORY
+      currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
+      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
 
-    if(currentChoosedCategory != "softwareComponents")
-      catButton.classList.toggle("out");
-    
-    console.log("[ℹ️ INFO] Category switching: " + currentChoosedCategory)
+      if(currentChoosedCategory != "softwareComponents")
+        catButton.classList.toggle("out");
+      
+      console.log("[ℹ️ INFO] Category switching: " + currentChoosedCategory)
 
-    //*RESTART THE ANIMATION
-    catButton.style.animation = "animClickedButton ease-in-out 500ms";
+      //*RESTART THE ANIMATION
+      catButton.style.animation = "animClickedButton ease-in-out 500ms";
 
-    console.log("[ℹ️ INFO] core platform: " + api.platform)
-    fetchVersion();
-    fetchBuildNumber();
-})
+      console.log("[ℹ️ INFO] core platform: " + api.platform)
+      fetchVersion();
+      fetchBuildNumber();
+  })
 }

@@ -29,15 +29,15 @@
         </div>
         <div class="app" id="AppTasks">
             <div class="version-inputs" id="versions">
-                <input type="text" id="prevVersion" placeholder="Previous version" spellcheck="false" data-i18n-title="homePage.previousVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.previousVersionTooltip">
-                <input type="text" id="nextVersion" placeholder="Newer version" spellcheck="false" data-i18n-title="homePage.newerVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.newerVersionTooltip">
+                <input type="text" id="prevVersion" placeholder="Previous version" data-i18n-title="homePage.previousVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.previousVersionTooltip">
+                <input type="text" id="nextVersion" placeholder="Newer version" data-i18n-title="homePage.newerVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.newerVersionTooltip">
                 <button id="employeeBtn" style="border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" data-i18n-title="titles.employee" draggable="false"></button>
             </div>
             <div class="employee-inputs" id="employeeIn">
-                <input type="text" id="employeeInput" placeholder="Employee Name..." spellcheck="false" data-i18n-title="homePage.employeeName" maxlength="10" style="width: 390px;" data-i18n-placeholder="homePage.employeeName">
+                <input type="text" id="employeeInput" placeholder="Employee Name..." data-i18n-title="homePage.employeeName" maxlength="10" style="width: 390px;" data-i18n-placeholder="homePage.employeeName">
                 <button id="closeEmployeeBtn" style="border: none; border-radius: 5px; font-size: 23px; font-family: 'General Sans', sans-serif;"><img src="assets/_close.png" alt="Close" height="25px" width="25px" style="position: relative; top: 3px; transform: scale(0.7);" draggable="false"></button>
             </div>
-            <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" spellcheck="false"/ data-i18n-placeholder="homePage.taskNameTooltip">
+            <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" data-i18n-placeholder="homePage.taskNameTooltip">
             <button id="categorySelection"></button>
             <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px" draggable="false"></button>
         </div>
@@ -139,7 +139,7 @@
                     </div>
                     <br>
                     <div class="cleanSection">
-                        <input id="nameCompany" type="text" required placeholder="Enter new Company name..." spellcheck="false" data-i18n-placeholder="settings.enterCompanyNamePlaceholder">
+                        <input id="nameCompany" type="text" required placeholder="Enter new Company name..." data-i18n-placeholder="settings.enterCompanyNamePlaceholder">
                         <button id="changeNameBtn" class="cleanSectionBtn">
                             <img src="assets/_editCompanyName.png" alt="Edit Company Name" height="20px" width="20px" class="imageCheckbox" draggable="false" style="top: 2px;">
                             <span data-i18n="settings.changeBtn"></span>
@@ -171,7 +171,13 @@
                     <label for="doublePressChecks" style="font-size: 20px;">
                         <img src="assets/_touchIcon.png" alt="Touch Limit" height="25px" width="25px" class="imageCheckbox" draggable="false">
                         <span data-i18n="settings.enableDoublePress"></span>
-                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.doubleTap')" src="assets/_about.png" width="20px" height="20px" data-i18n-title="popUps.doubleTap"><br>
+                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.doubleTap')" src="assets/_about.png" width="20px" height="20px" data-i18n-title="popUps.doubleTap"><br><br>
+
+                    <input type="checkbox" id="spellcheck" style="transform: scale(1.7);">
+                    <label for="spellcheck" style="font-size: 20px;">
+                        <img src="assets/_spellcheck.png" alt="SpellCheck" height="25px" width="25px" class="imageCheckbox" draggable="false">
+                        <span data-i18n="settings.enableSpellCheck"></span>
+                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.spellcheckEnabled')" src="assets/_about.png" width="20px" height="20px" data-i18n-title="popUps.spellcheckEnabled"><br>
 
                     <h2 style="text-align: center; font-family: 'General Sans', sans-serif;">
                         <img src="assets/_appearance.png" draggable="false" height="20px" width="20px">
@@ -261,7 +267,7 @@
                 <h2 style="margin-top: -35px; font-family: 'General Sans', sans-serif;" class="assistantText">AI Assistant <img src="assets/_betaIcon.png" height="40px" width="40px" style="margin-top: 10px;" draggable="false"></h2>
                 <div id="aiChatHistory" class="ai-chat-history"></div>
                 <div class="ai-chat-input-row">
-                    <input id="aiInputSide" type="text" placeholder="Write a command..." autocomplete="on" style="display: block; width: 70%;" spellcheck="false"/>
+                    <input id="aiInputSide" type="text" placeholder="Write a command..." autocomplete="on" style="display: block; width: 70%;"/>
                     <button id="aiSendBtn" style="font-family: 'Switzer', sans-serif; height: 100%;"><img src="assets/_send.png" height="20px" width="20px" draggable="false"></button>
                 </div>
             </div>

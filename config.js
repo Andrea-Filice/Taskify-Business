@@ -23,7 +23,8 @@ let todos = {
   taskCompletedColor : "green",
   taskCreatedColor: "blue",
   characterLimit: true,
-  doublePressChecks: true
+  doublePressChecks: true,
+  spellcheckEnabled: false
 }
 
 function loadTodosFromDisk() {
@@ -40,6 +41,7 @@ function loadTodosFromDisk() {
       todos.taskCreatedColor = todos.taskCreatedColor || "blue"
       todos.characterLimit = typeof todos.characterLimit === 'boolean' ? todos.characterLimit : true
       todos.doublePressChecks = typeof todos.doublePressChecks === 'boolean' ? todos.doublePressChecks : true
+      todos.spellcheckEnabled = typeof todos.spellcheckEnabled === 'boolean' ? todos.spellcheckEnabled : false
     }
   } catch (err) {
       console.error(err)
@@ -54,7 +56,8 @@ function loadTodosFromDisk() {
         taskCompletedColor : "green",
         taskCreatedColor: "blue",
         characterLimit: true,
-        doublePressChecks: true
+        doublePressChecks: true,
+        spellcheckEnabled: false
       }
   }
 }

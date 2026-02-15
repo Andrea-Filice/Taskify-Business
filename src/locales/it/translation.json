@@ -55,7 +55,8 @@
         "daysToShow": "Giorni da mostrare: ",
         "defaultCat": "CATEGORIA DI DEFAULT ",
         "outMaintenanceSelect": "🟥 FUORI MANUTENZIONE",
-        "maintenanceSelect": "🟦 IN MANUTENZIONE"
+        "maintenanceSelect": "🟦 IN MANUTENZIONE",
+        "enableSpellCheck": "Attiva SpellCheck."
     },
     "popUps": {
         "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome Task valido.",
@@ -71,7 +72,8 @@
         "doubleTap": "Quando attivata, controlla il tocco doppio nel pulsante per cambiare categoria, permettendo una velocià maggiore nello Switch di essa.",
         "resetDataConfirm": "Sei sicuro di voler eliminare tutti i dati?",
         "restartConfirm": "Sei sicuro di voler riavviare l'app?",
-        "quitAppConfirm": "Sei sicuro di voler chiudere l'app?"
+        "quitAppConfirm": "Sei sicuro di voler chiudere l'app?",
+        "spellcheckEnabled": "Se attivata, questa opzione controlla gli errori Grammaticali nella creazione del Task."
     },
     "errorTitles": {
         "taskCreationError": "Errore creazione Task"
