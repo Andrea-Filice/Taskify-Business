@@ -1,8 +1,8 @@
 # Release Notes for Taskify Business 1.11.0
 
 # Stack Upgrades
-- electron-builder `26.8.0`
-  - [New in 26.8.0](https://github.com/electron-userland/electron-builder/releases/tag/electron-builder%4026.8.0)
+- electron-builder `26.8.1`
+  - [New in 26.8.0](https://github.com/electron-userland/electron-builder/releases/tag/electron-builder%4026.8.1)
 - dotenv `17.3.1`
   - [New in 17.3.1](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md)
 - Electron `40.4.1`
