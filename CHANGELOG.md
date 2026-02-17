@@ -1,6 +1,8 @@
 # Release Notes for Taskify Business 1.11.0
 
 # Stack Upgrades
+- supabase-js `2.96.0`
+  - [New in 2.96.0](https://github.com/supabase/supabase-js/releases/tag/v2.96.0)
 - electron-builder `26.8.1`
   - [New in 26.8.0](https://github.com/electron-userland/electron-builder/releases/tag/electron-builder%4026.8.1)
 - dotenv `17.3.1`
