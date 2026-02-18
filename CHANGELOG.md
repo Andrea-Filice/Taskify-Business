@@ -2,9 +2,9 @@
 
 # Stack Upgrades
 - supabase-js `2.97.0`
-  - [New in 2.97.0](https://github.com/supabase/supabase-js/releases/tag/v2.96ì7.0)
+  - [New in 2.97.0](https://github.com/supabase/supabase-js/releases/tag/v2.97.0)
 - electron-builder `26.8.1`
-  - [New in 26.8.0](https://github.com/electron-userland/electron-builder/releases/tag/electron-builder%4026.8.1)
+  - [New in 26.8.1](https://github.com/electron-userland/electron-builder/releases/tag/electron-builder%4026.8.1)
 - dotenv `17.3.1`
   - [New in 17.3.1](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md)
 - Electron `40.4.1`
