@@ -7,8 +7,8 @@
   - [New in 26.8.1](https://github.com/electron-userland/electron-builder/releases/tag/electron-builder%4026.8.1)
 - dotenv `17.3.1`
   - [New in 17.3.1](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md)
-- Electron `40.4.1`
-  - [New in 40.4.1](https://github.com/electron/electron/releases/tag/v40.4.1)
+- Electron `40.6.0`
+  - [New in 40.6.0](https://github.com/electron/electron/releases/tag/v40.6.0)
 - npm `11.10.0`
   - [New in 11.10.0](https://github.com/npm/cli/releases/tag/v11.10.0)
 
