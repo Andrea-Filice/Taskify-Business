@@ -9,8 +9,8 @@
   - [New in 17.3.1](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md)
 - Electron `40.6.0`
   - [New in 40.6.0](https://github.com/electron/electron/releases/tag/v40.6.0)
-- npm `11.10.0`
-  - [New in 11.10.0](https://github.com/npm/cli/releases/tag/v11.10.0)
+- npm `11.10.1`
+  - [New in 11.10.1](https://github.com/npm/cli/releases/tag/v11.10.1)
 
 # New Features
 [1491837] Languages added! Now you can choose between 🇮🇹 Italian, 🇪🇸 Spanish and 🇬🇧/🇺🇸 English!
