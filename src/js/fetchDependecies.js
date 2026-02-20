@@ -26,10 +26,10 @@ async function startUpdates(){
 
     currentVersion = localData.Version;
     document.getElementById('version').innerHTML = `<img src="assets/_icon.png" alt="Icon Logo" width="30px" height="30px" draggable="false">&nbsp; Taskify Business ` + currentVersion;
-    document.getElementById('build').innerHTML = "Build Number: " + localData.BuildNumber + ' <img src="assets/_updateWarn.png" alt="Update available" draggable="false" style="width: 20px; height: 20px;" id="updateIcon" title="Update Available!">';
+    document.getElementById('build').innerHTML = window.i18n.t('settings.buildNumber') + localData.BuildNumber + ' <img src="assets/_updateWarn.png" alt="Update available" draggable="false" style="width: 20px; height: 20px;" id="updateIcon" title="Update Available!">';
 
     latestVersion = remoteData.versionTaskify;
-    document.getElementById('latestversion').innerHTML = "Latest version available: " + remoteData.versionTaskify;
+    document.getElementById('latestversion').innerHTML = window.i18n.t('settings.latestVersionAvailable') + remoteData.versionTaskify;
 
     checkForUpdates();
   }

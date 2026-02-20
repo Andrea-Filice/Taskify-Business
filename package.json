@@ -84,6 +84,7 @@
     "src/js/**/*",
     "src/css/**/*",
     "src/assets/**/*",
+    "src/locales/**/*",
     "src/*.html",
     "src/version.json",
     "config.js",
@@ -91,18 +92,21 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^40.2.1",
-    "electron-builder": "^26.7.0"
+    "electron": "^40.6.0",
+    "electron-builder": "^26.8.1"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.95.3",
+    "@supabase/supabase-js": "^2.97.0",
     "chart.js": "^4.5.1",
-    "dotenv": "^17.2.4",
+    "dotenv": "^17.3.1",
     "electron-progressbar": "^2.2.1",
     "follow-redirects": "^1.15.11",
-    "glob": "^13.0.1",
+    "glob": "^13.0.6",
+    "i18next": "^25.8.13",
+    "i18next-electron-fs-backend": "^3.0.3",
+    "i18next-fs-backend": "^2.6.1",
     "js-yaml": "^4.1.1",
-    "npm": "^11.9.0",
+    "npm": "^11.10.1",
     "semver": "^7.7.4"
   }
 }

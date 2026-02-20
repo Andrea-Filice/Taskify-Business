@@ -12,6 +12,9 @@ let categoryModifyTask, indexModifyTask, characterLimit;
 const dataPath = path.join(app.getPath('userData'), 'todos.json');
 const DEBUG = process.argv.includes("--dev");
 
+///Sets the name of the about section in macOS
+app.setName("Taskify Business")
+
 let todos = {
   softwareComponents: [],
   fuoriManutenzione: [],
@@ -23,7 +26,8 @@ let todos = {
   taskCompletedColor : "green",
   taskCreatedColor: "blue",
   characterLimit: true,
-  doublePressChecks: true
+  doublePressChecks: true,
+  spellcheckEnabled: false
 }
 
 function loadTodosFromDisk() {
@@ -40,6 +44,7 @@ function loadTodosFromDisk() {
       todos.taskCreatedColor = todos.taskCreatedColor || "blue"
       todos.characterLimit = typeof todos.characterLimit === 'boolean' ? todos.characterLimit : true
       todos.doublePressChecks = typeof todos.doublePressChecks === 'boolean' ? todos.doublePressChecks : true
+      todos.spellcheckEnabled = typeof todos.spellcheckEnabled === 'boolean' ? todos.spellcheckEnabled : false
     }
   } catch (err) {
       console.error(err)
@@ -54,7 +59,8 @@ function loadTodosFromDisk() {
         taskCompletedColor : "green",
         taskCreatedColor: "blue",
         characterLimit: true,
-        doublePressChecks: true
+        doublePressChecks: true,
+        spellcheckEnabled: false
       }
   }
 }
@@ -63,6 +69,7 @@ function saveTodosToDisk() {try {fs.writeFileSync(dataPath, JSON.stringify(todos
 
 function createWindow() {
   let width, height;
+  const isDev = !app.isPackaged;
 
   //* SET THE WIDTH AND HEIGHT BETWEEN LINUX AND OTHER PLATFORMS
   //? LINUX HAVE A MINOR RENDERING SCALE.
@@ -93,7 +100,7 @@ function createWindow() {
 
     const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
-      buttons: ['OK', 'Cancel'],
+      buttons: ['Cancel', 'OK'],
       defaultId: 1,
       cancelId: 0,
       message,
@@ -101,8 +108,44 @@ function createWindow() {
       noLink: true,
       modal: true
     })
-    return result.response === 0
+    return result.response === 1
   })
+
+  ipcMain.handle('get-translations', async (event, language) => {
+    try {
+      const isDev = !app.isPackaged;
+      const localesPath = isDev
+        ? path.join(__dirname, 'src', 'locales', language, 'translation.json')
+        : path.join(process.resourcesPath, 'app.asar', 'src', 'locales', language, 'translation.json');
+      
+      const data = fs.readFileSync(localesPath, 'utf8');
+      return JSON.parse(data);
+    } catch (error) {
+      console.error('Error loading translations:', error);
+      const fallbackPath = isDev
+        ? path.join(__dirname, 'src', 'locales', 'en', 'translation.json')
+        : path.join(process.resourcesPath, 'app.asar', 'src', 'locales', 'en', 'translation.json');
+      
+      const data = fs.readFileSync(fallbackPath, 'utf8');
+      return JSON.parse(data);
+    }
+  });
+
+  ipcMain.handle('get-system-language', () => {
+    const locale = app.getLocale();
+    const language = locale.split('-')[0];
+    
+    const supportedLanguages = ['en', 'it', 'es'];
+    return supportedLanguages.includes(language) ? language : 'en';
+  });
+
+  ipcMain.handle('get-supported-languages', () => {
+    return [
+      { code: 'en', name: 'English' },
+      { code: 'it', name: 'Italiano' },
+      { code: 'es', name: 'Español' }
+    ];
+  });
 
   ipcMain.handle('new-version', async (event, message) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
@@ -166,6 +209,13 @@ function createWindow() {
       } catch (e) { reject(e); }
     });
   })
+
+  ipcMain.handle('get-asset-path', (event, assetPath) => {
+    if (!app.isPackaged) 
+      return path.join(__dirname, 'src', assetPath);
+    return path.join(process.resourcesPath, 'app.asar', 'src', assetPath);
+  });
+
 
   //* CLEAN THE NAME OF THE INSTALLER
   function sanitizeFilename(name) {return name.replace(/[^a-zA-Z0-9._-]/g, '_');}
@@ -620,6 +670,7 @@ function createInputPopUp() {
     },
     icon: 'src/assets/icon.ico'
   })
+
   inputWindow.setMenu(null)
   inputWindow.loadFile('src/popUp.html')
 

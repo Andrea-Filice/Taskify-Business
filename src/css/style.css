@@ -146,7 +146,7 @@ li {
     width: 100px;
 }
 
-input:focus:not(#checkbox):not(#aiInput):not(#characterLimit):not(#doublePressChecks){
+input:focus:not(#checkbox):not(#aiInput):not(#characterLimit):not(#doublePressChecks):not(#spellcheck){
     outline: none;
     animation: animInputIn 2s ease-in-out infinite;
 }
@@ -423,7 +423,10 @@ option{
     color: var(--color);
 }
 
-.appTheme{width: 100%;}
+.appTheme, .appLanguage{
+    margin-top: -10px;
+    width: 100%;
+}
 
 .sidebar-ai {
     height: 100%;
@@ -562,7 +565,7 @@ option{
     animation: gradient 8s linear infinite;
 }
 
-#checkbox:checked, #characterLimit:checked, #doublePressChecks:checked{accent-color: #009dff; color-scheme: light;}
+#checkbox:checked, #characterLimit:checked, #doublePressChecks:checked, #spellcheck:checked{accent-color: #009dff; color-scheme: light;}
 
 /*TIP*/
 .tip{

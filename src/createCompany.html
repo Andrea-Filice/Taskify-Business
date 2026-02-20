@@ -2,7 +2,6 @@
 <html>
     <head>
         <!--SETTINGS-->
-        <title>Taskify Business - Create your company</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <link rel="stylesheet" href="css/companyCreation.css">
@@ -11,16 +10,26 @@
     </head>
     <body>
         <div id="container" style="opacity: 0;">
-            <h1>CREATE YOUR <p style="display: inline; font-size: 70px; font-style: italic;" class="special">COMPANY.</p></h1><br>
-            <h3 style="margin-top: -50px; margin-left: 10px; margin-right: 10px;">To continue using Taskify Business, create a company in order to divide maintenance roles among its members, create Tasks and more!</h3>
+            <h1>
+                <span data-i18n="companyCreation.createYour"></span>
+                <p style="display: inline; font-size: 70px; font-style: italic;" class="special" data-i18n="companyCreation.company"></p>
+            </h1><br>
+            <h3 style="margin-top: -50px; margin-left: 10px; margin-right: 10px;" data-i18n="companyCreation.description"></h3>
             <br>
             <div class="inputs">
-                <input type="text" placeholder="Enter here the name of your company..." style="width: 80%; margin-left: 90px;" id="inputCompany" maxlength="30" alt="Company Name" spellcheck="false" title="Enter the Company name (Max 30 characters)">
+                <input type="text" data-i18n-placeholder="companyCreation.companyName" style="width: 80%; margin-left: 90px;" id="inputCompany" maxlength="30" alt="Company Name" spellcheck="false" data-i18n-title="companyCreation.companyTitle">
             </div>
-            <p id="warn"><img src="assets/_warn.png" width="20px" height="20px" draggable="false" alt="Warning"> The company name must contain at least <b style="font-weight: 700;">8 characters</b></p>
+            <p id="warn">
+                <img src="assets/_warn.png" width="20px" height="20px" draggable="false" alt="Warning">
+                <span data-i18n="companyCreation.warning"></span>
+                <b data-i18n="companyCreation.8Characters"></b>
+            </p>
             <br> <br>
-            <button id="companyCreation" style="font-family: 'General Sans', sans-serif;" title="Create Company"><img src="assets/_create.png" draggable="false" height="25px" width="25px" alt="Create Company"> Create</button>
+            <button id="companyCreation" style="font-family: 'General Sans', sans-serif;" title="Create Company">
+                <img src="assets/_create.png" draggable="false" height="25px" width="25px" alt="Create Company">
+                <span data-i18n="companyCreation.createBtn"></span>
+            </button>
         </div>
     </body>
-    <script src="js/companyCreation.js"></script>
+    <script src="js/companyCreation.js"></script><script src="js/i18n-render.js"></script>
 </html>
