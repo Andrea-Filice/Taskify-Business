@@ -1,16 +1,16 @@
 # Release Notes for Taskify Business 1.11.0
 
 # Stack Upgrades
-- supabase-js `2.97.0`
-  - [New in 2.97.0](https://github.com/supabase/supabase-js/releases/tag/v2.97.0)
+- supabase-js `2.98.0`
+  - [New in 2.98.0](https://github.com/supabase/supabase-js/releases/tag/v2.98.0)
 - electron-builder `26.8.1`
   - [New in 26.8.1](https://github.com/electron-userland/electron-builder/releases/tag/electron-builder%4026.8.1)
 - dotenv `17.3.1`
   - [New in 17.3.1](https://github.com/motdotla/dotenv/blob/master/CHANGELOG.md)
 - Electron `40.6.0`
   - [New in 40.6.0](https://github.com/electron/electron/releases/tag/v40.6.0)
-- npm `11.10.1`
-  - [New in 11.10.1](https://github.com/npm/cli/releases/tag/v11.10.1)
+- npm `11.11.0`
+  - [New in 11.11.0](https://github.com/npm/cli/releases/tag/v11.11.0)
 
 # New Features
 [1491837] Languages added! Now you can choose between 🇮🇹 Italian, 🇪🇸 Spanish and 🇬🇧/🇺🇸 English!
