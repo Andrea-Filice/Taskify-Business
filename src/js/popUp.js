@@ -9,21 +9,26 @@ const inputTaskName = document.getElementById('inputName');
 const inputNewVersion = document.getElementById('inputNV');
 const inputPreviousVersion = document.getElementById('inputPV');
 
-function OnLoad(){
+async function OnLoad(){
+  //*INITIALIZE i18n
+  ///Initialize here the i18next framework for translate this page.
+  await window.i18n.init()
+
   buttonEditTask.disabled = true;
 
-  //SET THE THEME
+  //*SET THE THEME
   ///Set the theme based from localStorage itam
   const htmlElement = document.documentElement;
   const theme = localStorage.getItem("theme");
   htmlElement.setAttribute('data-theme', theme);
+  document.title = window.i18n.t('htmlTitles.editPopUp');
 
-  setTimeout(() =>{document.getElementById('loading').style.animation = "FadeOut 0.5s linear forwards";}, 100)
+  setTimeout(() =>{document.getElementById('loading').style.animation = "FadeOut 0.5s linear forwards";}, 500)
   setTimeout(() =>{
     document.getElementById('loading').style.display = "none";
     document.getElementById('main').style.animation = "FadeIn 0.5s linear forwards";
     saveOriginalDatas();
-  }, 500);
+  }, 1000);
 
   //* ENTER HANDLER
   ///Actions to input components for submit when pressing ENTER key
@@ -43,22 +48,23 @@ function submitInput() {
   const newerVersion = inputNewVersion.value.trim();
 
   //SEND NEW VALUES
-  if(inputName)
+  if(inputName && inputName != originalTaskName){
     api.inputSend(inputName, "task_name")
-  else
-    api.showAlert("Unable to modify the Task. Invalid Task name.")
+    window.close();
+  }
+  else if(!inputName)
+    api.showAlert(window.i18n.t('editPopUp.errorEdit'))
   if(previousVersion && !newerVersion || !previousVersion && newerVersion)
-    api.showAlert("Unable to modify the Task. You cannot add just one version.")
+    api.showAlert(window.i18n.t('editPopUp.errorVersions'))
   else if(previousVersion && newerVersion){
     api.inputSend(previousVersion, "prev_version");
     api.inputSend(newerVersion, "next_version");
+    window.close();
   }
-
-  window.close();
 }
 
 function DeleteTask(){
-  api.showConfirm("Are you sure you want to delete this Task?")
+  api.showConfirm(window.i18n.t('editPopUp.deleteConfirm'))
     .then(userResponse => {
       if(userResponse){
         api.deleteTask(); 
@@ -69,7 +75,7 @@ function DeleteTask(){
 
 function Quit(){
   if(getUnsavedChanges()){
-    api.showConfirm("Are you sure you want to quit and not save the unsaved changes?")
+    api.showConfirm(window.i18n.t('editPopUp.unsavedChanges'))
     .then(userResponse => {
         if(userResponse)
           window.close();

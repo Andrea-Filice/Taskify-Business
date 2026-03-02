@@ -20,10 +20,13 @@
         </center>
     </body>
     <script>
-        function OnLoad(){
+        async function OnLoad() {
             //SET THE LOGO
             document.getElementById("logo").style.display = (window.api.platform == "darwin") ? "none" : "block";
-            document.getElementById("logoMacOS").style.display = (window.api.platform == "darwin") ? "block" : "none";
+            
+            const logoMacOS = document.getElementById("logoMacOS");
+            logoMacOS.src = await window.api.getAssetPath("assets/iconComposer/iconMacOs.png");
+            logoMacOS.style.display = (window.api.platform == "darwin") ? "block" : "none";
 
             //SET THE THEME FROM LOCALSTORAGE
             const htmlElement = document.documentElement;

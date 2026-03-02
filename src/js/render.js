@@ -8,32 +8,46 @@ if (window.__taskify_render_loaded__) {
 
   //VARIABLES
   let taskCreated = 0, taskCompleted = 0;
-  let autoClose = false, characterLimit = true, doublePressChecks = true;
+  let autoClose = false, characterLimit = true, doublePressChecks = true, spellcheckEnabled = false;
   let companyName = undefined;
   let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
   let theme = localStorage.getItem("theme") || "dark";
+  let currentChoosedCategory;
+
   const themeDropdown = document.getElementById("themeDropDown");
+  const languageDropdown = document.getElementById("languageDropDown");
+  const daysToShowDropdown = document.getElementById("daysToShowDropdown");
+  const defaultCategoryDropdown = document.getElementById("defaultCategoryDropdown");
+  const catButton = document.getElementById("categorySelection");
 
   const DEBUG = api.checkForDebug();
+
+  //CHECK IF daysToShow is null
+  if(localStorage.getItem("daysToShow") == null)
+    localStorage.setItem("daysToShow", 7);
+
+  daysToShowDropdown.value = localStorage.getItem("daysToShow");
+  const daysToShow = parseInt(localStorage.getItem("daysToShow"));
+
+  ///CHECK IF defaultSelectedCategory is null
+  if(localStorage.getItem("defaultSelectedCategory") == null)
+    localStorage.setItem("defaultSelectedCategory", "softwareComponents")
+
+  currentChoosedCategory = localStorage.getItem("defaultSelectedCategory") || "softwareComponents"
 
   //LOADING TODOs
   const loaded = api.loadTodosSync() || {};
 
   let chartData = loaded.chartData || {
-    labels: Array(7).fill('').map((_, i) => {
+    labels: Array(daysToShow).fill('').map((_, i) => {
       const date = new Date();
-      date.setDate(date.getDate() - (6 - i)); 
+      date.setDate(date.getDate() - ((daysToShow - 1) - i)); 
       return date.toLocaleDateString();
     }),
-    created: Array(7).fill(0),
-    completed: Array(7).fill(0)
+    created: Array(daysToShow).fill(0),
+    completed: Array(daysToShow).fill(0)
   };
-
-  ///MARK: UI ANIMATIONS
-  //*CHANGE THE CATEGORY
-  let currentChoosedCategory = 'softwareComponents';
-  const catButton = document.getElementById("categorySelection");
-
+  
   catButton.addEventListener('click', function(event){
     if(!event.detail || event.detail === 1 && doublePressChecks){
       //*RESET PREVIOUS ANIMATION
@@ -42,7 +56,7 @@ if (window.__taskify_render_loaded__) {
 
       //*SELECT THE CATEGORY
       currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
-      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? "Maintenance Tasks" : "Out of Maintenance";
+      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
       catButton.classList.toggle("out");
       console.log("[ℹ️ INFO] Category switching: " + currentChoosedCategory)
 
@@ -56,7 +70,7 @@ if (window.__taskify_render_loaded__) {
 
       //*SELECT THE CATEGORY
       currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
-      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? "Maintenance Tasks" : "Out of Maintenance";
+      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
       catButton.classList.toggle("out");
       console.log(currentChoosedCategory)
 
@@ -118,6 +132,7 @@ if (window.__taskify_render_loaded__) {
       companyName = loaded.companyName || undefined;
       characterLimit = typeof loaded.characterLimit === 'boolean' ? loaded.characterLimit : true;
       doublePressChecks = typeof loaded.doublePressChecks === 'boolean' ? loaded.doublePressChecks : true;
+      spellcheckEnabled = typeof loaded.spellcheckEnabled === 'boolean' ? loaded.spellcheckEnabled : true;
 
       //*THEME SETTING
       themeDropdown.value = theme;
@@ -125,6 +140,7 @@ if (window.__taskify_render_loaded__) {
 
       //SET DEFAULT BOOLEAN VALUES
       this.inputCharactersUpdate(characterLimit);
+      this.setSpellcheckValue(spellcheckEnabled)
 
       document.getElementById('colorTaskCreated').value = loaded.taskCreatedColor || "blue";
       document.getElementById('colorTaskCompleted').value = loaded.taskCompletedColor || "green";
@@ -168,10 +184,43 @@ if (window.__taskify_render_loaded__) {
               .addEventListener('change', () => this.updateUI())
       document.getElementById('doublePressChecks')
               .addEventListener('click', () => this.toggleDoublePressChecks());
-      themeDropdown.addEventListener("change", () =>{
+      document.getElementById("spellcheck")
+              .addEventListener('click', () => this.toggleSpellcheck());
+      themeDropdown.addEventListener("change", () => {
               htmlElement.setAttribute('data-theme', themeDropdown.value);
-              this.updateUI();
-      })
+              this.updateUI();})
+      languageDropdown.addEventListener('change', async () => {
+          const newLanguage = languageDropdown.value;
+          await window.i18n.changeLanguage(newLanguage);
+          window.i18n.translatePage();;
+          this.updateUI();
+      });
+      daysToShowDropdown.addEventListener('change', () =>{
+        const newDays = parseInt(daysToShowDropdown.value);
+        localStorage.setItem("daysToShow", newDays);
+        
+        chartData = {
+            labels: Array(newDays).fill('').map((_, i) => {
+                const date = new Date();
+                date.setDate(date.getDate() - ((newDays - 1) - i)); 
+                return date.toLocaleDateString();
+            }),
+            created: Array(newDays).fill(0),
+            completed: Array(newDays).fill(0)
+        };
+        
+        if (tasksChart) {
+            tasksChart.destroy();
+            tasksChart = null;
+        }
+        
+        this.updateChart();
+        this.updateUI();
+      });
+      defaultCategoryDropdown.addEventListener("change", () => {
+        localStorage.setItem("defaultSelectedCategory", defaultCategoryDropdown.value);
+        currentChoosedCategory = defaultCategoryDropdown.value;
+      });
       this.updateUI();
     }
 
@@ -206,7 +255,7 @@ if (window.__taskify_render_loaded__) {
       })
 
       taskCreated++;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       this.updateUI();
     }
 
@@ -222,16 +271,16 @@ if (window.__taskify_render_loaded__) {
       let employeeName = employeeField.value.trim();
 
       if (!text){
-        api.showAlert('Invalid task name. Please enter a valid name.', 'Task Creation Error');
+        api.showAlert(window.i18n.t('popUps.errorInvalidTaskName'), window.i18n.t('errorTitles.taskCreationError'));
         return;
       }
 
       if(prevVersion && !nextVersion){
-        api.showAlert('Invalid version format. Please enter a valid format.', 'Task Creation Error');
+        api.showAlert(window.i18n.t('popUps.invalidVersionFormat'), window.i18n.t('errorTitles.taskCreationError'));
         return;
       }
       
-      if (!employeeName) employeeName = "You";
+      if (!employeeName) employeeName = window.i18n.t('homePage.you');
 
       this.todos[category].push({
         text,
@@ -269,7 +318,7 @@ if (window.__taskify_render_loaded__) {
     removeTodo(category, index) {
       this.todos[category].splice(index, 1);
       taskCompleted++;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       updateDailyData(); 
       this.updateUI();
     }
@@ -280,8 +329,14 @@ if (window.__taskify_render_loaded__) {
       const autoCloseCheckbox = document.getElementById('checkbox');
       const characterLimitCheckbox = document.getElementById('characterLimit');
       const doublePressChecksCheckbox = document.getElementById('doublePressChecks');
+      const spellcheckCheckbox = document.getElementById('spellcheck');
       const dropDowntaskCreated = document.getElementById('colorTaskCreated').value;
       const dropDowntaskCompleted = document.getElementById('colorTaskCompleted').value;
+      const tipText = window.i18n.t('settings.tipDescription')
+          .replace('{{taskCompleted}}', '<i style="font-weight: 800;" data-i18n="settings.taskCompleted">"Task Completati"</i>')
+          .replace('{{taskCreated}}', '<i style="font-weight: 800;" data-i18n="settings.taskCreated">"Task Creati"</i>');
+
+      document.getElementById('tipDescription').innerHTML = tipText;
 
       let colorTCompleted = null, colorTCreated = null, colorTCompletedBG = null, colorTCreatedBG = null;
 
@@ -290,6 +345,7 @@ if (window.__taskify_render_loaded__) {
       autoCloseCheckbox.checked = autoClose;
       characterLimitCheckbox.checked = characterLimit;
       doublePressChecksCheckbox.checked = doublePressChecks;
+      spellcheckCheckbox.checked = spellcheckEnabled;
 
       //* COLOR SELECTION
       //* TASK COMPLETED
@@ -350,7 +406,7 @@ if (window.__taskify_render_loaded__) {
       taskCompletedColor = document.getElementById('colorTaskCompleted').value;
 
       //*SAVE DATAS
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       localStorage.setItem("theme", themeDropdown.value);
 
       document.title = `Taskify Dashboard - ${companyName}`;
@@ -366,14 +422,14 @@ if (window.__taskify_render_loaded__) {
             labels: chartData.labels, 
             datasets: [
               {
-                label: 'Tasks Created',
+                label: window.i18n.t('settings.taskCreatedCanvas'),
                 data: chartData.created,
                 borderColor: colorTCreated,
                 backgroundColor: colorTCreatedBG,
                 tension: 0.3
               },
               {
-                label: 'Tasks Completed',
+                label: window.i18n.t('settings.taskCompletedCanvas'),
                 data: chartData.completed,
                 borderColor: colorTCompleted,
                 backgroundColor: colorTCompletedBG,
@@ -437,11 +493,17 @@ if (window.__taskify_render_loaded__) {
         });
       } else {
         tasksChart.data.labels = chartData.labels;
+        
         tasksChart.options.plugins.legend.labels.color = getCSSRule('--color');
         tasksChart.options.scales.x.ticks.color = getCSSRule('--color');
         tasksChart.options.scales.y.ticks.color = getCSSRule('--color');
+
+        tasksChart.data.datasets[0].label = window.i18n.t('settings.taskCreatedCanvas');
+        tasksChart.data.datasets[1].label = window.i18n.t('settings.taskCompletedCanvas');
+
         tasksChart.data.datasets[0].data = chartData.created;
         tasksChart.data.datasets[1].data = chartData.completed;
+
         tasksChart.data.datasets[0].borderColor = colorTCreated;
         tasksChart.data.datasets[0].backgroundColor = colorTCreatedBG;
         tasksChart.data.datasets[1].borderColor = colorTCompleted;
@@ -460,7 +522,8 @@ if (window.__taskify_render_loaded__) {
       numberToUpdate.innerHTML = `&nbsp;&nbsp;${localArray.length}&nbsp;&nbsp;`;
 
       if(localArray.length === 0)
-        list.innerHTML = 'No Tasks in this Category.';
+        list.innerHTML = window.i18n.t('homePage.noTasks');
+
       else{
         this.todos[category].forEach((todo, idx) => {
             const li = document.createElement('li');
@@ -479,12 +542,14 @@ if (window.__taskify_render_loaded__) {
                 <span><b>${todo.text}</b></span>
                 <div>
                     ${versionHtml}
-                    <small>Assigned to: <i>${employee}</i></small>
+                    <small>
+                      ${window.i18n.t('homePage.assignedTo')} <i>${employee}</i>
+                    </small>
                     <div style="display: flex; gap: 5px; margin-top: 0px;">
-                        <button class="delete-btn" style="width: 100px; background-color: white;" title="Mark as Completed">
+                        <button class="delete-btn" style="width: 100px; background-color: white;" title="${window.i18n.t('settings.markAsCompleted')}">
                           <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
                         </button>
-                        <button class="edit-btn" id="editBtn" title="Edit Task">
+                        <button class="edit-btn" id="editBtn" title="${window.i18n.t('homePage.editTask')}">
                           <img src="assets/_edit.png" draggable="false" width="20px" height="20px">
                         </button>
                     </div>
@@ -500,7 +565,7 @@ if (window.__taskify_render_loaded__) {
     }
 
     resetData() {
-      api.showConfirm("Are you sure you want to reset all data saved?")
+      api.showConfirm(window.i18n.t('popUps.resetDataConfirm'))
         .then(userResponse => {
           if (userResponse) {
             this.todos = {
@@ -521,16 +586,17 @@ if (window.__taskify_render_loaded__) {
               created: Array(7).fill(0),
               completed: Array(7).fill(0)
             };
-            api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+            localStorage.setItem("daysToShow", 7);
+            api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
             this.updateUI();
-            api.showAlert("Data successfully reset, the app will be restarted soon.")
+            api.showAlert(window.i18n.t('popUps.dataReset'))
             .then(() => {window.location.href = "boot.html";});
           }
         });
     }
 
     restartApplication(){
-      api.showConfirm('Are you sure you want to restart the app?')
+      api.showConfirm(window.i18n.t('popUps.restartConfirm'))
       .then(userResponse =>{
         if(userResponse)
           window.location.href = "boot.html";
@@ -543,16 +609,16 @@ if (window.__taskify_render_loaded__) {
         return;
       }
 
-      api.showConfirm(`Are you sure to mark complete the following category?`)
+      api.showConfirm(window.i18n.t("popUps.markCategoryComplete"))
       .then(userResponse => {
         if (!userResponse) return;
         const list = this.todos[categoryKey];
         taskCompleted += list.length;
 
         this.todos[categoryKey] = [];
-        api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+        api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
         this.updateUI();
-        api.showAlert("Tasks marked as 'Completed'!");
+        api.showAlert(window.i18n.t("popUps.markedAsCompleted"));
       });
     }
     
@@ -562,11 +628,17 @@ if (window.__taskify_render_loaded__) {
         window.addEventListener('scroll', this.handleScroll);
       else
         window.removeEventListener('scroll', this.handleScroll);
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks });
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
     }
 
     toggleDoublePressChecks(){
       doublePressChecks = !doublePressChecks;
+      this.updateUI();
+    }
+
+    toggleSpellcheck(){
+      spellcheckEnabled = !spellcheckEnabled;
+      this.setSpellcheckValue(spellcheckEnabled);
       this.updateUI();
     }
     
@@ -589,16 +661,16 @@ if (window.__taskify_render_loaded__) {
 
     changeCompanyName(newName) {
       if(!newName || newName.length < 8) {
-        api.showAlert('Invalid Company name. At least 8 characters.');
+        api.showAlert(window.i18n.t('popUps.invalidCharacters'));
         return;
       }
-      api.showConfirm(`Are you sure to change the company name to "${newName}"?`)
+      api.showConfirm((window.i18n.t('popUps.changeCompanyName') + `"${newName}"?`))
         .then(userResponse => {
           if (!userResponse) return;
           companyName = newName;
-          api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+          api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
           document.getElementById('nameCompany').value = '';
-          api.showAlert('Company name changed successfully!');
+          api.showAlert(window.i18n.t('popUps.companyChanged'));
           this.updateUI();
         });
     }
@@ -660,7 +732,14 @@ if (window.__taskify_render_loaded__) {
             e.setAttribute('maxlength', 20);
         });
       }
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
+    }
+
+    setSpellcheckValue(value){
+        const inputs = document.querySelectorAll('input[type="text"], textarea');
+        inputs.forEach(input => {
+            input.setAttribute('spellcheck', value ? "true" : "false");
+        });
     }
   }();
 
@@ -700,7 +779,7 @@ if (window.__taskify_render_loaded__) {
   function toggleButtons(value){buttons.forEach(e  => {e.style.display = (value) ? "block" : "none";});}
 
   async function quitApplication() {
-    const userConfirmed = await api.showConfirm('Are you sure you want to close the app?');
+    const userConfirmed = await api.showConfirm(window.i18n.t('popUps.quitAppConfirm'));
     if (userConfirmed)
       api.quitApp();
   }
@@ -751,14 +830,14 @@ if (window.__taskify_render_loaded__) {
       window.todoManager.todos[category][index].text = taskData.text;
       window.todoManager.todos[category][index].prevVersion = taskData.prevVersion;
       window.todoManager.todos[category][index].nextVersion = taskData.nextVersion;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       window.todoManager.updateUI();
   });
 
   api.onDeleteTask((category, index) => {
       window.todoManager.todos[category].splice(index, 1);
       taskCreated--;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       window.todoManager.updateUI();
   });
 
@@ -873,7 +952,7 @@ if (window.__taskify_render_loaded__) {
   }
 
   //ABOUT PANEL
-  function ShowInfoPanel(textToShow){api.showAlert(textToShow)}
+  function ShowInfoPanel(key){api.showAlert(window.i18n.t(key))}
 
   //WEB REFERENCES SECTION
   document.getElementById('repoGitBtn').addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});
@@ -902,9 +981,37 @@ if (window.__taskify_render_loaded__) {
   document.getElementById('contactUs').addEventListener('click', () => {api.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
 
   //ON LOAD
-  window.addEventListener("load", () => {
-    console.log("[ℹ️ INFO] core platform: " + api.platform)
-    fetchVersion();
-    fetchBuildNumber();
+  window.addEventListener("load", async () => {
+      await window.i18n.init();
+
+      const currentLang = window.i18n.getCurrentLanguage();
+      if (languageDropdown) 
+        languageDropdown.value = currentLang;
+
+      ///When loaded the languages, reset the UI
+      if (window.todoManager) 
+        window.todoManager.updateUI();
+
+      //*CHANGE THE CATEGORY
+      defaultCategoryDropdown.value = localStorage.getItem("defaultSelectedCategory");
+      
+      catButton.style.animation = "none";
+      void catButton.offsetWidth;
+
+      //*SELECT THE CATEGORY
+      currentChoosedCategory = (currentChoosedCategory == 'softwareComponents') ? 'fuoriManutenzione' : "softwareComponents";
+      catButton.innerHTML = (currentChoosedCategory == 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
+
+      if(currentChoosedCategory != "softwareComponents")
+        catButton.classList.toggle("out");
+      
+      console.log("[ℹ️ INFO] Category switching: " + currentChoosedCategory)
+
+      //*RESTART THE ANIMATION
+      catButton.style.animation = "animClickedButton ease-in-out 500ms";
+
+      console.log("[ℹ️ INFO] core platform: " + api.platform)
+      fetchVersion();
+      fetchBuildNumber();
   })
 }

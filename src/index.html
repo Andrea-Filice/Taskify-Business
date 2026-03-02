@@ -10,117 +10,255 @@
     </head>
     <body>
         <div id="mainSection">
-            <h1 style="font-family: 'General Sans', sans-serif; font-size: 60px;"><img src="assets/_list.png" alt="Icon" style="width: 45px; height: 45px;" draggable="false" title="Tasks"> TASKS</h1>
-            <div class="bubbleMaintenance">Maintenance Tasks <p id="maintenanceNumber" style="display: inline; right: 0px; background-color: rgb(31, 31, 163); border-radius: 5px; font-family: 'General Sans', sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;</p></div><br>
+            <h1 style="font-family: 'General Sans', sans-serif; font-size: 60px;">
+                <img src="assets/_list.png" alt="Icon" style="width: 45px; height: 45px;" draggable="false" data-i18n-title="homePage.tasks">
+                <span data-i18n="homePage.tasks">TASKS</span>
+            </h1>
+            <div class="bubbleMaintenance">
+                <span data-i18n="homePage.maintenanceTasks">Maintenance Tasks</span>
+                <p id="maintenanceNumber" style="display: inline; right: 0px; background-color: rgb(31, 31, 163); border-radius: 5px; font-family: 'General Sans', sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </div>
+            <br>
             <ul id="softwareList"></ul><br>
-            <div class="bubbleOut">Out Of Maintenance Tasks <p id="outNumber" style="display: inline; right: 0px; background-color: #88210c; border-radius: 5px; font-family: 'General Sans', sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;</p></div><br>
+            <div class="bubbleOut">
+                <span data-i18n="homePage.outOfMaintenance">Out Of Maintenance Tasks</span>
+                <p id="outNumber" style="display: inline; right: 0px; background-color: #88210c; border-radius: 5px; font-family: 'General Sans', sans-serif;">&nbsp;&nbsp;&nbsp;&nbsp;</p>
+            </div>
+            <br>
             <ul id="fuoriList"></ul><br>
         </div>
         <div class="app" id="AppTasks">
             <div class="version-inputs" id="versions">
-                <input type="text" id="prevVersion" placeholder="Previous version" spellcheck="false" title="Previous version" maxlength="10">
-                <input type="text" id="nextVersion" placeholder="Newer version" spellcheck="false" title="Newer version" maxlength="10">
-                <button id="employeeBtn" style="border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" title="Add Employee" draggable="false"></button>
+                <input type="text" id="prevVersion" placeholder="Previous version" data-i18n-title="homePage.previousVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.previousVersionTooltip">
+                <input type="text" id="nextVersion" placeholder="Newer version" data-i18n-title="homePage.newerVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.newerVersionTooltip">
+                <button id="employeeBtn" style="border: none; border-radius: 5px;"><img src="assets/_employee.png" alt="Add Employee" height="25px" width="25px" data-i18n-title="titles.employee" draggable="false"></button>
             </div>
             <div class="employee-inputs" id="employeeIn">
-                <input type="text" id="employeeInput" placeholder="Employee Name..." spellcheck="false" title="Employee Name" maxlength="10" style="width: 390px;">
+                <input type="text" id="employeeInput" placeholder="Employee Name..." data-i18n-title="homePage.employeeName" maxlength="10" style="width: 390px;" data-i18n-placeholder="homePage.employeeName">
                 <button id="closeEmployeeBtn" style="border: none; border-radius: 5px; font-size: 23px; font-family: 'General Sans', sans-serif;"><img src="assets/_close.png" alt="Close" height="25px" width="25px" style="position: relative; top: 3px; transform: scale(0.7);" draggable="false"></button>
             </div>
-            <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" spellcheck="false"/>
-            <button id="categorySelection">Maintenance Tasks</button>
+            <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" data-i18n-placeholder="homePage.taskNameTooltip">
+            <button id="categorySelection"></button>
             <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px" draggable="false"></button>
         </div>
         <div class="container" id="app">
-            <button onclick="openInfoBox()" class="infoButton" id="ibtn" title="About"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
-            <button onclick="openSettings()" class="settingsButton" id="sbtn" title="Settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
+            <button onclick="openInfoBox()" class="infoButton" id="ibtn" data-i18n-title="settings.aboutTitle"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
+            <button onclick="openSettings()" class="settingsButton" id="sbtn" data-i18n-title="titles.settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
         </div>
         <br> 
         <div class="info" id="infoBox">
-            <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;"><img src="assets/_info.png" draggable="false" height="35px" width="35px"> About:</h1>
+            <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;">
+                <img src="assets/_info.png" draggable="false" height="35px" width="35px">
+                <span data-i18n="settings.aboutTitle"></span>
+            </h1>
             <div class="content" style="margin-top: -35px;">
                 <h2 id="version" style="font-size: 30px;"><img src="assets/_icon.png" alt="Icon Logo" width="20px" height="20px">Taskify Business </h2>
                 <p style="margin-top: -20px;" id="latestversion">Latest version available: </p>
                 <h2 id="build">Build Number:</h2>
                 <hr>
-                <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;"><img src="assets/_chart.png" draggable="false" width="35px" height="35px"> Charts:</h1>
-                <h2><img src="assets/_createTask.png" draggable="false" height="20px" width="20px">  Tasks created:  <p style="display: inline; font-weight: 500; font-style: italic;" id="taskCreated"></p></h2>
-                <h2><img src="assets/_completeIcon.png" draggable="false" height="23px" width="23px">  Tasks completed:  <p style="display: inline; font-weight: 500; font-style: italic;" id="taskCompleted"></p></h2>
+                <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;">
+                    <img src="assets/_chart.png" draggable="false" width="35px" height="35px">
+                    <span data-i18n="settings.chartsTitle"></span>
+                </h1>
+                <h2>
+                    <img src="assets/_createTask.png" draggable="false" height="20px" width="20px">
+                    <span data-i18n="settings.taskCreated"></span>
+                    <p style="display: inline; font-weight: 500; font-style: italic;" id="taskCreated"></p>
+                </h2>
+                <h2>
+                    <img src="assets/_completeIcon.png" draggable="false" height="23px" width="23px">
+                    <span data-i18n="settings.taskCompleted"></span>
+                    <p style="display: inline; font-weight: 500; font-style: italic;" id="taskCompleted"></p>
+                </h2>
                 <canvas id="tasksChart" width="400" height="150" style="border-radius: 10px; margin-bottom: 30px;"></canvas>
-                <h1 style="font-family: 'General Sans', sans-serif; font-size: 35px; text-align: center;"><img src="assets/_settings.png" alt="Charts settings" width="30px" height="30px" draggable="false"> Charts Settings:</h1>
+                <h1 style="font-family: 'General Sans', sans-serif; font-size: 35px; text-align: center;">
+                    <img src="assets/_settings.png" alt="Charts settings" width="30px" height="30px" draggable="false">
+                    <span data-i18n="settings.chartsSettingsTitle"></span>
+                </h1>
                 <center>
                     <div class="selections">
-                        <label for="colorTaskCreated" style="margin-left: 20px;">Color <b>Tasks created:</b></label>
+                        <label for="colorTaskCreated" style="margin-left: 20px;">
+                            <span data-i18n="settings.colorTooltip"></span>
+                            <b data-i18n="settings.taskCreated">Tasks created:</b>
+                        </label>
                         <select name="selectColor" id="colorTaskCreated" style="width: 4%; height: 25px;">
-                            <option value="red" style="color: #c01212;; background-color: #c01212;" title="Red">🟥</option>
-                            <option value="green" style="color: green; background-color: green;" title="Green">🟩</option>
-                            <option value="blue" style="color: blue; background-color: blue;" title="Blue">🟦</option>
-                            <option value="orange" style="color: orange; background-color: orange;" title="Orange">🟧</option>
-                            <option value="yellow" style="color: yellow; background-color: yellow;" title="Yellow">🟨</option>
+                            <option value="red" style="color: #c01212;; background-color: #c01212;" data-i18n-title="titles.red">🟥</option>
+                            <option value="green" style="color: green; background-color: green;" data-i18n-title="titles.green">🟩</option>
+                            <option value="blue" style="color: blue; background-color: blue;" data-i18n-title="titles.blue">🟦</option>
+                            <option value="orange" style="color: orange; background-color: orange;" data-i18n-title="titles.orange">🟧</option>
+                            <option value="yellow" style="color: yellow; background-color: yellow;" data-i18n-title="titles.yellow">🟨</option>
                         </select>
-                        <label for="colorTaskCompleted" style="margin-left: 20px;">Color <b>Tasks completed:</b></label>
+                        <label for="colorTaskCompleted" style="margin-left: 20px;">
+                            <span data-i18n="settings.colorTooltip"></span>
+                            <b data-i18n="settings.taskCompleted">Tasks created:</b>
+                        </label>
                         <select name="selectColor" id="colorTaskCompleted" style="width: 4%; height: 25px;">
-                            <option value="red" style="color: #c01212;; background-color: #c01212;" title="Red">🟥</option>
-                            <option value="green" style="color: green; background-color: green;" title="Green">🟩</option>
-                            <option value="blue" style="color: blue; background-color: blue;" title="Blue">🟦</option>
-                            <option value="orange" style="color: orange; background-color: orange;" title="Orange">🟧</option>
-                            <option value="yellow" style="color: yellow; background-color: yellow;" title="Yellow">🟨</option>
+                            <option value="red" style="color: #c01212;; background-color: #c01212;" data-i18n-title="titles.red">🟥</option>
+                            <option value="green" style="color: green; background-color: green;" data-i18n-title="titles.green">🟩</option>
+                            <option value="blue" style="color: blue; background-color: blue;" data-i18n-title="titles.blue">🟦</option>
+                            <option value="orange" style="color: orange; background-color: orange;" data-i18n-title="titles.orange">🟧</option>
+                            <option value="yellow" style="color: yellow; background-color: yellow;" data-i18n-title="titles.yellow">🟨</option>
                         </select>
                     </div>
                 </center>
-                <h3 class="tip" style="font-weight: 300;"><img src="assets/_tip.png" height="20px" width="20px" draggable="false" id="tipImage"><p style="display: inline; color: orange;"><b style="font-weight: 800;">TIP:</b>  </p> Click on <i style="font-weight: 800;">"Tasks Completed" </i> or <i style="font-weight: 800;">"Tasks Created"</i> &nbsp;to see the progress of an individual item.</h3>
+                <h3 style="text-align: center; font-weight: 300;">
+                    <span data-i18n="settings.daysToShow"></span>
+                    <select name="selectDays" id="daysToShowDropdown" style="width: 4%; height: 25px">
+                        <option value="2" title="2">2</option>
+                        <option value="7" title="7">7</option>
+                        <option value="15" title="15">15</option>
+                        <option value="30" title="30">30</option>
+                    </select>
+                </h3>
+                <h3 class="tip" style="font-weight: 300;">
+                    <img src="assets/_tip.png" height="20px" width="20px" draggable="false" id="tipImage">
+                    <p style="display: inline; color: orange;">
+                        <b style="font-weight: 800;">TIP:</b>  
+                    </p>
+                    <span id="tipDescription"></span>
+                </h3>
                 <hr>
-                <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;"><img src="assets/_settings.png" draggable="false" height="35px" width="35px"> Settings:</h1>
+                <h1 style="font-size: 50px; font-family: 'General Sans', sans-serif;">
+                    <img src="assets/_settings.png" draggable="false" height="35px" width="35px">
+                    <span data-i18n="settings.settingsTitle"></span>
+                </h1>
                 <div class="settings" id="settings">
-                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_general.png" draggable="false" height="20px" width="20px"> General:</h2>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;">
+                        <img src="assets/_general.png" draggable="false" height="20px" width="20px">
+                        <span data-i18n="settings.generalSettings"></span>
+                    </h2>
                     <div class="cleanSection">
                         <select name="selectCategory" id="categoryClean">
-                            <option value="softwareComponents">&nbsp;Maintenance Tasks</option>
-                            <option value="fuoriManutenzione">&nbsp;Out of Maintenance</option>
+                            <option value="softwareComponents" data-i18n="homePage.maintenanceTasks">&nbsp;Maintenance Tasks</option>
+                            <option value="fuoriManutenzione" data-i18n="homePage.outOfMaintenance">&nbsp;Out of Maintenance</option>
                         </select>
-                        <button id="cleanSectionBtn" class="cleanSectionBtn"><img src="assets/_markAsCompleted.png" alt="Mark as Completed" height="20px" width="20px" class="imageCheckbox" draggable="false" style="top: 2px;">Mark as Completed</button>
+                        <button id="cleanSectionBtn" class="cleanSectionBtn">
+                            <img src="assets/_markAsCompleted.png" alt="Mark as Completed" height="20px" width="20px" class="imageCheckbox" draggable="false" style="top: 2px;">
+                            <span data-i18n="settings.markAsCompleted"></span>
+                        </button>
                     </div>
                     <br>
                     <div class="cleanSection">
-                        <input id="nameCompany" type="text" required placeholder="Enter new Company name..." spellcheck="false">
-                        <button id="changeNameBtn" class="cleanSectionBtn"><img src="assets/_editCompanyName.png" alt="Edit Company Name" height="20px" width="20px" class="imageCheckbox" draggable="false" style="top: 2px;">Change</button>
+                        <input id="nameCompany" type="text" required placeholder="Enter new Company name..." data-i18n-placeholder="settings.enterCompanyNamePlaceholder">
+                        <button id="changeNameBtn" class="cleanSectionBtn">
+                            <img src="assets/_editCompanyName.png" alt="Edit Company Name" height="20px" width="20px" class="imageCheckbox" draggable="false" style="top: 2px;">
+                            <span data-i18n="settings.changeBtn"></span>
+                        </button>
                     </div>
+                    <h3 style="color: rgb(170, 167, 167);" data-i18n="settings.defaultCat"></h3>
+                    <select name="selectDeafultCategory" id="defaultCategoryDropdown" class="appTheme">
+                        <option value="softwareComponents" data-i18n="settings.outMaintenanceSelect"></option>
+                        <option value="fuoriManutenzione" data-i18n="settings.maintenanceSelect"></option>
+                    </select>
                     <br>
-                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_userSettings.png" draggable="false" height="20px" width="20px"> User Preferences:</h2><br>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;">
+                        <img src="assets/_userSettings.png" draggable="false" height="20px" width="20px">
+                        <span data-i18n="settings.userPreferences"></span>
+                    </h2><br>
                     <input type="checkbox" id="checkbox" style="transform: scale(1.7);">
-                    <label for="checkbox" style="font-size: 20px;"><img src="assets/_automatic.png" alt="Disable Auto-Close" height="25px" width="25px" class="imageCheckbox" draggable="false">&nbsp;Disables the auto-close of the settings panel.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will disables the auto-close of the settings panel.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will disables the auto-close of the settings panel."><br><br>
+                    <label for="checkbox" style="font-size: 20px;">
+                        <img src="assets/_automatic.png" alt="Disable Auto-Close" height="25px" width="25px" class="imageCheckbox" draggable="false">
+                        <span data-i18n="settings.disableAutoClose"></span>
+                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.descriptionAutoClose')" src="assets/_about.png" width="20px" height="20px" data-i18n-placeholder="popUps.descriptionAutoClose"><br><br>
+
                     <input type="checkbox" id="characterLimit" style="transform: scale(1.7);">
-                    <label for="characterLimit" style="font-size: 20px;"><img src="assets/_keyboardLimit.png" alt="Character Limit" height="25px" width="25px" class="imageCheckbox" draggable="false">&nbsp;Enable character limit.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('If enabled, this option will set a character limit for Task names and version numbers.')" src="assets/_about.png" width="20px" height="20px" title="If enabled, this option will set a character limit for Task names and version numbers."><br><br>
+                    <label for="characterLimit" style="font-size: 20px;">
+                        <img src="assets/_keyboardLimit.png" alt="Character Limit" height="25px" width="25px" class="imageCheckbox" draggable="false">
+                        <span data-i18n="settings.enableCharacterLimit"></span>
+                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.characterLimit')" src="assets/_about.png" width="20px" height="20px" data-i18n-title="popUps.characterLimit"><br><br>
+
                     <input type="checkbox" id="doublePressChecks" style="transform: scale(1.7);">
-                    <label for="doublePressChecks" style="font-size: 20px;"><img src="assets/_touchIcon.png" alt="Touch Limit" height="25px" width="25px" class="imageCheckbox" draggable="false">&nbsp;Enable double-press checks.</label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('When enabled, enables double-tap control on the Category button, allowing for faster category switching.')" src="assets/_about.png" width="20px" height="20px" title="When enabled, disables double-tap control on the Category button, allowing for faster category switching."><br>
-                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_appearance.png" draggable="false" height="20px" width="20px"> Appearance:</h2>
+                    <label for="doublePressChecks" style="font-size: 20px;">
+                        <img src="assets/_touchIcon.png" alt="Touch Limit" height="25px" width="25px" class="imageCheckbox" draggable="false">
+                        <span data-i18n="settings.enableDoublePress"></span>
+                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.doubleTap')" src="assets/_about.png" width="20px" height="20px" data-i18n-title="popUps.doubleTap"><br><br>
+
+                    <input type="checkbox" id="spellcheck" style="transform: scale(1.7);">
+                    <label for="spellcheck" style="font-size: 20px;">
+                        <img src="assets/_spellcheck.png" alt="SpellCheck" height="25px" width="25px" class="imageCheckbox" draggable="false">
+                        <span data-i18n="settings.enableSpellCheck"></span>
+                    </label> <img class="aboutBeta" draggable="false" onclick="ShowInfoPanel('popUps.spellcheckEnabled')" src="assets/_about.png" width="20px" height="20px" data-i18n-title="popUps.spellcheckEnabled"><br>
+
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;">
+                        <img src="assets/_appearance.png" draggable="false" height="20px" width="20px">
+                        <span data-i18n="settings.appearanceSettings"></span>
+                    </h2>
+                    <h3 style="color: rgb(170, 167, 167);" data-i18n="settings.themeApplication">TEMA APPLICAZIONE</h3>
                     <select name="selectTheme" id="themeDropDown" class="appTheme">
-                        <option value="dark"> 🌙 Dark Theme</option>
-                        <option value="light"> ☀️ Light Theme</option>
+                        <option value="dark" data-i18n="settings.darkTheme"> 🌙 Dark Theme</option>
+                        <option value="light" data-i18n="settings.lightTheme"> ☀️ Light Theme</option>
+                    </select>
+                    <br><br>
+                    <h3 style="color: rgb(170, 167, 167);" data-i18n="settings.languageApplication">LINGUA APPLICAZIONE</h3>
+                    <select name="selectLanguage" id="languageDropDown" class="appLanguage">
+                        <option value="en" data-i18n="languages.english-us"> It</option>
+                        <option value="it" data-i18n="languages.italian"> Us</option>
+                        <option value="es" data-i18n="languages.spanish"> Es</option>
                     </select>
                     <br><br><br>
-                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_references.png" draggable="false" height="20px" width="20px"> Web References:</h2>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;">
+                        <img src="assets/_references.png" draggable="false" height="20px" width="20px">
+                        <span data-i18n="settings.webReferences"></span>
+                    </h2>
                     <div class="references">
-                        <button id="repoGitBtn" title="Open on GitHub"><img src="assets/_github.png" width="20px" height="20px" draggable="false"> Open on GitHub</button>
-                        <button id="licenseBtn" title="See License"><img src="assets/_license.png" width="20px" height="20px" draggable="false"> See License</button>
+                        <button id="repoGitBtn" data-i18n-title="settings.openOnGithub">
+                            <img src="assets/_github.png" width="20px" height="20px" draggable="false">
+                            <span data-i18n="settings.openOnGithub"></span>
+                        </button>
+
+                        <button id="licenseBtn" data-i18n-title="settings.seeLicense">
+                            <img src="assets/_license.png" width="20px" height="20px" draggable="false">
+                            <span data-i18n="settings.seeLicense"></span>
+                        </button>
                     </div>
-                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_help.png" draggable="false" height="20px" width="20px"> Need help?</h2>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;">
+                        <img src="assets/_help.png" draggable="false" height="20px" width="20px">
+                        <span data-i18n="settings.needHelpSettings"></span>
+                    </h2>
                     <div class="needHelp">
-                        <button id="feedback" title="Leave a Feedback"><img src="assets/_feedback.png" width="20px" height="20px" draggable="false"> Leave a Feedback <img src="assets/_arrowDown.png" alt="Icon arrow" style="display: inline;" width="20px" height="20px" id="menuFeedback"></button>
-                        <button id="contactUs" title="Contact Us"><img src="assets/_contact.png" width="20px" height="20px" draggable="false"> Contact Us</button>
+                        <button id="feedback" data-i18n-title="settings.leaveAFeedback">
+                            <img src="assets/_feedback.png" width="20px" height="20px" draggable="false">
+                            <span data-i18n="settings.leaveAFeedback"></span>
+                            <img src="assets/_arrowDown.png" alt="Icon arrow" style="display: inline;" width="20px" height="20px" id="menuFeedback"></button>
+                        <button id="contactUs" data-i18n-title="settings.contactUs">
+                            <img src="assets/_contact.png" width="20px" height="20px" draggable="false">
+                            <span data-i18n="settings.contactUs"></span>
+                        </button>
                     </div>
                     <div class="feedbackSelection" id="feedbackSelection">
-                        <a id="bug" style="margin-left: 170px;"><img src="assets/_bugIcon.png" alt="Bug Icon" width="15px" height="15px">&nbsp; Write a Bug Report.</a><br>
-                        <a id="feedbackBtn" style="margin-left: 170px;"><img src="assets/_feedback.png" alt="Bug Icon" width="15px" height="15px">&nbsp; Leave a Feedback.</a>
+                        <a id="bug" style="margin-left: 170px;">
+                            <img src="assets/_bugIcon.png" alt="Bug Icon" width="15px" height="15px">
+                            <span data-i18n="settings.writeBug"></span>
+                        </a><br>
+                        <a id="feedbackBtn" style="margin-left: 170px;">
+                            <img src="assets/_feedback.png" alt="Bug Icon" width="15px" height="15px">
+                            <span data-i18n="settings.leaveAFeedbackDot"></span>
+                        </a>
                     </div>
                     <br>
-                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;"><img src="assets/_actions.png" draggable="false" height="20px" width="20px"> Actions:</h2>
-                    <button onclick="quitApplication()" class="quitButton" title="Quit application"><img src="assets/_quit.png" draggable="false" height="25px" width="25px"> Quit application</button>
+                    <h2 style="text-align: center; font-family: 'General Sans', sans-serif;">
+                        <img src="assets/_actions.png" draggable="false" height="20px" width="20px">
+                        <span data-i18n="settings.actionsSettings"></span>
+                    </h2>
+                    <button onclick="quitApplication()" class="quitButton" data-i18n-title="settings.quitApplication">
+                        <img src="assets/_quit.png" draggable="false" height="25px" width="25px">
+                        <span data-i18n="settings.quitApplication"></span>                   
+                    </button>
                     <br> <br>
-                    <button id="restartBtn" class="btn" title="Restart"><img src="assets/_reload.png" draggable="false" width="23px" height="23px">  Restart</button>
+                    <button id="restartBtn" class="btn" data-i18n-title="settings.restartApplication">
+                        <img src="assets/_reload.png" draggable="false" width="23px" height="23px">
+                        <span data-i18n="settings.restartApplication"></span>
+                    </button>
                     <br> <br>
-                    <button id="resetBtn" style="background-color: #c01212; font-size: 20px;" class="btn" title="Delete data"><img src="assets/_delete.png" draggable="false" width="25px" height="25px">  Delete all data</button>
+                    <button id="resetBtn" style="background-color: #c01212; font-size: 20px;" class="btn" data-i18n-title="settings.deleteData">
+                        <img src="assets/_delete.png" draggable="false" width="25px" height="25px">
+                        <span data-i18n="settings.deleteData"></span>
+                    </button>
                     <br> <br>
-                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton" title="Close panel"><img src="assets/_close.png" draggable="false" height="15px" width="15px"> Close panel</button>
+                    <button style="background-color: #c01212; font-size: 20px;" onclick="closeInfoBox()" class="closeButton" data-i18n-title="settings.closePanel">
+                        <img src="assets/_close.png" draggable="false" height="15px" width="15px">
+                        <span data-i18n="settings.closePanel"></span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -130,11 +268,12 @@
                 <h2 style="margin-top: -35px; font-family: 'General Sans', sans-serif;" class="assistantText">AI Assistant <img src="assets/_betaIcon.png" height="40px" width="40px" style="margin-top: 10px;" draggable="false"></h2>
                 <div id="aiChatHistory" class="ai-chat-history"></div>
                 <div class="ai-chat-input-row">
-                    <input id="aiInputSide" type="text" placeholder="Write a command..." autocomplete="on" style="display: block; width: 70%;" spellcheck="false"/>
+                    <input id="aiInputSide" type="text" placeholder="Write a command..." autocomplete="on" style="display: block; width: 70%;"/>
                     <button id="aiSendBtn" style="font-family: 'Switzer', sans-serif; height: 100%;"><img src="assets/_send.png" height="20px" width="20px" draggable="false"></button>
                 </div>
             </div>
         </div>
     </body>
+    <script src="js/i18n-render.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script><script src="js/render.js"></script><script src="js/fetchDependecies.js"></script>
 </html>

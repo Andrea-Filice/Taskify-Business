@@ -1,8 +1,12 @@
-function OnLoad(){
+async function OnLoad(){
+    //INITIALIZE i18n
+    await window.i18n.init();
+
     //SET THEME
     const htmlElement = document.documentElement;
     const theme = localStorage.getItem("theme");
     htmlElement.setAttribute('data-theme', theme);
+    document.title = window.i18n.t('htmlTitles.companyCreation');
 
     document.getElementById('container').style.animation = "FadeIn 1s forwards";
 

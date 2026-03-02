@@ -33,4 +33,4 @@ jobs:
       - name: Build Electron app
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npx electron-builder --mac --x64 --publish always
+        run: npx electron-builder --mac --universal --publish always
