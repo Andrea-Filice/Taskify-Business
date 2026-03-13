@@ -33,7 +33,7 @@
         "userPreferences": "Preferenze Utente:",
         "disableAutoClose": "Disattiva l'auto-chiusura del pannello Impostazioni.",
         "enableCharacterLimit": "Attiva limite caratteri.",
-        "enableDoublePress": "Attiva controllo doppio-tocco.",
+        "enableDoublePress": "Attiva controllo doppio-click.",
         "appearanceSettings": "Aspetto:",
         "darkTheme": " 🌙  Tema Scuro",
         "lightTheme": " ☀️  Tema Chiaro",
@@ -42,7 +42,7 @@
         "seeLicense": "Vedi Licenza",
         "needHelpSettings": "Hai bisogno di Aiuto?",
         "leaveAFeedback": "Lascia un Feedback",
-        "writeBug": "Scrivi un Bug Report.",
+        "writeBug": "Segnala un Bug.",
         "leaveAFeedbackDot": "Lascia un Feedback.",
         "contactUs": "Contattaci",
         "actionsSettings": "Azioni:",
@@ -59,7 +59,7 @@
         "enableSpellCheck": "Attiva SpellCheck."
     },
     "popUps": {
-        "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome Task valido.",
+        "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome valido.",
         "invalidVersionFormat": "Formato versioni invalido. Inserisci un formato valido.",
         "dataReset": "Dati rimossi correttamente. L'App si riavvierà a presto.",
         "markCategoryComplete" : "Sei sicuro di voler segnare come completato questa categoria?",
