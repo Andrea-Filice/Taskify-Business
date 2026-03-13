@@ -508,6 +508,10 @@ if (window.__taskify_render_loaded__) {
         tasksChart.data.datasets[1].backgroundColor = colorTCompletedBG;
         tasksChart.update();
       }
+
+      //*UPDATE THE TRANSLATION FOR catButton
+      ///In this section of the code, we update the Translation for the Button of "changeCategory", this fixes a bug.
+      catButton.innerHTML = (currentChoosedCategory === 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
     }
 
     renderList(category, listId) {
