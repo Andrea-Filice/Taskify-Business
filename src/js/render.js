@@ -229,7 +229,7 @@ if (window.__taskify_render_loaded__) {
       const messageSide = inputSide.value.trim();
 
       if((!input && !inputSide) || (!message && !messageSide) ){
-        api.showAlert('Invalid message. You cannot send empty messages.', 'Invalid AI Message');
+        api.showAlert('Invalid message. You cannot send empty messages.', 'Invalid AI Message', window.i18n.t("htmlTitles.closeButton"));
         return;
       }
 
@@ -269,12 +269,12 @@ if (window.__taskify_render_loaded__) {
       let employeeName = employeeField.value.trim();
 
       if (!text){
-        api.showAlert(window.i18n.t('popUps.errorInvalidTaskName'), window.i18n.t('errorTitles.taskCreationError'));
+        api.showAlert(window.i18n.t('popUps.errorInvalidTaskName'), window.i18n.t('errorTitles.taskCreationError'), window.i18n.t("htmlTitles.closeButton"));
         return;
       }
 
       if(prevVersion && !nextVersion){
-        api.showAlert(window.i18n.t('popUps.invalidVersionFormat'), window.i18n.t('errorTitles.taskCreationError'));
+        api.showAlert(window.i18n.t('popUps.invalidVersionFormat'), window.i18n.t('errorTitles.taskCreationError'), window.i18n.t("htmlTitles.closeButton"));
         return;
       }
       
@@ -567,7 +567,7 @@ if (window.__taskify_render_loaded__) {
     }
 
     resetData() {
-      api.showConfirm(window.i18n.t('popUps.resetDataConfirm'))
+      api.showConfirm(window.i18n.t('popUps.resetDataConfirm'), window.i18n.t('htmlTitles.cancelButton'))
         .then(userResponse => {
           if (userResponse) {
             this.todos = {
@@ -591,14 +591,14 @@ if (window.__taskify_render_loaded__) {
             localStorage.setItem("daysToShow", 7);
             api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
             this.updateUI();
-            api.showAlert(window.i18n.t('popUps.dataReset'))
+            api.showAlert(window.i18n.t('popUps.dataReset'), window.i18n.t("htmlTitles.closeButton"))
             .then(() => {window.location.href = "boot.html";});
           }
         });
     }
 
     restartApplication(){
-      api.showConfirm(window.i18n.t('popUps.restartConfirm'))
+      api.showConfirm(window.i18n.t('popUps.restartConfirm'), window.i18n.t('htmlTitles.cancelButton'))
       .then(userResponse =>{
         if(userResponse)
           window.location.href = "boot.html";
@@ -607,11 +607,11 @@ if (window.__taskify_render_loaded__) {
 
     markAsCompleted(categoryKey) {
       if (!this.todos[categoryKey]) {
-        api.showAlert('Invalid category.');
+        api.showAlert('Invalid category.', window.i18n.t("htmlTitles.closeButton"));
         return;
       }
 
-      api.showConfirm(window.i18n.t("popUps.markCategoryComplete"))
+      api.showConfirm(window.i18n.t("popUps.markCategoryComplete"), window.i18n.t('htmlTitles.cancelButton'))
       .then(userResponse => {
         if (!userResponse) return;
         const list = this.todos[categoryKey];
@@ -620,7 +620,7 @@ if (window.__taskify_render_loaded__) {
         this.todos[categoryKey] = [];
         api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
         this.updateUI();
-        api.showAlert(window.i18n.t("popUps.markedAsCompleted"));
+        api.showAlert(window.i18n.t("popUps.markedAsCompleted"), window.i18n.t("htmlTitles.closeButton"));
       });
     }
     
@@ -663,16 +663,16 @@ if (window.__taskify_render_loaded__) {
 
     changeCompanyName(newName) {
       if(!newName || newName.length < 8) {
-        api.showAlert(window.i18n.t('popUps.invalidCharacters'));
+        api.showAlert(window.i18n.t('popUps.invalidCharacters'), window.i18n.t("htmlTitles.closeButton"));
         return;
       }
-      api.showConfirm((window.i18n.t('popUps.changeCompanyName') + `"${newName}"?`))
+      api.showConfirm((window.i18n.t('popUps.changeCompanyName') + `"${newName}"?`), window.i18n.t('htmlTitles.cancelButton'))
         .then(userResponse => {
           if (!userResponse) return;
           companyName = newName;
           api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
           document.getElementById('nameCompany').value = '';
-          api.showAlert(window.i18n.t('popUps.companyChanged'));
+          api.showAlert(window.i18n.t('popUps.companyChanged'), window.i18n.t("htmlTitles.closeButton"));
           this.updateUI();
         });
     }
@@ -700,7 +700,7 @@ if (window.__taskify_render_loaded__) {
     modifyTask(category, index) {
       const task = this.todos[category][index];
       if (!task){
-        api.showAlert('Task not found.'); 
+        api.showAlert('Task not found.', window.i18n.t("htmlTitles.closeButton")); 
         return;
       }
       api.shareSettings(characterLimit);
@@ -781,7 +781,7 @@ if (window.__taskify_render_loaded__) {
   function toggleButtons(value){buttons.forEach(e  => {e.style.display = (value) ? "block" : "none";});}
 
   async function quitApplication() {
-    const userConfirmed = await api.showConfirm(window.i18n.t('popUps.quitAppConfirm'));
+    const userConfirmed = await api.showConfirm(window.i18n.t('popUps.quitAppConfirm'), window.i18n.t('htmlTitles.cancelButton'));
     if (userConfirmed)
       api.quitApp();
   }
@@ -954,7 +954,7 @@ if (window.__taskify_render_loaded__) {
   }
 
   //ABOUT PANEL
-  function ShowInfoPanel(key){api.showAlert(window.i18n.t(key))}
+  function ShowInfoPanel(key){api.showAlert(window.i18n.t(key), window.i18n.t("htmlTitles.closeButton"))}
 
   //WEB REFERENCES SECTION
   document.getElementById('repoGitBtn').addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});

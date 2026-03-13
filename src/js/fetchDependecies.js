@@ -63,7 +63,7 @@ function checkForUpdates(){
         else{ 
           //! DISABLE THE Taskify Updater WITH LINUX.
           window.api.openExternal(url);
-          window.api.showAlert("It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.", "Downloading in Background")
+          window.api.showAlert("It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.", "Downloading in Background", window.i18n.t("htmlTitles.closeButton"))
         }
       }
       else

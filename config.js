@@ -95,12 +95,12 @@ function createWindow() {
   mainWindow.setMenu(null)
   mainWindow.loadFile('src/boot.html')
 
-  ipcMain.handle('show-confirm', async (event, message) => {
+  ipcMain.handle('show-confirm', async (event, message, cancelBtn) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
 
     const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
-      buttons: ['Cancel', 'OK'],
+      buttons: [cancelBtn || "Cancel", 'OK'],
       defaultId: 1,
       cancelId: 0,
       message,
@@ -554,12 +554,12 @@ function createWindow() {
     }
   });
 
-  ipcMain.handle('show-alert', async (event, message, title) => {
+  ipcMain.handle('show-alert', async (event, message, title, closeBtn) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
 
     await dialog.showMessageBox(currentWin, {
       type: 'info',
-      buttons: ['OK'],
+      buttons: [closeBtn || "OK"],
       defaultId: 0,
       message,
       title: (title == "" || title == undefined) ? "Taskify Business" : title,

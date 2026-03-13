@@ -119,7 +119,9 @@
     },
     "htmlTitles": {
         "companyCreation": "Taskify Business - Create your company",
-        "editPopUp": "Taskify Business - Edit Task"
+        "editPopUp": "Taskify Business - Edit Task",
+        "cancelButton": "Cancel",
+        "closeButton": "Close"
     },
     "languages": {
         "italian": "🇮🇹 Italian",

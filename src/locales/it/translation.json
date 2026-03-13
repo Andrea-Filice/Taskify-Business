@@ -117,7 +117,9 @@
     },
     "htmlTitles": {
         "companyCreation": "Taskify Business - Creazione azienda",
-        "editPopUp": "Taskify Business - Modifica Task"
+        "editPopUp": "Taskify Business - Modifica Task",
+        "cancelButton": "Annulla",
+        "closeButton": "Chiudi"
     },
     "languages": {
         "italian": "🇮🇹 Italiano",
