@@ -279,7 +279,7 @@ function createWindow() {
   }
 
   //* DOWNLOAD FILE AND UPDATE PROGRESSBAR
-  async function downloadFileWithProgress(url, totalMB, progressBar, mainWindow) {
+  async function downloadFileWithProgress(url, totalMB, progressBar, mainWindow, outOfTranslation, downloadingTranslation) {
     const maxRedirects = 10;
     const maxRetries = 2;
     const requestTimeout = 60000; 
@@ -372,7 +372,7 @@ function createWindow() {
             const downloadedMB = downloadedBytes / (1024 * 1024);
             try {
               progressBar.value = downloadedMB;
-              progressBar.detail = `Downloading ${downloadedMB.toFixed(2)}Mb out of ${progressBar.getOptions().maxValue}Mb...`;
+              progressBar.detail = downloadingTranslation + `${downloadedMB.toFixed(2)}Mb ` + outOfTranslation +` ${progressBar.getOptions().maxValue}Mb...`;
             } catch (e) {
               if (mainWindow && mainWindow.webContents) 
                 mainWindow.webContents.send('download-progress', { mb: downloadedMB, totalMB: isNaN(totalBytes) ? null : totalBytes / (1024 * 1024) });
@@ -518,21 +518,21 @@ function createWindow() {
     }
   }
 
-  ipcMain.handle('downloadProgress', async (event, url, latestVersion) => {
+  ipcMain.handle('downloadProgress', async (event, url, latestVersion, title, msg, successMsg, downloadingTranslation, outOfTranslation) => {
     const megabytesTotal = await retrieveLatestVersion(url);
 
     const progressBar = new ProgressBar({
       indeterminate: false,
       maxValue: megabytesTotal,
-      text: `Updating Taskify to ${latestVersion}`,
-      detail: `Downloading 0Mb out of ${megabytesTotal}Mb...`
+      text: title + ` ${latestVersion}`,
+      detail: msg + ` ${megabytesTotal}Mb...`
     });
 
     try {
-      const downloadedPath = await downloadFileWithProgress(url, megabytesTotal, progressBar, null);
+      const downloadedPath = await downloadFileWithProgress(url, megabytesTotal, progressBar, null, outOfTranslation, downloadingTranslation); //
       console.log('[ℹ️ INFO] downloadFileWithProgress returned:', downloadedPath);
 
-      progressBar.detail = "Download completed, follow the on-screen instructions.";
+      progressBar.detail = successMsg;
       setTimeout(() => {
         progressBar.close();
       }, 3000);

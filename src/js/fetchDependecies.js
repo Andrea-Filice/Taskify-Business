@@ -59,7 +59,7 @@ function checkForUpdates(){
         }
         console.log("[ℹ️ INFO] DOWNLOAD LINK: " + url + ".")
         if(window.api.platform != "linux")
-          window.api.downloadProgress(url, latestVersion)
+          window.api.downloadProgress(url, latestVersion, window.i18n.t("updatePopUp.titleProgressBar"), window.i18n.t("updatePopUp.msgProgessBar"), window.i18n.t("updatePopUp.successMsg"), window.i18n.t("updatePopUp.downloadingTranslation"), window.i18n.t("updatePopUp.outOfTranslation"))
         else { 
           //! DISABLE THE Taskify Updater WITH LINUX.
           window.api.openExternal(url);

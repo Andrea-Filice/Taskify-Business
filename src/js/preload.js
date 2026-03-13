@@ -8,7 +8,7 @@ contextBridge.exposeInMainWorld('api', {
   showAlert: (message, title, closeBtn) => ipcRenderer.invoke('show-alert', message, title, closeBtn),
   showConfirm: (message, cancelBtn) => ipcRenderer.invoke('show-confirm', message, cancelBtn),
   newVersion: (message, installNow, remindLater) => ipcRenderer.invoke('new-version', message, installNow, remindLater),
-  downloadProgress: (url, latest) => ipcRenderer.invoke('downloadProgress', url, latest),
+  downloadProgress: (url, latest, title, msg, successMsg, downloadingTranslation, outOfTranslation) => ipcRenderer.invoke('downloadProgress', url, latest, title, msg, successMsg, downloadingTranslation, outOfTranslation),
   shareSettings: (settings) => ipcRenderer.invoke('shareSettings', settings),
   showInputAlert: (category, index) => ipcRenderer.invoke('show-input-alert', category, index),
   inputSend: (updatedText, category) => ipcRenderer.send('inputSend', updatedText, category),

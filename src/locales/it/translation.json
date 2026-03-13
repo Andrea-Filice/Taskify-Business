@@ -126,7 +126,13 @@
         "title": "Download in Background",
         "titleWindowsMac": "Una nuova versione di Taskify Business è disponibile!",
         "installNow": "Installa ora",
-        "remindLater": "Ricordamelo dopo"
+        "remindLater": "Ricordamelo dopo",
+        "outOfTranslation": "di",
+        "downloadingTranslation": "Scarico ",
+        "titleProgressBar": "Download di Taskify Business ",
+        "msgProgessBar": "Scarico 0Mb di",
+        "successMsg": "Download completato, segui le indicazioni a schermo.",
+        "unknownError": "Si è verificato un errore imprevisto durante l'aggiornamento."
     },
     "languages": {
         "italian": "🇮🇹 Italiano",
