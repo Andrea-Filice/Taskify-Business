@@ -18,6 +18,7 @@ This version of Taskify Business **resolves important security vulnerabilities**
 # New Features
 [0ec3ada] New language added! 🇫🇷 French is now available.
 [b283244] New, fresher, and improved icons.
+[c1b43ce] Added a new animation that dynamically changes the tooltip for new ideas.
 
 # Bug Fixes
 [e66123e] The drop-down menu for sending feedback has been removed; now there is only the option to report a bug.
