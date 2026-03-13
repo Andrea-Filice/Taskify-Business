@@ -104,7 +104,8 @@
         "deleteConfirm": "¿Estás seguro de que quieres eliminar esta Tarea?",
         "unsavedChanges": "¿Estás seguro de que quieres salir sin guardar los cambios pendientes?",
         "optional": "Opcional",
-        "taskTitle": "Introduce el nuevo Nombre de Tarea"
+        "taskTitle": "Introduce el nuevo Nombre de Tarea",
+        "proprieties": "Propiedades."
     },
     "companyCreation": {
         "createYour": "CREA TU",

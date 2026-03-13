@@ -102,7 +102,8 @@
         "deleteConfirm": "Sei sicuro di voler eliminare il Task?",
         "unsavedChanges": "Sei sicuro di voler uscire con modifiche non salvate?",
         "optional": "Opzionale",
-        "taskTitle": "Inserisci il nuovo nome del Task"
+        "taskTitle": "Inserisci il nuovo nome del Task",
+        "proprieties": "Proprietà."
     },
     "companyCreation":{
         "createYour": "CREA LA TUA",
