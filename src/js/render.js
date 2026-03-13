@@ -20,8 +20,6 @@ if (window.__taskify_render_loaded__) {
   const defaultCategoryDropdown = document.getElementById("defaultCategoryDropdown");
   const catButton = document.getElementById("categorySelection");
 
-  const DEBUG = api.checkForDebug();
-
   //CHECK IF daysToShow is null
   if(localStorage.getItem("daysToShow") == null)
     localStorage.setItem("daysToShow", 7);
