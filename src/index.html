@@ -37,7 +37,12 @@
                 <input type="text" id="employeeInput" placeholder="Employee Name..." data-i18n-title="homePage.employeeName" maxlength="10" style="width: 390px;" data-i18n-placeholder="homePage.employeeName">
                 <button id="closeEmployeeBtn" style="border: none; border-radius: 5px; font-size: 23px; font-family: 'General Sans', sans-serif;"><img src="assets/_close.png" alt="Close" height="25px" width="25px" style="position: relative; top: 3px; transform: scale(0.7);" draggable="false"></button>
             </div>
-            <input class="inputName" id="aiInput" type="text" placeholder="Task name or /ai to open AI..." autocomplete="on" style="display: block;" data-i18n-placeholder="homePage.taskNameTooltip">
+            <div class="inputName-wrapper">
+            <input class="inputName" id="aiInput" type="text" autocomplete="on" style="display: block;">
+            <div class="hint-overlay" id="hintOverlay">
+                <span class="hint-text" id="hintText"></span>
+            </div>
+            </div>
             <button id="categorySelection"></button>
             <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px" draggable="false"></button>
         </div>

@@ -745,6 +745,64 @@ if (window.__taskify_render_loaded__) {
     }
   }();
 
+  (function initHintCycler() {
+      const input      = document.getElementById('aiInput');
+      const overlay    = document.getElementById('hintOverlay');
+      const hintEl     = document.getElementById('hintText');
+
+      const getHints = () => [
+          window.i18n.t('homePage.taskNameTooltip'),
+          window.i18n.t('homePage.hintCreate'),
+          window.i18n.t('homePage.hintAI'),
+          window.i18n.t('homePage.hintEmployee'),
+      ];
+
+      let currentIndex = 0;
+      let intervalId   = null;
+
+      function showHint(text) {
+          hintEl.textContent = text;
+          hintEl.classList.remove('exit-up');
+          void hintEl.offsetWidth;
+          hintEl.style.animation = 'none';
+          void hintEl.offsetWidth;
+          hintEl.style.animation = 'hintEnter 0.5s ease forwards';
+      }
+
+      function nextHint() {
+          const hints = getHints();
+          hintEl.classList.add('exit-up');
+          hintEl.style.animation = 'hintExitUp 0.4s ease forwards';
+
+          setTimeout(() => {
+              currentIndex = (currentIndex + 1) % hints.length;
+              showHint(hints[currentIndex]);
+          }, 420);
+      }
+
+      function startCycling() {
+          const hints = getHints();
+          showHint(hints[currentIndex]);
+          intervalId = setInterval(nextHint, 3000);
+      }
+
+      function stopCycling() {
+          clearInterval(intervalId);
+          intervalId = null;
+      }
+
+      input.addEventListener('input', () => {overlay.style.visibility = input.value.length > 0 ? 'hidden' : 'visible';});
+      input.addEventListener('focus', () => {overlay.style.visibility = input.value.length > 0 ? 'hidden' : 'visible';});
+      input.addEventListener('blur', () => {overlay.style.visibility = input.value.length > 0 ? 'hidden' : 'visible';});
+
+      const origUpdateUI = window.todoManager.updateUI.bind(window.todoManager);
+      window.todoManager.updateUI = function(...args) {
+          origUpdateUI(...args);
+          if (intervalId) { stopCycling(); startCycling(); }
+      };
+      startCycling();
+  })();
+
   //*GET CSS RULES
   function getCSSRule(varName){return getComputedStyle(document.documentElement).getPropertyValue(varName);}
 
