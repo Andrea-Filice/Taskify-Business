@@ -6,11 +6,15 @@
         "noTasks": "No Tasks in this category.",
         "previousVersionTooltip": "Previous version",
         "newerVersionTooltip": "Newer version",
-        "taskNameTooltip": "Task name or /ai to open AI...",
+        "taskNameTooltip": "Task name or /AI to open AI...",
         "employeeName": "Employee Name...",
         "assignedTo": "Assigned to: ",
         "you": "You",
-        "editTask": "Edit Task"
+        "editTask": "Edit Task",
+        "hint2": "Add your goal...",
+        "hint3": "Write your secret dream...",
+        "hint4": "Today's mood...",
+        "hint5": "Write your brilliant idea..."
     },
     "settings": {
         "aboutTitle": "About",

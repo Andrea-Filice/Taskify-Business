@@ -752,9 +752,10 @@ if (window.__taskify_render_loaded__) {
 
       const getHints = () => [
           window.i18n.t('homePage.taskNameTooltip'),
-          window.i18n.t('homePage.hintCreate'),
-          window.i18n.t('homePage.hintAI'),
-          window.i18n.t('homePage.hintEmployee'),
+          window.i18n.t('homePage.hint2'),
+          window.i18n.t('homePage.hint3'),
+          window.i18n.t('homePage.hint4'),
+          window.i18n.t('homePage.hint5'),
       ];
 
       let currentIndex = 0;

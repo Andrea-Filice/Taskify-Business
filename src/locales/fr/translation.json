@@ -6,11 +6,15 @@
         "noTasks": "Aucune tâche dans cette catégorie.",
         "previousVersionTooltip": "Version précédente",
         "newerVersionTooltip": "Nouvelle version",
-        "taskNameTooltip": "Nom de la tâche ou /ai pour ouvrir l'IA...",
+        "taskNameTooltip": "Nom de la tâche ou /AI pour ouvrir l'IA...",
         "employeeName": "Nom de l'employé...",
         "assignedTo": "Assigné à : ",
         "you": "Vous",
-        "editTask": "Modifier la Tâche"
+        "editTask": "Modifier la Tâche",
+        "hint2": "Ajoute ton objectif...",
+        "hint3": "Écris ton rêve secret...",
+        "hint4": "L'humeur du jour...",
+        "hint5": "Écris ton idée géniale..."
     },
     "settings": {
         "aboutTitle": "À propos",

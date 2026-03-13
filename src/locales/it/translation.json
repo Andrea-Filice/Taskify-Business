@@ -6,11 +6,15 @@
         "noTasks": "Nessun Task in questa categoria.",
         "previousVersionTooltip": "Versione Precedente",
         "newerVersionTooltip": "Nuova Versione",
-        "taskNameTooltip": "Nome del Task o /ai per l'assistente AI...",
+        "taskNameTooltip": "Nome del Task o /AI per l'assistente AI...",
         "employeeName": "Nome dipendente...",
         "assignedTo": "Assegnato a: ",
         "you": "Te",
-        "editTask": "Modifica Task"
+        "editTask": "Modifica Task",
+        "hint2": "Aggiungi un tuo obbiettivo...",
+        "hint3": "Scrivi il tuo sogno nel cassetto...",
+        "hint4": "Il mood del giorno...",
+        "hint5": "Scrivi la tua idea geniale..."
     },
     "settings": {
         "aboutTitle": "Info",
