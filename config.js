@@ -143,7 +143,8 @@ function createWindow() {
     return [
       { code: 'en', name: 'English' },
       { code: 'it', name: 'Italiano' },
-      { code: 'es', name: 'Español' }
+      { code: 'es', name: 'Español' },
+      { code: 'fr', name: "Français" }
     ];
   });
 
