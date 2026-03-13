@@ -113,7 +113,9 @@
         "companyTitle": "Inserisci il nome dell'azienda (Massimo 30 caratteri)",
         "warning": "Il nome deve contenere minimo ",
         "8Characters": "8 caratteri.",
-        "createBtn": "Crea"
+        "createBtn": "Crea",
+        "errorInvalidCompanyName": "Nome dell'azienda non valido, Richiesti minimi 8 caratteri.",
+        "titleError": "Nome dell'azienda non valido."
     },
     "htmlTitles": {
         "companyCreation": "Taskify Business - Creazione azienda",
