@@ -147,12 +147,12 @@ function createWindow() {
     ];
   });
 
-  ipcMain.handle('new-version', async (event, message) => {
+  ipcMain.handle('new-version', async (event, message, installNow, remindLater) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
 
     const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
-      buttons: ['Install Now', 'Remind me Later'],
+      buttons: [installNow || "Install Now", remindLater || 'Remind me Later'],
       defaultId: 0,
       cancelId: 1,
       message,

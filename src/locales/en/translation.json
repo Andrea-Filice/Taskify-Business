@@ -123,6 +123,13 @@
         "cancelButton": "Cancel",
         "closeButton": "Close"
     },
+    "updatePopUp": {
+        "title": "It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.",
+        "msg": "Downloading in Background",
+        "titleWindowsMac": "A newer version of Taskify Business is available!",
+        "installNow": "Install Now",
+        "remindLater": "Remind me Later"
+    },
     "languages": {
         "italian": "🇮🇹 Italian",
         "english-us": "🇬🇧/🇺🇸 English",

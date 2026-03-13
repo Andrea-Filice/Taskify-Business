@@ -43,7 +43,7 @@ function checkForUpdates(){
   if(isNewerVersion(latestVersion, currentVersion)){
     document.getElementById("updateIcon").style.display = "inline";
     let url; //* THIS WILL STORE THE URL FOR DOWNLOAD THE INSTALLER
-    let res = window.api.newVersion("A newer version of Taskify Business is available! (" + latestVersion + ")")
+    let res = window.api.newVersion(window.i18n.t('updatePopUp.titleWindowsMac') + " (" + latestVersion + ")", window.i18n.t("updatePopUp.installNow"), window.i18n.t("updatePopUp.remindLater"))
     .then(res =>{
       if(res === true){
         switch(window.api.platform){
@@ -60,10 +60,10 @@ function checkForUpdates(){
         console.log("[ℹ️ INFO] DOWNLOAD LINK: " + url + ".")
         if(window.api.platform != "linux")
           window.api.downloadProgress(url, latestVersion)
-        else{ 
+        else { 
           //! DISABLE THE Taskify Updater WITH LINUX.
           window.api.openExternal(url);
-          window.api.showAlert("It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.", "Downloading in Background", window.i18n.t("htmlTitles.closeButton"))
+          window.api.showAlert(window.i18n.t("updatePopUp.msg"), window.i18n.t("updatePopUp.title"), window.i18n.t("htmlTitles.closeButton"))
         }
       }
       else

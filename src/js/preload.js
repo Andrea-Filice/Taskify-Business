@@ -7,7 +7,7 @@ contextBridge.exposeInMainWorld('api', {
   loadTodosSync: () => ipcRenderer.sendSync('load-todos'),
   showAlert: (message, title, closeBtn) => ipcRenderer.invoke('show-alert', message, title, closeBtn),
   showConfirm: (message, cancelBtn) => ipcRenderer.invoke('show-confirm', message, cancelBtn),
-  newVersion: (message) => ipcRenderer.invoke('new-version', message),
+  newVersion: (message, installNow, remindLater) => ipcRenderer.invoke('new-version', message, installNow, remindLater),
   downloadProgress: (url, latest) => ipcRenderer.invoke('downloadProgress', url, latest),
   shareSettings: (settings) => ipcRenderer.invoke('shareSettings', settings),
   showInputAlert: (category, index) => ipcRenderer.invoke('show-input-alert', category, index),
