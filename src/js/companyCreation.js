@@ -20,7 +20,7 @@ function createCompany(){
     const value = input.value.trim();
     
     if (!value || value.length < 8){
-        api.showAlert('Invalid Company name. At least 8 characters.'); 
+        api.showAlert(window.i18n.t("companyCreation.errorInvalidCompanyName"), window.i18n.t("companyCreation.titleError"), window.i18n.t("htmlTitles.closeButton")); 
         return;
     }
     else {

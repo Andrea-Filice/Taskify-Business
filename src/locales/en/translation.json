@@ -6,11 +6,15 @@
         "noTasks": "No Tasks in this category.",
         "previousVersionTooltip": "Previous version",
         "newerVersionTooltip": "Newer version",
-        "taskNameTooltip": "Task name or /ai to open AI...",
+        "taskNameTooltip": "Task name or /AI to open AI...",
         "employeeName": "Employee Name...",
         "assignedTo": "Assigned to: ",
         "you": "You",
-        "editTask": "Edit Task"
+        "editTask": "Edit Task",
+        "hint2": "Add your goal...",
+        "hint3": "Write your secret dream...",
+        "hint4": "Today's mood...",
+        "hint5": "Write your brilliant idea..."
     },
     "settings": {
         "aboutTitle": "About",
@@ -104,7 +108,8 @@
         "deleteConfirm": "Are you sure you want to delete this Task?",
         "unsavedChanges": "Are you sure you want to quit and not save the unsaved changes?",
         "optional": "Optional",
-        "taskTitle": "Enter the new Task Name"
+        "taskTitle": "Enter the new Task Name",
+        "proprieties": "Proprieties."
     },
     "companyCreation": {
         "createYour": "CREATE YOUR",
@@ -114,15 +119,33 @@
         "companyTitle": "Enter the Company name (Max 30 characters)",
         "warning": "The company name must contain at least ",
         "8Characters": "8 characters.",
-        "createBtn": "Create"
+        "createBtn": "Create",
+        "errorInvalidCompanyName": "Invalid Company name. At least 8 characters.",
+        "titleError": "Invalid Company Name."
     },
     "htmlTitles": {
         "companyCreation": "Taskify Business - Create your company",
-        "editPopUp": "Taskify Business - Edit Task"
+        "editPopUp": "Taskify Business - Edit Task",
+        "cancelButton": "Cancel",
+        "closeButton": "Close"
+    },
+    "updatePopUp": {
+        "title": "It is downloading the new version of Taskify Business on your Chrome page. Once it’s finished, uninstall the current version and install the new one.",
+        "msg": "Downloading in Background",
+        "titleWindowsMac": "A newer version of Taskify Business is available!",
+        "installNow": "Install Now",
+        "remindLater": "Remind me Later",
+        "outOfTranslation": "out of ",
+        "downloadingTranslation": "Downloading ",
+        "titleProgressBar": "Download of Taskify Business ",
+        "msgProgessBar": "Downloading 0Mb out of",
+        "successMsg": "Download completed, follow the on-screen instructions.",
+        "unknownError": "There was an unknown error during the installation."
     },
     "languages": {
         "italian": "🇮🇹 Italian",
         "english-us": "🇬🇧/🇺🇸 English",
-        "spanish": "🇪🇸 Spanish"
+        "spanish": "🇪🇸 Spanish",
+        "french": "🇫🇷 French"
     }
 }

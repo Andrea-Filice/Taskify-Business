@@ -53,9 +53,9 @@ function submitInput() {
     window.close();
   }
   else if(!inputName)
-    api.showAlert(window.i18n.t('editPopUp.errorEdit'))
+    api.showAlert(window.i18n.t('editPopUp.errorEdit'), window.i18n.t("htmlTitles.closeButton"))
   if(previousVersion && !newerVersion || !previousVersion && newerVersion)
-    api.showAlert(window.i18n.t('editPopUp.errorVersions'))
+    api.showAlert(window.i18n.t('editPopUp.errorVersions'), window.i18n.t("htmlTitles.closeButton"))
   else if(previousVersion && newerVersion){
     api.inputSend(previousVersion, "prev_version");
     api.inputSend(newerVersion, "next_version");
@@ -64,7 +64,7 @@ function submitInput() {
 }
 
 function DeleteTask(){
-  api.showConfirm(window.i18n.t('editPopUp.deleteConfirm'))
+  api.showConfirm(window.i18n.t('editPopUp.deleteConfirm'), window.i18n.t("htmlTitles.cancelButton"))
     .then(userResponse => {
       if(userResponse){
         api.deleteTask(); 
@@ -75,7 +75,7 @@ function DeleteTask(){
 
 function Quit(){
   if(getUnsavedChanges()){
-    api.showConfirm(window.i18n.t('editPopUp.unsavedChanges'))
+    api.showConfirm(window.i18n.t('editPopUp.unsavedChanges'), window.i18n.t("htmlTitles.cancelButton"))
     .then(userResponse => {
         if(userResponse)
           window.close();

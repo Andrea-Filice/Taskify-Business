@@ -95,12 +95,12 @@ function createWindow() {
   mainWindow.setMenu(null)
   mainWindow.loadFile('src/boot.html')
 
-  ipcMain.handle('show-confirm', async (event, message) => {
+  ipcMain.handle('show-confirm', async (event, message, cancelBtn) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
 
     const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
-      buttons: ['Cancel', 'OK'],
+      buttons: [cancelBtn || "Cancel", 'OK'],
       defaultId: 1,
       cancelId: 0,
       message,
@@ -143,16 +143,17 @@ function createWindow() {
     return [
       { code: 'en', name: 'English' },
       { code: 'it', name: 'Italiano' },
-      { code: 'es', name: 'Español' }
+      { code: 'es', name: 'Español' },
+      { code: 'fr', name: "Français" }
     ];
   });
 
-  ipcMain.handle('new-version', async (event, message) => {
+  ipcMain.handle('new-version', async (event, message, installNow, remindLater) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
 
     const result = await dialog.showMessageBox(currentWin, {
       type: 'question',
-      buttons: ['Install Now', 'Remind me Later'],
+      buttons: [installNow || "Install Now", remindLater || 'Remind me Later'],
       defaultId: 0,
       cancelId: 1,
       message,
@@ -279,7 +280,7 @@ function createWindow() {
   }
 
   //* DOWNLOAD FILE AND UPDATE PROGRESSBAR
-  async function downloadFileWithProgress(url, totalMB, progressBar, mainWindow) {
+  async function downloadFileWithProgress(url, totalMB, progressBar, mainWindow, outOfTranslation, downloadingTranslation) {
     const maxRedirects = 10;
     const maxRetries = 2;
     const requestTimeout = 60000; 
@@ -372,7 +373,7 @@ function createWindow() {
             const downloadedMB = downloadedBytes / (1024 * 1024);
             try {
               progressBar.value = downloadedMB;
-              progressBar.detail = `Downloading ${downloadedMB.toFixed(2)}Mb out of ${progressBar.getOptions().maxValue}Mb...`;
+              progressBar.detail = downloadingTranslation + `${downloadedMB.toFixed(2)}Mb ` + outOfTranslation +` ${progressBar.getOptions().maxValue}Mb...`;
             } catch (e) {
               if (mainWindow && mainWindow.webContents) 
                 mainWindow.webContents.send('download-progress', { mb: downloadedMB, totalMB: isNaN(totalBytes) ? null : totalBytes / (1024 * 1024) });
@@ -518,21 +519,21 @@ function createWindow() {
     }
   }
 
-  ipcMain.handle('downloadProgress', async (event, url, latestVersion) => {
+  ipcMain.handle('downloadProgress', async (event, url, latestVersion, title, msg, successMsg, downloadingTranslation, outOfTranslation) => {
     const megabytesTotal = await retrieveLatestVersion(url);
 
     const progressBar = new ProgressBar({
       indeterminate: false,
       maxValue: megabytesTotal,
-      text: `Updating Taskify to ${latestVersion}`,
-      detail: `Downloading 0Mb out of ${megabytesTotal}Mb...`
+      text: title + ` ${latestVersion}`,
+      detail: msg + ` ${megabytesTotal}Mb...`
     });
 
     try {
-      const downloadedPath = await downloadFileWithProgress(url, megabytesTotal, progressBar, null);
+      const downloadedPath = await downloadFileWithProgress(url, megabytesTotal, progressBar, null, outOfTranslation, downloadingTranslation); //
       console.log('[ℹ️ INFO] downloadFileWithProgress returned:', downloadedPath);
 
-      progressBar.detail = "Download completed, follow the on-screen instructions.";
+      progressBar.detail = successMsg;
       setTimeout(() => {
         progressBar.close();
       }, 3000);
@@ -554,12 +555,12 @@ function createWindow() {
     }
   });
 
-  ipcMain.handle('show-alert', async (event, message, title) => {
+  ipcMain.handle('show-alert', async (event, message, title, closeBtn) => {
     const currentWin = BrowserWindow.fromWebContents(event.sender);
 
     await dialog.showMessageBox(currentWin, {
       type: 'info',
-      buttons: ['OK'],
+      buttons: [closeBtn || "OK"],
       defaultId: 0,
       message,
       title: (title == "" || title == undefined) ? "Taskify Business" : title,

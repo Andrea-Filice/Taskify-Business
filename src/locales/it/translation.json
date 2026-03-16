@@ -6,11 +6,15 @@
         "noTasks": "Nessun Task in questa categoria.",
         "previousVersionTooltip": "Versione Precedente",
         "newerVersionTooltip": "Nuova Versione",
-        "taskNameTooltip": "Nome del Task o /ai per l'assistente AI...",
+        "taskNameTooltip": "Nome del Task o /AI per l'assistente AI...",
         "employeeName": "Nome dipendente...",
         "assignedTo": "Assegnato a: ",
         "you": "Te",
-        "editTask": "Modifica Task"
+        "editTask": "Modifica Task",
+        "hint2": "Aggiungi un tuo obbiettivo...",
+        "hint3": "Scrivi il tuo sogno nel cassetto...",
+        "hint4": "Il mood del giorno...",
+        "hint5": "Scrivi la tua idea geniale..."
     },
     "settings": {
         "aboutTitle": "Info",
@@ -28,12 +32,12 @@
         "settingsTitle": "Impostazioni:",
         "generalSettings": "Generali:",
         "markAsCompleted": "Segna come Completato",
-        "changeBtn": "Cambia",
+        "changeBtn": "Modifica",
         "enterCompanyNamePlaceholder": "Inserci il nuovo nome...",
         "userPreferences": "Preferenze Utente:",
         "disableAutoClose": "Disattiva l'auto-chiusura del pannello Impostazioni.",
         "enableCharacterLimit": "Attiva limite caratteri.",
-        "enableDoublePress": "Attiva controllo doppio-tocco.",
+        "enableDoublePress": "Attiva controllo doppio-click.",
         "appearanceSettings": "Aspetto:",
         "darkTheme": " 🌙  Tema Scuro",
         "lightTheme": " ☀️  Tema Chiaro",
@@ -41,14 +45,12 @@
         "openOnGithub": "Apri su GitHub",
         "seeLicense": "Vedi Licenza",
         "needHelpSettings": "Hai bisogno di Aiuto?",
-        "leaveAFeedback": "Lascia un Feedback",
-        "writeBug": "Scrivi un Bug Report.",
-        "leaveAFeedbackDot": "Lascia un Feedback.",
+        "writeBug": "Segnala un Bug",
         "contactUs": "Contattaci",
         "actionsSettings": "Azioni:",
         "quitApplication": "Chiudi applicazione",
         "restartApplication": "Riavvia",
-        "deleteData": "Elimina tutti i dati",
+        "deleteData": "Elimina i tuoi dati",
         "closePanel": "Chiudi pannello",
         "languageApplication": "LINGUA APPLICAZIONE",
         "themeApplication": "TEMA APPLICAZIONE",
@@ -59,7 +61,7 @@
         "enableSpellCheck": "Attiva SpellCheck."
     },
     "popUps": {
-        "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome Task valido.",
+        "errorInvalidTaskName": "Nome Task non valido. Inserisci un nome valido.",
         "invalidVersionFormat": "Formato versioni invalido. Inserisci un formato valido.",
         "dataReset": "Dati rimossi correttamente. L'App si riavvierà a presto.",
         "markCategoryComplete" : "Sei sicuro di voler segnare come completato questa categoria?",
@@ -104,7 +106,8 @@
         "deleteConfirm": "Sei sicuro di voler eliminare il Task?",
         "unsavedChanges": "Sei sicuro di voler uscire con modifiche non salvate?",
         "optional": "Opzionale",
-        "taskTitle": "Inserisci il nuovo nome del Task"
+        "taskTitle": "Inserisci il nuovo nome del Task",
+        "proprieties": "Proprietà."
     },
     "companyCreation":{
         "createYour": "CREA LA TUA",
@@ -114,15 +117,33 @@
         "companyTitle": "Inserisci il nome dell'azienda (Massimo 30 caratteri)",
         "warning": "Il nome deve contenere minimo ",
         "8Characters": "8 caratteri.",
-        "createBtn": "Crea"
+        "createBtn": "Crea",
+        "errorInvalidCompanyName": "Nome dell'azienda non valido, Richiesti minimi 8 caratteri.",
+        "titleError": "Nome dell'azienda non valido."
     },
     "htmlTitles": {
         "companyCreation": "Taskify Business - Creazione azienda",
-        "editPopUp": "Taskify Business - Modifica Task"
+        "editPopUp": "Taskify Business - Modifica Task",
+        "cancelButton": "Annulla",
+        "closeButton": "Chiudi"
+    },
+    "updatePopUp": {
+        "msg": "La nuova versione di Taskify Business si sta scaricando nella tua pagina Chrome, appena finisce disinstalla la versione corrente ed installa quella nuova.",
+        "title": "Download in Background",
+        "titleWindowsMac": "Una nuova versione di Taskify Business è disponibile!",
+        "installNow": "Installa ora",
+        "remindLater": "Ricordamelo dopo",
+        "outOfTranslation": "di",
+        "downloadingTranslation": "Scarico ",
+        "titleProgressBar": "Download di Taskify Business ",
+        "msgProgessBar": "Scarico 0Mb di",
+        "successMsg": "Download completato, segui le indicazioni a schermo.",
+        "unknownError": "Si è verificato un errore imprevisto durante l'aggiornamento."
     },
     "languages": {
         "italian": "🇮🇹 Italiano",
         "english-us": "🇬🇧/🇺🇸 Inglese",
-        "spanish": "🇪🇸 Spagnolo"
+        "spanish": "🇪🇸 Spagnolo",
+        "french": "🇫🇷 Francese"
     }
 }

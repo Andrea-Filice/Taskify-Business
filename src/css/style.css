@@ -716,3 +716,54 @@ option{
     top: 5px;
     padding: 0 5px;
 }
+
+.inputName-wrapper {
+    position: fixed;
+    bottom: 15px;
+    width: 50%;
+}
+
+.inputName-wrapper .inputName {
+    position: static;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.hint-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+    pointer-events: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.hint-text {
+    color: rgba(255,255,255,0.35);
+    font-size: 15px;
+    font-family: 'Switzer', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    animation: hintEnter 0.5s ease forwards;
+}
+
+.hint-text.exit-up {
+    animation: hintExitUp 0.4s ease forwards;
+}
+
+@keyframes hintEnter {
+    0%   { opacity: 0; transform: translateY(14px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hintExitUp {
+    0%   { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-14px); }
+}

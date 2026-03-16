@@ -20,8 +20,6 @@ if (window.__taskify_render_loaded__) {
   const defaultCategoryDropdown = document.getElementById("defaultCategoryDropdown");
   const catButton = document.getElementById("categorySelection");
 
-  const DEBUG = api.checkForDebug();
-
   //CHECK IF daysToShow is null
   if(localStorage.getItem("daysToShow") == null)
     localStorage.setItem("daysToShow", 7);
@@ -231,7 +229,7 @@ if (window.__taskify_render_loaded__) {
       const messageSide = inputSide.value.trim();
 
       if((!input && !inputSide) || (!message && !messageSide) ){
-        api.showAlert('Invalid message. You cannot send empty messages.', 'Invalid AI Message');
+        api.showAlert('Invalid message. You cannot send empty messages.', 'Invalid AI Message', window.i18n.t("htmlTitles.closeButton"));
         return;
       }
 
@@ -271,12 +269,12 @@ if (window.__taskify_render_loaded__) {
       let employeeName = employeeField.value.trim();
 
       if (!text){
-        api.showAlert(window.i18n.t('popUps.errorInvalidTaskName'), window.i18n.t('errorTitles.taskCreationError'));
+        api.showAlert(window.i18n.t('popUps.errorInvalidTaskName'), window.i18n.t('errorTitles.taskCreationError'), window.i18n.t("htmlTitles.closeButton"));
         return;
       }
 
       if(prevVersion && !nextVersion){
-        api.showAlert(window.i18n.t('popUps.invalidVersionFormat'), window.i18n.t('errorTitles.taskCreationError'));
+        api.showAlert(window.i18n.t('popUps.invalidVersionFormat'), window.i18n.t('errorTitles.taskCreationError'), window.i18n.t("htmlTitles.closeButton"));
         return;
       }
       
@@ -510,6 +508,10 @@ if (window.__taskify_render_loaded__) {
         tasksChart.data.datasets[1].backgroundColor = colorTCompletedBG;
         tasksChart.update();
       }
+
+      //*UPDATE THE TRANSLATION FOR catButton
+      ///In this section of the code, we update the Translation for the Button of "changeCategory", this fixes a bug.
+      catButton.innerHTML = (currentChoosedCategory === 'softwareComponents') ? window.i18n.t('homePage.maintenanceTasks') : window.i18n.t('homePage.outOfMaintenance');
     }
 
     renderList(category, listId) {
@@ -565,7 +567,7 @@ if (window.__taskify_render_loaded__) {
     }
 
     resetData() {
-      api.showConfirm(window.i18n.t('popUps.resetDataConfirm'))
+      api.showConfirm(window.i18n.t('popUps.resetDataConfirm'), window.i18n.t('htmlTitles.cancelButton'))
         .then(userResponse => {
           if (userResponse) {
             this.todos = {
@@ -589,14 +591,14 @@ if (window.__taskify_render_loaded__) {
             localStorage.setItem("daysToShow", 7);
             api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
             this.updateUI();
-            api.showAlert(window.i18n.t('popUps.dataReset'))
+            api.showAlert(window.i18n.t('popUps.dataReset'), window.i18n.t("htmlTitles.closeButton"))
             .then(() => {window.location.href = "boot.html";});
           }
         });
     }
 
     restartApplication(){
-      api.showConfirm(window.i18n.t('popUps.restartConfirm'))
+      api.showConfirm(window.i18n.t('popUps.restartConfirm'), window.i18n.t('htmlTitles.cancelButton'))
       .then(userResponse =>{
         if(userResponse)
           window.location.href = "boot.html";
@@ -605,11 +607,11 @@ if (window.__taskify_render_loaded__) {
 
     markAsCompleted(categoryKey) {
       if (!this.todos[categoryKey]) {
-        api.showAlert('Invalid category.');
+        api.showAlert('Invalid category.', window.i18n.t("htmlTitles.closeButton"));
         return;
       }
 
-      api.showConfirm(window.i18n.t("popUps.markCategoryComplete"))
+      api.showConfirm(window.i18n.t("popUps.markCategoryComplete"), window.i18n.t('htmlTitles.cancelButton'))
       .then(userResponse => {
         if (!userResponse) return;
         const list = this.todos[categoryKey];
@@ -618,7 +620,7 @@ if (window.__taskify_render_loaded__) {
         this.todos[categoryKey] = [];
         api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
         this.updateUI();
-        api.showAlert(window.i18n.t("popUps.markedAsCompleted"));
+        api.showAlert(window.i18n.t("popUps.markedAsCompleted"), window.i18n.t("htmlTitles.closeButton"));
       });
     }
     
@@ -661,16 +663,16 @@ if (window.__taskify_render_loaded__) {
 
     changeCompanyName(newName) {
       if(!newName || newName.length < 8) {
-        api.showAlert(window.i18n.t('popUps.invalidCharacters'));
+        api.showAlert(window.i18n.t('popUps.invalidCharacters'), window.i18n.t("htmlTitles.closeButton"));
         return;
       }
-      api.showConfirm((window.i18n.t('popUps.changeCompanyName') + `"${newName}"?`))
+      api.showConfirm((window.i18n.t('popUps.changeCompanyName') + `"${newName}"?`), window.i18n.t('htmlTitles.cancelButton'))
         .then(userResponse => {
           if (!userResponse) return;
           companyName = newName;
           api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
           document.getElementById('nameCompany').value = '';
-          api.showAlert(window.i18n.t('popUps.companyChanged'));
+          api.showAlert(window.i18n.t('popUps.companyChanged'), window.i18n.t("htmlTitles.closeButton"));
           this.updateUI();
         });
     }
@@ -698,7 +700,7 @@ if (window.__taskify_render_loaded__) {
     modifyTask(category, index) {
       const task = this.todos[category][index];
       if (!task){
-        api.showAlert('Task not found.'); 
+        api.showAlert('Task not found.', window.i18n.t("htmlTitles.closeButton")); 
         return;
       }
       api.shareSettings(characterLimit);
@@ -743,6 +745,65 @@ if (window.__taskify_render_loaded__) {
     }
   }();
 
+  (function initHintCycler() {
+      const input      = document.getElementById('aiInput');
+      const overlay    = document.getElementById('hintOverlay');
+      const hintEl     = document.getElementById('hintText');
+
+      const getHints = () => [
+          window.i18n.t('homePage.taskNameTooltip'),
+          window.i18n.t('homePage.hint2'),
+          window.i18n.t('homePage.hint3'),
+          window.i18n.t('homePage.hint4'),
+          window.i18n.t('homePage.hint5'),
+      ];
+
+      let currentIndex = 0;
+      let intervalId   = null;
+
+      function showHint(text) {
+          hintEl.textContent = text;
+          hintEl.classList.remove('exit-up');
+          void hintEl.offsetWidth;
+          hintEl.style.animation = 'none';
+          void hintEl.offsetWidth;
+          hintEl.style.animation = 'hintEnter 0.5s ease forwards';
+      }
+
+      function nextHint() {
+          const hints = getHints();
+          hintEl.classList.add('exit-up');
+          hintEl.style.animation = 'hintExitUp 0.4s ease forwards';
+
+          setTimeout(() => {
+              currentIndex = (currentIndex + 1) % hints.length;
+              showHint(hints[currentIndex]);
+          }, 420);
+      }
+
+      function startCycling() {
+          const hints = getHints();
+          showHint(hints[currentIndex]);
+          intervalId = setInterval(nextHint, 3000);
+      }
+
+      function stopCycling() {
+          clearInterval(intervalId);
+          intervalId = null;
+      }
+
+      input.addEventListener('input', () => {overlay.style.visibility = input.value.length > 0 ? 'hidden' : 'visible';});
+      input.addEventListener('focus', () => {overlay.style.visibility = input.value.length > 0 ? 'hidden' : 'visible';});
+      input.addEventListener('blur', () => {overlay.style.visibility = input.value.length > 0 ? 'hidden' : 'visible';});
+
+      const origUpdateUI = window.todoManager.updateUI.bind(window.todoManager);
+      window.todoManager.updateUI = function(...args) {
+          origUpdateUI(...args);
+          if (intervalId) { stopCycling(); startCycling(); }
+      };
+      startCycling();
+  })();
+
   //*GET CSS RULES
   function getCSSRule(varName){return getComputedStyle(document.documentElement).getPropertyValue(varName);}
 
@@ -779,7 +840,7 @@ if (window.__taskify_render_loaded__) {
   function toggleButtons(value){buttons.forEach(e  => {e.style.display = (value) ? "block" : "none";});}
 
   async function quitApplication() {
-    const userConfirmed = await api.showConfirm(window.i18n.t('popUps.quitAppConfirm'));
+    const userConfirmed = await api.showConfirm(window.i18n.t('popUps.quitAppConfirm'), window.i18n.t('htmlTitles.cancelButton'));
     if (userConfirmed)
       api.quitApp();
   }
@@ -952,32 +1013,13 @@ if (window.__taskify_render_loaded__) {
   }
 
   //ABOUT PANEL
-  function ShowInfoPanel(key){api.showAlert(window.i18n.t(key))}
+  function ShowInfoPanel(key){api.showAlert(window.i18n.t(key), window.i18n.t("htmlTitles.closeButton"))}
 
   //WEB REFERENCES SECTION
   document.getElementById('repoGitBtn').addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});
   document.getElementById('licenseBtn').addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/blob/main/LICENSE");});
 
-  //NEED HELP SECTION
-  document.getElementById('feedback').addEventListener('click', () =>{
-    let menuFeedback = document.getElementById('menuFeedback');
-
-    //* INTERRUPT THE CURRENT ANIMATION
-    menuFeedback.style.animation = "none";
-
-    document.getElementById("feedbackSelection").classList.toggle("feedbackSelection");
-    if(menuFeedback.classList.contains("arrowMenu"))
-      menuFeedback.style.animation = "rotateAnimationBackward 0.3s forwards ease-in-out";
-    else
-      menuFeedback.style.animation = "rotateAnimation 0.3s forwards ease-in-out";
-
-    setTimeout(() =>{ 
-      menuFeedback.classList.toggle("arrowMenu");
-    }, 10);
-  });
-
-  document.getElementById("bug").addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/issues/new?labels=bug");})
-  document.getElementById("feedbackBtn").addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/issues/new?labels=enhancement");})
+  document.getElementById("feedback").addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business/issues/new?labels=bug");})
   document.getElementById('contactUs').addEventListener('click', () => {api.openExternal("https://play-epik-incorporation.netlify.app/contactus#morehelp");});
 
   //ON LOAD
