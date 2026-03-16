@@ -1,8 +1,8 @@
 # Release Notes for Taskify Business 1.11.1 (March Security Patch)
 
 # Stack Upgrades
-- supabase-js `2.99.1`
-  - [New in 2.99.1](https://github.com/supabase/supabase-js/releases/tag/v2.99.1)
+- supabase-js `2.99.2`
+  - [New in 2.99.2](https://github.com/supabase/supabase-js/releases/tag/v2.99.2)
 - electron-builder `26.8.2`
   - [New in 26.8.2](https://github.com/electron-userland/electron-builder/releases/tag/electron-builder%4026.8.2)
 - i18next `25.8.18`
