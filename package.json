@@ -92,7 +92,7 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^41.0.2",
+    "electron": "^41.0.3",
     "electron-builder": "^26.8.2"
   },
   "dependencies": {
