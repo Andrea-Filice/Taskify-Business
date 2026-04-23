@@ -145,7 +145,7 @@ if (window.__taskify_render_loaded__) {
 
       if(companyName === undefined)
         window.location.href = "createCompany.html";
-      else{
+      else {
         document.getElementById("app").style.animation = "FadeIn 1s forwards";
         document.getElementById("AppTasks").style.animation = "FadeIn 1s forwards";
         document.getElementById("mainSection").style.animation = "FadeIn 1s forwards";

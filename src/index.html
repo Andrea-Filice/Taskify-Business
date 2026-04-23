@@ -9,7 +9,7 @@
         <link href="https://api.fontshare.com/v2/css?f[]=manrope@1&display=swap" rel="stylesheet">
     </head>
     <body>
-        <div id="mainSection">
+        <div id="mainSection" style="opacity: 0;">
             <h1 style="font-family: 'General Sans', sans-serif; font-size: 60px;">
                 <img src="assets/_list.png" alt="Icon" style="width: 45px; height: 45px;" draggable="false" data-i18n-title="homePage.tasks">
                 <span data-i18n="homePage.tasks">TASKS</span>
@@ -27,7 +27,7 @@
             <br>
             <ul id="fuoriList"></ul><br><br>
         </div>
-        <div class="app" id="AppTasks">
+        <div class="app" id="AppTasks" style="opacity: 0;">
             <div class="version-inputs" id="versions">
                 <input type="text" id="prevVersion" placeholder="Previous version" data-i18n-title="homePage.previousVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.previousVersionTooltip">
                 <input type="text" id="nextVersion" placeholder="Newer version" data-i18n-title="homePage.newerVersionTooltip" maxlength="10" data-i18n-placeholder="homePage.newerVersionTooltip">
@@ -46,7 +46,7 @@
             <button id="categorySelection"></button>
             <button class="addTask" id="addTask"><img src="assets/_add.png" alt="Add Task" width="20px" height="20px" draggable="false"></button>
         </div>
-        <div class="container" id="app">
+        <div class="container" id="app" style="opacity: 0;">
             <button onclick="openInfoBox()" class="infoButton" id="ibtn" data-i18n-title="settings.aboutTitle"><img src="assets/_info.png" draggable="false" height="30px" width="30px"></button>
             <button onclick="openSettings()" class="settingsButton" id="sbtn" data-i18n-title="titles.settings"><img src="assets/_settings.png" draggable="false" height="30px" width="30px"></button>
         </div>
