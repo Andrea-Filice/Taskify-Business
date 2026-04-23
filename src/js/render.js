@@ -345,7 +345,7 @@ if (window.__taskify_render_loaded__) {
       doublePressChecksCheckbox.checked = doublePressChecks;
       spellcheckCheckbox.checked = spellcheckEnabled;
 
-      //* COLOR SELECTION
+      ///COLOR SELECTION
       //* TASK COMPLETED
       switch(dropDowntaskCompleted){
         case 'red':
