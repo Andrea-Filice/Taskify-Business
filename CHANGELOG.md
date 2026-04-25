@@ -5,8 +5,8 @@
   - [New in 2.104.1](https://github.com/supabase/supabase-js/releases/tag/v2.104.1)
 - electron-builder `26.9.0`
   - [New in 26.9.0](https://github.com/electron-userland/electron-builder/releases/tag/electron-builder%4026.9.0)
-- i18next `26.0.7`
-  - [New in 26.0.7](https://github.com/i18next/i18next/releases/tag/v26.0.7)
+- i18next `26.0.8`
+  - [New in 26.0.8](https://github.com/i18next/i18next/releases/tag/v26.0.8)
 - Electron `41.3.0`
   - [New in 41.3.0](https://github.com/electron/electron/releases/tag/v41.3.0)
 - npm `11.13.0`
