@@ -145,7 +145,7 @@ if (window.__taskify_render_loaded__) {
 
       if(companyName === undefined)
         window.location.href = "createCompany.html";
-      else{
+      else {
         document.getElementById("app").style.animation = "FadeIn 1s forwards";
         document.getElementById("AppTasks").style.animation = "FadeIn 1s forwards";
         document.getElementById("mainSection").style.animation = "FadeIn 1s forwards";
@@ -293,6 +293,8 @@ if (window.__taskify_render_loaded__) {
       nextVersionInput.value = '';
       employeeField.value = '';
 
+      input.dispatchEvent(new Event('input'));
+
       taskCreated++;
       api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
       updateDailyData();
@@ -345,7 +347,7 @@ if (window.__taskify_render_loaded__) {
       doublePressChecksCheckbox.checked = doublePressChecks;
       spellcheckCheckbox.checked = spellcheckEnabled;
 
-      //* COLOR SELECTION
+      ///COLOR SELECTION
       //* TASK COMPLETED
       switch(dropDowntaskCompleted){
         case 'red':
@@ -746,9 +748,9 @@ if (window.__taskify_render_loaded__) {
   }();
 
   (function initHintCycler() {
-      const input      = document.getElementById('aiInput');
-      const overlay    = document.getElementById('hintOverlay');
-      const hintEl     = document.getElementById('hintText');
+      const input = document.getElementById('aiInput');
+      const overlay = document.getElementById('hintOverlay');
+      const hintEl = document.getElementById('hintText');
 
       const getHints = () => [
           window.i18n.t('homePage.taskNameTooltip'),
@@ -801,6 +803,7 @@ if (window.__taskify_render_loaded__) {
           origUpdateUI(...args);
           if (intervalId) { stopCycling(); startCycling(); }
       };
+
       startCycling();
   })();
 
