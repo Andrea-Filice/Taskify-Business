@@ -92,11 +92,11 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^42.3.3",
+    "electron": "^42.4.0",
     "electron-builder": "^26.15.2"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.108.0",
+    "@supabase/supabase-js": "^2.108.1",
     "chart.js": "^4.5.1",
     "dotenv": "^17.4.2",
     "electron-progressbar": "^2.2.1",
@@ -107,6 +107,6 @@
     "i18next-fs-backend": "^2.6.6",
     "js-yaml": "^4.2.0",
     "npm": "^11.16.0",
-    "semver": "^7.8.3"
+    "semver": "^7.8.4"
   }
 }
