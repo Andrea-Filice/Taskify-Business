@@ -105,8 +105,8 @@
     "i18next": "^26.3.1",
     "i18next-electron-fs-backend": "^4.0.0",
     "i18next-fs-backend": "^2.6.6",
-    "js-yaml": "^4.2.0",
+    "js-yaml": "^5.1.0",
     "npm": "^11.17.0",
-    "semver": "^7.8.4"
+    "semver": "^7.8.5"
   }
 }
