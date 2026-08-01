@@ -96,7 +96,7 @@
     "electron-builder": "^26.15.7"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.110.8",
+    "@supabase/supabase-js": "^2.111.0",
     "chart.js": "^4.5.1",
     "dotenv": "^17.4.2",
     "electron-progressbar": "^2.2.1",
@@ -104,9 +104,9 @@
     "glob": "^13.0.6",
     "i18next": "^26.3.6",
     "i18next-electron-fs-backend": "^4.0.0",
-    "i18next-fs-backend": "^2.6.6",
-    "js-yaml": "^5.2.2",
-    "npm": "^12.0.1",
+    "i18next-fs-backend": "^2.6.7",
+    "js-yaml": "^5.2.3",
+    "npm": "^12.0.2",
     "semver": "^7.8.5"
   }
 }
