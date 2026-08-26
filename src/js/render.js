@@ -676,7 +676,7 @@ else {
     modifyTask(category, index) {
       const task = this.todos[category][index];
       if (!task){
-        api.showAlert(window.i18n.t("popUps.taskNotFound"), "Taskify Business", window.i18n.t("htmlTitles.closeButton")); //TODO: Translate this alert
+        api.showAlert(window.i18n.t("popUps.taskNotFound"), "Taskify Business", window.i18n.t("htmlTitles.closeButton"));
         return;
       }
       api.shareSettings(characterLimit);
