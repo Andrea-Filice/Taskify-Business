@@ -77,7 +77,9 @@
         "resetDataConfirm": "¿Estás seguro de que deseas restablecer todos los datos guardados?",
         "restartConfirm": "¿Estás seguro de que deseas reiniciar la aplicación?",
         "quitAppConfirm": "¿Estás seguro de que deseas cerrar la aplicación?",
-        "spellcheckEnabled": "Si está activada, esta opción comprobará los errores gramaticales del usuario al escribir una nueva tarea."
+        "spellcheckEnabled": "Si está activada, esta opción comprobará los errores gramaticales del usuario al escribir una nueva tarea.",
+        "invalidCategory": "Categoría no válida.",
+        "taskNotFound": "No se ha encontrado la tarea."
     },
     "errorTitles": {
         "taskCreationError": "Error al crear la tarea"

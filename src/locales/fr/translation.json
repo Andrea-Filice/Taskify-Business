@@ -77,7 +77,9 @@
         "resetDataConfirm": "Êtes-vous sûr de vouloir réinitialiser toutes les données sauvegardées ?",
         "restartConfirm": "Êtes-vous sûr de vouloir redémarrer l'application ?",
         "quitAppConfirm": "Êtes-vous sûr de vouloir fermer l'application ?",
-        "spellcheckEnabled": "Si activée, cette option vérifiera les erreurs grammaticales de l'utilisateur lors de la création d'une nouvelle tâche."
+        "spellcheckEnabled": "Si activée, cette option vérifiera les erreurs grammaticales de l'utilisateur lors de la création d'une nouvelle tâche.",
+        "invalidCategory": "Catégorie non valide.",
+        "taskNotFound": "Tâche introuvable."
     },
     "errorTitles": {
         "taskCreationError": "Erreur de création de tâche"

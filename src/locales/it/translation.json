@@ -75,7 +75,9 @@
         "resetDataConfirm": "Sei sicuro di voler eliminare tutti i dati?",
         "restartConfirm": "Sei sicuro di voler riavviare l'app?",
         "quitAppConfirm": "Sei sicuro di voler chiudere l'app?",
-        "spellcheckEnabled": "Se attivata, questa opzione controlla gli errori Grammaticali nella creazione del Task."
+        "spellcheckEnabled": "Se attivata, questa opzione controlla gli errori Grammaticali nella creazione del Task.",
+        "invalidCategory": "Categoria non valida.",
+        "taskNotFound": "Task non trovato."
     },
     "errorTitles": {
         "taskCreationError": "Errore creazione Task"

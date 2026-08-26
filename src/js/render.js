@@ -583,7 +583,7 @@ else {
 
     markAsCompleted(categoryKey) {
       if (!this.todos[categoryKey]) {
-        api.showAlert('Invalid category.', window.i18n.t("htmlTitles.closeButton")); //TODO: Translate this alert
+        api.showAlert(window.i18n.t("popUps.invalidCategory"), "Taskify Business", window.i18n.t("htmlTitles.closeButton"));
         return;
       }
 
@@ -676,7 +676,7 @@ else {
     modifyTask(category, index) {
       const task = this.todos[category][index];
       if (!task){
-        api.showAlert('Task not found.', window.i18n.t("htmlTitles.closeButton")); //TODO: Translate this alert
+        api.showAlert(window.i18n.t("popUps.taskNotFound"), "Taskify Business", window.i18n.t("htmlTitles.closeButton")); //TODO: Translate this alert
         return;
       }
       api.shareSettings(characterLimit);
