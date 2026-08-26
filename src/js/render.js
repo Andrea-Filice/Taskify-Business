@@ -282,7 +282,7 @@ else {
     handleEnter(e, category) {
       const input = document.getElementById('aiInput');
 
-      this.addTodoHandler(category);
+      if (e.key === 'Enter') this.addTodoHandler(category);
     }
 
     removeTodo(category, index) {
