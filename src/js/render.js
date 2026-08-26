@@ -487,6 +487,12 @@ else {
     }
 
     renderList(category, listId) {
+      //*UTILS METHODS
+      ///In this section, we have some utils to avoid HTMLInjection with render.
+      function cleanUserInput(str = '') {
+        return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      }
+
       const numberToUpdateID = (listId === "softwareList") ? "maintenanceNumber" : "outNumber";
       const numberToUpdate = document.getElementById(numberToUpdateID);
       const list = document.getElementById(listId);
@@ -506,18 +512,18 @@ else {
             if (todo.prevVersion || todo.nextVersion) {
                 versionHtml = `
                     <small>
-                        ${todo.prevVersion ? `<p class="versionPrev">${todo.prevVersion}</p>` : ''}
-                        ${todo.prevVersion && todo.nextVersion ? ' > ' : ''}
-                        ${todo.nextVersion ? `<p class="versionNext">${todo.nextVersion}</p>` : ''}
+                        ${cleanUserInput(todo.prevVersion) ? `<p class="versionPrev">${cleanUserInput(todo.prevVersion)}</p>` : ''}
+                        ${cleanUserInput(todo.prevVersion) && cleanUserInput(todo.nextVersion) ? ' > ' : ''}
+                        ${cleanUserInput(todo.nextVersion) ? `<p class="versionNext">${cleanUserInput(todo.nextVersion)}</p>` : ''}
                     </small><br>
                 `;
             }
             li.innerHTML = `
-                <span><b>${todo.text}</b></span>
+                <span><b>${cleanUserInput(todo.text)}</b></span>
                 <div>
                     ${versionHtml}
                     <small>
-                      ${window.i18n.t('homePage.assignedTo')} <i>${employee}</i>
+                      ${window.i18n.t('homePage.assignedTo')} <i>${cleanUserInput(employee)}</i>
                     </small>
                     <div style="display: flex; gap: 5px; margin-top: 0px;">
                         <button class="delete-btn" style="width: 100px; background-color: white;" title="${window.i18n.t('settings.markAsCompleted')}">
