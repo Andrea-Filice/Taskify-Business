@@ -186,12 +186,14 @@ else {
       themeDropdown.addEventListener("change", () => {
               htmlElement.setAttribute('data-theme', themeDropdown.value);
               this.updateUI();})
+            
       languageDropdown.addEventListener('change', async () => {
           const newLanguage = languageDropdown.value;
           await window.i18n.changeLanguage(newLanguage);
           window.i18n.translatePage();;
           this.updateUI();
       });
+      
       daysToShowDropdown.addEventListener('change', () =>{
         const newDays = parseInt(daysToShowDropdown.value);
         localStorage.setItem("daysToShow", newDays);
