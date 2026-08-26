@@ -1,6 +1,7 @@
 if (window.__taskify_render_loaded__) {
   console.warn('[ℹ️ INFO] render.js already loaded; skipping duplicate execution.');
-} else {
+} 
+else {
   window.__taskify_render_loaded__ = true;
 
   const api = window.api;
@@ -174,8 +175,6 @@ if (window.__taskify_render_loaded__) {
               .addEventListener('click', () => this.checkBox());
       document.getElementById('characterLimit')
               .addEventListener('change', () => this.setCharacterLimit())
-      document.getElementById('aiSendBtn')
-              .addEventListener('click', e => this.sendAIMessage())
       document.getElementById('colorTaskCreated')
               .addEventListener('change', () => this.updateUI())
       document.getElementById('colorTaskCompleted')
@@ -220,27 +219,6 @@ if (window.__taskify_render_loaded__) {
         currentChoosedCategory = defaultCategoryDropdown.value;
       });
       this.updateUI();
-    }
-
-    sendAIMessage(){
-      const input = document.getElementById('aiInput');
-      const inputSide = document.getElementById('aiInputSide');
-      const message = input.value.trim();
-      const messageSide = inputSide.value.trim();
-
-      if((!input && !inputSide) || (!message && !messageSide) ){
-        api.showAlert('Invalid message. You cannot send empty messages.', 'Invalid AI Message', window.i18n.t("htmlTitles.closeButton"));
-        return;
-      }
-
-      sidebar.classList.add('open');
-      setTimeout(() =>{aiInput.focus();}, 400);
-      const messageToSend = (!message) ? messageSide : message;
-
-      appendMsg(messageToSend, "you");
-      input.value = '';
-      inputSide.value = '';
-      CallAIFunction(messageToSend);
     }
 
     addToDo(taskName, previousVer, nextVer, category){
@@ -303,16 +281,8 @@ if (window.__taskify_render_loaded__) {
 
     handleEnter(e, category) {
       const input = document.getElementById('aiInput');
-      const aiMessages = ["/create", "/help", "/edit", "hi", "hello", "/clear", "/cls", "/ai"]
-      var regex = new RegExp(`^(${aiMessages.join("|")})$`, "i");
-      let containsAIMessages =  regex.test(input.value.trim());
-      console.log(regex.test(input.value))
-      console.log(containsAIMessages)
 
-      if(containsAIMessages && e.key === 'Enter')
-        this.sendAIMessage();
-      else if(!containsAIMessages && e.key === 'Enter')
-        this.addTodoHandler(category);
+      this.addTodoHandler(category);
     }
 
     removeTodo(category, index) {
@@ -904,116 +874,6 @@ if (window.__taskify_render_loaded__) {
       api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       window.todoManager.updateUI();
   });
-
-  ///MARK: AI SECTION
-  //* AI ASSISTANT
-  function CallAIFunction(input){
-    api.analyzeContent(input)
-      .then(result => {
-        try{
-          if (result.tasks && Array.isArray(result.tasks) && !Object.prototype.hasOwnProperty.call(result, 'modify') && !Object.prototype.hasOwnProperty.call(result, 'type')) {
-            result.tasks.forEach(task => {
-              appendMsg(`Task Created! ${task.name} (${task.prev_version} → ${task.next_version})`, "AI");
-              window.todoManager.addToDo(task.name, task.prev_version, task.next_version, task.category);
-            });
-          } else if (result.name && !Object.prototype.hasOwnProperty.call(result, 'modify') && !Object.prototype.hasOwnProperty.call(result, 'type')) {
-            appendMsg(`Task Created! ${result.name} (${result.prev_version} → ${result.next_version})`, "AI");
-            window.todoManager.addToDo(result.name, result.prev_version, result.next_version, result.category);
-          } else if(Object.prototype.hasOwnProperty.call(result, 'modify')){
-            const todos = window.todoManager.todos[result.category];
-            const index = todos.findIndex(t => t.text === result.name);
-
-            if(index !== -1){
-              window.todoManager.modifyTask(result.category, index);
-              appendMsg(`Editing task: ${result.name}`, "AI");
-            }
-            else
-              appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
-          }
-          else if (result.name && Object.prototype.hasOwnProperty.call(result, 'type')){
-            const todos = window.todoManager.todos[result.category];
-            const index = todos.findIndex(t => t.text === result.name);
-
-            if(index !== -1){
-              window.todoManager.removeTodo(result.category, index);
-              appendMsg(`Deleting task: ${result.name}`, "AI");
-              taskCreated--;
-            }
-            else
-              appendMsg(`Task "${result.name}" not found in category "${result.category == "fuoriManutenzione"? "Out Of Maintenance" : "Maintenance Tasks"}"`, "AI");
-          }
-          else{
-            if (typeof result === "object")
-              appendMsg(JSON.stringify(result, null, 2), "AI");
-            if(result == "cleared")
-              clearChat();
-            else
-              appendMsg(result, "AI");
-          }
-        }
-        catch(e) {appendMsg("An unknown error occured: " + e, "AI");}
-      })
-      .catch(error => {appendMsg(`Error during the load of AI Scripts: ${error.message || error}`, "AI");});
-  }
-
-  //SIDEBAR VARIABLES
-  const sidebar = document.getElementById('sidebarAI');
-  const closeSidebarBtn = document.getElementById('closeSidebarBtn');
-  const aiSendBtn = document.getElementById('aiSendBtn');
-  const aiInput = document.getElementById('aiInputSide');
-  const aiChatHistory = document.getElementById('aiChatHistory');
-
-  closeSidebarBtn.onclick = () =>{sidebar.classList.remove('open');}
-
-  aiSendBtn.onclick = () => {
-    const msg = aiInput.value.trim();
-    if(!msg) return;
-
-    appendMsg(msg, "you");
-    
-    if (!sidebar.classList.contains('open')) 
-      sidebar.classList.add('open');
-
-    CallAIFunction(msg);
-    setTimeout(() => {appendMsg("AI: Elaborating request...", "AI");}, 800);
-  }
-
-  aiInput.addEventListener('keydown', function(e){if(e.key === 'Enter') aiSendBtn.click();});
-  aiInput.addEventListener('focus', () => aiInput.classList.add('ai-glow'));
-  aiInput.addEventListener('blur', () => aiInput.classList.remove('ai-glow'));
-
-  function appendMsg(text, who = "ai"){
-    const div = document.createElement('div');
-    div.className = 'ai-chat-msg ' + (who.toLowerCase() === "you" ? "user" : "ai");
-
-    const innerDiv = document.createElement('div');
-    const label = document.createElement('label');
-    const p = document.createElement('p');
-
-    if(who === "AI"){
-      label.className = "aiText";
-      label.textContent = 'AI Assistant:';
-    }
-    else{
-      label.className = "youText";
-      label.textContent = 'You:';
-    }
-
-    p.style.display = 'inline';
-    p.textContent = text;
-
-    innerDiv.appendChild(label);
-    innerDiv.appendChild(p);
-    div.appendChild(innerDiv);
-
-    aiChatHistory.appendChild(div);
-    aiChatHistory.scrollTop = aiChatHistory.scrollHeight;
-  }
-
-  function clearChat() {
-    const chatHistory = document.querySelector('.ai-chat-history');
-    chatHistory.innerHTML = (chatHistory) ? '' : chatHistory.innerHTML;
-  }
 
   //ABOUT PANEL
   function ShowInfoPanel(key){api.showAlert(window.i18n.t(key), window.i18n.t("htmlTitles.closeButton"))}
