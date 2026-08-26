@@ -280,8 +280,6 @@ else {
     }
 
     handleEnter(e, category) {
-      const input = document.getElementById('aiInput');
-
       if (e.key === 'Enter') this.addTodoHandler(category);
     }
 
