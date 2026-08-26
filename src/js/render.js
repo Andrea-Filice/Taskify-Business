@@ -567,7 +567,7 @@ else {
             localStorage.setItem("daysToShow", 7);
             api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
             this.updateUI();
-            api.showAlert(window.i18n.t('popUps.dataReset'), window.i18n.t("htmlTitles.closeButton"))
+            api.showAlert(window.i18n.t('popUps.dataReset'), "Taskify Business", window.i18n.t("htmlTitles.closeButton"))
             .then(() => {window.location.href = "boot.html";});
           }
         });
@@ -583,7 +583,7 @@ else {
 
     markAsCompleted(categoryKey) {
       if (!this.todos[categoryKey]) {
-        api.showAlert('Invalid category.', window.i18n.t("htmlTitles.closeButton"));
+        api.showAlert('Invalid category.', window.i18n.t("htmlTitles.closeButton")); //TODO: Translate this alert
         return;
       }
 
@@ -596,7 +596,7 @@ else {
         this.todos[categoryKey] = [];
         api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
         this.updateUI();
-        api.showAlert(window.i18n.t("popUps.markedAsCompleted"), window.i18n.t("htmlTitles.closeButton"));
+        api.showAlert(window.i18n.t("popUps.markedAsCompleted"), "Taskify Business", window.i18n.t("htmlTitles.closeButton"));
       });
     }
     
@@ -639,7 +639,7 @@ else {
 
     changeCompanyName(newName) {
       if(!newName || newName.length < 8) {
-        api.showAlert(window.i18n.t('popUps.invalidCharacters'), window.i18n.t("htmlTitles.closeButton"));
+        api.showAlert(window.i18n.t('popUps.invalidCharacters'), "Taskify Business", window.i18n.t("htmlTitles.closeButton"));
         return;
       }
       api.showConfirm((window.i18n.t('popUps.changeCompanyName') + `"${newName}"?`), window.i18n.t('htmlTitles.cancelButton'))
@@ -648,7 +648,7 @@ else {
           companyName = newName;
           api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
           document.getElementById('nameCompany').value = '';
-          api.showAlert(window.i18n.t('popUps.companyChanged'), window.i18n.t("htmlTitles.closeButton"));
+          api.showAlert(window.i18n.t('popUps.companyChanged'), "Taskify Business", window.i18n.t("htmlTitles.closeButton"));
           this.updateUI();
         });
     }
@@ -676,7 +676,7 @@ else {
     modifyTask(category, index) {
       const task = this.todos[category][index];
       if (!task){
-        api.showAlert('Task not found.', window.i18n.t("htmlTitles.closeButton")); 
+        api.showAlert('Task not found.', window.i18n.t("htmlTitles.closeButton")); //TODO: Translate this alert
         return;
       }
       api.shareSettings(characterLimit);
@@ -880,7 +880,7 @@ else {
   });
 
   //ABOUT PANEL
-  function ShowInfoPanel(key){api.showAlert(window.i18n.t(key), window.i18n.t("htmlTitles.closeButton"))}
+  function ShowInfoPanel(key){api.showAlert(window.i18n.t(key), "Taskify Business", window.i18n.t("htmlTitles.closeButton"))}
 
   //WEB REFERENCES SECTION
   document.getElementById('repoGitBtn').addEventListener('click', () => {api.openExternal("https://github.com/Andrea-Filice/Taskify-Business");});

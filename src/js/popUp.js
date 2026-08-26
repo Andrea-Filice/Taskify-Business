@@ -53,9 +53,9 @@ function submitInput() {
     window.close();
   }
   else if(!inputName)
-    api.showAlert(window.i18n.t('editPopUp.errorEdit'), window.i18n.t("htmlTitles.closeButton"))
+    api.showAlert(window.i18n.t('editPopUp.errorEdit'), "Taskify Business", window.i18n.t("htmlTitles.closeButton"))
   if(previousVersion && !newerVersion || !previousVersion && newerVersion)
-    api.showAlert(window.i18n.t('editPopUp.errorVersions'), window.i18n.t("htmlTitles.closeButton"))
+    api.showAlert(window.i18n.t('editPopUp.errorVersions'), "Taskify Business", window.i18n.t("htmlTitles.closeButton"))
   else if(previousVersion && newerVersion){
     api.inputSend(previousVersion, "prev_version");
     api.inputSend(newerVersion, "next_version");
