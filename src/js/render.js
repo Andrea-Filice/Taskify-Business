@@ -274,7 +274,7 @@ else {
       input.dispatchEvent(new Event('input'));
 
       taskCreated++;
-      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks});
+      api.saveTodos({ ...this.todos, taskCreated, taskCompleted, autoClose, companyName, chartData, taskCompletedColor, taskCreatedColor, characterLimit, doublePressChecks, spellcheckEnabled});
       updateDailyData();
       this.updateUI();
     }
