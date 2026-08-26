@@ -11,7 +11,7 @@ else {
   let taskCreated = 0, taskCompleted = 0;
   let autoClose = false, characterLimit = true, doublePressChecks = true, spellcheckEnabled = false;
   let companyName = undefined;
-  let taskCompletedColor = document.getElementById('colorTaskCreated').value, taskCreatedColor = document.getElementById('colorTaskCompleted').value;
+  let taskCompletedColor = document.getElementById('colorTaskCompleted').value, taskCreatedColor = document.getElementById('colorTaskCreated').value;
   let theme = localStorage.getItem("theme") || "dark";
   let currentChoosedCategory;
 
