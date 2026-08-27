@@ -538,7 +538,7 @@ else {
                         <button class="delete-btn" style="width: 100px; background-color: white;" title="${window.i18n.t('settings.markAsCompleted')}">
                           <img src="assets/_complete.png" draggable="false" width="20px" height="20px">
                         </button>
-                        <button class="edit-btn" id="editBtn" title="${window.i18n.t('homePage.editTask')}">
+                        <button class="edit-btn" title="${window.i18n.t('homePage.editTask')}">
                           <img src="assets/_edit.png" draggable="false" width="20px" height="20px">
                         </button>
                     </div>
