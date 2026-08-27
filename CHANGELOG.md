@@ -13,17 +13,17 @@
   - [New in 5.4.1](https://github.com/nodeca/js-yaml)
 
 # ⚠️Warning
-This version of Taskify Business **resolves important security vulnerabilities** caused by packages used by the application that were not updated correctly. This update is recommended for all users as part of the **July Security Patch.**
+This version of Taskify Business **resolves important security vulnerabilities** caused by packages used by the application that were not updated correctly. This update is recommended for all users as part of the **August Security Patch.**
 
 # Security Fixes
 [d07ef45] Resolve Content-Injection with Task Name Creation [CWE-79]. 
 
 # Breaking Changes
-[b8099ab] Removed AI. Now Taskify Business is more efficent and more reliable.
+[b8099ab] Removed AI components. Taskify Business is now more efficient and reliable.
 
 # Bug Fixes
-[1209ac9] Fixed bugs with Spellcheck option, sometime it doesn't save the option.
-[7fc9da2] Fixed alert titles, now show correctly "Taskify Business" and not "Close".
-[a9e11fb] Fixed some alerts not correctly translated.
-[5d4484f] Fixed saved colors from the Chart not loading correctly sometimes.
-[18cce4c] Fixed chart not displayed correctly sometimes.
+[1209ac9] Fixed Spellcheck setting not persisting across sessions.
+[7fc9da2] Fixed alert titles to display "Taskify Business" instead of "Close".
+[a9e11fb] Fixed missing translations in alert messages.
+[5d4484f] Fixed chart colors not loading correctly on startup.
+[18cce4c] Fixed chart rendering issues.
