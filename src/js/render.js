@@ -196,16 +196,25 @@ else {
       
       daysToShowDropdown.addEventListener('change', () =>{
         const newDays = parseInt(daysToShowDropdown.value);
+        const oldDays = chartData.labels.length;
         localStorage.setItem("daysToShow", newDays);
         
+        const newLabels = Array(newDays).fill('').map((_, i) => {
+            const date = new Date();
+            date.setDate(date.getDate() - ((newDays - 1) - i)); 
+            return date.toLocaleDateString();
+        });
+        
+        const newCreated = chartData.created.slice(Math.max(0, oldDays - newDays));
+        const newCompleted = chartData.completed.slice(Math.max(0, oldDays - newDays));
+        
+        while (newCreated.length < newDays) newCreated.unshift(0);
+        while (newCompleted.length < newDays) newCompleted.unshift(0);
+        
         chartData = {
-            labels: Array(newDays).fill('').map((_, i) => {
-                const date = new Date();
-                date.setDate(date.getDate() - ((newDays - 1) - i)); 
-                return date.toLocaleDateString();
-            }),
-            created: Array(newDays).fill(0),
-            completed: Array(newDays).fill(0)
+            labels: newLabels,
+            created: newCreated,
+            completed: newCompleted
         };
         
         if (tasksChart) {
