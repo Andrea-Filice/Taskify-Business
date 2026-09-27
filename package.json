@@ -93,12 +93,12 @@
   ],
   "devDependencies": {
     "electron": "^44.4.5",
-    "electron-builder": "^26.16.1"
+    "electron-builder": "^26.17.0"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.117.2",
     "chart.js": "^4.5.1",
-    "dotenv": "^18.0.3",
+    "dotenv": "^18.0.4",
     "electron-progressbar": "^2.2.1",
     "follow-redirects": "^1.16.0",
     "glob": "^13.0.6",
