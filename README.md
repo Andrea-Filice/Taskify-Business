@@ -18,11 +18,6 @@ Keep track of new versions of third-party tools and apps. *You won't forget to u
 
 ![alt text](src/assets/gitImages/git_slide2.webp "Version Tracking")
   
-# **Powered by AI (Beta)**  
-  **/Create, /Delete** and **/Modify** Tasks, only with a few commands ahead.
-
-![alt text](https://play-epik-incorporation.netlify.app/img/devsImages/slide_AI.webp "AI Assistant")
-  
 # **Progress Dashboard**  
   Keep track of tasks and time at the same time. Simply with a *Graph*.
 
