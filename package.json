@@ -92,7 +92,7 @@
     "package.json"
   ],
   "devDependencies": {
-    "electron": "^45.4.1",
+    "electron": "^45.5.0",
     "electron-builder": "^26.18.0"
   },
   "dependencies": {
@@ -102,7 +102,7 @@
     "electron-progressbar": "^2.2.1",
     "follow-redirects": "^1.16.3",
     "glob": "^14.0.6",
-    "i18next": "^27.2.7",
+    "i18next": "^27.2.10",
     "i18next-electron-fs-backend": "^4.0.0",
     "i18next-fs-backend": "^2.7.3",
     "js-yaml": "^5.5.0",
